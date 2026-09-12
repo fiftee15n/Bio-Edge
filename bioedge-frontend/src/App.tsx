@@ -9,6 +9,7 @@ import { Footer } from './components/common/Footer';
 import { DemoRoleSwitcher } from './components/common/DemoRoleSwitcher';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { PageTransition } from './components/common/PageTransition';
+import { SmoothScrollProvider } from './components/common/SmoothScrollProvider';
 
 // Public Pages
 import { HomePage } from './pages/public/HomePage';
@@ -74,60 +75,62 @@ export default function App(): React.ReactElement {
     <AuthProvider>
       <CourseDataProvider>
         <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            {/* Public Pages */}
-            <Route element={<PublicLayout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/program" element={<ProgramPage />} />
-              <Route path="/schedule" element={<SchedulePage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/enroll" element={<EnrollPage />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Route>
+          <SmoothScrollProvider>
+            <ScrollToTop />
+            <Routes>
+              {/* Public Pages */}
+              <Route element={<PublicLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/program" element={<ProgramPage />} />
+                <Route path="/schedule" element={<SchedulePage />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/enroll" element={<EnrollPage />} />
+                <Route path="/login" element={<LoginPage />} />
+              </Route>
 
-            {/* Authenticated Student Portal */}
-            <Route path="/student" element={<StudentLayout />}>
-              <Route path="dashboard" element={<StudentDashboard />} />
-              <Route path="course" element={<StudentCoursePage />} />
-              <Route path="chapter/:id" element={<StudentChapterDetailsPage />} />
-              <Route path="classes" element={<StudentClassesPage />} />
-              <Route path="practice" element={<StudentPracticePage />} />
-              <Route path="practice/:id" element={<StudentTestRunnerPage />} />
-              <Route path="model-tests" element={<StudentModelTestsPage />} />
-              <Route path="results" element={<StudentResultsPage />} />
-              <Route path="analytics" element={<StudentAnalyticsPage />} />
-              <Route path="feedback" element={<StudentFeedbackPage />} />
-              <Route path="notifications" element={<StudentNotificationsPage />} />
-              <Route path="profile" element={<StudentProfilePage />} />
-            </Route>
+              {/* Authenticated Student Portal */}
+              <Route path="/student" element={<StudentLayout />}>
+                <Route path="dashboard" element={<StudentDashboard />} />
+                <Route path="course" element={<StudentCoursePage />} />
+                <Route path="chapter/:id" element={<StudentChapterDetailsPage />} />
+                <Route path="classes" element={<StudentClassesPage />} />
+                <Route path="practice" element={<StudentPracticePage />} />
+                <Route path="practice/:id" element={<StudentTestRunnerPage />} />
+                <Route path="model-tests" element={<StudentModelTestsPage />} />
+                <Route path="results" element={<StudentResultsPage />} />
+                <Route path="analytics" element={<StudentAnalyticsPage />} />
+                <Route path="feedback" element={<StudentFeedbackPage />} />
+                <Route path="notifications" element={<StudentNotificationsPage />} />
+                <Route path="profile" element={<StudentProfilePage />} />
+              </Route>
 
-            {/* Authenticated Teacher Management Portal */}
-            <Route path="/teacher" element={<TeacherLayout />}>
-              <Route path="dashboard" element={<TeacherDashboard />} />
-              <Route path="students" element={<TeacherStudentsPage />} />
-              <Route path="students/:id" element={<TeacherStudentDetailPage />} />
-              <Route path="course" element={<TeacherCoursePage />} />
-              <Route path="chapters" element={<TeacherChaptersPage />} />
-              <Route path="classes" element={<TeacherClassesPage />} />
-              <Route path="schedule" element={<TeacherSchedulePage />} />
-              <Route path="tests" element={<TeacherTestsPage />} />
-              <Route path="tests/create" element={<TeacherTestCreatePage />} />
-              <Route path="questions" element={<TeacherQuestionsPage />} />
-              <Route path="model-tests" element={<TeacherModelTestsPage />} />
-              <Route path="results" element={<TeacherResultsPage />} />
-              <Route path="feedback" element={<TeacherFeedbackPage />} />
-              <Route path="analytics" element={<TeacherAnalyticsPage />} />
-              <Route path="pricing" element={<TeacherPricingPage />} />
-              <Route path="profile" element={<TeacherProfilePage />} />
-              <Route path="settings" element={<TeacherCoursePage />} />
-            </Route>
+              {/* Authenticated Teacher Management Portal */}
+              <Route path="/teacher" element={<TeacherLayout />}>
+                <Route path="dashboard" element={<TeacherDashboard />} />
+                <Route path="students" element={<TeacherStudentsPage />} />
+                <Route path="students/:id" element={<TeacherStudentDetailPage />} />
+                <Route path="course" element={<TeacherCoursePage />} />
+                <Route path="chapters" element={<TeacherChaptersPage />} />
+                <Route path="classes" element={<TeacherClassesPage />} />
+                <Route path="schedule" element={<TeacherSchedulePage />} />
+                <Route path="tests" element={<TeacherTestsPage />} />
+                <Route path="tests/create" element={<TeacherTestCreatePage />} />
+                <Route path="questions" element={<TeacherQuestionsPage />} />
+                <Route path="model-tests" element={<TeacherModelTestsPage />} />
+                <Route path="results" element={<TeacherResultsPage />} />
+                <Route path="feedback" element={<TeacherFeedbackPage />} />
+                <Route path="analytics" element={<TeacherAnalyticsPage />} />
+                <Route path="pricing" element={<TeacherPricingPage />} />
+                <Route path="profile" element={<TeacherProfilePage />} />
+                <Route path="settings" element={<TeacherCoursePage />} />
+              </Route>
 
-            {/* Fallback route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              {/* Fallback route */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </SmoothScrollProvider>
         </BrowserRouter>
       </CourseDataProvider>
     </AuthProvider>
