@@ -760,6 +760,77 @@ export const EnrollPage: React.FC = () => {
       </div>
 
       <style>{`
+        .enroll-page-wrapper {
+          padding-top: 2rem;
+          padding-bottom: 5rem;
+        }
+
+        /* Top Program Switcher Tabs */
+        .program-selection-wrapper {
+          max-width: 900px;
+          margin: 0 auto 2.25rem;
+        }
+        .program-tab-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem;
+        }
+        .program-select-tab {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 1.1rem 1.25rem;
+          background: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          border-radius: var(--radius-md);
+          text-align: left;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: var(--shadow-sm);
+        }
+        .program-select-tab:hover {
+          border-color: var(--soft-green);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+        .program-select-tab.active {
+          border-color: var(--dark-green);
+          background: #F0FDF4;
+          box-shadow: 0 4px 16px rgba(22, 101, 52, 0.12);
+        }
+        .p-tab-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: var(--radius-sm);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .p-tab-icon.green {
+          background: var(--light-green);
+          color: var(--dark-green);
+        }
+        .p-tab-icon.amber {
+          background: #FEF3C7;
+          color: #B45309;
+        }
+        .p-tab-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+        .p-tab-text strong {
+          font-size: 0.96rem;
+          color: var(--text-dark);
+          font-weight: 700;
+        }
+        .p-tab-text span {
+          font-size: 0.8rem;
+          color: var(--text-muted);
+        }
+
+        /* Dual Column Layout */
         .enrollment-dual-grid {
           display: grid;
           grid-template-columns: 1fr 1.15fr;
@@ -924,8 +995,115 @@ export const EnrollPage: React.FC = () => {
           color: var(--text-muted);
         }
 
+        /* Action Column Card */
         .action-card {
           padding: 2.25rem 2rem;
+        }
+
+        /* Forms & Inputs within EnrollPage */
+        .form-group {
+          margin-bottom: 1.15rem;
+          text-align: left;
+        }
+        .form-label {
+          display: block;
+          font-size: 0.86rem;
+          font-weight: 600;
+          color: var(--text-dark);
+          margin-bottom: 0.45rem;
+        }
+        .form-input,
+        .form-select {
+          width: 100%;
+          padding: 0.72rem 1rem;
+          font-size: 0.92rem;
+          font-family: inherit;
+          color: var(--text-dark);
+          background-color: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          transition: all 0.2s ease;
+          box-sizing: border-box;
+        }
+        .form-input:focus,
+        .form-select:focus {
+          outline: none;
+          border-color: var(--dark-green);
+          box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.1);
+        }
+        .form-row-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        /* Input with Icon Positioning */
+        .input-with-icon {
+          position: relative;
+          width: 100%;
+          display: block;
+        }
+        .input-with-icon .input-icon {
+          position: absolute;
+          left: 0.95rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #6B7280;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .input-with-icon .form-input.with-icon,
+        .input-with-icon input.with-icon {
+          padding-left: 2.75rem !important;
+        }
+
+        /* Google Auth Button */
+        .btn-google-auth-full {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          background: #FFFFFF;
+          color: #374151;
+          border: 1.5px solid var(--border-color);
+          font-weight: 600;
+          font-size: 0.92rem;
+          padding: 0.75rem 1rem;
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          margin-bottom: 1.25rem;
+        }
+        .btn-google-auth-full:hover {
+          background: #F9FAFB;
+          border-color: #D1D5DB;
+          transform: translateY(-1px);
+        }
+
+        .auth-divider {
+          text-align: center;
+          position: relative;
+          margin: 1.25rem 0;
+        }
+        .auth-divider::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          width: 100%;
+          height: 1px;
+          background: var(--border-color);
+        }
+        .auth-divider span {
+          position: relative;
+          background: #FFFFFF;
+          padding: 0 0.75rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          color: var(--text-muted);
+          letter-spacing: 0.03em;
         }
 
         .authenticated-user-badge {
@@ -1142,6 +1320,9 @@ export const EnrollPage: React.FC = () => {
 
         @media (max-width: 900px) {
           .enrollment-dual-grid {
+            grid-template-columns: 1fr;
+          }
+          .program-tab-grid {
             grid-template-columns: 1fr;
           }
         }
