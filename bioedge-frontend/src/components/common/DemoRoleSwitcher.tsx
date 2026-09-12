@@ -98,7 +98,7 @@ export const DemoRoleSwitcher: React.FC = () => {
         .demo-role-switcher {
           position: fixed;
           bottom: 1.5rem;
-          right: 1.5rem;
+          left: 1.5rem;
           z-index: 9000;
           font-family: var(--font-sans);
         }
@@ -122,7 +122,7 @@ export const DemoRoleSwitcher: React.FC = () => {
         .demo-switcher-menu {
           position: absolute;
           bottom: calc(100% + 0.75rem);
-          right: 0;
+          left: 0;
           width: 290px;
           background: #FFFFFF;
           border: 1px solid var(--border-color);

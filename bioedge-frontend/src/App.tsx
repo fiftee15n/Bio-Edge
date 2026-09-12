@@ -8,6 +8,7 @@ import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { DemoRoleSwitcher } from './components/common/DemoRoleSwitcher';
 import { ScrollToTop } from './components/common/ScrollToTop';
+import { BackToTop } from './components/common/BackToTop';
 import { PageTransition } from './components/common/PageTransition';
 import { SmoothScrollProvider } from './components/common/SmoothScrollProvider';
 
@@ -77,6 +78,7 @@ export default function App(): React.ReactElement {
         <BrowserRouter>
           <SmoothScrollProvider>
             <ScrollToTop />
+            <BackToTop />
             <Routes>
               {/* Public Pages */}
               <Route element={<PublicLayout />}>

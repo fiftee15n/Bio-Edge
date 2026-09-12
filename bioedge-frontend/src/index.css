@@ -2303,6 +2303,103 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* ==========================================================================
+   BACK TO TOP FLOATING BUTTON & PROGRESS RING
+   ========================================================================== */
+
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #0B1710;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 12px 28px rgba(0, 0, 0, 0.45), 
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 20px rgba(52, 211, 153, 0.15);
+  z-index: 890;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.85);
+  transition: 
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.back-to-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.back-to-top-btn:hover {
+  background: #11281A;
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.5), 
+    0 0 0 1px rgba(52, 211, 153, 0.4),
+    0 0 25px rgba(52, 211, 153, 0.35);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.scroll-progress-ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.1s ease-out;
+  filter: drop-shadow(0 0 3px rgba(52, 211, 153, 0.6));
+}
+
+.back-to-top-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #34D399;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+}
+
+.back-to-top-btn:hover .back-to-top-icon {
+  transform: translateY(-2px);
+  color: #6EE7B7;
+}
+
+@media (max-width: 640px) {
+  .back-to-top-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .scroll-progress-ring {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+
 
 
 
