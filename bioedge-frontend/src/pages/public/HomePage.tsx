@@ -898,104 +898,143 @@ export const HomePage: React.FC = () => {
 
         /* Section Header */
         .section-header {
-          margin-bottom: 3.5rem;
+          margin-bottom: 1.75rem;
         }
         .text-center {
           text-align: center;
         }
         .section-pill {
           display: inline-block;
-          font-size: 0.78rem;
+          font-size: 0.75rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           color: var(--primary-green);
           background: var(--light-green);
-          padding: 0.35rem 0.85rem;
+          padding: 0.25rem 0.75rem;
           border-radius: var(--radius-full);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
         }
         .section-title {
-          font-size: 2.25rem;
+          font-size: 1.95rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.4rem;
+          line-height: 1.25;
         }
         .section-subtitle {
-          font-size: 1.05rem;
+          font-size: 0.92rem;
           color: var(--text-muted);
           max-width: 620px;
           margin: 0 auto;
+          line-height: 1.45;
         }
 
-        /* Benefits Grid */
+        /* Highlights Grid */
+        .highlights-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.15rem;
+        }
+        .highlight-card {
+          padding: 1.15rem;
+        }
+        .highlight-icon-box {
+          width: 40px;
+          height: 40px;
+          border-radius: var(--radius-md);
+          background: var(--light-green);
+          color: var(--dark-green);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0.75rem;
+        }
+        .highlight-icon-accent {
+          background: var(--warning-bg);
+          color: var(--warning);
+        }
+        .highlight-title {
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          margin-bottom: 0.35rem;
+        }
+        .highlight-desc {
+          font-size: 0.82rem;
+          color: var(--text-muted);
+          line-height: 1.4;
+        }
+
+        /* Benefits Grid (Core Pillars) */
         .benefits-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
         }
         .benefit-card {
-          padding: 1.5rem;
+          padding: 1.15rem;
         }
         .benefit-header {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
-          margin-bottom: 0.75rem;
+          gap: 0.5rem;
+          margin-bottom: 0.4rem;
         }
         .benefit-icon {
           color: var(--primary-green);
         }
         .benefit-title {
-          font-size: 1.05rem;
+          font-size: 0.95rem;
           font-weight: 700;
           color: var(--text-dark);
         }
         .benefit-text {
-          font-size: 0.88rem;
+          font-size: 0.82rem;
           color: var(--text-muted);
-          line-height: 1.55;
+          line-height: 1.45;
         }
 
         /* Timeline Grid */
         .timeline-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
         }
         .timeline-card {
-          padding: 1.75rem;
-          border-top: 4px solid var(--primary-green);
+          padding: 1.15rem 1rem;
+          border-top: 3px solid var(--primary-green);
         }
         .month-badge {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
           color: var(--primary-green);
           text-transform: uppercase;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.35rem;
         }
         .month-title {
-          font-size: 1.15rem;
+          font-size: 0.98rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.4rem;
         }
         .month-desc {
-          font-size: 0.88rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          margin-bottom: 1rem;
+          margin-bottom: 0.65rem;
+          line-height: 1.35;
         }
         .month-list {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
-          font-size: 0.82rem;
+          gap: 0.3rem;
+          font-size: 0.78rem;
           color: var(--text-dark);
         }
         .month-list li {
           position: relative;
-          padding-left: 1rem;
+          padding-left: 0.85rem;
         }
         .month-list li::before {
           content: '•';
@@ -1009,18 +1048,18 @@ export const HomePage: React.FC = () => {
         .paper-tabs-container {
           display: flex;
           justify-content: center;
-          gap: 1rem;
-          margin-bottom: 2.5rem;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
         }
         .paper-tab-btn {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
-          padding: 0.85rem 1.75rem;
+          gap: 0.5rem;
+          padding: 0.65rem 1.25rem;
           border-radius: var(--radius-md);
           background: #FFFFFF;
           border: 1px solid var(--border-color);
-          font-size: 1rem;
+          font-size: 0.92rem;
           font-weight: 600;
           color: var(--text-dark);
           transition: all 0.2s ease;
@@ -1034,9 +1073,9 @@ export const HomePage: React.FC = () => {
           border-color: var(--dark-green);
         }
         .paper-ch-count {
-          font-size: 0.78rem;
+          font-size: 0.75rem;
           background: rgba(255, 255, 255, 0.2);
-          padding: 0.15rem 0.5rem;
+          padding: 0.15rem 0.45rem;
           border-radius: var(--radius-full);
         }
         .paper-tab-btn:not(.active) .paper-ch-count {
@@ -1045,71 +1084,71 @@ export const HomePage: React.FC = () => {
         }
         .chapters-display-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 2.5rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          margin-bottom: 1.75rem;
         }
         .chapter-item-card {
-          padding: 1.5rem;
+          padding: 1.15rem;
         }
         .ch-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
         }
         .ch-num-badge {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
           color: var(--primary-green);
           background: var(--light-green);
-          padding: 0.2rem 0.5rem;
+          padding: 0.15rem 0.45rem;
           border-radius: var(--radius-sm);
         }
         .ch-topics-count {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           color: var(--text-muted);
         }
         .ch-name {
-          font-size: 1.05rem;
+          font-size: 0.95rem;
           font-weight: 700;
           color: var(--text-dark);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
         }
         .ch-topics-list {
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.35rem;
         }
         .ch-topic-bullet {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-size: 0.82rem;
+          gap: 0.4rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
         }
         .topic-bullet-dot {
-          width: 5px;
-          height: 5px;
+          width: 4px;
+          height: 4px;
           border-radius: 50%;
           background: var(--border-color);
         }
         .more-topics-tag {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           color: var(--primary-green);
           font-weight: 600;
-          margin-top: 0.25rem;
+          margin-top: 0.2rem;
         }
 
         /* Teacher Spotlight */
         .teacher-profile-card {
           background: #FFFFFF;
-          padding: 3rem;
+          padding: 2.25rem;
         }
         .teacher-grid {
           display: grid;
-          grid-template-columns: 300px 1fr;
-          gap: 3rem;
+          grid-template-columns: 240px 1fr;
+          gap: 2.25rem;
           align-items: center;
         }
         .teacher-visual-box {
@@ -1119,149 +1158,149 @@ export const HomePage: React.FC = () => {
           text-align: center;
         }
         .teacher-avatar-large {
-          width: 140px;
-          height: 140px;
+          width: 110px;
+          height: 110px;
           border-radius: 50%;
           background: var(--dark-green);
           color: #FFFFFF;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 3rem;
+          font-size: 2.4rem;
           font-weight: 700;
           font-family: var(--font-heading);
-          margin-bottom: 1.5rem;
-          border: 4px solid var(--light-green);
+          margin-bottom: 1rem;
+          border: 3px solid var(--light-green);
           box-shadow: var(--shadow-md);
         }
         .teacher-quick-stats {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 0.75rem;
+          gap: 0.5rem;
           width: 100%;
         }
         .t-stat {
           background: var(--light-green-subtle);
           border: 1px solid var(--border-subtle);
-          padding: 0.75rem 0.5rem;
+          padding: 0.5rem 0.4rem;
           border-radius: var(--radius-md);
           display: flex;
           flex-direction: column;
         }
         .t-stat strong {
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           color: var(--dark-green);
         }
         .t-stat span {
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           color: var(--text-muted);
         }
         .teacher-name-heading {
-          font-size: 2rem;
+          font-size: 1.85rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-top: 0.5rem;
-          margin-bottom: 0.25rem;
+          margin-top: 0.35rem;
+          margin-bottom: 0.2rem;
         }
         .teacher-institution-text {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           color: var(--primary-green);
           font-weight: 600;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
         }
         .teacher-specialization-text {
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           color: var(--text-dark);
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
         .teacher-bio-text {
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
-          line-height: 1.65;
-          margin-bottom: 1.5rem;
+          line-height: 1.5;
+          margin-bottom: 1rem;
         }
         .teacher-quote-box {
           background: var(--light-green);
-          border-left: 4px solid var(--primary-green);
-          padding: 1rem 1.25rem;
+          border-left: 3px solid var(--primary-green);
+          padding: 0.75rem 1rem;
           border-radius: 0 var(--radius-md) var(--radius-md) 0;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.25rem;
           font-style: italic;
-          font-size: 0.92rem;
+          font-size: 0.86rem;
           color: var(--dark-green);
         }
         .teacher-actions-row {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.85rem;
         }
 
         /* Why Seats */
         .why-seats-card {
           display: grid;
           grid-template-columns: 1.4fr 0.8fr;
-          gap: 3rem;
-          padding: 3rem;
+          gap: 2.25rem;
+          padding: 2.25rem;
           align-items: center;
           background: linear-gradient(135deg, #FFFFFF 0%, #FAFDFB 100%);
         }
         .why-seats-title {
-          font-size: 2rem;
+          font-size: 1.85rem;
           color: var(--dark-green);
-          margin-top: 0.5rem;
-          margin-bottom: 1rem;
+          margin-top: 0.35rem;
+          margin-bottom: 0.6rem;
         }
         .why-seats-desc {
-          font-size: 1rem;
+          font-size: 0.92rem;
           color: var(--text-muted);
-          line-height: 1.6;
-          margin-bottom: 2rem;
+          line-height: 1.5;
+          margin-bottom: 1.25rem;
         }
         .why-seats-points {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 0.85rem;
         }
         .seat-point {
           display: flex;
           align-items: flex-start;
-          gap: 0.85rem;
+          gap: 0.75rem;
         }
         .point-icon {
           color: var(--primary-green);
-          margin-top: 0.2rem;
+          margin-top: 0.15rem;
           flex-shrink: 0;
         }
         .seat-point strong {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           color: var(--text-dark);
         }
         .seat-point p {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          margin-top: 0.15rem;
+          margin-top: 0.1rem;
         }
         .why-seats-counter-box {
           background: var(--light-green-subtle);
           border: 1px solid var(--border-color);
           border-radius: var(--radius-lg);
-          padding: 2.25rem 1.75rem;
+          padding: 1.75rem 1.25rem;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
         }
         .counter-label {
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.03em;
           color: var(--primary-green);
-          margin-bottom: 1.25rem;
+          margin-bottom: 0.85rem;
         }
         .seats-circle {
-          width: 120px;
-          height: 120px;
+          width: 90px;
+          height: 90px;
           border-radius: 50%;
           background: var(--dark-green);
           color: #FFFFFF;
@@ -1269,35 +1308,35 @@ export const HomePage: React.FC = () => {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1.25rem;
+          margin-bottom: 0.85rem;
           box-shadow: var(--shadow-md);
         }
         .seats-num {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
           font-family: var(--font-heading);
           line-height: 1;
         }
         .seats-caption {
-          font-size: 0.68rem;
+          font-size: 0.62rem;
           text-transform: uppercase;
           letter-spacing: 0.04em;
           opacity: 0.9;
         }
         .counter-subtext {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.15rem;
         }
 
         /* Schedule Preview Grid */
         .schedule-list-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
         }
         .schedule-preview-card {
-          padding: 1.5rem;
+          padding: 1.15rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -1306,35 +1345,35 @@ export const HomePage: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
         .sched-day-time {
-          font-size: 0.78rem;
+          font-size: 0.75rem;
           color: var(--text-muted);
           font-weight: 500;
         }
         .sched-paper-tag {
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 600;
           color: var(--primary-green);
           text-transform: uppercase;
         }
         .sched-title {
-          font-size: 1.05rem;
+          font-size: 0.98rem;
           font-weight: 700;
           color: var(--text-dark);
-          margin-top: 0.35rem;
-          margin-bottom: 0.5rem;
+          margin-top: 0.25rem;
+          margin-bottom: 0.35rem;
         }
         .sched-topic {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          margin-bottom: 1.25rem;
+          margin-bottom: 0.85rem;
         }
         .sched-footer {
           border-top: 1px solid var(--border-subtle);
-          padding-top: 0.75rem;
-          font-size: 0.8rem;
+          padding-top: 0.6rem;
+          font-size: 0.76rem;
           color: var(--text-muted);
         }
 
@@ -1343,34 +1382,35 @@ export const HomePage: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 1rem;
+          gap: 0.75rem;
           flex-wrap: wrap;
         }
         .flow-step-card {
           flex: 1;
-          min-width: 180px;
-          padding: 1.5rem 1.25rem;
+          min-width: 160px;
+          padding: 1.15rem 1rem;
           text-align: center;
         }
         .step-num {
-          font-size: 1.5rem;
+          font-size: 1.35rem;
           font-weight: 700;
           font-family: var(--font-heading);
           color: var(--primary-green);
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.35rem;
         }
         .step-title {
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.35rem;
         }
         .step-desc {
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
+          line-height: 1.35;
         }
         .flow-step-arrow {
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           color: var(--primary-green);
           font-weight: bold;
         }
@@ -1379,12 +1419,12 @@ export const HomePage: React.FC = () => {
         .pricing-cards-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2rem;
-          max-width: 860px;
-          margin: 0 auto 2.5rem;
+          gap: 1.5rem;
+          max-width: 800px;
+          margin: 0 auto 1.75rem;
         }
         .pricing-card {
-          padding: 2.5rem;
+          padding: 2rem;
           display: flex;
           flex-direction: column;
           position: relative;
@@ -1395,64 +1435,64 @@ export const HomePage: React.FC = () => {
         }
         .pricing-badge-popular {
           position: absolute;
-          top: -14px;
+          top: -12px;
           left: 50%;
           transform: translateX(-50%);
           background: var(--dark-green);
           color: #FFFFFF;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
-          padding: 0.3rem 0.9rem;
+          padding: 0.25rem 0.8rem;
           border-radius: var(--radius-full);
           letter-spacing: 0.03em;
         }
         .pricing-plan-name {
-          font-size: 1.35rem;
+          font-size: 1.2rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
         }
         .pricing-amount {
           display: flex;
           align-items: baseline;
-          gap: 0.25rem;
-          margin-bottom: 0.75rem;
+          gap: 0.2rem;
+          margin-bottom: 0.5rem;
         }
         .currency {
-          font-size: 1.5rem;
+          font-size: 1.35rem;
           font-weight: 600;
           color: var(--dark-green);
         }
         .price-val {
-          font-size: 3rem;
+          font-size: 2.5rem;
           font-weight: 800;
           font-family: var(--font-heading);
           color: var(--dark-green);
           line-height: 1;
         }
         .price-period {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
         }
         .pricing-plan-desc {
-          font-size: 0.88rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-bottom: 1.75rem;
-          min-height: 42px;
+          margin-bottom: 1.25rem;
+          min-height: 38px;
         }
         .pricing-features {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 0.85rem;
-          margin-bottom: 2rem;
+          gap: 0.65rem;
+          margin-bottom: 1.5rem;
           flex: 1;
         }
         .pricing-features li {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
-          font-size: 0.88rem;
+          gap: 0.5rem;
+          font-size: 0.84rem;
           color: var(--text-dark);
         }
         .p-check {
@@ -1465,47 +1505,47 @@ export const HomePage: React.FC = () => {
           justify-content: space-between;
           background: var(--light-green);
           border-color: rgba(49, 91, 61, 0.2);
-          padding: 1.25rem 2rem;
-          max-width: 860px;
+          padding: 1rem 1.5rem;
+          max-width: 800px;
           margin: 0 auto;
         }
         .notice-left {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 0.75rem;
         }
         .notice-icon {
           color: var(--dark-green);
         }
         .notice-left strong {
           color: var(--dark-green);
-          font-size: 0.95rem;
+          font-size: 0.9rem;
         }
         .notice-left p {
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
           margin-top: 0.1rem;
         }
         .remaining-tag {
           background: var(--dark-green);
           color: #FFFFFF;
-          font-size: 0.8rem;
+          font-size: 0.76rem;
           font-weight: 700;
-          padding: 0.4rem 0.9rem;
+          padding: 0.35rem 0.8rem;
           border-radius: var(--radius-full);
           white-space: nowrap;
         }
 
         /* FAQ */
         .faq-accordion-container {
-          max-width: 800px;
+          max-width: 780px;
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 0.75rem;
         }
         .faq-item {
-          padding: 1.25rem 1.75rem;
+          padding: 1rem 1.5rem;
           cursor: pointer;
           transition: all 0.2s ease;
         }
@@ -1519,7 +1559,7 @@ export const HomePage: React.FC = () => {
           gap: 1rem;
         }
         .faq-q-text {
-          font-size: 1.05rem;
+          font-size: 0.98rem;
           font-weight: 600;
           color: var(--text-dark);
         }
@@ -1527,62 +1567,62 @@ export const HomePage: React.FC = () => {
           color: var(--primary-green);
         }
         .faq-answer-row {
-          margin-top: 0.85rem;
-          padding-top: 0.85rem;
+          margin-top: 0.75rem;
+          padding-top: 0.75rem;
           border-top: 1px solid var(--border-subtle);
         }
         .faq-a-text {
-          font-size: 0.92rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
-          line-height: 1.6;
+          line-height: 1.5;
         }
 
         /* Final CTA */
         .final-cta-section {
-          padding: 4rem 0 6rem;
+          padding: 2.75rem 0 4.5rem;
         }
         .final-cta-card {
           background: linear-gradient(135deg, var(--dark-green) 0%, #1c3823 100%);
           color: #FFFFFF;
-          padding: 4.5rem 3rem;
+          padding: 3.25rem 2rem;
           text-align: center;
           border-radius: var(--radius-xl);
         }
         .final-cta-content {
-          max-width: 720px;
+          max-width: 680px;
           margin: 0 auto;
         }
         .final-pill {
           display: inline-block;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           background: rgba(255, 255, 255, 0.15);
           color: #FFFFFF;
-          padding: 0.35rem 0.85rem;
+          padding: 0.3rem 0.75rem;
           border-radius: var(--radius-full);
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
         }
         .final-cta-heading {
-          font-size: 2.6rem;
+          font-size: 2.2rem;
           font-weight: 700;
           color: #FFFFFF;
-          margin-bottom: 1.25rem;
+          margin-bottom: 0.85rem;
           line-height: 1.2;
         }
         .final-cta-desc {
-          font-size: 1.1rem;
+          font-size: 0.98rem;
           color: #E2E8F0;
-          line-height: 1.65;
-          margin-bottom: 1.75rem;
+          line-height: 1.55;
+          margin-bottom: 1.5rem;
         }
         .final-cta-meta {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.75rem;
-          margin-bottom: 2.25rem;
+          gap: 0.65rem;
+          margin-bottom: 1.75rem;
         }
         .final-cta-actions {
           display: flex;
@@ -1593,12 +1633,12 @@ export const HomePage: React.FC = () => {
 
         /* Responsive Breakpoints */
         @media (max-width: 992px) {
-          .hero-grid {
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-          }
-          .hero-headline {
-            font-size: 2.4rem;
+          .highlights-grid,
+          .benefits-grid,
+          .timeline-grid,
+          .chapters-display-grid,
+          .schedule-list-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
           .teacher-grid {
             grid-template-columns: 1fr;
@@ -1612,6 +1652,23 @@ export const HomePage: React.FC = () => {
           }
           .flow-step-arrow {
             display: none;
+          }
+          .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+          }
+          .hero-headline {
+            font-size: 2.4rem;
+          }
+        }
+        @media (max-width: 640px) {
+          .highlights-grid,
+          .benefits-grid,
+          .timeline-grid,
+          .chapters-display-grid,
+          .schedule-list-grid,
+          .pricing-cards-grid {
+            grid-template-columns: 1fr;
           }
         }
         @media (max-width: 600px) {
