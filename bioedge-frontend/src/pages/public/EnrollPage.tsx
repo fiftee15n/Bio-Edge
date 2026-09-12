@@ -10,29 +10,54 @@ import {
   Sparkles, 
   CreditCard, 
   Lock,
-  ArrowLeft
+  ArrowLeft,
+  GraduationCap,
+  Target,
+  Award
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const EnrollPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const initialCourse = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
   const initialPlan = searchParams.get('plan') === 'monthly' ? 'monthly' : 'full';
 
   const { course, availableSeats, enrollStudent } = useCourseData();
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const [selectedCourse, setSelectedCourse] = useState<string>(initialCourse);
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan);
   const [step, setStep] = useState<number>(1); // 1: Plan & Info, 2: Account Creation, 3: Confirmation
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    college: '',
-    hscYear: '2026',
+    institution: '',
+    examYear: initialCourse === 'ssc-2027' ? 'SSC 2027' : 'HSC 2026',
     password: '',
     paymentMethod: 'bKash'
   });
+
+  const isSsc = selectedCourse === 'ssc-2027';
+
+  const currentCourseTitle = isSsc 
+    ? 'SSC 2027 Model Test Package' 
+    : 'Alpha Cohort — 4-Month Crash Course';
+
+  const currentCourseFee = isSsc 
+    ? 2200 
+    : (selectedPlan === 'full' ? course.fullCourseFee : course.monthlyFee);
+
+  const handleCourseChange = (courseKey: string) => {
+    setSelectedCourse(courseKey);
+    if (courseKey === 'ssc-2027') {
+      setSelectedPlan('full');
+      setFormData(prev => ({ ...prev, examYear: 'SSC 2027' }));
+    } else {
+      setFormData(prev => ({ ...prev, examYear: 'HSC 2026' }));
+    }
+  };
 
   const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +69,7 @@ export const EnrollPage: React.FC = () => {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        college: formData.college
+        college: formData.institution
       });
 
       // Login student automatically
@@ -69,9 +94,14 @@ export const EnrollPage: React.FC = () => {
         {/* Header */}
         <div className="section-header text-center">
           <span className="section-pill">Online Admission</span>
-          <h1 className="section-title">Enroll in Premium Biology Intensive</h1>
+          <h1 className="section-title">
+            {isSsc ? 'Enroll in SSC 2027 Model Test Package' : 'Enroll in Premium Biology Intensive'}
+          </h1>
           <p className="section-subtitle">
-            Secure one of the {availableSeats} remaining seats in Afroza Tahmina's 4-month cohort.
+            {isSsc 
+              ? 'Join the dedicated 20-test board evaluation batch mentored directly by Afroza Tahmina.'
+              : `Secure one of the ${availableSeats} remaining seats in Afroza Tahmina's 4-month Alpha Cohort.`
+            }
           </p>
         </div>
 
@@ -79,7 +109,7 @@ export const EnrollPage: React.FC = () => {
         <div className="enroll-steps-indicator">
           <div className={`step-item ${step >= 1 ? 'active' : ''} ${step > 1 ? 'done' : ''}`}>
             <span className="step-circle">{step > 1 ? <CheckCircle2 size={16} /> : '1'}</span>
-            <span className="step-label">Select Plan & Info</span>
+            <span className="step-label">Select Program & Info</span>
           </div>
           <div className="step-connector"></div>
           <div className={`step-item ${step >= 2 ? 'active' : ''} ${step > 2 ? 'done' : ''}`}>
@@ -96,44 +126,96 @@ export const EnrollPage: React.FC = () => {
         <div className="enroll-container-card bio-card">
           {step === 1 && (
             <form onSubmit={handleNext}>
-              <h3 className="enroll-step-title">Step 1: Choose Your Plan & Student Information</h3>
+              {/* Program Selector Tabs */}
+              <div className="program-selection-wrapper">
+                <label className="program-tab-label">Select Enrolling Course:</label>
+                <div className="program-tab-grid">
+                  <button
+                    type="button"
+                    className={`program-select-tab ${selectedCourse === 'alpha-cohort' ? 'active' : ''}`}
+                    onClick={() => handleCourseChange('alpha-cohort')}
+                  >
+                    <div className="p-tab-icon green">
+                      <GraduationCap size={18} />
+                    </div>
+                    <div className="p-tab-text">
+                      <strong>Alpha Cohort (Crash Course)</strong>
+                      <span>HSC 1st & 2nd Paper • 48 Classes</span>
+                    </div>
+                  </button>
 
-              {/* Plan Choice */}
-              <div className="plans-selection-grid">
-                <div 
-                  className={`plan-select-box ${selectedPlan === 'full' ? 'selected' : ''}`}
-                  onClick={() => setSelectedPlan('full')}
-                >
-                  <div className="plan-select-radio">
-                    <input 
-                      type="radio" 
-                      name="plan" 
-                      checked={selectedPlan === 'full'} 
-                      onChange={() => setSelectedPlan('full')} 
-                    />
-                    <strong>Full 4-Month Course (Recommended)</strong>
-                  </div>
-                  <div className="plan-price-tag">৳{course.fullCourseFee.toLocaleString()}</div>
-                  <p className="plan-note">Save ৳1,500 • Full access to all 48 classes and model tests</p>
-                </div>
-
-                <div 
-                  className={`plan-select-box ${selectedPlan === 'monthly' ? 'selected' : ''}`}
-                  onClick={() => setSelectedPlan('monthly')}
-                >
-                  <div className="plan-select-radio">
-                    <input 
-                      type="radio" 
-                      name="plan" 
-                      checked={selectedPlan === 'monthly'} 
-                      onChange={() => setSelectedPlan('monthly')} 
-                    />
-                    <strong>Monthly Installment</strong>
-                  </div>
-                  <div className="plan-price-tag">৳{course.monthlyFee.toLocaleString()} / mo</div>
-                  <p className="plan-note">Flexible monthly payments per 12 classes</p>
+                  <button
+                    type="button"
+                    className={`program-select-tab ${selectedCourse === 'ssc-2027' ? 'active' : ''}`}
+                    onClick={() => handleCourseChange('ssc-2027')}
+                  >
+                    <div className="p-tab-icon amber">
+                      <Target size={18} />
+                    </div>
+                    <div className="p-tab-text">
+                      <strong>SSC 2027 Model Test Package</strong>
+                      <span>20 Full Model Tests & Evaluation</span>
+                    </div>
+                  </button>
                 </div>
               </div>
+
+              <h3 className="enroll-step-title">Step 1: Choose Tuition Plan & Student Information</h3>
+
+              {/* Plan Choice for Alpha Cohort */}
+              {!isSsc ? (
+                <div className="plans-selection-grid">
+                  <div 
+                    className={`plan-select-box ${selectedPlan === 'full' ? 'selected' : ''}`}
+                    onClick={() => setSelectedPlan('full')}
+                  >
+                    <div className="plan-select-radio">
+                      <input 
+                        type="radio" 
+                        name="plan" 
+                        checked={selectedPlan === 'full'} 
+                        onChange={() => setSelectedPlan('full')} 
+                      />
+                      <strong>Full 4-Month Course (Recommended)</strong>
+                    </div>
+                    <div className="plan-price-tag">৳{course.fullCourseFee.toLocaleString()}</div>
+                    <p className="plan-note">Save ৳1,500 • Full access to all 48 classes and model tests</p>
+                  </div>
+
+                  <div 
+                    className={`plan-select-box ${selectedPlan === 'monthly' ? 'selected' : ''}`}
+                    onClick={() => setSelectedPlan('monthly')}
+                  >
+                    <div className="plan-select-radio">
+                      <input 
+                        type="radio" 
+                        name="plan" 
+                        checked={selectedPlan === 'monthly'} 
+                        onChange={() => setSelectedPlan('monthly')} 
+                      />
+                      <strong>Monthly Installment</strong>
+                    </div>
+                    <div className="plan-price-tag">৳{course.monthlyFee.toLocaleString()} / mo</div>
+                    <p className="plan-note">Flexible monthly payments per 12 classes</p>
+                  </div>
+                </div>
+              ) : (
+                /* Plan Choice for SSC 2027 */
+                <div className="ssc-plan-single-box selected">
+                  <div className="ssc-plan-header">
+                    <div className="ssc-plan-title-block">
+                      <span className="badge badge-amber">Full 20-Test Access</span>
+                      <strong className="ssc-plan-name">Complete SSC 2027 Model Test Package</strong>
+                    </div>
+                    <div className="plan-price-tag">
+                      <span className="old-p"><del>৳3,000</del></span> ৳2,200
+                    </div>
+                  </div>
+                  <p className="plan-note">
+                    Includes 20 Full Board Standard tests, handwritten CQ answer script evaluation, 8 live doubt-clearing solution masterclasses, and 35+ diagram guides.
+                  </p>
+                </div>
+              )}
 
               {/* Student Fields */}
               <div className="form-group">
@@ -150,7 +232,7 @@ export const EnrollPage: React.FC = () => {
 
               <div className="form-row-2">
                 <div className="form-group">
-                  <label className="form-label">Phone Number *</label>
+                  <label className="form-label">Phone Number (WhatsApp Preferred) *</label>
                   <input
                     type="tel"
                     required
@@ -176,26 +258,39 @@ export const EnrollPage: React.FC = () => {
 
               <div className="form-row-2">
                 <div className="form-group">
-                  <label className="form-label">College / Higher Secondary Institution *</label>
+                  <label className="form-label">
+                    {isSsc ? 'School / Institution Name *' : 'College / Higher Secondary Institution *'}
+                  </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Notre Dame College"
-                    value={formData.college}
-                    onChange={(e) => setFormData({ ...formData, college: e.target.value })}
+                    placeholder={isSsc ? "e.g. Ideal School and College" : "e.g. Notre Dame College"}
+                    value={formData.institution}
+                    onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
                     className="form-input"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">HSC Exam Year</label>
+                  <label className="form-label">Target Exam</label>
                   <select
-                    value={formData.hscYear}
-                    onChange={(e) => setFormData({ ...formData, hscYear: e.target.value })}
+                    value={formData.examYear}
+                    onChange={(e) => setFormData({ ...formData, examYear: e.target.value })}
                     className="form-select"
                   >
-                    <option value="2026">HSC 2026</option>
-                    <option value="2027">HSC 2027</option>
+                    {isSsc ? (
+                      <>
+                        <option value="SSC 2027">SSC Examination 2027</option>
+                        <option value="SSC 2026">SSC Examination 2026</option>
+                        <option value="Class 9/10">Class 9 / 10 Foundation</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="HSC 2026">HSC Examination 2026</option>
+                        <option value="HSC 2027">HSC Examination 2027</option>
+                        <option value="Alim / Other">Alim / Equivalent</option>
+                      </>
+                    )}
                   </select>
                 </div>
               </div>
@@ -215,16 +310,20 @@ export const EnrollPage: React.FC = () => {
               <div className="review-plan-box">
                 <div className="review-item">
                   <span>Selected Program:</span>
-                  <strong>{course.title}</strong>
+                  <strong>{currentCourseTitle}</strong>
                 </div>
                 <div className="review-item">
                   <span>Student Name:</span>
                   <strong>{formData.name} ({formData.phone})</strong>
                 </div>
                 <div className="review-item">
-                  <span>Tuition Amount:</span>
+                  <span>Institution:</span>
+                  <strong>{formData.institution || 'Registered'}</strong>
+                </div>
+                <div className="review-item">
+                  <span>Tuition / Package Amount:</span>
                   <strong className="review-price">
-                    ৳{selectedPlan === 'full' ? course.fullCourseFee.toLocaleString() : course.monthlyFee.toLocaleString()}
+                    ৳{currentCourseFee.toLocaleString()} {(!isSsc && selectedPlan === 'monthly') ? '/ month' : ''}
                   </strong>
                 </div>
               </div>
@@ -277,17 +376,21 @@ export const EnrollPage: React.FC = () => {
 
               <h2 className="confirm-title">Congratulations, {formData.name || "Student"}!</h2>
               <p className="confirm-subtitle">
-                Your admission to the <strong>{course.title}</strong> has been confirmed.
+                Your admission to the <strong>{currentCourseTitle}</strong> has been confirmed.
               </p>
 
               <div className="confirm-meta-card bio-card">
                 <div className="c-meta-row">
                   <span>Student ID:</span>
-                  <strong>BE-2026-018</strong>
+                  <strong>BE-{isSsc ? 'SSC27' : 'HSC26'}-018</strong>
+                </div>
+                <div className="c-meta-row">
+                  <span>Program:</span>
+                  <strong>{currentCourseTitle}</strong>
                 </div>
                 <div className="c-meta-row">
                   <span>Batch:</span>
-                  <strong>{course.batchName}</strong>
+                  <strong>{isSsc ? 'SSC 2027 Alpha Model Test Batch' : course.batchName}</strong>
                 </div>
                 <div className="c-meta-row">
                   <span>Enrollment Status:</span>
@@ -296,7 +399,10 @@ export const EnrollPage: React.FC = () => {
               </div>
 
               <p className="confirm-instructions">
-                Your portal account is active. You can now browse all First & Second Paper chapters, view upcoming live classes, and access practice tests.
+                {isSsc
+                  ? 'Your portal account is active! You can now access all 20 SSC Model Tests, view exam timings, and upload written CQ answer sheets.'
+                  : 'Your portal account is active. You can now browse all First & Second Paper chapters, view upcoming live classes, and access practice tests.'
+                }
               </p>
 
               <div className="confirm-actions">
@@ -355,16 +461,82 @@ export const EnrollPage: React.FC = () => {
         }
 
         .enroll-container-card {
-          max-width: 720px;
+          max-width: 740px;
           margin: 0 auto;
-          padding: 3rem;
+          padding: 2.5rem 3rem;
         }
-        .enroll-step-title {
-          font-size: 1.35rem;
-          color: var(--dark-green);
-          margin-bottom: 1.75rem;
-          padding-bottom: 0.75rem;
+
+        /* Program Tab Selector */
+        .program-selection-wrapper {
+          margin-bottom: 2rem;
+          padding-bottom: 1.5rem;
           border-bottom: 1px solid var(--border-subtle);
+        }
+        .program-tab-label {
+          display: block;
+          font-size: 0.82rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          color: var(--text-muted);
+          margin-bottom: 0.75rem;
+        }
+        .program-tab-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+        .program-select-tab {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1rem 1.15rem;
+          border-radius: var(--radius-lg);
+          border: 2px solid var(--border-color);
+          background: #FFFFFF;
+          text-align: left;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .program-select-tab:hover {
+          border-color: var(--primary-green);
+        }
+        .program-select-tab.active {
+          border-color: var(--dark-green);
+          background: var(--light-green-subtle);
+        }
+        .p-tab-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .p-tab-icon.green {
+          background: var(--light-green);
+          color: var(--dark-green);
+        }
+        .p-tab-icon.amber {
+          background: #FEF7E6;
+          color: #B45309;
+        }
+        .p-tab-text strong {
+          display: block;
+          font-size: 0.88rem;
+          color: var(--dark-green);
+          line-height: 1.25;
+        }
+        .p-tab-text span {
+          font-size: 0.74rem;
+          color: var(--text-muted);
+        }
+
+        .enroll-step-title {
+          font-size: 1.25rem;
+          color: var(--dark-green);
+          margin-bottom: 1.5rem;
         }
         .plans-selection-grid {
           display: grid;
@@ -401,10 +573,40 @@ export const EnrollPage: React.FC = () => {
           font-family: var(--font-heading);
           margin-bottom: 0.35rem;
         }
+        .plan-price-tag .old-p {
+          font-size: 0.95rem;
+          color: var(--text-muted);
+          font-weight: 400;
+          margin-right: 0.35rem;
+        }
         .plan-note {
           font-size: 0.75rem;
           color: var(--text-muted);
         }
+
+        /* SSC Single Plan Box */
+        .ssc-plan-single-box {
+          border: 2px solid var(--dark-green);
+          background: var(--light-green-subtle);
+          border-radius: var(--radius-md);
+          padding: 1.25rem 1.5rem;
+          margin-bottom: 2rem;
+        }
+        .ssc-plan-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+        .ssc-plan-name {
+          display: block;
+          font-size: 1.05rem;
+          color: var(--dark-green);
+          margin-top: 0.25rem;
+        }
+
         .form-row-2 {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -490,7 +692,7 @@ export const EnrollPage: React.FC = () => {
         .confirm-meta-card {
           background: var(--light-green-subtle);
           padding: 1.5rem;
-          max-width: 440px;
+          max-width: 480px;
           margin: 0 auto 2rem;
           display: flex;
           flex-direction: column;
@@ -505,12 +707,15 @@ export const EnrollPage: React.FC = () => {
           font-size: 0.92rem;
           color: var(--text-muted);
           margin-bottom: 2rem;
-          max-width: 480px;
+          max-width: 500px;
           margin-left: auto;
           margin-right: auto;
         }
 
         @media (max-width: 768px) {
+          .program-tab-grid {
+            grid-template-columns: 1fr;
+          }
           .plans-selection-grid {
             grid-template-columns: 1fr;
           }

@@ -16,6 +16,9 @@ import { SmoothScrollProvider } from './components/common/SmoothScrollProvider';
 import { HomePage } from './pages/public/HomePage';
 import { AboutPage } from './pages/public/AboutPage';
 import { ProgramPage } from './pages/public/ProgramPage';
+import { CoursesPage } from './pages/public/CoursesPage';
+import { CourseDetailsPage } from './pages/public/CourseDetailsPage';
+import { SscModelTestPage } from './pages/public/SscModelTestPage';
 import { SchedulePage } from './pages/public/SchedulePage';
 import { PricingPage } from './pages/public/PricingPage';
 import { ContactPage } from './pages/public/ContactPage';
@@ -85,6 +88,12 @@ export default function App(): React.ReactElement {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/program" element={<ProgramPage />} />
+                <Route path="/courses" element={<CoursesPage />} />
+                <Route path="/course-details" element={<CourseDetailsPage />} />
+                <Route path="/courses/details" element={<CourseDetailsPage />} />
+                <Route path="/courses/alpha-cohort" element={<CourseDetailsPage />} />
+                <Route path="/courses/ssc-2027-model-test" element={<SscModelTestPage />} />
+                <Route path="/courses/:slug" element={<CourseDetailsPage />} />
                 <Route path="/schedule" element={<SchedulePage />} />
                 <Route path="/pricing" element={<PricingPage />} />
                 <Route path="/contact" element={<ContactPage />} />
