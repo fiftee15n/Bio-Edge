@@ -56,7 +56,7 @@ export const BackToTop: React.FC = () => {
       <svg className="scroll-progress-ring" width="48" height="48" viewBox="0 0 48 48">
         <circle
           className="progress-ring-bg"
-          stroke="rgba(255, 255, 255, 0.18)"
+          stroke="rgba(255, 255, 255, 0.28)"
           strokeWidth="3"
           fill="transparent"
           r={radius}
@@ -65,7 +65,7 @@ export const BackToTop: React.FC = () => {
         />
         <circle
           className="progress-ring-circle"
-          stroke="#34D399"
+          stroke="#FFFFFF"
           strokeWidth="3"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
@@ -78,7 +78,7 @@ export const BackToTop: React.FC = () => {
       </svg>
 
       <div className="back-to-top-icon">
-        <ArrowUp size={20} className="arrow-icon-svg" />
+        <ArrowUp size={22} className="arrow-icon-svg" strokeWidth={2.4} />
       </div>
     </button>
   );
