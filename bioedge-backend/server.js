@@ -1,28 +1,70 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from './src/routes/authRoutes.js';
+import courseRoutes from './src/routes/courseRoutes.js';
+import enrollmentRoutes from './src/routes/enrollmentRoutes.js';
+import { initDatabase } from './src/config/database.js';
+import { seedDatabase } from './src/seed.js';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Initialize Database & seed initial courses and accounts
+initDatabase();
+await seedDatabase();
+
+// Middleware
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
-// Base health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Bio Edz API is running smoothly' });
+// Request logger
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
 });
 
-// API Routes placeholder
-app.get('/api/course', (req, res) => {
+// Health check endpoint
+app.get('/api/health', (req, res) => {
   res.json({
-    title: 'Premium HEC Biology Intensive Program',
-    duration: '4 Months',
-    totalClasses: 48,
-    papers: ['First Paper', 'Second Paper'],
-    seatLimit: 20
+    status: 'ok',
+    message: 'Bio Edz Backend API is active and healthy',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Mount Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
+
+// Fallback 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API endpoint ${req.method} ${req.originalUrl} not found.`
+  });
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error('Unhandled server error:', err);
+  res.status(500).json({
+    success: false,
+    message: 'An unexpected server error occurred. Please try again later.'
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`Bio Edz Backend running on port ${PORT}`);
+  console.log(`\n=================================================`);
+  console.log(`🚀 Bio Edz Backend Server running on http://localhost:${PORT}`);
+  console.log(`📚 Public Courses API: http://localhost:${PORT}/api/courses`);
+  console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
+  console.log(`💳 Enrollment API: http://localhost:${PORT}/api/enrollments`);
+  console.log(`=================================================\n`);
 });

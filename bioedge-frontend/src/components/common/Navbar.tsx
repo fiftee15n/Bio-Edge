@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useCourseData } from '../../context/CourseDataContext';
 import { 
   Menu, 
   X, 
   LogIn, 
-  Sparkles, 
-  ShieldCheck, 
-  GraduationCap
+  Sparkles
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
-  const { availableSeats } = useCourseData();
 
   const navLinks = [
     { name: 'Course', path: '/courses' },
@@ -70,36 +66,16 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Area */}
           <div className="navbar-actions">
-            {/* Dynamic Seats Pill */}
-            <div className="seats-indicator">
-              <span className="pulse-dot"></span>
-              <span className="seats-text">{availableSeats} Seats Left</span>
-            </div>
-
             {user ? (
               <div className="user-action-group">
-                <Link
-                  to={user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
-                  className="btn btn-secondary btn-sm"
-                >
-                  {user.role === 'teacher' ? (
-                    <>
-                      <ShieldCheck size={16} /> Teacher Portal
-                    </>
-                  ) : (
-                    <>
-                      <GraduationCap size={16} /> Student Portal
-                    </>
-                  )}
-                </Link>
-                <button onClick={logout} className="btn btn-outline btn-sm">
+                <button onClick={logout} className="nav-logout-btn">
                   Logout
                 </button>
               </div>
             ) : (
               <div className="guest-action-group">
-                <Link to="/login" className="btn btn-ghost btn-sm">
-                  <LogIn size={16} /> Login
+                <Link to="/login" className="nav-login-btn">
+                  <LogIn size={15} /> <span>Login</span>
                 </Link>
                 <Link to="/enroll" className="btn btn-primary btn-sm">
                   Enroll Now
@@ -141,13 +117,6 @@ export const Navbar: React.FC = () => {
             <div className="mobile-menu-divider" />
             {user ? (
               <div className="mobile-user-links">
-                <Link
-                  to={user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="btn btn-primary btn-block"
-                >
-                  {user.role === 'teacher' ? 'Open Teacher Portal' : 'Open Student Dashboard'}
-                </Link>
                 <button
                   onClick={() => {
                     logout();
@@ -277,8 +246,53 @@ export const Navbar: React.FC = () => {
         .user-action-group, .guest-action-group {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.65rem;
         }
+
+        /* Light Navbar Login Button */
+        .nav-login-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.45rem 1.05rem;
+          font-size: 0.86rem;
+          font-weight: 600;
+          border-radius: var(--radius-full);
+          color: var(--dark-green);
+          background: #F0FDF4;
+          border: 1px solid rgba(22, 101, 52, 0.2);
+          text-decoration: none;
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-login-btn:hover {
+          background: var(--dark-green);
+          color: #FFFFFF !important;
+          border-color: var(--dark-green);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(22, 101, 52, 0.18);
+        }
+
+        /* Light Navbar Logout Button */
+        .nav-logout-btn {
+          display: inline-flex;
+          align-items: center;
+          padding: 0.42rem 0.95rem;
+          font-size: 0.84rem;
+          font-weight: 600;
+          border-radius: var(--radius-full);
+          color: var(--text-muted);
+          background: #FFFFFF;
+          border: 1px solid var(--border-color);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .nav-logout-btn:hover {
+          background: #FEF2F2;
+          color: #DC2626;
+          border-color: #FECACA;
+          transform: translateY(-1px);
+        }
+
         .mobile-toggle-btn {
           display: none;
           color: var(--text-dark);
@@ -303,13 +317,27 @@ export const Navbar: React.FC = () => {
         .navbar-wrapper.is-home-nav .nav-item.active {
           color: #34D399;
         }
-        .navbar-wrapper.is-home-nav .seats-indicator {
-          background: rgba(16, 185, 129, 0.15);
-          border: 1px solid rgba(52, 211, 153, 0.3);
-          color: #34D399;
+        .navbar-wrapper.is-home-nav .nav-login-btn {
+          color: #E2E8F0;
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          background: rgba(255, 255, 255, 0.08);
         }
-        .navbar-wrapper.is-home-nav .btn-ghost {
-          color: #FFFFFF;
+        .navbar-wrapper.is-home-nav .nav-login-btn:hover {
+          background: #34D399;
+          color: #064E3B !important;
+          border-color: #34D399;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(52, 211, 153, 0.3);
+        }
+        .navbar-wrapper.is-home-nav .nav-logout-btn {
+          color: #CBD5E1;
+          background: rgba(255, 255, 255, 0.08);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .navbar-wrapper.is-home-nav .nav-logout-btn:hover {
+          background: rgba(239, 68, 68, 0.2);
+          color: #FCA5A5;
+          border-color: rgba(239, 68, 68, 0.4);
         }
         .navbar-wrapper.is-home-nav .mobile-toggle-btn {
           color: #FFFFFF;

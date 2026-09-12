@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { useCourseData } from '../../context/CourseDataContext';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../services/api';
+import { BackendCourse } from '../../types';
+import { VerifyEmailForm } from '../../components/common/VerifyEmailForm';
 import { 
   CheckCircle2, 
   Users, 
@@ -13,89 +15,199 @@ import {
   ArrowLeft,
   GraduationCap,
   Target,
-  Award
+  Award,
+  BookOpen,
+  Calendar,
+  Clock,
+  User as UserIcon,
+  Phone,
+  Building2,
+  Mail,
+  AlertCircle
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const EnrollPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const initialCourse = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
+  const initialCourseKey = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
   const initialPlan = searchParams.get('plan') === 'monthly' ? 'monthly' : 'full';
 
-  const { course, availableSeats, enrollStudent } = useCourseData();
-  const { login } = useAuth();
+  const { user, isAuthenticated, register, login, loginWithGoogle, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
 
-  const [selectedCourse, setSelectedCourse] = useState<string>(initialCourse);
+  // Course state from authoritative backend
+  const [selectedCourseSlug, setSelectedCourseSlug] = useState<string>(initialCourseKey);
   const [selectedPlan, setSelectedPlan] = useState<string>(initialPlan);
-  const [step, setStep] = useState<number>(1); // 1: Plan & Info, 2: Account Creation, 3: Confirmation
-  const [formData, setFormData] = useState({
+  const [courseData, setCourseData] = useState<BackendCourse | null>(null);
+  const [isLoadingCourse, setIsLoadingCourse] = useState<boolean>(true);
+
+  // Authentication sub-flow for unauthenticated visitors
+  const [authMode, setAuthMode] = useState<'register' | 'login' | 'verify'>('register');
+  const [verifyEmailTarget, setVerifyEmailTarget] = useState<string>('');
+  const [initialOtpCode, setInitialOtpCode] = useState<string>('');
+  const [authError, setAuthError] = useState<string>('');
+
+  // Unauthenticated register inputs
+  const [authFormData, setAuthFormData] = useState({
     name: '',
     email: '',
+    password: '',
+    confirmPassword: '',
     phone: '',
     institution: '',
-    examYear: initialCourse === 'ssc-2027' ? 'SSC 2027' : 'HSC 2026',
-    password: '',
-    paymentMethod: 'bKash'
+    examYear: initialCourseKey === 'ssc-2027' ? 'SSC 2027' : 'HSC 2026'
   });
 
-  const isSsc = selectedCourse === 'ssc-2027';
+  // Login inputs
+  const [loginEmail, setLoginEmail] = useState<string>('');
+  const [loginPassword, setLoginPassword] = useState<string>('');
 
-  const currentCourseTitle = isSsc 
-    ? 'SSC 2027 Model Test Package' 
-    : 'Alpha Cohort — 4-Month Crash Course';
+  // Enrollment submission state
+  const [paymentMethod, setPaymentMethod] = useState<'bKash' | 'Nagad' | 'Rocket'>('bKash');
+  const [transactionId, setTransactionId] = useState<string>('');
+  const [isSubmittingEnrollment, setIsSubmittingEnrollment] = useState<boolean>(false);
+  const [enrollmentSuccess, setEnrollmentSuccess] = useState<any>(null);
+  const [enrollmentError, setEnrollmentError] = useState<string>('');
 
-  const currentCourseFee = isSsc 
-    ? 2200 
-    : (selectedPlan === 'full' ? course.fullCourseFee : course.monthlyFee);
+  // Fetch authoritative course data from backend API
+  useEffect(() => {
+    const fetchAuthoritativeCourse = async () => {
+      setIsLoadingCourse(true);
+      try {
+        const res = await api.courses.getBySlug(selectedCourseSlug);
+        if (res.success && res.course) {
+          setCourseData(res.course);
+        }
+      } catch (err) {
+        console.error('Failed to load authoritative course:', err);
+      } finally {
+        setIsLoadingCourse(false);
+      }
+    };
 
-  const handleCourseChange = (courseKey: string) => {
-    setSelectedCourse(courseKey);
-    if (courseKey === 'ssc-2027') {
+    fetchAuthoritativeCourse();
+  }, [selectedCourseSlug]);
+
+  const handleCourseChange = (slug: string) => {
+    setSelectedCourseSlug(slug);
+    if (slug === 'ssc-2027') {
       setSelectedPlan('full');
-      setFormData(prev => ({ ...prev, examYear: 'SSC 2027' }));
+      setAuthFormData(prev => ({ ...prev, examYear: 'SSC 2027' }));
     } else {
-      setFormData(prev => ({ ...prev, examYear: 'HSC 2026' }));
+      setAuthFormData(prev => ({ ...prev, examYear: 'HSC 2026' }));
     }
   };
 
-  const handleNext = (e: React.FormEvent) => {
+  // Google Authentication
+  const handleGoogleAuth = async () => {
+    setAuthError('');
+    const res = await loginWithGoogle();
+    if (res.success) {
+      // Authenticated! Remains on enrollment page with course preserved
+    } else {
+      setAuthError(res.message || 'Google sign-in failed');
+    }
+  };
+
+  // Email & Password Registration
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (step === 1) {
-      setStep(2);
-    } else if (step === 2) {
-      // Create student & register in store
-      enrollStudent({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        college: formData.institution
+    setAuthError('');
+
+    if (authFormData.password !== authFormData.confirmPassword) {
+      setAuthError('Passwords do not match.');
+      return;
+    }
+
+    const res = await register({
+      name: authFormData.name,
+      email: authFormData.email,
+      password: authFormData.password,
+      confirmPassword: authFormData.confirmPassword,
+      phone: authFormData.phone,
+      institution: authFormData.institution,
+      examYear: authFormData.examYear,
+      targetCourse: selectedCourseSlug
+    });
+
+    if (res.success && res.requiresVerification) {
+      setVerifyEmailTarget(res.email || authFormData.email);
+      setInitialOtpCode(res.verificationCode || '');
+      setAuthMode('verify');
+    } else if (res.success && res.user) {
+      // Auto-verified & logged in
+    } else {
+      setAuthError(res.message || 'Registration failed.');
+    }
+  };
+
+  // Sign In
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+
+    const res = await login(loginEmail, loginPassword, 'student');
+    if (res.success) {
+      // User is logged in!
+    } else if (res.requiresVerification && res.email) {
+      setVerifyEmailTarget(res.email);
+      setInitialOtpCode(res.verificationCode || '');
+      setAuthMode('verify');
+    } else {
+      setAuthError(res.message || 'Invalid email or password');
+    }
+  };
+
+  // Final Enrollment Submission (Calling backend with DB authoritative pricing)
+  const handleFinalEnrollmentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingEnrollment(true);
+    setEnrollmentError('');
+
+    try {
+      const res = await api.enrollments.create({
+        courseId: selectedCourseSlug,
+        plan: selectedPlan,
+        paymentMethod,
+        transactionId: transactionId || `TXN-${Math.floor(10000000 + Math.random() * 90000000)}`
       });
 
-      // Login student automatically
-      login('student', formData.email, formData.password);
-
-      // Trigger confetti celebration
-      try {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-      } catch (err) {}
-
-      setStep(3);
+      if (res.success) {
+        setEnrollmentSuccess(res.enrollment);
+        try {
+          confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: { y: 0.6 }
+          });
+        } catch (err) {}
+      } else {
+        setEnrollmentError(res.message || 'Enrollment could not be processed.');
+      }
+    } catch (err: any) {
+      setEnrollmentError(err.message || 'Error communicating with backend.');
+    } finally {
+      setIsSubmittingEnrollment(false);
     }
   };
+
+  const isSsc = selectedCourseSlug === 'ssc-2027';
+
+  // Authoritative figures from database
+  const fullFee = courseData ? courseData.fullFee : (isSsc ? 2200 : 12500);
+  const monthlyFee = courseData ? courseData.monthlyFee : 3500;
+  const activeFee = (selectedPlan === 'monthly' && !isSsc) ? monthlyFee : fullFee;
+  const availableSeats = courseData ? courseData.availableSeats : (isSsc ? 11 : 6);
+  const seatLimit = courseData ? courseData.seatLimit : (isSsc ? 30 : 20);
 
   return (
     <div className="enroll-page-wrapper section-padding">
       <div className="container">
         {/* Header */}
         <div className="section-header text-center">
-          <span className="section-pill">Online Admission</span>
+          <span className="section-pill">Online Admission & Enrollment</span>
           <h1 className="section-title">
-            {isSsc ? 'Enroll in SSC 2027 Model Test Package' : 'Enroll in Premium Biology Intensive'}
+            {isSsc ? 'Enroll in SSC 2027 Model Test Package' : 'Enroll in Premium HSC Biology Intensive'}
           </h1>
           <p className="section-subtitle">
             {isSsc 
@@ -105,625 +217,932 @@ export const EnrollPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Progress Step Indicator */}
-        <div className="enroll-steps-indicator">
-          <div className={`step-item ${step >= 1 ? 'active' : ''} ${step > 1 ? 'done' : ''}`}>
-            <span className="step-circle">{step > 1 ? <CheckCircle2 size={16} /> : '1'}</span>
-            <span className="step-label">Select Program & Info</span>
-          </div>
-          <div className="step-connector"></div>
-          <div className={`step-item ${step >= 2 ? 'active' : ''} ${step > 2 ? 'done' : ''}`}>
-            <span className="step-circle">{step > 2 ? <CheckCircle2 size={16} /> : '2'}</span>
-            <span className="step-label">Account Setup</span>
-          </div>
-          <div className="step-connector"></div>
-          <div className={`step-item ${step === 3 ? 'active' : ''}`}>
-            <span className="step-circle">3</span>
-            <span className="step-label">Access Granted</span>
-          </div>
-        </div>
-
-        <div className="enroll-container-card bio-card">
-          {step === 1 && (
-            <form onSubmit={handleNext}>
-              {/* Program Selector Tabs */}
-              <div className="program-selection-wrapper">
-                <label className="program-tab-label">Select Enrolling Course:</label>
-                <div className="program-tab-grid">
-                  <button
-                    type="button"
-                    className={`program-select-tab ${selectedCourse === 'alpha-cohort' ? 'active' : ''}`}
-                    onClick={() => handleCourseChange('alpha-cohort')}
-                  >
-                    <div className="p-tab-icon green">
-                      <GraduationCap size={18} />
-                    </div>
-                    <div className="p-tab-text">
-                      <strong>Alpha Cohort (Crash Course)</strong>
-                      <span>HSC 1st & 2nd Paper • 48 Classes</span>
-                    </div>
-                  </button>
-
-                  <button
-                    type="button"
-                    className={`program-select-tab ${selectedCourse === 'ssc-2027' ? 'active' : ''}`}
-                    onClick={() => handleCourseChange('ssc-2027')}
-                  >
-                    <div className="p-tab-icon amber">
-                      <Target size={18} />
-                    </div>
-                    <div className="p-tab-text">
-                      <strong>SSC 2027 Model Test Package</strong>
-                      <span>20 Full Model Tests & Evaluation</span>
-                    </div>
-                  </button>
+        {/* Course Switcher Tabs */}
+        {!enrollmentSuccess && (
+          <div className="program-selection-wrapper">
+            <div className="program-tab-grid">
+              <button
+                type="button"
+                className={`program-select-tab ${selectedCourseSlug === 'alpha-cohort' ? 'active' : ''}`}
+                onClick={() => handleCourseChange('alpha-cohort')}
+              >
+                <div className="p-tab-icon green">
+                  <GraduationCap size={20} />
                 </div>
-              </div>
-
-              <h3 className="enroll-step-title">Step 1: Choose Tuition Plan & Student Information</h3>
-
-              {/* Plan Choice for Alpha Cohort */}
-              {!isSsc ? (
-                <div className="plans-selection-grid">
-                  <div 
-                    className={`plan-select-box ${selectedPlan === 'full' ? 'selected' : ''}`}
-                    onClick={() => setSelectedPlan('full')}
-                  >
-                    <div className="plan-select-radio">
-                      <input 
-                        type="radio" 
-                        name="plan" 
-                        checked={selectedPlan === 'full'} 
-                        onChange={() => setSelectedPlan('full')} 
-                      />
-                      <strong>Full 4-Month Course (Recommended)</strong>
-                    </div>
-                    <div className="plan-price-tag">৳{course.fullCourseFee.toLocaleString()}</div>
-                    <p className="plan-note">Save ৳1,500 • Full access to all 48 classes and model tests</p>
-                  </div>
-
-                  <div 
-                    className={`plan-select-box ${selectedPlan === 'monthly' ? 'selected' : ''}`}
-                    onClick={() => setSelectedPlan('monthly')}
-                  >
-                    <div className="plan-select-radio">
-                      <input 
-                        type="radio" 
-                        name="plan" 
-                        checked={selectedPlan === 'monthly'} 
-                        onChange={() => setSelectedPlan('monthly')} 
-                      />
-                      <strong>Monthly Installment</strong>
-                    </div>
-                    <div className="plan-price-tag">৳{course.monthlyFee.toLocaleString()} / mo</div>
-                    <p className="plan-note">Flexible monthly payments per 12 classes</p>
-                  </div>
+                <div className="p-tab-text">
+                  <strong>Alpha Cohort (HSC Intensive)</strong>
+                  <span>Biology 1st & 2nd Paper • 48 Masterclasses • ৳12,500</span>
                 </div>
-              ) : (
-                /* Plan Choice for SSC 2027 */
-                <div className="ssc-plan-single-box selected">
-                  <div className="ssc-plan-header">
-                    <div className="ssc-plan-title-block">
-                      <span className="badge badge-amber">Full 20-Test Access</span>
-                      <strong className="ssc-plan-name">Complete SSC 2027 Model Test Package</strong>
-                    </div>
-                    <div className="plan-price-tag">
-                      <span className="old-p"><del>৳3,000</del></span> ৳2,200
-                    </div>
-                  </div>
-                  <p className="plan-note">
-                    Includes 20 Full Board Standard tests, handwritten CQ answer script evaluation, 8 live doubt-clearing solution masterclasses, and 35+ diagram guides.
+              </button>
+
+              <button
+                type="button"
+                className={`program-select-tab ${selectedCourseSlug === 'ssc-2027' ? 'active' : ''}`}
+                onClick={() => handleCourseChange('ssc-2027')}
+              >
+                <div className="p-tab-icon amber">
+                  <Target size={20} />
+                </div>
+                <div className="p-tab-text">
+                  <strong>SSC 2027 Model Test Package</strong>
+                  <span>20 Board Standard Tests & Evaluation • ৳2,200</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Main Enrollment Layout */}
+        {!enrollmentSuccess ? (
+          <div className="enrollment-dual-grid">
+            {/* Left Column: Authoritative Course Summary Card */}
+            <div className="enrollment-summary-col">
+              <div className="summary-card bio-card">
+                <div className="summary-card-header">
+                  <span className={`badge ${isSsc ? 'badge-amber' : 'badge-green'}`}>
+                    {isSsc ? 'SSC 2027 Batch' : 'Flagship HSC Cohort'}
+                  </span>
+                  <h2 className="summary-course-title">
+                    {courseData?.title || (isSsc ? 'SSC 2027 Model Test Package' : 'Alpha Cohort — 4-Month Crash Course')}
+                  </h2>
+                  <p className="summary-course-desc">
+                    {courseData?.subtitle || 'Complete Biology syllabus preparation with personalized faculty attention.'}
                   </p>
                 </div>
-              )}
 
-              {/* Student Fields */}
-              <div className="form-group">
-                <label className="form-label">Student Full Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Tariqul Islam"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="form-input"
-                />
-              </div>
+                {/* Key Program Specifications */}
+                <div className="summary-meta-list">
+                  <div className="summary-meta-item">
+                    <Clock size={17} className="meta-icon" />
+                    <div>
+                      <span className="meta-label">Program Duration</span>
+                      <strong className="meta-value">{courseData?.duration || (isSsc ? '2.5 Months' : '4 Months')}</strong>
+                    </div>
+                  </div>
 
-              <div className="form-row-2">
-                <div className="form-group">
-                  <label className="form-label">Phone Number (WhatsApp Preferred) *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="01XXXXXXXXX"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="form-input"
-                  />
+                  <div className="summary-meta-item">
+                    <BookOpen size={17} className="meta-icon" />
+                    <div>
+                      <span className="meta-label">Total Classes / Tests</span>
+                      <strong className="meta-value">{courseData?.totalClasses || (isSsc ? 20 : 48)} Sessions</strong>
+                    </div>
+                  </div>
+
+                  <div className="summary-meta-item">
+                    <Users size={17} className="meta-icon" />
+                    <div>
+                      <span className="meta-label">Batch Size & Seats</span>
+                      <strong className="meta-value">Max {seatLimit} Students ({availableSeats} seats left)</strong>
+                    </div>
+                  </div>
+
+                  <div className="summary-meta-item">
+                    <Award size={17} className="meta-icon" />
+                    <div>
+                      <span className="meta-label">Lead Instructor</span>
+                      <strong className="meta-value">Afroza Tahmina (Senior Faculty)</strong>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label className="form-label">Email Address *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="your.email@gmail.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="form-input"
-                  />
+                {/* Pricing Plan Selector */}
+                <div className="summary-pricing-box">
+                  <label className="pricing-box-label">Authoritative Tuition Fee (from Database):</label>
+                  
+                  {!isSsc ? (
+                    <div className="plan-choice-container">
+                      <div 
+                        className={`plan-option-row ${selectedPlan === 'full' ? 'active' : ''}`}
+                        onClick={() => setSelectedPlan('full')}
+                      >
+                        <input 
+                          type="radio" 
+                          name="plan" 
+                          checked={selectedPlan === 'full'} 
+                          onChange={() => setSelectedPlan('full')} 
+                        />
+                        <div className="plan-text-col">
+                          <strong>Full 4-Month Course (Best Value)</strong>
+                          <span>Includes all 48 classes, CQ evaluations & 8 model tests</span>
+                        </div>
+                        <div className="plan-fee-tag">
+                          <span className="old-fee"><del>৳14,000</del></span>
+                          <strong>৳{fullFee.toLocaleString()}</strong>
+                        </div>
+                      </div>
+
+                      <div 
+                        className={`plan-option-row ${selectedPlan === 'monthly' ? 'active' : ''}`}
+                        onClick={() => setSelectedPlan('monthly')}
+                      >
+                        <input 
+                          type="radio" 
+                          name="plan" 
+                          checked={selectedPlan === 'monthly'} 
+                          onChange={() => setSelectedPlan('monthly')} 
+                        />
+                        <div className="plan-text-col">
+                          <strong>Monthly Installment</strong>
+                          <span>Flexible payments per 12 classes</span>
+                        </div>
+                        <div className="plan-fee-tag">
+                          <strong>৳{monthlyFee.toLocaleString()} / mo</strong>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="ssc-fee-display">
+                      <div className="ssc-fee-content">
+                        <span className="old-fee"><del>৳3,000</del></span>
+                        <strong className="ssc-price">৳{fullFee.toLocaleString()}</strong>
+                        <span className="ssc-discount-badge">Save ৳800 Early Bird</span>
+                      </div>
+                      <p className="ssc-note">Full access to 20 Model Tests, handwritten evaluation & live doubt clearing.</p>
+                    </div>
+                  )}
+
+                  {/* Summary Total */}
+                  <div className="summary-total-row">
+                    <span>Payable Amount:</span>
+                    <span className="total-figure">৳{activeFee.toLocaleString()} {selectedPlan === 'monthly' && !isSsc ? '/ mo' : ''}</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-row-2">
-                <div className="form-group">
-                  <label className="form-label">
-                    {isSsc ? 'School / Institution Name *' : 'College / Higher Secondary Institution *'}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder={isSsc ? "e.g. Ideal School and College" : "e.g. Notre Dame College"}
-                    value={formData.institution}
-                    onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                    className="form-input"
-                  />
+                <div className="trust-seal-row">
+                  <ShieldCheck size={16} />
+                  <span>Official Bio Edz Guarantee • Limited batch to ensure individual attention</span>
                 </div>
-
-                <div className="form-group">
-                  <label className="form-label">Target Exam</label>
-                  <select
-                    value={formData.examYear}
-                    onChange={(e) => setFormData({ ...formData, examYear: e.target.value })}
-                    className="form-select"
-                  >
-                    {isSsc ? (
-                      <>
-                        <option value="SSC 2027">SSC Examination 2027</option>
-                        <option value="SSC 2026">SSC Examination 2026</option>
-                        <option value="Class 9/10">Class 9 / 10 Foundation</option>
-                      </>
-                    ) : (
-                      <>
-                        <option value="HSC 2026">HSC Examination 2026</option>
-                        <option value="HSC 2027">HSC Examination 2027</option>
-                        <option value="Alim / Other">Alim / Equivalent</option>
-                      </>
-                    )}
-                  </select>
-                </div>
-              </div>
-
-              <div className="enroll-actions-row">
-                <button type="submit" className="btn btn-primary btn-lg btn-block">
-                  Continue to Account Setup <ArrowRight size={18} />
-                </button>
-              </div>
-            </form>
-          )}
-
-          {step === 2 && (
-            <form onSubmit={handleNext}>
-              <h3 className="enroll-step-title">Step 2: Student Portal Account & Verification</h3>
-
-              <div className="review-plan-box">
-                <div className="review-item">
-                  <span>Selected Program:</span>
-                  <strong>{currentCourseTitle}</strong>
-                </div>
-                <div className="review-item">
-                  <span>Student Name:</span>
-                  <strong>{formData.name} ({formData.phone})</strong>
-                </div>
-                <div className="review-item">
-                  <span>Institution:</span>
-                  <strong>{formData.institution || 'Registered'}</strong>
-                </div>
-                <div className="review-item">
-                  <span>Tuition / Package Amount:</span>
-                  <strong className="review-price">
-                    ৳{currentCourseFee.toLocaleString()} {(!isSsc && selectedPlan === 'monthly') ? '/ month' : ''}
-                  </strong>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Create Student Password *</label>
-                <input
-                  type="password"
-                  required
-                  placeholder="Minimum 6 characters"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="form-input"
-                />
-                <span className="input-hint">You will use this password to log in to the Student Portal.</span>
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Preferred Payment Verification Method</label>
-                <div className="payment-options-row">
-                  {['bKash', 'Nagad', 'Rocket', 'Direct Bank Transfer'].map((m) => (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, paymentMethod: m })}
-                      className={`payment-method-pill ${formData.paymentMethod === m ? 'active' : ''}`}
-                    >
-                      {m}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="step-2-actions">
-                <button type="button" onClick={() => setStep(1)} className="btn btn-outline">
-                  <ArrowLeft size={16} /> Back
-                </button>
-                <button type="submit" className="btn btn-primary btn-lg flex-1">
-                  Complete Enrollment & Enter Dashboard <Sparkles size={18} />
-                </button>
-              </div>
-            </form>
-          )}
-
-          {step === 3 && (
-            <div className="confirmation-box text-center">
-              <div className="confetti-icon-circle">
-                <Sparkles size={40} />
-              </div>
-
-              <h2 className="confirm-title">Congratulations, {formData.name || "Student"}!</h2>
-              <p className="confirm-subtitle">
-                Your admission to the <strong>{currentCourseTitle}</strong> has been confirmed.
-              </p>
-
-              <div className="confirm-meta-card bio-card">
-                <div className="c-meta-row">
-                  <span>Student ID:</span>
-                  <strong>BE-{isSsc ? 'SSC27' : 'HSC26'}-018</strong>
-                </div>
-                <div className="c-meta-row">
-                  <span>Program:</span>
-                  <strong>{currentCourseTitle}</strong>
-                </div>
-                <div className="c-meta-row">
-                  <span>Batch:</span>
-                  <strong>{isSsc ? 'SSC 2027 Alpha Model Test Batch' : course.batchName}</strong>
-                </div>
-                <div className="c-meta-row">
-                  <span>Enrollment Status:</span>
-                  <span className="badge badge-green">Active Access</span>
-                </div>
-              </div>
-
-              <p className="confirm-instructions">
-                {isSsc
-                  ? 'Your portal account is active! You can now access all 20 SSC Model Tests, view exam timings, and upload written CQ answer sheets.'
-                  : 'Your portal account is active. You can now browse all First & Second Paper chapters, view upcoming live classes, and access practice tests.'
-                }
-              </p>
-
-              <div className="confirm-actions">
-                <Link to="/student/dashboard" className="btn btn-primary btn-lg">
-                  Go to Student Dashboard <ArrowRight size={18} />
-                </Link>
               </div>
             </div>
-          )}
-        </div>
+
+            {/* Right Column: Authenticated Enrollment OR Unauthenticated Sign-in/Register */}
+            <div className="enrollment-action-col">
+              <div className="action-card bio-card">
+                {/* SCENARIO B: User IS Authenticated -> Show Final Confirmation & Payment */}
+                {isAuthenticated && user ? (
+                  <div>
+                    <div className="authenticated-user-badge">
+                      <div className="user-avatar-initial">
+                        {user.name.charAt(0)}
+                      </div>
+                      <div className="user-info-text">
+                        <div className="user-logged-tag">
+                          <CheckCircle2 size={14} /> Signed In as Verified Student
+                        </div>
+                        <strong className="user-name-title">{user.name}</strong>
+                        <span className="user-email-subtitle">{user.email} • {user.phone || 'Phone verified'}</span>
+                      </div>
+                    </div>
+
+                    <h3 className="enroll-step-heading">Complete Your Admission</h3>
+                    <p className="enroll-step-desc">
+                      Please confirm your payment details to activate your student seat in {courseData?.title || 'the program'}.
+                    </p>
+
+                    {enrollmentError && (
+                      <div className="auth-alert error">
+                        <AlertCircle size={18} />
+                        <span>{enrollmentError}</span>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleFinalEnrollmentSubmit} className="payment-confirm-form">
+                      {/* Payment Method Selector */}
+                      <div className="form-group">
+                        <label className="form-label">Select Payment Gateway:</label>
+                        <div className="payment-methods-grid">
+                          <button
+                            type="button"
+                            className={`payment-method-card ${paymentMethod === 'bKash' ? 'active' : ''}`}
+                            onClick={() => setPaymentMethod('bKash')}
+                          >
+                            <span className="pm-name bkash">bKash Merchant</span>
+                            <span className="pm-sub">01712-345678 (Make Payment)</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            className={`payment-method-card ${paymentMethod === 'Nagad' ? 'active' : ''}`}
+                            onClick={() => setPaymentMethod('Nagad')}
+                          >
+                            <span className="pm-name nagad">Nagad Merchant</span>
+                            <span className="pm-sub">01712-345678 (Payment)</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Transaction ID / bKash Number (Optional for Demo)</label>
+                        <div className="input-with-icon">
+                          <CreditCard size={18} className="input-icon" />
+                          <input
+                            type="text"
+                            placeholder="e.g. 9B8A7C6D5E"
+                            value={transactionId}
+                            onChange={e => setTransactionId(e.target.value)}
+                            className="form-input with-icon"
+                          />
+                        </div>
+                        <small className="form-helper-text">
+                          You can leave this blank in sandbox demo to generate an auto-assigned transaction ID.
+                        </small>
+                      </div>
+
+                      {/* Final Price Breakdown Confirmation */}
+                      <div className="checkout-summary-box">
+                        <div className="checkout-line">
+                          <span>Course:</span>
+                          <strong>{courseData?.title || 'Selected Course'}</strong>
+                        </div>
+                        <div className="checkout-line">
+                          <span>Selected Plan:</span>
+                          <strong>{selectedPlan === 'monthly' ? 'Monthly Installment' : 'Full Course'}</strong>
+                        </div>
+                        <div className="checkout-line total">
+                          <span>Final Total:</span>
+                          <span className="checkout-total-price">৳{activeFee.toLocaleString()}</span>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmittingEnrollment}
+                        className="btn btn-primary btn-block btn-lg mt-3"
+                      >
+                        {isSubmittingEnrollment ? (
+                          'Finalizing Enrollment...'
+                        ) : (
+                          <>
+                            Confirm Enrollment & Activate Seat <ArrowRight size={18} />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  /* SCENARIO A: Visitor is NOT logged in -> Show Account Creation & OTP Verification */
+                  <div>
+                    {authMode !== 'verify' ? (
+                      <div>
+                        <div className="guest-enroll-header">
+                          <span className="badge badge-green">Step 1: Student Account</span>
+                          <h3 className="guest-enroll-title">
+                            {authMode === 'register' ? 'Create Your Student Account' : 'Sign In to Your Account'}
+                          </h3>
+                          <p className="guest-enroll-desc">
+                            Create your account to lock in your seat for <strong>{courseData?.title || 'the program'}</strong>.
+                          </p>
+                        </div>
+
+                        {/* Mode Switcher */}
+                        <div className="auth-tab-row">
+                          <button
+                            type="button"
+                            className={`auth-tab-pill ${authMode === 'register' ? 'active' : ''}`}
+                            onClick={() => { setAuthMode('register'); setAuthError(''); }}
+                          >
+                            New Student (Register)
+                          </button>
+                          <button
+                            type="button"
+                            className={`auth-tab-pill ${authMode === 'login' ? 'active' : ''}`}
+                            onClick={() => { setAuthMode('login'); setAuthError(''); }}
+                          >
+                            Existing Student (Sign In)
+                          </button>
+                        </div>
+
+                        {authError && (
+                          <div className="auth-alert error">
+                            <AlertCircle size={18} />
+                            <span>{authError}</span>
+                          </div>
+                        )}
+
+                        {/* Continue with Google */}
+                        <button
+                          type="button"
+                          onClick={handleGoogleAuth}
+                          disabled={authLoading}
+                          className="btn-google-auth-full"
+                        >
+                          <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z" fill="#4285F4"/>
+                            <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+                            <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+                            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
+                          </svg>
+                          <span>Continue with Google</span>
+                        </button>
+
+                        <div className="auth-divider">
+                          <span>Or Fill Out Student Details</span>
+                        </div>
+
+                        {/* Registration Form */}
+                        {authMode === 'register' && (
+                          <form onSubmit={handleRegisterSubmit} className="register-inline-form">
+                            <div className="form-group">
+                              <label className="form-label">Student Full Name *</label>
+                              <div className="input-with-icon">
+                                <UserIcon size={18} className="input-icon" />
+                                <input
+                                  type="text"
+                                  required
+                                  placeholder="e.g. Tariqul Islam"
+                                  value={authFormData.name}
+                                  onChange={e => setAuthFormData({ ...authFormData, name: e.target.value })}
+                                  className="form-input with-icon"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="form-row-2">
+                              <div className="form-group">
+                                <label className="form-label">Email Address *</label>
+                                <div className="input-with-icon">
+                                  <Mail size={18} className="input-icon" />
+                                  <input
+                                    type="email"
+                                    required
+                                    placeholder="student@gmail.com"
+                                    value={authFormData.email}
+                                    onChange={e => setAuthFormData({ ...authFormData, email: e.target.value })}
+                                    className="form-input with-icon"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="form-group">
+                                <label className="form-label">Phone Number *</label>
+                                <div className="input-with-icon">
+                                  <Phone size={18} className="input-icon" />
+                                  <input
+                                    type="tel"
+                                    required
+                                    placeholder="01XXXXXXXXX"
+                                    value={authFormData.phone}
+                                    onChange={e => setAuthFormData({ ...authFormData, phone: e.target.value })}
+                                    className="form-input with-icon"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="form-row-2">
+                              <div className="form-group">
+                                <label className="form-label">School / College *</label>
+                                <div className="input-with-icon">
+                                  <Building2 size={18} className="input-icon" />
+                                  <input
+                                    type="text"
+                                    required
+                                    placeholder="e.g. Notre Dame College"
+                                    value={authFormData.institution}
+                                    onChange={e => setAuthFormData({ ...authFormData, institution: e.target.value })}
+                                    className="form-input with-icon"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="form-group">
+                                <label className="form-label">Password * (Min 6 chars)</label>
+                                <div className="input-with-icon">
+                                  <Lock size={18} className="input-icon" />
+                                  <input
+                                    type="password"
+                                    required
+                                    minLength={6}
+                                    placeholder="••••••••"
+                                    value={authFormData.password}
+                                    onChange={e => setAuthFormData({ ...authFormData, password: e.target.value })}
+                                    className="form-input with-icon"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="form-group">
+                              <label className="form-label">Confirm Password *</label>
+                              <div className="input-with-icon">
+                                <Lock size={18} className="input-icon" />
+                                <input
+                                  type="password"
+                                  required
+                                  minLength={6}
+                                  placeholder="••••••••"
+                                  value={authFormData.confirmPassword}
+                                  onChange={e => setAuthFormData({ ...authFormData, confirmPassword: e.target.value })}
+                                  className="form-input with-icon"
+                                />
+                              </div>
+                            </div>
+
+                            <button
+                              type="submit"
+                              disabled={authLoading}
+                              className="btn btn-primary btn-block btn-lg mt-3"
+                            >
+                              {authLoading ? 'Creating Account...' : 'Continue to Email Verification'} <ArrowRight size={18} />
+                            </button>
+                          </form>
+                        )}
+
+                        {/* Login Form */}
+                        {authMode === 'login' && (
+                          <form onSubmit={handleLoginSubmit} className="login-inline-form">
+                            <div className="form-group">
+                              <label className="form-label">Student Email Address</label>
+                              <div className="input-with-icon">
+                                <Mail size={18} className="input-icon" />
+                                <input
+                                  type="email"
+                                  required
+                                  placeholder="student@gmail.com"
+                                  value={loginEmail}
+                                  onChange={e => setLoginEmail(e.target.value)}
+                                  className="form-input with-icon"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="form-group">
+                              <label className="form-label">Password</label>
+                              <div className="input-with-icon">
+                                <Lock size={18} className="input-icon" />
+                                <input
+                                  type="password"
+                                  required
+                                  placeholder="••••••••"
+                                  value={loginPassword}
+                                  onChange={e => setLoginPassword(e.target.value)}
+                                  className="form-input with-icon"
+                                />
+                              </div>
+                            </div>
+
+                            <button
+                              type="submit"
+                              disabled={authLoading}
+                              className="btn btn-primary btn-block btn-lg mt-3"
+                            >
+                              {authLoading ? 'Signing In...' : 'Sign In & Continue to Enrollment'} <ArrowRight size={18} />
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    ) : (
+                      /* OTP Verification in place */
+                      <VerifyEmailForm
+                        email={verifyEmailTarget}
+                        initialCode={initialOtpCode}
+                        onSuccess={() => {
+                          // Handled automatically via AuthContext update
+                        }}
+                        onCancel={() => setAuthMode('register')}
+                        redirectNotice={`After verification, you will immediately confirm enrollment in ${courseData?.title || 'the course'}.`}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Enrollment Success Confirmation Screen */
+          <div className="enroll-success-container bio-card text-center">
+            <div className="success-icon-badge">
+              <CheckCircle2 size={48} />
+            </div>
+            <span className="badge badge-green mb-2">Admission Confirmed</span>
+            <h2 className="success-title">Welcome to {enrollmentSuccess.courseTitle}!</h2>
+            <p className="success-subtitle">
+              Your enrollment has been successfully recorded in the Bio Edz system under authoritative fee <strong>৳{enrollmentSuccess.authoritativeAmount?.toLocaleString()}</strong>.
+            </p>
+
+            <div className="success-receipt-card">
+              <div className="receipt-row">
+                <span>Student:</span>
+                <strong>{user?.name}</strong>
+              </div>
+              <div className="receipt-row">
+                <span>Student ID:</span>
+                <strong>{user?.studentId || 'BE-2026-001'}</strong>
+              </div>
+              <div className="receipt-row">
+                <span>Enrolled Program:</span>
+                <strong>{enrollmentSuccess.courseTitle}</strong>
+              </div>
+              <div className="receipt-row">
+                <span>Tuition Plan:</span>
+                <strong className="text-capitalize">{enrollmentSuccess.plan === 'monthly' ? 'Monthly Installment' : 'Full 4-Month Course'}</strong>
+              </div>
+              <div className="receipt-row">
+                <span>Payment Reference:</span>
+                <code>{enrollmentSuccess.transactionId}</code>
+              </div>
+              <div className="receipt-row total">
+                <span>Authoritative Amount:</span>
+                <strong className="text-dark-green">৳{enrollmentSuccess.authoritativeAmount?.toLocaleString()}</strong>
+              </div>
+            </div>
+
+            <div className="success-actions-row">
+              <Link to="/student/dashboard" className="btn btn-primary btn-lg">
+                Go to Student Dashboard <ArrowRight size={18} />
+              </Link>
+              <Link to="/student/course" className="btn btn-outline btn-lg">
+                View Course Curriculum
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
 
       <style>{`
-        .enroll-steps-indicator {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
-          margin-bottom: 2.5rem;
-        }
-        .step-item {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          font-size: 0.9rem;
-          color: var(--text-muted);
-          font-weight: 600;
-        }
-        .step-item.active {
-          color: var(--dark-green);
-        }
-        .step-circle {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: #E2E8F0;
-          color: var(--text-muted);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.85rem;
-          font-weight: 700;
-        }
-        .step-item.active .step-circle {
-          background: var(--dark-green);
-          color: #FFFFFF;
-        }
-        .step-item.done .step-circle {
-          background: var(--primary-green);
-          color: #FFFFFF;
-        }
-        .step-connector {
-          width: 40px;
-          height: 2px;
-          background: #E2E8F0;
-        }
-
-        .enroll-container-card {
-          max-width: 740px;
-          margin: 0 auto;
-          padding: 2.5rem 3rem;
-        }
-
-        /* Program Tab Selector */
-        .program-selection-wrapper {
-          margin-bottom: 2rem;
-          padding-bottom: 1.5rem;
-          border-bottom: 1px solid var(--border-subtle);
-        }
-        .program-tab-label {
-          display: block;
-          font-size: 0.82rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-          color: var(--text-muted);
-          margin-bottom: 0.75rem;
-        }
-        .program-tab-grid {
+        .enrollment-dual-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
-        .program-select-tab {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: 1rem 1.15rem;
-          border-radius: var(--radius-lg);
-          border: 2px solid var(--border-color);
-          background: #FFFFFF;
-          text-align: left;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .program-select-tab:hover {
-          border-color: var(--primary-green);
-        }
-        .program-select-tab.active {
-          border-color: var(--dark-green);
-          background: var(--light-green-subtle);
-        }
-        .p-tab-icon {
-          width: 36px;
-          height: 36px;
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-        .p-tab-icon.green {
-          background: var(--light-green);
-          color: var(--dark-green);
-        }
-        .p-tab-icon.amber {
-          background: #FEF7E6;
-          color: #B45309;
-        }
-        .p-tab-text strong {
-          display: block;
-          font-size: 0.88rem;
-          color: var(--dark-green);
-          line-height: 1.25;
-        }
-        .p-tab-text span {
-          font-size: 0.74rem;
-          color: var(--text-muted);
+          grid-template-columns: 1fr 1.15fr;
+          gap: 2rem;
+          align-items: start;
         }
 
-        .enroll-step-title {
-          font-size: 1.25rem;
-          color: var(--dark-green);
+        .summary-card {
+          padding: 2.25rem 2rem;
+        }
+        .summary-card-header {
           margin-bottom: 1.5rem;
+          border-bottom: 1px solid var(--border-color);
+          padding-bottom: 1.25rem;
         }
-        .plans-selection-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
-        .plan-select-box {
-          border: 2px solid var(--border-color);
-          border-radius: var(--radius-md);
-          padding: 1.25rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .plan-select-box:hover {
-          border-color: var(--primary-green);
-        }
-        .plan-select-box.selected {
-          border-color: var(--dark-green);
-          background: var(--light-green-subtle);
-        }
-        .plan-select-radio {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.9rem;
-          margin-bottom: 0.5rem;
-          color: var(--dark-green);
-        }
-        .plan-price-tag {
+        .summary-course-title {
           font-size: 1.4rem;
-          font-weight: 800;
           color: var(--dark-green);
           font-family: var(--font-heading);
-          margin-bottom: 0.35rem;
+          margin: 0.5rem 0 0.35rem;
         }
-        .plan-price-tag .old-p {
-          font-size: 0.95rem;
+        .summary-course-desc {
+          font-size: 0.88rem;
           color: var(--text-muted);
-          font-weight: 400;
-          margin-right: 0.35rem;
-        }
-        .plan-note {
-          font-size: 0.75rem;
-          color: var(--text-muted);
+          line-height: 1.4;
         }
 
-        /* SSC Single Plan Box */
-        .ssc-plan-single-box {
-          border: 2px solid var(--dark-green);
-          background: var(--light-green-subtle);
-          border-radius: var(--radius-md);
-          padding: 1.25rem 1.5rem;
-          margin-bottom: 2rem;
+        .summary-meta-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+          margin-bottom: 1.5rem;
         }
-        .ssc-plan-header {
+        .summary-meta-item {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          margin-bottom: 0.5rem;
-          flex-wrap: wrap;
-          gap: 0.5rem;
+          gap: 0.75rem;
         }
-        .ssc-plan-name {
+        .meta-icon {
+          color: var(--soft-green);
+        }
+        .meta-label {
           display: block;
-          font-size: 1.05rem;
-          color: var(--dark-green);
-          margin-top: 0.25rem;
-        }
-
-        .form-row-2 {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
-        .input-hint {
           font-size: 0.75rem;
           color: var(--text-muted);
-          margin-top: 0.25rem;
+        }
+        .meta-value {
+          font-size: 0.92rem;
+          color: var(--text-primary);
         }
 
-        .review-plan-box {
+        .summary-pricing-box {
           background: var(--light-green-subtle);
-          border: 1px solid var(--border-color);
-          border-radius: var(--radius-md);
           padding: 1.25rem;
-          margin-bottom: 1.75rem;
+          border-radius: var(--radius-md);
+          border: 1px solid var(--border-color);
+          margin-bottom: 1.25rem;
+        }
+        .pricing-box-label {
+          display: block;
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: var(--dark-green);
+          margin-bottom: 0.75rem;
+        }
+
+        .plan-choice-container {
           display: flex;
           flex-direction: column;
           gap: 0.6rem;
         }
-        .review-item {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.9rem;
-          color: var(--text-dark);
-        }
-        .review-price {
-          color: var(--dark-green);
-          font-size: 1.1rem;
-        }
-        .payment-options-row {
-          display: flex;
-          gap: 0.5rem;
-          flex-wrap: wrap;
-        }
-        .payment-method-pill {
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-sm);
-          border: 1px solid var(--border-color);
-          background: #FFFFFF;
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: var(--text-dark);
-        }
-        .payment-method-pill.active {
-          background: var(--dark-green);
-          color: #FFFFFF;
-          border-color: var(--dark-green);
-        }
-        .step-2-actions {
+        .plan-option-row {
           display: flex;
           align-items: center;
-          gap: 1rem;
-          margin-top: 2rem;
+          gap: 0.75rem;
+          background: #FFFFFF;
+          padding: 0.85rem;
+          border-radius: var(--radius-sm);
+          border: 1.5px solid var(--border-color);
+          cursor: pointer;
+          transition: all 0.2s ease;
         }
-        .flex-1 {
+        .plan-option-row.active {
+          border-color: var(--dark-green);
+          background: #F0FDF4;
+        }
+        .plan-text-col {
           flex: 1;
         }
-
-        /* Step 3 Confirmation */
-        .confetti-icon-circle {
-          width: 76px;
-          height: 76px;
-          border-radius: 50%;
-          background: var(--light-green);
+        .plan-text-col strong {
+          display: block;
+          font-size: 0.88rem;
+          color: var(--text-primary);
+        }
+        .plan-text-col span {
+          display: block;
+          font-size: 0.75rem;
+          color: var(--text-muted);
+        }
+        .plan-fee-tag strong {
+          font-size: 1rem;
           color: var(--dark-green);
+        }
+        .old-fee {
+          display: block;
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          text-align: right;
+        }
+
+        .ssc-fee-display {
+          background: #FFFFFF;
+          padding: 1rem;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--border-color);
+        }
+        .ssc-fee-content {
+          display: flex;
+          align-items: baseline;
+          gap: 0.6rem;
+          margin-bottom: 0.4rem;
+        }
+        .ssc-price {
+          font-size: 1.5rem;
+          color: var(--dark-green);
+        }
+        .ssc-discount-badge {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #B45309;
+          background: #FEF3C7;
+          padding: 0.15rem 0.5rem;
+          border-radius: 9999px;
+        }
+        .ssc-note {
+          font-size: 0.8rem;
+          color: var(--text-muted);
+          line-height: 1.35;
+        }
+
+        .summary-total-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 1rem;
+          padding-top: 0.85rem;
+          border-top: 1px dashed var(--border-color);
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: var(--dark-green);
+        }
+        .total-figure {
+          font-size: 1.35rem;
+          font-weight: 800;
+        }
+
+        .trust-seal-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.78rem;
+          color: var(--text-muted);
+        }
+
+        .action-card {
+          padding: 2.25rem 2rem;
+        }
+
+        .authenticated-user-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          background: #F0FDF4;
+          border: 1px solid #BBF7D0;
+          padding: 0.85rem 1rem;
+          border-radius: var(--radius-md);
+          margin-bottom: 1.5rem;
+        }
+        .user-avatar-initial {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: var(--dark-green);
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 1.1rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin: 0 auto 1.5rem;
         }
-        .confirm-title {
-          font-size: 2rem;
-          color: var(--dark-green);
-          margin-bottom: 0.5rem;
+        .user-info-text {
+          flex: 1;
         }
-        .confirm-subtitle {
-          font-size: 1.05rem;
-          color: var(--text-muted);
-          margin-bottom: 2rem;
-        }
-        .confirm-meta-card {
-          background: var(--light-green-subtle);
-          padding: 1.5rem;
-          max-width: 480px;
-          margin: 0 auto 2rem;
+        .user-logged-tag {
           display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #15803D;
         }
-        .c-meta-row {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.9rem;
+        .user-name-title {
+          display: block;
+          font-size: 1rem;
+          color: var(--text-primary);
         }
-        .confirm-instructions {
-          font-size: 0.92rem;
+        .user-email-subtitle {
+          display: block;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          margin-bottom: 2rem;
-          max-width: 500px;
-          margin-left: auto;
-          margin-right: auto;
         }
 
-        @media (max-width: 768px) {
-          .program-tab-grid {
+        .enroll-step-heading {
+          font-size: 1.35rem;
+          color: var(--dark-green);
+          font-family: var(--font-heading);
+          margin-bottom: 0.25rem;
+        }
+        .enroll-step-desc {
+          font-size: 0.88rem;
+          color: var(--text-muted);
+          margin-bottom: 1.5rem;
+        }
+
+        .payment-methods-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+        }
+        .payment-method-card {
+          padding: 0.75rem 1rem;
+          text-align: left;
+          background: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          border-radius: var(--radius-sm);
+          cursor: pointer;
+        }
+        .payment-method-card.active {
+          border-color: var(--dark-green);
+          background: var(--light-green-subtle);
+        }
+        .pm-name {
+          display: block;
+          font-weight: 700;
+          font-size: 0.92rem;
+        }
+        .pm-name.bkash { color: #E2136E; }
+        .pm-name.nagad { color: #F7931E; }
+        .pm-sub {
+          display: block;
+          font-size: 0.75rem;
+          color: var(--text-muted);
+          margin-top: 0.2rem;
+        }
+
+        .checkout-summary-box {
+          background: #FAFAFA;
+          padding: 1rem;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--border-color);
+          margin: 1.25rem 0;
+        }
+        .checkout-line {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.85rem;
+          color: var(--text-muted);
+          margin-bottom: 0.4rem;
+        }
+        .checkout-line.total {
+          margin-top: 0.6rem;
+          padding-top: 0.6rem;
+          border-top: 1px dashed var(--border-color);
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--dark-green);
+        }
+        .checkout-total-price {
+          font-size: 1.25rem;
+        }
+
+        .auth-tab-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.35rem;
+          background: var(--light-green-subtle);
+          padding: 0.3rem;
+          border-radius: var(--radius-md);
+          margin-bottom: 1.25rem;
+          border: 1px solid var(--border-color);
+        }
+        .auth-tab-pill {
+          padding: 0.55rem;
+          font-size: 0.88rem;
+          font-weight: 600;
+          color: var(--text-muted);
+          border-radius: var(--radius-sm);
+          border: none;
+          background: none;
+          cursor: pointer;
+        }
+        .auth-tab-pill.active {
+          background: #FFFFFF;
+          color: var(--dark-green);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .guest-enroll-header {
+          margin-bottom: 1.25rem;
+        }
+        .guest-enroll-title {
+          font-size: 1.35rem;
+          color: var(--dark-green);
+          font-family: var(--font-heading);
+          margin: 0.4rem 0 0.25rem;
+        }
+        .guest-enroll-desc {
+          font-size: 0.88rem;
+          color: var(--text-muted);
+        }
+
+        .enroll-success-container {
+          max-width: 580px;
+          margin: 0 auto;
+          padding: 3rem 2.5rem;
+        }
+        .success-icon-badge {
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          background: #DCFCE7;
+          color: #166534;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1.25rem;
+        }
+        .success-title {
+          font-size: 1.75rem;
+          color: var(--dark-green);
+          font-family: var(--font-heading);
+          margin-bottom: 0.4rem;
+        }
+        .success-subtitle {
+          font-size: 0.95rem;
+          color: var(--text-muted);
+          line-height: 1.5;
+          margin-bottom: 1.75rem;
+        }
+
+        .success-receipt-card {
+          background: #FAFAFA;
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-md);
+          padding: 1.25rem;
+          text-align: left;
+          margin-bottom: 2rem;
+        }
+        .receipt-row {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.45rem 0;
+          font-size: 0.88rem;
+          border-bottom: 1px dashed #E5E7EB;
+        }
+        .receipt-row:last-child {
+          border-bottom: none;
+        }
+        .receipt-row.total {
+          padding-top: 0.75rem;
+          font-size: 1.05rem;
+          font-weight: 700;
+        }
+
+        .success-actions-row {
+          display: flex;
+          gap: 0.85rem;
+          justify-content: center;
+        }
+
+        @media (max-width: 900px) {
+          .enrollment-dual-grid {
             grid-template-columns: 1fr;
-          }
-          .plans-selection-grid {
-            grid-template-columns: 1fr;
-          }
-          .form-row-2 {
-            grid-template-columns: 1fr;
-          }
-          .enroll-container-card {
-            padding: 1.5rem;
           }
         }
       `}</style>

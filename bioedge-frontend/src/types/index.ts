@@ -8,7 +8,40 @@ export interface User {
   studentId?: string;
   batch?: string;
   status?: string;
+  phone?: string;
+  institution?: string;
+  examYear?: string;
+  isVerified?: boolean;
+  avatar?: string;
   designation?: string;
+}
+
+export interface AuthResponse {
+  success: boolean;
+  message?: string;
+  token?: string;
+  user?: User;
+  requiresVerification?: boolean;
+  email?: string;
+  verificationCode?: string;
+}
+
+export interface BackendCourse {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  duration: string;
+  totalClasses: number;
+  seatLimit: number;
+  enrolledCount: number;
+  availableSeats: number;
+  fullFee: number;
+  monthlyFee: number;
+  discountAmount: number;
+  curriculum?: any;
+  metadata?: any;
 }
 
 export interface CourseData {

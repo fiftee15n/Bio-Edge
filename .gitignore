@@ -28,3 +28,10 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+bioedge-backend/data/
+
