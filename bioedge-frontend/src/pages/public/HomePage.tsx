@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { ReferenceHeroSection } from '../../components/home/ReferenceHeroSection';
 import { Hero3DCardDeck } from '../../components/home/Hero3DCardDeck';
 import { Interactive3DBento } from '../../components/home/Interactive3DBento';
 import { CurvedAvatarMarquee } from '../../components/home/CurvedAvatarMarquee';
@@ -45,108 +46,8 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="homepage-wrapper">
-      {/* 6.1 Hero Section */}
-      <section className="hero-section">
-        <div className="container">
-          <div className="hero-grid">
-            <div className="hero-content">
-              {/* Limited Seats Alert Badge */}
-              <div className="hero-badge">
-                <span className="pulse-indicator"></span>
-                <span>Limited Batch: Only 15–20 Students ({availableSeats} Seats Left)</span>
-              </div>
-
-              <h1 className="hero-headline">
-                {course.title}
-              </h1>
-
-              <p className="hero-supporting-message">
-                4 Months • 48 Intensive Classes • First & Second Paper • Regular Assessment
-              </p>
-
-              <p className="hero-description">
-                {course.description}
-              </p>
-
-              <div className="hero-actions">
-                <Link to="/enroll" className="btn btn-primary btn-lg">
-                  Enroll Now <ArrowRight size={18} />
-                </Link>
-                <Link to="/program" className="btn btn-secondary btn-lg">
-                  Explore Program
-                </Link>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="hero-trust-row">
-                <div className="trust-item">
-                  <CheckCircle2 size={16} className="trust-icon" />
-                  <span>Personal Attention</span>
-                </div>
-                <div className="trust-item">
-                  <CheckCircle2 size={16} className="trust-icon" />
-                  <span>Written CQ Feedback</span>
-                </div>
-                <div className="trust-item">
-                  <CheckCircle2 size={16} className="trust-icon" />
-                  <span>Full Board Model Tests</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Hero Interactive Preview Card */}
-            <div className="hero-visual">
-              <div className="hero-preview-card bio-card">
-                <div className="card-top-header">
-                  <span className="badge badge-green">Curriculum Roadmap</span>
-                  <span className="live-status">
-                    <span className="dot"></span> Live Interactive
-                  </span>
-                </div>
-
-                <div className="course-spec-summary">
-                  <h3 className="spec-title">Bio Edz by Afroza Tahmina</h3>
-                  <p className="spec-teacher">Lead Faculty: {teacher.name}</p>
-                </div>
-
-                <div className="spec-stats-grid">
-                  <div className="spec-stat-box">
-                    <span className="stat-label">Duration</span>
-                    <strong className="stat-value">{course.duration}</strong>
-                  </div>
-                  <div className="spec-stat-box">
-                    <span className="stat-label">Total Classes</span>
-                    <strong className="stat-value">{course.totalClasses} Live</strong>
-                  </div>
-                  <div className="spec-stat-box">
-                    <span className="stat-label">Batch Size</span>
-                    <strong className="stat-value">{course.seatLimit} Max</strong>
-                  </div>
-                  <div className="spec-stat-box highlight-box">
-                    <span className="stat-label">Enrolled</span>
-                    <strong className="stat-value">{activeStudentsCount} / {course.seatLimit}</strong>
-                  </div>
-                </div>
-
-                <div className="hero-next-class-snippet">
-                  <div className="snippet-title">Upcoming Scheduled Session</div>
-                  <div className="snippet-details">
-                    <div className="snippet-class-num">Class 18</div>
-                    <div className="snippet-info">
-                      <p className="snippet-name">Agaricus Anatomy & Basidiospores</p>
-                      <span className="snippet-time">Thursday • 7:00 PM - 8:30 PM</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Link to="/enroll" className="btn btn-primary btn-block">
-                  Secure Your Seat Now ({availableSeats} Available)
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Reference Master Hero Section (Person in center, Teacher card bottom-left, Bio Edge Theme) */}
+      <ReferenceHeroSection />
 
       {/* 3D Biological Concept Deck Showcase (Inspired by Pinterest 3D Design) */}
       <section className="section-padding bg-studio-glow" style={{ background: 'linear-gradient(180deg, var(--bg-color) 0%, #EFF6F0 50%, #FFFFFF 100%)', paddingBottom: '3rem' }}>
