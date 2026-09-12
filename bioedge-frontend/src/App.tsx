@@ -7,6 +7,8 @@ import { CourseDataProvider } from './context/CourseDataContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { DemoRoleSwitcher } from './components/common/DemoRoleSwitcher';
+import { ScrollToTop } from './components/common/ScrollToTop';
+import { PageTransition } from './components/common/PageTransition';
 
 // Public Pages
 import { HomePage } from './pages/public/HomePage';
@@ -57,7 +59,9 @@ const PublicLayout: React.FC = () => {
     <div className="public-site-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
       <main style={{ flex: 1 }}>
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
       <Footer />
       <DemoRoleSwitcher />
@@ -70,6 +74,7 @@ export default function App(): React.ReactElement {
     <AuthProvider>
       <CourseDataProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             {/* Public Pages */}
             <Route element={<PublicLayout />}>

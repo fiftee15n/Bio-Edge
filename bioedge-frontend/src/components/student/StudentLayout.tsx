@@ -3,6 +3,7 @@ import { Outlet, Navigate, Link } from 'react-router-dom';
 import { StudentSidebar } from '../common/StudentSidebar';
 import { useAuth } from '../../context/AuthContext';
 import { DemoRoleSwitcher } from '../common/DemoRoleSwitcher';
+import { PageTransition } from '../common/PageTransition';
 import { 
   Menu, 
   Sparkles, 
@@ -121,7 +122,9 @@ export const StudentLayout: React.FC = () => {
 
         {/* Page Viewport */}
         <main className="portal-page-viewport">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
 
