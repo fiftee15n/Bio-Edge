@@ -211,8 +211,8 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
 
       <style>{`
         .syllabus-explorer-section {
-          padding: 3.25rem 0;
-          background: #F8FAF8;
+          padding: 3.75rem 0;
+          background: #FAFCFA;
           scroll-margin-top: 85px;
         }
 
@@ -220,51 +220,59 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.6rem;
+          gap: 0.65rem;
           flex-wrap: wrap;
-          margin-top: 0.85rem;
+          margin-top: 1rem;
         }
 
         .pillar-tag {
           display: inline-flex;
           align-items: center;
-          gap: 5px;
+          gap: 6px;
           background: #FFFFFF;
           border: 1px solid var(--border-color);
-          padding: 3px 10px;
+          padding: 5px 12px;
           border-radius: var(--radius-full);
-          font-size: 0.75rem;
+          font-size: 0.78rem;
           font-weight: 700;
           color: var(--dark-green);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+          box-shadow: 0 2px 6px rgba(41, 78, 54, 0.03);
+          transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .pillar-tag:hover {
+          transform: translateY(-1px);
+          border-color: var(--primary-green);
         }
 
         .pillar-tag .dot {
-          width: 6px;
-          height: 6px;
+          width: 7px;
+          height: 7px;
           border-radius: 50%;
           background: var(--primary-green);
+          box-shadow: 0 0 6px rgba(78, 134, 95, 0.4);
         }
 
         /* Month Navigation Tabs */
         .month-tabs-nav {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 0.85rem;
-          margin-bottom: 1.5rem;
+          gap: 1rem;
+          margin-bottom: 1.75rem;
         }
 
         .month-tab-btn {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          padding: 1rem 1.15rem;
-          border-radius: var(--radius-lg);
+          padding: 1.15rem 1.25rem;
+          border-radius: 18px;
           background: #FFFFFF;
           border: 1.5px solid var(--border-color);
           cursor: pointer;
-          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
           text-align: left;
+          position: relative;
         }
 
         .month-tab-btn:hover {
@@ -276,25 +284,25 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         .month-tab-btn.active {
           background: #FFFFFF;
           border-color: var(--dark-green);
-          box-shadow: 0 4px 14px rgba(49, 91, 61, 0.12);
+          box-shadow: 0 8px 24px rgba(41, 78, 54, 0.08);
           border-width: 2px;
         }
 
         .month-tab-btn .m-num {
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           font-weight: 800;
           text-transform: uppercase;
           letter-spacing: 0.04em;
           color: var(--primary-green);
-          margin-bottom: 0.25rem;
+          margin-bottom: 0.3rem;
         }
 
         .month-tab-btn .m-title {
-          font-size: 0.88rem;
+          font-size: 0.92rem;
           font-weight: 700;
           color: var(--text-dark);
-          line-height: 1.25;
-          margin-bottom: 0.5rem;
+          line-height: 1.3;
+          margin-bottom: 0.6rem;
         }
 
         .month-tab-btn.active .m-title {
@@ -302,11 +310,11 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         }
 
         .month-tab-btn .m-badge {
-          font-size: 0.7rem;
+          font-size: 0.72rem;
           font-weight: 600;
           color: var(--text-muted);
           background: var(--light-green);
-          padding: 2px 7px;
+          padding: 3px 9px;
           border-radius: var(--radius-full);
           margin-top: auto;
         }
@@ -319,7 +327,7 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         /* Month Curriculum Panel */
         .month-curriculum-panel {
           background: #FFFFFF;
-          padding: 1.75rem;
+          padding: 2rem;
           border-radius: var(--radius-xl);
           border: 1px solid var(--border-color);
           box-shadow: var(--shadow-md);
@@ -330,47 +338,47 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           align-items: flex-start;
           justify-content: space-between;
           border-bottom: 1px solid var(--border-subtle);
-          padding-bottom: 1.25rem;
-          margin-bottom: 1.5rem;
+          padding-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
           flex-wrap: wrap;
-          gap: 1rem;
+          gap: 1.25rem;
         }
 
         .month-badge-pill {
           display: inline-block;
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           font-weight: 700;
           color: var(--primary-green);
           background: var(--light-green);
-          padding: 2px 8px;
+          padding: 3px 10px;
           border-radius: var(--radius-full);
-          margin-bottom: 0.35rem;
+          margin-bottom: 0.4rem;
         }
 
         .month-panel-title {
-          font-size: 1.35rem;
+          font-size: 1.45rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.25rem;
+          margin-bottom: 0.3rem;
         }
 
         .month-panel-desc {
-          font-size: 0.85rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
         }
 
         .paper-filter-toggles {
           display: flex;
-          background: #F1F6F2;
-          padding: 3px;
+          background: #EEF5F0;
+          padding: 4px;
           border-radius: var(--radius-full);
-          gap: 3px;
+          gap: 4px;
         }
 
         .paper-filter-btn {
-          padding: 0.4rem 0.85rem;
+          padding: 0.45rem 0.95rem;
           border-radius: var(--radius-full);
-          font-size: 0.78rem;
+          font-size: 0.8rem;
           font-weight: 600;
           color: var(--text-muted);
           border: none;
@@ -386,15 +394,15 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         .paper-filter-btn.active {
           background: #FFFFFF;
           color: var(--dark-green);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
         /* Curriculum Columns */
         .curriculum-columns-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-          margin-bottom: 1.5rem;
+          gap: 1.75rem;
+          margin-bottom: 1.75rem;
         }
 
         .curriculum-columns-grid.single-col {
@@ -407,47 +415,47 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           background: #FAFCFA;
           border: 1px solid var(--border-color);
           border-radius: var(--radius-lg);
-          padding: 1.25rem;
+          padding: 1.4rem;
         }
 
         .paper-col-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding-bottom: 0.85rem;
+          padding-bottom: 1rem;
           border-bottom: 1px solid var(--border-subtle);
-          margin-bottom: 0.85rem;
+          margin-bottom: 1rem;
         }
 
         .paper-col-title-wrap {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
+          gap: 0.75rem;
         }
 
         .paper-icon {
-          font-size: 1.35rem;
+          font-size: 1.4rem;
         }
 
         .paper-col-title {
-          font-size: 1rem;
+          font-size: 1.05rem;
           font-weight: 700;
           color: var(--dark-green);
           line-height: 1.2;
         }
 
         .paper-col-sub {
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           color: var(--text-muted);
         }
 
         .classes-counter-pill {
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           font-weight: 700;
           color: var(--primary-green);
           background: #FFFFFF;
           border: 1px solid var(--border-color);
-          padding: 2px 8px;
+          padding: 3px 9px;
           border-radius: var(--radius-full);
         }
 
@@ -455,47 +463,48 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         .classes-timeline-list {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
+          gap: 0.6rem;
         }
 
         .class-timeline-item {
           display: flex;
           align-items: flex-start;
-          gap: 0.75rem;
-          padding: 0.65rem 0.75rem;
+          gap: 0.85rem;
+          padding: 0.75rem 0.95rem;
           border-radius: var(--radius-md);
           background: #FFFFFF;
           border: 1px solid var(--border-subtle);
-          transition: all 0.15s ease;
+          transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .class-timeline-item:hover {
-          border-color: var(--primary-green);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+          border-color: rgba(78, 134, 95, 0.35);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(41, 78, 54, 0.04);
         }
 
         .class-timeline-item.is-exam-item {
-          background: #FEF2F2;
-          border-color: #FECACA;
+          background: #FEF5F5;
+          border-color: #FED7D7;
         }
 
         .class-timeline-item.is-test-item {
-          background: #FFFBEB;
-          border-color: #FDE68A;
+          background: #FEF9EE;
+          border-color: #FEE8B7;
         }
 
         .class-timeline-item.is-revision-item {
-          background: #F0FDF4;
-          border-color: #BBF7D0;
+          background: #F4FAF5;
+          border-color: #CDEFD7;
         }
 
         .class-num-badge {
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           font-weight: 800;
           color: var(--dark-green);
           background: var(--light-green);
-          padding: 2px 6px;
-          border-radius: var(--radius-sm);
+          padding: 3px 7px;
+          border-radius: 8px;
           flex-shrink: 0;
           font-family: var(--font-sans);
         }
@@ -508,21 +517,22 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         .class-body-details {
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 3px;
           flex: 1;
         }
 
         .class-top-meta {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.45rem;
         }
 
         .class-ch-tag {
-          font-size: 0.68rem;
+          font-size: 0.7rem;
           font-weight: 700;
           color: var(--primary-green);
           text-transform: uppercase;
+          letter-spacing: 0.02em;
         }
 
         .class-ch-tag.zoology-tag {
@@ -530,9 +540,9 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         }
 
         .class-badge-pill {
-          font-size: 0.62rem;
+          font-size: 0.64rem;
           font-weight: 700;
-          padding: 1px 6px;
+          padding: 2px 7px;
           border-radius: var(--radius-full);
           text-transform: uppercase;
         }
@@ -553,35 +563,36 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         }
 
         .class-title-text {
-          font-size: 0.84rem;
+          font-size: 0.86rem;
           font-weight: 600;
           color: var(--text-dark);
-          line-height: 1.3;
+          line-height: 1.35;
         }
 
         /* Monthly Exam Milestone Box */
         .monthly-exam-milestone-box {
-          background: linear-gradient(135deg, #0B1710 0%, #162B1F 100%);
+          background: linear-gradient(135deg, #1C3825 0%, #112519 100%);
           color: #FFFFFF;
-          border-radius: var(--radius-lg);
-          padding: 1.25rem 1.5rem;
+          border-radius: 20px;
+          padding: 1.5rem 1.75rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 1.5rem;
+          gap: 1.75rem;
           flex-wrap: wrap;
+          box-shadow: 0 8px 24px rgba(17, 37, 25, 0.2);
         }
 
         .exam-milestone-left {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 1.15rem;
           max-width: 540px;
         }
 
         .exam-trophy-icon {
-          width: 44px;
-          height: 44px;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
           background: rgba(245, 158, 11, 0.2);
           color: #FBBF24;
@@ -589,43 +600,44 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          border: 1px solid rgba(245, 158, 11, 0.4);
+          border: 1px solid rgba(245, 158, 11, 0.35);
+          box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
         }
 
         .exam-milestone-tag {
-          font-size: 0.68rem;
+          font-size: 0.7rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           color: #34D399;
           display: block;
-          margin-bottom: 2px;
+          margin-bottom: 3px;
         }
 
         .exam-milestone-title {
-          font-size: 1.15rem;
+          font-size: 1.2rem;
           font-weight: 700;
           color: #FFFFFF;
-          line-height: 1.2;
+          line-height: 1.25;
         }
 
         .exam-milestone-desc {
-          font-size: 0.78rem;
-          color: #94A3B8;
-          margin-top: 2px;
+          font-size: 0.82rem;
+          color: #CBD5E1;
+          margin-top: 3px;
         }
 
         .exam-milestone-syllabus-pills {
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.45rem;
         }
 
         .syllabus-pill {
-          font-size: 0.76rem;
+          font-size: 0.78rem;
           background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          padding: 4px 10px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          padding: 5px 12px;
           border-radius: var(--radius-sm);
           color: #E2E8F0;
         }
@@ -639,7 +651,7 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           align-items: center;
           justify-content: center;
           gap: 1rem;
-          margin-top: 2rem;
+          margin-top: 2.25rem;
           flex-wrap: wrap;
         }
 

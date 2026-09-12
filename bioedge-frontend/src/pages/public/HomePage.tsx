@@ -848,71 +848,83 @@ export const HomePage: React.FC = () => {
         .benefits-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
+          gap: 1.25rem;
         }
         .benefit-card {
-          padding: 1.15rem;
+          padding: 1.4rem;
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--border-color);
+          background: #FFFFFF;
+          transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .benefit-card:hover {
+          transform: translateY(-3px);
+          border-color: rgba(78, 134, 95, 0.3);
+          box-shadow: var(--shadow-md);
         }
         .benefit-header {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 0.4rem;
+          gap: 0.75rem;
+          margin-bottom: 0.65rem;
         }
         .benefit-icon {
           color: var(--primary-green);
+          flex-shrink: 0;
         }
         .benefit-title {
-          font-size: 0.95rem;
+          font-size: 1rem;
           font-weight: 700;
           color: var(--text-dark);
+          line-height: 1.3;
         }
         .benefit-text {
-          font-size: 0.82rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          line-height: 1.45;
+          line-height: 1.5;
         }
 
         /* Timeline Grid */
         .timeline-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
+          gap: 1.25rem;
         }
         .timeline-card {
-          padding: 1.15rem 1rem;
-          border-top: 3px solid var(--primary-green);
+          padding: 1.4rem;
+          border-radius: var(--radius-lg);
+          border-top: 4px solid var(--primary-green);
         }
         .month-badge {
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           font-weight: 700;
           color: var(--primary-green);
           text-transform: uppercase;
           margin-bottom: 0.35rem;
         }
         .month-title {
-          font-size: 0.98rem;
+          font-size: 1.05rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.4rem;
+          margin-bottom: 0.45rem;
         }
         .month-desc {
-          font-size: 0.8rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-bottom: 0.65rem;
-          line-height: 1.35;
+          margin-bottom: 0.75rem;
+          line-height: 1.45;
         }
         .month-list {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 0.3rem;
-          font-size: 0.78rem;
+          gap: 0.35rem;
+          font-size: 0.8rem;
           color: var(--text-dark);
         }
         .month-list li {
           position: relative;
-          padding-left: 0.85rem;
+          padding-left: 0.95rem;
         }
         .month-list li::before {
           content: '•';
@@ -927,33 +939,36 @@ export const HomePage: React.FC = () => {
           display: flex;
           justify-content: center;
           gap: 0.75rem;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
         }
         .paper-tab-btn {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          padding: 0.65rem 1.25rem;
-          border-radius: var(--radius-md);
+          gap: 0.6rem;
+          padding: 0.7rem 1.4rem;
+          border-radius: var(--radius-full);
           background: #FFFFFF;
-          border: 1px solid var(--border-color);
+          border: 1.5px solid var(--border-color);
           font-size: 0.92rem;
           font-weight: 600;
           color: var(--text-dark);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
           transition: all 0.2s ease;
         }
         .paper-tab-btn:hover {
           border-color: var(--primary-green);
+          transform: translateY(-1px);
         }
         .paper-tab-btn.active {
           background: var(--dark-green);
           color: #FFFFFF;
           border-color: var(--dark-green);
+          box-shadow: 0 4px 14px rgba(41, 78, 54, 0.15);
         }
         .paper-ch-count {
           font-size: 0.75rem;
           background: rgba(255, 255, 255, 0.2);
-          padding: 0.15rem 0.45rem;
+          padding: 0.15rem 0.5rem;
           border-radius: var(--radius-full);
         }
         .paper-tab-btn:not(.active) .paper-ch-count {
@@ -963,70 +978,76 @@ export const HomePage: React.FC = () => {
         .chapters-display-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-          margin-bottom: 1.75rem;
+          gap: 1.25rem;
+          margin-bottom: 2rem;
         }
         .chapter-item-card {
-          padding: 1.15rem;
+          padding: 1.35rem;
+          border-radius: var(--radius-lg);
         }
         .ch-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.65rem;
         }
         .ch-num-badge {
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           font-weight: 700;
           color: var(--primary-green);
           background: var(--light-green);
-          padding: 0.15rem 0.45rem;
+          padding: 0.2rem 0.6rem;
           border-radius: var(--radius-sm);
         }
         .ch-topics-count {
-          font-size: 0.72rem;
+          font-size: 0.75rem;
           color: var(--text-muted);
         }
         .ch-name {
-          font-size: 0.95rem;
+          font-size: 1rem;
           font-weight: 700;
           color: var(--text-dark);
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.65rem;
+          line-height: 1.3;
         }
         .ch-topics-list {
           display: flex;
           flex-direction: column;
-          gap: 0.35rem;
+          gap: 0.4rem;
         }
         .ch-topic-bullet {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
-          font-size: 0.78rem;
+          gap: 0.45rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
         }
         .topic-bullet-dot {
-          width: 4px;
-          height: 4px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
-          background: var(--border-color);
+          background: var(--primary-green);
+          opacity: 0.6;
         }
         .more-topics-tag {
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           color: var(--primary-green);
           font-weight: 600;
-          margin-top: 0.2rem;
+          margin-top: 0.3rem;
         }
 
         /* Teacher Spotlight */
         .teacher-profile-card {
           background: #FFFFFF;
-          padding: 2.25rem;
+          padding: 2.75rem;
+          border-radius: var(--radius-xl);
+          border: 1px solid var(--border-color);
+          box-shadow: var(--shadow-md);
         }
         .teacher-grid {
           display: grid;
-          grid-template-columns: 240px 1fr;
-          gap: 2.25rem;
+          grid-template-columns: 260px 1fr;
+          gap: 2.5rem;
           align-items: center;
         }
         .teacher-visual-box {
@@ -1036,185 +1057,190 @@ export const HomePage: React.FC = () => {
           text-align: center;
         }
         .teacher-avatar-large {
-          width: 110px;
-          height: 110px;
+          width: 120px;
+          height: 120px;
           border-radius: 50%;
-          background: var(--dark-green);
+          background: linear-gradient(135deg, var(--dark-green) 0%, #1A3423 100%);
           color: #FFFFFF;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 2.4rem;
+          font-size: 2.5rem;
           font-weight: 700;
           font-family: var(--font-heading);
-          margin-bottom: 1rem;
-          border: 3px solid var(--light-green);
-          box-shadow: var(--shadow-md);
+          margin-bottom: 1.25rem;
+          border: 4px solid var(--light-green);
+          box-shadow: 0 8px 24px rgba(41, 78, 54, 0.15);
         }
         .teacher-quick-stats {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 0.5rem;
+          gap: 0.65rem;
           width: 100%;
         }
         .t-stat {
           background: var(--light-green-subtle);
           border: 1px solid var(--border-subtle);
-          padding: 0.5rem 0.4rem;
+          padding: 0.6rem 0.5rem;
           border-radius: var(--radius-md);
           display: flex;
           flex-direction: column;
         }
         .t-stat strong {
-          font-size: 0.88rem;
+          font-size: 0.92rem;
           color: var(--dark-green);
         }
         .t-stat span {
-          font-size: 0.68rem;
+          font-size: 0.72rem;
           color: var(--text-muted);
         }
         .teacher-name-heading {
-          font-size: 1.85rem;
+          font-size: 2rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-top: 0.35rem;
-          margin-bottom: 0.2rem;
+          margin-top: 0.4rem;
+          margin-bottom: 0.25rem;
         }
         .teacher-institution-text {
-          font-size: 0.9rem;
+          font-size: 0.95rem;
           color: var(--primary-green);
           font-weight: 600;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.6rem;
         }
         .teacher-specialization-text {
-          font-size: 0.85rem;
+          font-size: 0.88rem;
           color: var(--text-dark);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.85rem;
         }
         .teacher-bio-text {
-          font-size: 0.88rem;
+          font-size: 0.9rem;
           color: var(--text-muted);
-          line-height: 1.5;
-          margin-bottom: 1rem;
+          line-height: 1.55;
+          margin-bottom: 1.25rem;
         }
         .teacher-quote-box {
           background: var(--light-green);
           border-left: 3px solid var(--primary-green);
-          padding: 0.75rem 1rem;
+          padding: 0.85rem 1.15rem;
           border-radius: 0 var(--radius-md) var(--radius-md) 0;
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.5rem;
           font-style: italic;
-          font-size: 0.86rem;
+          font-size: 0.9rem;
           color: var(--dark-green);
         }
         .teacher-actions-row {
           display: flex;
           align-items: center;
-          gap: 0.85rem;
+          gap: 1rem;
+          flex-wrap: wrap;
         }
 
         /* Why Seats */
         .why-seats-card {
           display: grid;
           grid-template-columns: 1.4fr 0.8fr;
-          gap: 2.25rem;
-          padding: 2.25rem;
+          gap: 2.5rem;
+          padding: 2.75rem;
           align-items: center;
-          background: linear-gradient(135deg, #FFFFFF 0%, #FAFDFB 100%);
+          border-radius: var(--radius-xl);
+          background: linear-gradient(135deg, #FFFFFF 0%, #F8FAF8 100%);
         }
         .why-seats-title {
-          font-size: 1.85rem;
+          font-size: 2rem;
           color: var(--dark-green);
-          margin-top: 0.35rem;
-          margin-bottom: 0.6rem;
+          margin-top: 0.4rem;
+          margin-bottom: 0.75rem;
         }
         .why-seats-desc {
-          font-size: 0.92rem;
+          font-size: 0.95rem;
           color: var(--text-muted);
-          line-height: 1.5;
-          margin-bottom: 1.25rem;
+          line-height: 1.55;
+          margin-bottom: 1.5rem;
         }
         .why-seats-points {
           display: flex;
           flex-direction: column;
-          gap: 0.85rem;
+          gap: 1rem;
         }
         .seat-point {
           display: flex;
           align-items: flex-start;
-          gap: 0.75rem;
+          gap: 0.85rem;
         }
         .point-icon {
           color: var(--primary-green);
-          margin-top: 0.15rem;
+          margin-top: 0.2rem;
           flex-shrink: 0;
         }
         .seat-point strong {
-          font-size: 0.9rem;
+          font-size: 0.94rem;
           color: var(--text-dark);
         }
         .seat-point p {
-          font-size: 0.8rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-top: 0.1rem;
+          margin-top: 0.15rem;
+          line-height: 1.45;
         }
         .why-seats-counter-box {
           background: var(--light-green-subtle);
           border: 1px solid var(--border-color);
           border-radius: var(--radius-lg);
-          padding: 1.75rem 1.25rem;
+          padding: 2rem 1.5rem;
           text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
+          box-shadow: var(--shadow-sm);
         }
         .counter-label {
           font-size: 0.78rem;
-          font-weight: 600;
+          font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.03em;
+          letter-spacing: 0.04em;
           color: var(--primary-green);
-          margin-bottom: 0.85rem;
+          margin-bottom: 1rem;
         }
         .seats-circle {
-          width: 90px;
-          height: 90px;
+          width: 96px;
+          height: 96px;
           border-radius: 50%;
-          background: var(--dark-green);
+          background: linear-gradient(135deg, var(--dark-green) 0%, #1A3423 100%);
           color: #FFFFFF;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          margin-bottom: 0.85rem;
-          box-shadow: var(--shadow-md);
+          margin-bottom: 1rem;
+          box-shadow: 0 8px 24px rgba(41, 78, 54, 0.2);
         }
         .seats-num {
-          font-size: 2rem;
+          font-size: 2.2rem;
           font-weight: 700;
           font-family: var(--font-heading);
           line-height: 1;
         }
         .seats-caption {
-          font-size: 0.62rem;
+          font-size: 0.65rem;
           text-transform: uppercase;
           letter-spacing: 0.04em;
           opacity: 0.9;
         }
         .counter-subtext {
-          font-size: 0.8rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-bottom: 1.15rem;
+          margin-bottom: 1.25rem;
         }
 
         /* Schedule Preview Grid */
         .schedule-list-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
+          gap: 1.25rem;
         }
         .schedule-preview-card {
-          padding: 1.15rem;
+          padding: 1.35rem;
+          border-radius: var(--radius-lg);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -1223,35 +1249,38 @@ export const HomePage: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.85rem;
         }
         .sched-day-time {
-          font-size: 0.75rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
           font-weight: 500;
         }
         .sched-paper-tag {
-          font-size: 0.72rem;
-          font-weight: 600;
+          font-size: 0.74rem;
+          font-weight: 700;
           color: var(--primary-green);
           text-transform: uppercase;
+          letter-spacing: 0.02em;
         }
         .sched-title {
-          font-size: 0.98rem;
+          font-size: 1.02rem;
           font-weight: 700;
           color: var(--text-dark);
-          margin-top: 0.25rem;
-          margin-bottom: 0.35rem;
+          margin-top: 0.3rem;
+          margin-bottom: 0.4rem;
+          line-height: 1.3;
         }
         .sched-topic {
-          font-size: 0.8rem;
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-bottom: 0.85rem;
+          margin-bottom: 1rem;
+          line-height: 1.4;
         }
         .sched-footer {
           border-top: 1px solid var(--border-subtle);
-          padding-top: 0.6rem;
-          font-size: 0.76rem;
+          padding-top: 0.75rem;
+          font-size: 0.78rem;
           color: var(--text-muted);
         }
 
@@ -1260,35 +1289,36 @@ export const HomePage: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 0.75rem;
+          gap: 0.85rem;
           flex-wrap: wrap;
         }
         .flow-step-card {
           flex: 1;
-          min-width: 160px;
-          padding: 1.15rem 1rem;
+          min-width: 170px;
+          padding: 1.35rem 1.15rem;
           text-align: center;
+          border-radius: var(--radius-lg);
         }
         .step-num {
-          font-size: 1.35rem;
-          font-weight: 700;
+          font-size: 1.45rem;
+          font-weight: 800;
           font-family: var(--font-heading);
           color: var(--primary-green);
-          margin-bottom: 0.35rem;
+          margin-bottom: 0.4rem;
         }
         .step-title {
-          font-size: 1rem;
+          font-size: 1.05rem;
           font-weight: 700;
           color: var(--dark-green);
-          margin-bottom: 0.35rem;
+          margin-bottom: 0.4rem;
         }
         .step-desc {
-          font-size: 0.78rem;
+          font-size: 0.82rem;
           color: var(--text-muted);
-          line-height: 1.35;
+          line-height: 1.4;
         }
         .flow-step-arrow {
-          font-size: 1.25rem;
+          font-size: 1.35rem;
           color: var(--primary-green);
           font-weight: bold;
         }
@@ -1297,35 +1327,37 @@ export const HomePage: React.FC = () => {
         .pricing-cards-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-          max-width: 800px;
-          margin: 0 auto 1.75rem;
+          gap: 1.75rem;
+          max-width: 840px;
+          margin: 0 auto 2rem;
         }
         .pricing-card {
-          padding: 2rem;
+          padding: 2.25rem;
+          border-radius: var(--radius-xl);
           display: flex;
           flex-direction: column;
           position: relative;
         }
         .featured-pricing-card {
           border: 2px solid var(--dark-green);
-          box-shadow: var(--shadow-md);
+          box-shadow: 0 12px 32px rgba(41, 78, 54, 0.12);
         }
         .pricing-badge-popular {
           position: absolute;
-          top: -12px;
+          top: -14px;
           left: 50%;
           transform: translateX(-50%);
           background: var(--dark-green);
           color: #FFFFFF;
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           font-weight: 700;
-          padding: 0.25rem 0.8rem;
+          padding: 0.3rem 0.95rem;
           border-radius: var(--radius-full);
           letter-spacing: 0.03em;
+          box-shadow: 0 4px 12px rgba(41, 78, 54, 0.2);
         }
         .pricing-plan-name {
-          font-size: 1.2rem;
+          font-size: 1.25rem;
           font-weight: 700;
           color: var(--dark-green);
           margin-bottom: 0.5rem;
@@ -1333,44 +1365,45 @@ export const HomePage: React.FC = () => {
         .pricing-amount {
           display: flex;
           align-items: baseline;
-          gap: 0.2rem;
+          gap: 0.25rem;
           margin-bottom: 0.5rem;
         }
         .currency {
-          font-size: 1.35rem;
+          font-size: 1.45rem;
           font-weight: 600;
           color: var(--dark-green);
         }
         .price-val {
-          font-size: 2.5rem;
+          font-size: 2.6rem;
           font-weight: 800;
           font-family: var(--font-heading);
           color: var(--dark-green);
           line-height: 1;
         }
         .price-period {
-          font-size: 0.8rem;
+          font-size: 0.82rem;
           color: var(--text-muted);
         }
         .pricing-plan-desc {
-          font-size: 0.84rem;
+          font-size: 0.86rem;
           color: var(--text-muted);
-          margin-bottom: 1.25rem;
-          min-height: 38px;
+          margin-bottom: 1.35rem;
+          min-height: 40px;
+          line-height: 1.45;
         }
         .pricing-features {
           list-style: none;
           display: flex;
           flex-direction: column;
-          gap: 0.65rem;
-          margin-bottom: 1.5rem;
+          gap: 0.75rem;
+          margin-bottom: 1.75rem;
           flex: 1;
         }
         .pricing-features li {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-size: 0.84rem;
+          gap: 0.6rem;
+          font-size: 0.86rem;
           color: var(--text-dark);
         }
         .p-check {
@@ -1382,53 +1415,58 @@ export const HomePage: React.FC = () => {
           align-items: center;
           justify-content: space-between;
           background: var(--light-green);
-          border-color: rgba(49, 91, 61, 0.2);
-          padding: 1rem 1.5rem;
-          max-width: 800px;
+          border: 1px solid rgba(41, 78, 54, 0.15);
+          border-radius: var(--radius-lg);
+          padding: 1.15rem 1.65rem;
+          max-width: 840px;
           margin: 0 auto;
         }
         .notice-left {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.85rem;
         }
         .notice-icon {
           color: var(--dark-green);
+          flex-shrink: 0;
         }
         .notice-left strong {
           color: var(--dark-green);
-          font-size: 0.9rem;
+          font-size: 0.92rem;
         }
         .notice-left p {
-          font-size: 0.78rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
           margin-top: 0.1rem;
         }
         .remaining-tag {
           background: var(--dark-green);
           color: #FFFFFF;
-          font-size: 0.76rem;
+          font-size: 0.78rem;
           font-weight: 700;
-          padding: 0.35rem 0.8rem;
+          padding: 0.4rem 0.9rem;
           border-radius: var(--radius-full);
           white-space: nowrap;
+          box-shadow: 0 2px 6px rgba(41, 78, 54, 0.15);
         }
 
         /* FAQ */
         .faq-accordion-container {
-          max-width: 780px;
+          max-width: 820px;
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          gap: 0.85rem;
         }
         .faq-item {
-          padding: 1rem 1.5rem;
+          padding: 1.15rem 1.65rem;
+          border-radius: var(--radius-lg);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .faq-item:hover {
-          border-color: var(--primary-green);
+          border-color: rgba(78, 134, 95, 0.35);
+          transform: translateY(-1px);
         }
         .faq-question-row {
           display: flex;
@@ -1437,70 +1475,72 @@ export const HomePage: React.FC = () => {
           gap: 1rem;
         }
         .faq-q-text {
-          font-size: 0.98rem;
+          font-size: 1.02rem;
           font-weight: 600;
           color: var(--text-dark);
         }
         .faq-chevron {
           color: var(--primary-green);
+          flex-shrink: 0;
         }
         .faq-answer-row {
-          margin-top: 0.75rem;
-          padding-top: 0.75rem;
+          margin-top: 0.85rem;
+          padding-top: 0.85rem;
           border-top: 1px solid var(--border-subtle);
         }
         .faq-a-text {
-          font-size: 0.88rem;
+          font-size: 0.9rem;
           color: var(--text-muted);
-          line-height: 1.5;
+          line-height: 1.55;
         }
 
         /* Final CTA */
         .final-cta-section {
-          padding: 2.75rem 0 4.5rem;
+          padding: 3rem 0 5rem;
         }
         .final-cta-card {
-          background: linear-gradient(135deg, var(--dark-green) 0%, #1c3823 100%);
+          background: linear-gradient(135deg, #1C3825 0%, #112418 100%);
           color: #FFFFFF;
-          padding: 3.25rem 2rem;
+          padding: 3.75rem 2.25rem;
           text-align: center;
           border-radius: var(--radius-xl);
+          box-shadow: 0 16px 44px rgba(17, 36, 24, 0.25);
         }
         .final-cta-content {
-          max-width: 680px;
+          max-width: 700px;
           margin: 0 auto;
         }
         .final-pill {
           display: inline-block;
-          font-size: 0.72rem;
+          font-size: 0.74rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           background: rgba(255, 255, 255, 0.15);
           color: #FFFFFF;
-          padding: 0.3rem 0.75rem;
+          padding: 0.35rem 0.85rem;
           border-radius: var(--radius-full);
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.85rem;
         }
         .final-cta-heading {
-          font-size: 2.2rem;
+          font-size: 2.35rem;
           font-weight: 700;
           color: #FFFFFF;
-          margin-bottom: 0.85rem;
+          margin-bottom: 0.95rem;
           line-height: 1.2;
         }
         .final-cta-desc {
-          font-size: 0.98rem;
+          font-size: 1rem;
           color: #E2E8F0;
-          line-height: 1.55;
-          margin-bottom: 1.5rem;
+          line-height: 1.6;
+          margin-bottom: 1.75rem;
         }
         .final-cta-meta {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.65rem;
-          margin-bottom: 1.75rem;
+          gap: 0.75rem;
+          margin-bottom: 2rem;
         }
         .final-cta-actions {
           display: flex;
