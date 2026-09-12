@@ -67,9 +67,17 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6.2 Program Highlights */}
-      <section className="section-padding highlights-section">
+      {/* 1. Course Structure: Program Highlights & 4-Month Roadmap */}
+      <section className="section-padding highlights-section" id="structure">
         <div className="container">
+          <div className="section-header text-center">
+            <span className="section-pill">Program Structure</span>
+            <h2 className="section-title">Course Structure & Intensive Framework</h2>
+            <p className="section-subtitle">
+              A meticulously designed 4-month academic blueprint tailored for HSC Board GPA 5.0 and top Medical rank.
+            </p>
+          </div>
+
           <div className="highlights-grid">
             <div className="highlight-card bio-card">
               <div className="highlight-icon-box">
@@ -122,7 +130,70 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6.3 What Students Will Get */}
+      {/* 4-Month Progression Timeline */}
+      <section className="section-padding timeline-section" style={{ paddingTop: '0' }}>
+        <div className="container">
+          <div className="timeline-grid">
+            <div className="timeline-card bio-card">
+              <div className="month-badge">Month 01</div>
+              <h3 className="month-title">Foundation + Concept Building</h3>
+              <p className="month-desc">
+                Focus on Cellular Architecture, Cell Division mechanisms, Biomolecules, and Fundamental Animal Organization.
+              </p>
+              <ul className="month-list">
+                <li>Cell Structure & Fluid Mosaic Model</li>
+                <li>Mitosis & Meiosis Crossing Over</li>
+                <li>Carbohydrates & Enzyme Kinetics</li>
+                <li>Weekly Chapter Quizzes</li>
+              </ul>
+            </div>
+
+            <div className="timeline-card bio-card">
+              <div className="month-badge">Month 02</div>
+              <h3 className="month-title">Advanced Chapter Coverage + Practice</h3>
+              <p className="month-desc">
+                In-depth study of Microorganisms, Plant Classification, Animal Identification (Hydra, Grasshopper, Rohu Fish) and Digestion.
+              </p>
+              <ul className="month-list">
+                <li>Viruses & Bacterial Genetics</li>
+                <li>Algae, Fungi & Gymnosperms</li>
+                <li>Organ System Morphology</li>
+                <li>Structured CQ Answer Sessions</li>
+              </ul>
+            </div>
+
+            <div className="timeline-card bio-card">
+              <div className="month-badge">Month 03</div>
+              <h3 className="month-title">Syllabus Reinforcement + Assessments</h3>
+              <p className="month-desc">
+                Plant Physiology (Photosynthesis, Respiration), Human Circulation, Respiration, Excretion, and Biotechnology.
+              </p>
+              <ul className="month-list">
+                <li>C3/C4 Cycles & Glycolysis</li>
+                <li>Cardiac Cycle & Nephron Physiology</li>
+                <li>Recombinant DNA & Gene Cloning</li>
+                <li>Mid-Term Comprehensive Assessments</li>
+              </ul>
+            </div>
+
+            <div className="timeline-card bio-card">
+              <div className="month-badge">Month 04</div>
+              <h3 className="month-title">Revision + Full Model Tests</h3>
+              <p className="month-desc">
+                Human Genetics, Evolution, Defense Mechanisms, Complete Board Revision, and Timed Board Model Tests.
+              </p>
+              <ul className="month-list">
+                <li>Mendelian Genetics & Sex Linkage</li>
+                <li>Immunity & Antibody Chemistry</li>
+                <li>Full Syllabus First Paper Model Tests</li>
+                <li>Full Syllabus Second Paper Model Tests</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Core Pillars */}
       <section className="section-padding benefits-section">
         <div className="container">
           <div className="section-header text-center">
@@ -217,81 +288,10 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6.4 4-Month Program Structure Timeline */}
-      <section className="section-padding timeline-section">
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-pill">4-Month Roadmap</span>
-            <h2 className="section-title">Program Structure & Progression</h2>
-            <p className="section-subtitle">
-              From foundational concepts to complete full-syllabus model tests.
-            </p>
-          </div>
-
-          <div className="timeline-grid">
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 01</div>
-              <h3 className="month-title">Foundation + Concept Building</h3>
-              <p className="month-desc">
-                Focus on Cellular Architecture, Cell Division mechanisms, Biomolecules, and Fundamental Animal Organization.
-              </p>
-              <ul className="month-list">
-                <li>Cell Structure & Fluid Mosaic Model</li>
-                <li>Mitosis & Meiosis Crossing Over</li>
-                <li>Carbohydrates & Enzyme Kinetics</li>
-                <li>Weekly Chapter Quizzes</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 02</div>
-              <h3 className="month-title">Advanced Chapter Coverage + Practice</h3>
-              <p className="month-desc">
-                In-depth study of Microorganisms, Plant Classification, Animal Identification (Hydra, Grasshopper, Rohu Fish) and Digestion.
-              </p>
-              <ul className="month-list">
-                <li>Viruses & Bacterial Genetics</li>
-                <li>Algae, Fungi & Gymnosperms</li>
-                <li>Organ System Morphology</li>
-                <li>Structured CQ Answer Sessions</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 03</div>
-              <h3 className="month-title">Syllabus Reinforcement + Assessments</h3>
-              <p className="month-desc">
-                Plant Physiology (Photosynthesis, Respiration), Human Circulation, Respiration, Excretion, and Biotechnology.
-              </p>
-              <ul className="month-list">
-                <li>C3/C4 Cycles & Glycolysis</li>
-                <li>Cardiac Cycle & Nephron Physiology</li>
-                <li>Recombinant DNA & Gene Cloning</li>
-                <li>Mid-Term Comprehensive Assessments</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 04</div>
-              <h3 className="month-title">Revision + Full Model Tests</h3>
-              <p className="month-desc">
-                Human Genetics, Evolution, Defense Mechanisms, Complete Board Revision, and Timed Board Model Tests.
-              </p>
-              <ul className="month-list">
-                <li>Mendelian Genetics & Sex Linkage</li>
-                <li>Immunity & Antibody Chemistry</li>
-                <li>Full Syllabus First Paper Model Tests</li>
-                <li>Full Syllabus Second Paper Model Tests</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive 3D Bento Section */}
+      {/* 3. Multi-Dimensional Biology */}
       <Interactive3DBento />
 
-      {/* 6.5 Course Coverage (First & Second Paper Explorer) */}
+      {/* 4. Curriculum Explorer */}
       <section className="section-padding curriculum-section">
         <div className="container">
           <div className="section-header text-center">
