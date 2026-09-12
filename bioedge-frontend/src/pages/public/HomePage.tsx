@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { Hero3DCardDeck } from '../../components/home/Hero3DCardDeck';
+import { Interactive3DBento } from '../../components/home/Interactive3DBento';
+import { CurvedAvatarMarquee } from '../../components/home/CurvedAvatarMarquee';
 import { 
   CheckCircle2, 
   Calendar, 
@@ -142,6 +145,24 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 3D Biological Concept Deck Showcase (Inspired by Pinterest 3D Design) */}
+      <section className="section-padding bg-studio-glow" style={{ background: 'linear-gradient(180deg, var(--bg-color) 0%, #EFF6F0 50%, #FFFFFF 100%)', paddingBottom: '3rem' }}>
+        <div className="container text-center">
+          <div className="inline-floating-badge">
+            <Sparkles size={16} />
+            <span>Interactive 3D Visual Experience</span>
+          </div>
+          <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>
+            A place to master your biological concepts.
+          </h2>
+          <p className="section-subtitle" style={{ maxWidth: '640px', margin: '0 auto 1rem' }}>
+            Explore high-yield HSC Botany & Zoology chapters in interactive 3D perspective cards. Hover to fan out, click to inspect key CQ hotspots.
+          </p>
+
+          <Hero3DCardDeck />
         </div>
       </section>
 
@@ -366,6 +387,9 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Interactive 3D Bento Section */}
+      <Interactive3DBento />
+
       {/* 6.5 Course Coverage (First & Second Paper Explorer) */}
       <section className="section-padding curriculum-section">
         <div className="container">
@@ -477,6 +501,9 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Curved Avatar Community Stage ("You will find yourself among us") */}
+      <CurvedAvatarMarquee />
 
       {/* 6.7 Why Limited Seats? */}
       <section className="section-padding why-seats-section">
