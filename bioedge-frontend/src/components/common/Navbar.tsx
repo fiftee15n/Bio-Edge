@@ -27,9 +27,10 @@ export const Navbar: React.FC = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+  const isHome = location.pathname === '/';
 
   return (
-    <header className="navbar-wrapper">
+    <header className={`navbar-wrapper ${isHome ? 'is-home-nav' : ''}`}>
       <div className="container">
         <div className="navbar-container">
           {/* Logo */}
@@ -269,6 +270,38 @@ export const Navbar: React.FC = () => {
           display: none;
           color: var(--text-dark);
         }
+
+        /* Dark Home Hero Navbar Theme */
+        .navbar-wrapper.is-home-nav {
+          background: rgba(8, 19, 12, 0.96);
+          backdrop-filter: blur(14px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .navbar-wrapper.is-home-nav .brand-title {
+          color: #FFFFFF;
+        }
+        .navbar-wrapper.is-home-nav .brand-subtitle {
+          color: #34D399;
+        }
+        .navbar-wrapper.is-home-nav .nav-item {
+          color: #E2E8F0;
+        }
+        .navbar-wrapper.is-home-nav .nav-item:hover,
+        .navbar-wrapper.is-home-nav .nav-item.active {
+          color: #34D399;
+        }
+        .navbar-wrapper.is-home-nav .seats-indicator {
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(52, 211, 153, 0.3);
+          color: #34D399;
+        }
+        .navbar-wrapper.is-home-nav .btn-ghost {
+          color: #FFFFFF;
+        }
+        .navbar-wrapper.is-home-nav .mobile-toggle-btn {
+          color: #FFFFFF;
+        }
+
         .mobile-menu-drawer {
           background: #ffffff;
           border-bottom: 1px solid var(--border-color);

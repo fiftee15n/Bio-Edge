@@ -1635,7 +1635,11 @@ input, select, textarea {
   color: #FFFFFF;
   position: relative;
   overflow: hidden;
-  padding: 3.5rem 0 3rem;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem 0 0 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1711,10 +1715,15 @@ input, select, textarea {
 
 .ref-hero-container {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
 }
 
 .ref-hero-grid {
@@ -1722,6 +1731,7 @@ input, select, textarea {
   grid-template-columns: 280px 1.25fr 290px;
   gap: 2rem;
   align-items: flex-end;
+  width: 100%;
 }
 
 /* Left Column */
@@ -1729,7 +1739,7 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0;
 }
 
 .ref-hero-mini-badge {
@@ -1822,6 +1832,7 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  margin-bottom: 0;
 }
 
 .teacher-card-top-header {
@@ -1913,9 +1924,9 @@ input, select, textarea {
   max-width: 440px;
   margin: 0 auto;
   z-index: 5;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .center-student-img {
@@ -1924,11 +1935,11 @@ input, select, textarea {
   max-height: 520px;
   object-fit: contain;
   display: block;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.5));
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.45));
 }
 
 .student-ambient-glow {
@@ -1944,17 +1955,19 @@ input, select, textarea {
 .ref-bottom-white-card {
   background: #FFFFFF;
   color: #1F2922;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
   padding: 1.5rem 1.75rem;
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: 1.5rem;
   align-items: center;
   width: 100%;
-  margin-top: -45px;
+  margin-top: -35px;
+  margin-bottom: 0;
   z-index: 25;
-  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: none;
 }
 
 .card-cta-headline {
