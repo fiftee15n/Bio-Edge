@@ -11,20 +11,20 @@ import {
 } from '../types';
 
 export const initialCourseData: CourseData = {
-  id: "hec-bio-intensive-2026",
-  title: "Premium HEC Biology Intensive Program",
-  subtitle: "4 Months • 48 Intensive Classes • First & Second Paper • Regular Assessment",
-  description: "A structured, focused and result-oriented Biology preparation program designed to build strong concepts, improve exam performance and prepare students for HEC Biology First and Second Paper.",
+  id: "hsc-bio-intensive-2026",
+  title: "HSC Biology Intensive Program",
+  subtitle: "1st Paper & 2nd Paper • 4 Months • 48 Intensive Classes • Weekly 3 Classes • Focus: Concept • Practice • Exam • Revision • Confidence",
+  description: "A comprehensive 4-month academic blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology). 48 Intensive classes, weekly assessments, 3 monthly milestone exams, and full-length Board model tests.",
   duration: "4 Months",
   totalClasses: 48,
   seatLimit: 20,
   monthlyFee: 3500,
   fullCourseFee: 12500,
   status: "Active",
-  batchName: "Batch 01 - Alpha Cohort",
+  batchName: "Batch 01 - Intensive Cohort",
   startDate: "2026-10-01",
   classDays: "Sun, Tue, Thu (7:00 PM - 8:30 PM)",
-  whyLimitedSeats: "The program intentionally maintains a limited batch size to ensure students receive meaningful academic attention, regular feedback and a focused learning environment."
+  whyLimitedSeats: "The program strictly limits cohort capacity to 15–20 students to ensure every student receives personalized line-by-line CQ evaluation, real-time doubt clearing, and continuous academic mentorship."
 };
 
 export const initialTeacherData: TeacherData = {

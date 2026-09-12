@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
   BookOpen, 
   Calendar, 
@@ -28,7 +29,7 @@ export const ProgramPage: React.FC = () => {
           <span className="section-pill">Flagship Program</span>
           <h1 className="section-title">{course.title}</h1>
           <p className="section-subtitle">
-            A comprehensive 4-month academic blueprint encompassing all 24 chapters of HEC Biology First & Second Paper.
+            A comprehensive 4-month academic blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology).
           </p>
         </div>
 
@@ -54,6 +55,11 @@ export const ProgramPage: React.FC = () => {
             <strong className="ov-value">{course.seatLimit} Students</strong>
             <p className="ov-sub">{availableSeats} seats remaining</p>
           </div>
+        </div>
+
+        {/* 4-Month 48-Class Academic Blueprint */}
+        <div style={{ marginBottom: '3.5rem' }}>
+          <SyllabusCurriculumExplorer />
         </div>
 
         {/* Comprehensive Syllabus Explorer */}

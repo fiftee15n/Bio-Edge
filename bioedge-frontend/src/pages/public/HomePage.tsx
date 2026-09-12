@@ -5,6 +5,7 @@ import { ReferenceHeroSection } from '../../components/home/ReferenceHeroSection
 import { Hero3DCardDeck } from '../../components/home/Hero3DCardDeck';
 import { Interactive3DBento } from '../../components/home/Interactive3DBento';
 import { CurvedAvatarMarquee } from '../../components/home/CurvedAvatarMarquee';
+import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
   CheckCircle2, 
   Calendar, 
@@ -67,131 +68,8 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 1. Course Structure: Program Highlights & 4-Month Roadmap */}
-      <section className="section-padding highlights-section" id="structure">
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-pill">Program Structure</span>
-            <h2 className="section-title">Course Structure & Intensive Framework</h2>
-            <p className="section-subtitle">
-              A meticulously designed 4-month academic blueprint tailored for HSC Board GPA 5.0 and top Medical rank.
-            </p>
-          </div>
-
-          <div className="highlights-grid">
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box">
-                <Clock size={24} />
-              </div>
-              <h3 className="highlight-title">4 Months</h3>
-              <p className="highlight-desc">Complete structured preparation covering the complete syllabus.</p>
-            </div>
-
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box">
-                <BookOpen size={24} />
-              </div>
-              <h3 className="highlight-title">48 Intensive Classes</h3>
-              <p className="highlight-desc">Comprehensive conceptual coverage of both First & Second Paper.</p>
-            </div>
-
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box">
-                <Target size={24} />
-              </div>
-              <h3 className="highlight-title">Regular Assessments</h3>
-              <p className="highlight-desc">Weekly chapter MCQ quizzes & CQ answer-writing practice sessions.</p>
-            </div>
-
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box">
-                <Award size={24} />
-              </div>
-              <h3 className="highlight-title">Full Syllabus Model Tests</h3>
-              <p className="highlight-desc">Rigorous exam-oriented timed model tests for Board exam readiness.</p>
-            </div>
-
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box">
-                <GraduationCap size={24} />
-              </div>
-              <h3 className="highlight-title">Individual Feedback</h3>
-              <p className="highlight-desc">Personalized written evaluation and targeted academic guidance.</p>
-            </div>
-
-            <div className="highlight-card bio-card">
-              <div className="highlight-icon-box highlight-icon-accent">
-                <Users size={24} />
-              </div>
-              <h3 className="highlight-title">Limited Seats</h3>
-              <p className="highlight-desc">Strictly capped at 15–20 students to guarantee individual attention.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4-Month Progression Timeline */}
-      <section className="section-padding timeline-section" style={{ paddingTop: '0' }}>
-        <div className="container">
-          <div className="timeline-grid">
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 01</div>
-              <h3 className="month-title">Foundation + Concept Building</h3>
-              <p className="month-desc">
-                Focus on Cellular Architecture, Cell Division mechanisms, Biomolecules, and Fundamental Animal Organization.
-              </p>
-              <ul className="month-list">
-                <li>Cell Structure & Fluid Mosaic Model</li>
-                <li>Mitosis & Meiosis Crossing Over</li>
-                <li>Carbohydrates & Enzyme Kinetics</li>
-                <li>Weekly Chapter Quizzes</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 02</div>
-              <h3 className="month-title">Advanced Chapter Coverage + Practice</h3>
-              <p className="month-desc">
-                In-depth study of Microorganisms, Plant Classification, Animal Identification (Hydra, Grasshopper, Rohu Fish) and Digestion.
-              </p>
-              <ul className="month-list">
-                <li>Viruses & Bacterial Genetics</li>
-                <li>Algae, Fungi & Gymnosperms</li>
-                <li>Organ System Morphology</li>
-                <li>Structured CQ Answer Sessions</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 03</div>
-              <h3 className="month-title">Syllabus Reinforcement + Assessments</h3>
-              <p className="month-desc">
-                Plant Physiology (Photosynthesis, Respiration), Human Circulation, Respiration, Excretion, and Biotechnology.
-              </p>
-              <ul className="month-list">
-                <li>C3/C4 Cycles & Glycolysis</li>
-                <li>Cardiac Cycle & Nephron Physiology</li>
-                <li>Recombinant DNA & Gene Cloning</li>
-                <li>Mid-Term Comprehensive Assessments</li>
-              </ul>
-            </div>
-
-            <div className="timeline-card bio-card">
-              <div className="month-badge">Month 04</div>
-              <h3 className="month-title">Revision + Full Model Tests</h3>
-              <p className="month-desc">
-                Human Genetics, Evolution, Defense Mechanisms, Complete Board Revision, and Timed Board Model Tests.
-              </p>
-              <ul className="month-list">
-                <li>Mendelian Genetics & Sex Linkage</li>
-                <li>Immunity & Antibody Chemistry</li>
-                <li>Full Syllabus First Paper Model Tests</li>
-                <li>Full Syllabus Second Paper Model Tests</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Course Structure: HSC Biology Intensive Program (4-Month, 48-Class Blueprint) */}
+      <SyllabusCurriculumExplorer />
 
       {/* 2. Core Pillars */}
       <section className="section-padding benefits-section">
