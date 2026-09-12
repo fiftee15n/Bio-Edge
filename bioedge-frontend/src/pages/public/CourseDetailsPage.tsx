@@ -1336,7 +1336,7 @@ export const CourseDetailsPage: React.FC = () => {
 
         /* Sticky Right-Side Pricing Card */
         .course-sidebar-column {
-          padding-top: 54px;
+          padding-top: 76px;
         }
 
         .sticky-enroll-card {
