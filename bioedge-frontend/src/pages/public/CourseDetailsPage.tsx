@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams, useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
 import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
@@ -7,38 +7,23 @@ import {
   Calendar, 
   Clock, 
   CheckCircle2, 
-  ChevronRight, 
   Layers, 
   ArrowRight, 
   ShieldCheck, 
   Users, 
   Target,
   Sparkles,
-  Award,
-  Zap,
-  Star,
   FileText,
-  Download,
   Phone,
-  HelpCircle,
   GraduationCap,
   Check,
   ChevronDown,
-  PlayCircle
+  PlayCircle,
+  ArrowLeft
 } from 'lucide-react';
 
 export const CourseDetailsPage: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { slug } = useParams<{ slug?: string }>();
-  const navigate = useNavigate();
-
   const { course, papers, availableSeats } = useCourseData();
-
-  // Determine active course
-  const paramCourse = slug || searchParams.get('course');
-  const activeCourseKey = paramCourse === 'ssc-2027' || paramCourse === 'ssc-model-test' 
-    ? 'ssc-2027' 
-    : 'alpha-cohort';
 
   const [activeTab, setActiveTab] = useState<'overview' | 'curriculum' | 'methodology' | 'schedule' | 'instructor' | 'tuition' | 'faq'>('overview');
   const [selectedPaperId, setSelectedPaperId] = useState<string>('first-paper');
@@ -46,37 +31,7 @@ export const CourseDetailsPage: React.FC = () => {
 
   const activePaper = papers.find(p => p.id === selectedPaperId) || papers[0];
 
-  const handleCourseSwitch = (key: 'alpha-cohort' | 'ssc-2027') => {
-    setSearchParams({ course: key });
-  };
-
-  const isAlpha = activeCourseKey === 'alpha-cohort';
-
-  // SSC 20 Model Tests Data
-  const sscModelTests = [
-    { num: '01', title: 'Chapter 01 & 02 Model Test', topics: 'Life Lessons & Cells and Tissues of Plants and Animals', type: 'Paper 1 Standard', marks: '50 Marks', duration: '1 Hour' },
-    { num: '02', title: 'Chapter 03 & 04 Model Test', topics: 'Cell Division & Bioenergetics (Photosynthesis/Respiration)', type: 'Paper 1 Standard', marks: '50 Marks', duration: '1 Hour' },
-    { num: '03', title: 'Chapter 05 & 06 Model Test', topics: 'Food, Nutrition and Digestion & Transport in Organisms', type: 'Physiology Focus', marks: '50 Marks', duration: '1 Hour' },
-    { num: '04', title: 'Chapter 07 & 08 Model Test', topics: 'Exchange of Gases & Excretory System', type: 'Human Systems', marks: '50 Marks', duration: '1 Hour' },
-    { num: '05', title: 'Chapter 09 & 10 Model Test', topics: 'Firmness and Locomotion & Coordination', type: 'Nervous & Skeleton', marks: '50 Marks', duration: '1 Hour' },
-    { num: '06', title: 'Chapter 11 & 12 Model Test', topics: 'Reproduction in Organisms & Heredity and Evolution', type: 'Genetics Focus', marks: '50 Marks', duration: '1 Hour' },
-    { num: '07', title: 'Chapter 13 & 14 Model Test', topics: 'Environment of Life & Biotechnology', type: 'Ecology & Biotech', marks: '50 Marks', duration: '1 Hour' },
-    { num: '08', title: 'First Half Comprehensive Test (Ch 1–7)', topics: 'All Chapter 1 to 7 Full Board Standard Evaluation', type: 'Half Syllabus', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '09', title: 'Second Half Comprehensive Test (Ch 8–14)', topics: 'All Chapter 8 to 14 Full Board Standard Evaluation', type: 'Half Syllabus', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '10', title: 'SSC Grand Board Model Test 01', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '11', title: 'SSC Grand Board Model Test 02', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '12', title: 'SSC Grand Board Model Test 03', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '13', title: 'SSC Grand Board Model Test 04', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '14', title: 'SSC Grand Board Model Test 05', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '15', title: 'Top 100 MCQ Marathon Test', topics: 'High-Frequency Board Repeated MCQs', type: 'Speed & Accuracy', marks: '100 MCQs', duration: '50 Mins' },
-    { num: '16', title: 'CQ Writing & Time Attack Drill', topics: 'Structured CQ 4-Mark Problem Scenarios', type: 'Answer Mastery', marks: '70 Marks', duration: '1.5 Hours' },
-    { num: '17', title: 'Diagram & Labeling Master Test', topics: 'All 35+ Mandatory SSC Board Diagrams', type: 'Diagram Blitz', marks: '50 Marks', duration: '1 Hour' },
-    { num: '18', title: 'Cadet College & Top School Paper 01', topics: 'Exclusive High-Difficulty Question Bank', type: 'Advanced Test', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '19', title: 'Cadet College & Top School Paper 02', topics: 'Exclusive High-Difficulty Question Bank', type: 'Advanced Test', marks: '100 Marks', duration: '2.5 Hours' },
-    { num: '20', title: 'Final Pre-Board Mega Simulation', topics: 'Final Rehearsal Before SSC 2027 Examination', type: 'Mega Final', marks: '100 Marks', duration: '2.5 Hours' },
-  ];
-
-  // Alpha FAQs
+  // Alpha Cohort FAQs
   const alphaFaqs = [
     {
       q: 'Is this 4-month crash course suitable for both HSC 2026 and HSC 2027 students?',
@@ -100,150 +55,67 @@ export const CourseDetailsPage: React.FC = () => {
     }
   ];
 
-  // SSC FAQs
-  const sscFaqs = [
-    {
-      q: 'Who is the SSC 2027 Model Test Package designed for?',
-      a: 'This package is designed for Class 9 and Class 10 students preparing for the SSC 2027 Board Examination who want to eliminate exam fear, master time management, and secure A+ in General Biology.'
-    },
-    {
-      q: 'How will the Model Tests be conducted?',
-      a: 'MCQs are conducted on our timed Computer-Based Testing (CBT) platform with instant analytics and rankings. For CQs, students write answers on paper, take photos, and upload them for detailed manual teacher grading.'
-    },
-    {
-      q: 'Are the 8 Live Masterclasses recorded?',
-      a: 'Yes, all 8 live solution masterclasses are recorded and permanently accessible in your portal dashboard until the conclusion of your SSC 2027 exams.'
-    },
-    {
-      q: 'Is there a diagram evaluation included?',
-      a: 'Absolutely. Test #17 is a dedicated Diagram & Labeling Master Test, and every CQ submission receives specific scoring for anatomical diagram proportions, labeling precision, and neatness.'
-    }
-  ];
-
-  const currentFaqs = isAlpha ? alphaFaqs : sscFaqs;
-
   return (
     <div className="course-details-page-wrapper section-padding">
       <div className="container">
         
-        {/* Top Switcher Navigation Bar */}
-        <div className="course-switcher-bar bio-card">
-          <span className="switcher-label">Select Course View:</span>
-          <div className="switcher-buttons-group">
-            <button
-              type="button"
-              className={`switcher-pill ${isAlpha ? 'active' : ''}`}
-              onClick={() => handleCourseSwitch('alpha-cohort')}
-            >
-              <GraduationCap size={16} />
-              <span>Alpha Cohort (4-Month HSC Crash Course)</span>
-              <span className="pill-badge green">HSC 2026/27</span>
-            </button>
-
-            <button
-              type="button"
-              className={`switcher-pill ${!isAlpha ? 'active' : ''}`}
-              onClick={() => handleCourseSwitch('ssc-2027')}
-            >
-              <Target size={16} />
-              <span>SSC 2027 Model Test Package</span>
-              <span className="pill-badge amber">20 Model Tests</span>
-            </button>
-          </div>
+        {/* Back Link to Courses */}
+        <div className="details-back-nav">
+          <Link to="/courses" className="back-courses-link">
+            <ArrowLeft size={16} /> Back to All Courses
+          </Link>
         </div>
 
-        {/* Hero Section */}
+        {/* Hero Section: HSC Alpha Cohort */}
         <div className="course-details-hero bio-card">
           <div className="hero-badge-row">
-            <span className={`badge ${isAlpha ? 'badge-green' : 'badge-amber'}`}>
-              {isAlpha ? 'Flagship 4-Month Intensive' : 'SSC 2027 Board Rehearsal'}
+            <span className="badge badge-green">
+              <GraduationCap size={14} /> Flagship 4-Month Intensive
             </span>
             <span className="batch-status-pill">
               <span className="dot"></span>
-              {isAlpha ? `${availableSeats} Seats Remaining` : 'Enrollment Active'}
+              {availableSeats} Seats Remaining in Alpha Batch
             </span>
           </div>
 
           <h1 className="course-hero-title">
-            {isAlpha ? (
-              <>Alpha Cohort: <span className="highlight-text">4-Month Biology Crash Course</span></>
-            ) : (
-              <>SSC 2027: <span className="highlight-text">20 Full Biology Model Test Package</span></>
-            )}
+            Alpha Cohort: <span className="highlight-text">4-Month Biology Crash Course</span>
           </h1>
 
           <p className="course-hero-desc">
-            {isAlpha
-              ? 'An elite 4-month academic journey covering all 24 chapters across HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology). Combines 3D visualization, 48 live classes, weekly CQ grading, and comprehensive board rehearsals.'
-              : 'The definitive board examination preparation package for SSC 2027 candidates. 20 full-length model tests covering all 14 chapters, handwritten CQ answer evaluation, and 8 live solution masterclasses.'
-            }
+            An elite 4-month academic journey covering all 24 chapters across HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology). Combines 3D visualization, 48 live classes, weekly CQ grading, and comprehensive board rehearsals.
           </p>
 
           {/* Quick Metrics Bar */}
           <div className="course-metrics-bar">
-            {isAlpha ? (
-              <>
-                <div className="metric-cell">
-                  <Clock size={20} className="metric-icon" />
-                  <div>
-                    <strong>4 Months</strong>
-                    <span>16 Intensive Weeks</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <BookOpen size={20} className="metric-icon" />
-                  <div>
-                    <strong>48 Live Classes</strong>
-                    <span>3 Sessions / Week</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <Target size={20} className="metric-icon" />
-                  <div>
-                    <strong>24 Chapters</strong>
-                    <span>Botany + Zoology</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <Users size={20} className="metric-icon" />
-                  <div>
-                    <strong>15–20 Limit</strong>
-                    <span>Personalized Mentorship</span>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="metric-cell">
-                  <Award size={20} className="metric-icon" />
-                  <div>
-                    <strong>20 Model Tests</strong>
-                    <span>MCQ + CQ + Diagrams</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <BookOpen size={20} className="metric-icon" />
-                  <div>
-                    <strong>14 Chapters</strong>
-                    <span>Complete SSC Syllabus</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <Zap size={20} className="metric-icon" />
-                  <div>
-                    <strong>8 Masterclasses</strong>
-                    <span>Live Doubt Clearing</span>
-                  </div>
-                </div>
-                <div className="metric-cell">
-                  <ShieldCheck size={20} className="metric-icon" />
-                  <div>
-                    <strong>100% Evaluation</strong>
-                    <span>Annotated PDF Rubrics</span>
-                  </div>
-                </div>
-              </>
-            )}
+            <div className="metric-cell">
+              <Clock size={20} className="metric-icon" />
+              <div>
+                <strong>4 Months</strong>
+                <span>16 Intensive Weeks</span>
+              </div>
+            </div>
+            <div className="metric-cell">
+              <BookOpen size={20} className="metric-icon" />
+              <div>
+                <strong>48 Live Classes</strong>
+                <span>3 Sessions / Week</span>
+              </div>
+            </div>
+            <div className="metric-cell">
+              <Target size={20} className="metric-icon" />
+              <div>
+                <strong>24 Chapters</strong>
+                <span>Botany + Zoology</span>
+              </div>
+            </div>
+            <div className="metric-cell">
+              <Users size={20} className="metric-icon" />
+              <div>
+                <strong>15–20 Limit</strong>
+                <span>Personalized Mentorship</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -265,7 +137,7 @@ export const CourseDetailsPage: React.FC = () => {
                 className={`tab-btn ${activeTab === 'curriculum' ? 'active' : ''}`}
                 onClick={() => setActiveTab('curriculum')}
               >
-                {isAlpha ? '48-Class Curriculum' : '20-Test Schedule'}
+                48-Class Curriculum
               </button>
               <button 
                 className={`tab-btn ${activeTab === 'methodology' ? 'active' : ''}`}
@@ -304,10 +176,7 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="tab-pane-card bio-card">
                 <h2 className="tab-section-title">Course Overview & Target Outcomes</h2>
                 <p className="tab-body-lead">
-                  {isAlpha
-                    ? 'The Alpha Cohort is an intensively structured 4-month biology immersion designed specifically for students who demand perfection in their HSC Board Exams and Medical Admission Aspirations.'
-                    : 'The SSC 2027 Model Test Package is designed to transform textbook knowledge into lightning-fast, high-accuracy board exam performance with personalized evaluation.'
-                  }
+                  The Alpha Cohort is an intensively structured 4-month biology immersion designed specifically for students who demand perfection in their HSC Board Exams and Medical Admission Aspirations.
                 </p>
 
                 <h3 className="subsection-title">What You Will Achieve</h3>
@@ -316,7 +185,7 @@ export const CourseDetailsPage: React.FC = () => {
                     <CheckCircle2 size={18} className="outcome-icon" />
                     <div>
                       <strong>100% Syllabus Mastery</strong>
-                      <p>{isAlpha ? 'Deep theoretical clarity across all 24 chapters of Botany and Zoology.' : 'Complete coverage of all 14 SSC Biology chapters with zero blind spots.'}</p>
+                      <p>Deep theoretical clarity across all 24 chapters of Botany and Zoology.</p>
                     </div>
                   </div>
                   <div className="outcome-item">
@@ -330,7 +199,7 @@ export const CourseDetailsPage: React.FC = () => {
                     <CheckCircle2 size={18} className="outcome-icon" />
                     <div>
                       <strong>Diagram Speed & Accuracy</strong>
-                      <p>{isAlpha ? 'Master 80+ essential HSC diagrams under 3 minutes with proper labeling standards.' : 'Draw all 35+ mandatory SSC biology diagrams cleanly and accurately.'}</p>
+                      <p>Master 80+ essential HSC diagrams under 3 minutes with proper labeling standards.</p>
                     </div>
                   </div>
                   <div className="outcome-item">
@@ -343,21 +212,11 @@ export const CourseDetailsPage: React.FC = () => {
                 </div>
 
                 <div className="highlight-callout-box">
-                  <h4>Who Should Enroll in this Program?</h4>
+                  <h4>Who Should Enroll in the Alpha Cohort?</h4>
                   <ul>
-                    {isAlpha ? (
-                      <>
-                        <li><strong>HSC 2026 Students:</strong> Seeking a structured, high-yield crash course to revise and master both 1st & 2nd paper before final exams.</li>
-                        <li><strong>HSC 2027 Students:</strong> Aiming to get 6 months ahead of college syllabus and build solid medical admission foundations.</li>
-                        <li><strong>Students struggling with diagrams and CQ structure:</strong> Who need line-by-line feedback on their written scripts.</li>
-                      </>
-                    ) : (
-                      <>
-                        <li><strong>SSC 2027 Candidates:</strong> Who want realistic board-level rehearsal to guarantee GPA 5.00 in Biology.</li>
-                        <li><strong>Class 9 & 10 Students:</strong> Who want regular exam practice, time management training, and error diagnosis.</li>
-                        <li><strong>Students needing written feedback:</strong> To fix recurring mistakes in CQ answers before board exams.</li>
-                      </>
-                    )}
+                    <li><strong>HSC 2026 Students:</strong> Seeking a structured, high-yield crash course to revise and master both 1st & 2nd paper before final exams.</li>
+                    <li><strong>HSC 2027 Students:</strong> Aiming to get 6 months ahead of college syllabus and build solid medical admission foundations.</li>
+                    <li><strong>Students struggling with diagrams and CQ structure:</strong> Who need line-by-line feedback on their written scripts.</li>
                   </ul>
                 </div>
               </div>
@@ -366,78 +225,52 @@ export const CourseDetailsPage: React.FC = () => {
             {/* TAB 2: CURRICULUM */}
             {activeTab === 'curriculum' && (
               <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">
-                  {isAlpha ? 'Comprehensive 4-Month 48-Class Syllabus' : 'Full 20-Test Model Test Breakdown'}
-                </h2>
+                <h2 className="tab-section-title">Comprehensive 4-Month 48-Class Syllabus</h2>
                 <p className="tab-body-lead">
-                  {isAlpha
-                    ? 'Explore the complete class-by-class schedule divided into Botany (1st Paper) and Zoology (2nd Paper) with weekly CQ tests and monthly milestone exams.'
-                    : 'Each of the 20 tests is engineered to simulate authentic board exam difficulty with dedicated answer review and live masterclasses.'
-                  }
+                  Explore the complete class-by-class schedule divided into Botany (1st Paper) and Zoology (2nd Paper) with weekly CQ tests and monthly milestone exams.
                 </p>
 
-                {isAlpha ? (
-                  <>
-                    <div style={{ marginBottom: '2.5rem' }}>
-                      <SyllabusCurriculumExplorer />
-                    </div>
+                <div style={{ marginBottom: '2.5rem' }}>
+                  <SyllabusCurriculumExplorer />
+                </div>
 
-                    <div className="syllabus-explorer-block">
-                      <div className="syllabus-header-row">
-                        <h3 className="subsection-title">Detailed Chapter Topics</h3>
-                        <div className="paper-switcher-btn-group">
-                          {papers.map((p) => (
-                            <button
-                              key={p.id}
-                              onClick={() => setSelectedPaperId(p.id)}
-                              className={`paper-switcher-btn ${selectedPaperId === p.id ? 'active' : ''}`}
-                            >
-                              <BookOpen size={16} />
-                              <span>{p.name}</span>
-                            </button>
+                <div className="syllabus-explorer-block">
+                  <div className="syllabus-header-row">
+                    <h3 className="subsection-title">Detailed Chapter Topics</h3>
+                    <div className="paper-switcher-btn-group">
+                      {papers.map((p) => (
+                        <button
+                          key={p.id}
+                          onClick={() => setSelectedPaperId(p.id)}
+                          className={`paper-switcher-btn ${selectedPaperId === p.id ? 'active' : ''}`}
+                        >
+                          <BookOpen size={16} />
+                          <span>{p.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="chapters-stack">
+                    {activePaper.chapters.map((ch) => (
+                      <div key={ch.id} className="chapter-accordion-item">
+                        <div className="ch-acc-header">
+                          <span className="ch-num-badge">Chapter {ch.number}</span>
+                          <strong className="ch-title">{ch.name}</strong>
+                          <span className="ch-count-badge">{(ch.topics || []).length} Topics</span>
+                        </div>
+                        <div className="ch-topics-list">
+                          {(ch.topics || []).map((t, idx) => (
+                            <div key={idx} className="topic-line">
+                              <Check size={14} className="topic-icon" />
+                              <span>{t.title}</span>
+                            </div>
                           ))}
-                        </div>
-                      </div>
-
-                      <div className="chapters-stack">
-                        {activePaper.chapters.map((ch) => (
-                          <div key={ch.id} className="chapter-accordion-item">
-                            <div className="ch-acc-header">
-                              <span className="ch-num-badge">Chapter {ch.number}</span>
-                              <strong className="ch-title">{ch.name}</strong>
-                              <span className="ch-count-badge">{(ch.topics || []).length} Topics</span>
-                            </div>
-                            <div className="ch-topics-list">
-                              {(ch.topics || []).map((t, idx) => (
-                                <div key={idx} className="topic-line">
-                                  <Check size={14} className="topic-icon" />
-                                  <span>{t.title}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="ssc-tests-grid">
-                    {sscModelTests.map((t) => (
-                      <div key={t.num} className="ssc-test-card">
-                        <div className="test-card-top">
-                          <span className="test-num-badge">Test #{t.num}</span>
-                          <span className="test-type-pill">{t.type}</span>
-                        </div>
-                        <h4 className="test-name">{t.title}</h4>
-                        <p className="test-topics">{t.topics}</p>
-                        <div className="test-meta-row">
-                          <span><strong>Marks:</strong> {t.marks}</span>
-                          <span><strong>Duration:</strong> {t.duration}</span>
                         </div>
                       </div>
                     ))}
                   </div>
-                )}
+                </div>
               </div>
             )}
 
@@ -530,7 +363,7 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="tab-pane-card bio-card">
                 <h2 className="tab-section-title">Weekly Routine & Academic Timeline</h2>
                 <p className="tab-body-lead">
-                  Designed to integrate seamlessly with your regular college or school routines.
+                  Designed to integrate seamlessly with your regular college routines.
                 </p>
 
                 <div className="schedule-timeline-grid">
@@ -542,7 +375,7 @@ export const CourseDetailsPage: React.FC = () => {
                     </div>
                     <div className="t-day-body">
                       <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">{isAlpha ? '1st Paper (Botany) Live Masterclass' : 'General Biology Topic Drill'}</strong>
+                      <strong className="t-class-title">1st Paper (Botany) Live Masterclass</strong>
                       <p className="t-sub">Concept breakdown + 3D Visual Demo + CQ Analysis</p>
                     </div>
                   </div>
@@ -555,7 +388,7 @@ export const CourseDetailsPage: React.FC = () => {
                     </div>
                     <div className="t-day-body">
                       <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">{isAlpha ? '2nd Paper (Zoology) Live Masterclass' : 'Physiology & Systems Masterclass'}</strong>
+                      <strong className="t-class-title">2nd Paper (Zoology) Live Masterclass</strong>
                       <p className="t-sub">Anatomy breakdown + Diagram Workshop + Practice</p>
                     </div>
                   </div>
@@ -568,7 +401,7 @@ export const CourseDetailsPage: React.FC = () => {
                     </div>
                     <div className="t-day-body">
                       <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">{isAlpha ? 'Problem Solving & CQ Writing Workshop' : 'Live Board MCQ & CQ Solution'}</strong>
+                      <strong className="t-class-title">Problem Solving & CQ Writing Workshop</strong>
                       <p className="t-sub">Board question analysis + Timed drills</p>
                     </div>
                   </div>
@@ -607,7 +440,7 @@ export const CourseDetailsPage: React.FC = () => {
                     <h3 className="ins-name">Afroza Tahmina</h3>
                     <p className="ins-role">B.Sc & M.Sc in Botany | 12+ Years Teaching Experience</p>
                     <p className="ins-desc">
-                      Afroza Tahmina has trained over 5,000+ HSC and SSC students, helping hundreds achieve GPA 5.00 in Board examinations and gain top admissions to Dhaka Medical College, DMC, SSMC, and leading public medical colleges.
+                      Afroza Tahmina has trained over 5,000+ HSC students, helping hundreds achieve GPA 5.00 in Board examinations and gain top admissions to Dhaka Medical College, DMC, SSMC, and leading public medical colleges.
                     </p>
                     <p className="ins-desc">
                       Her unique visual methodology breaks down convoluted biological mechanisms into intuitive mental models, ensuring students retain every concept with zero confusion.
@@ -644,82 +477,51 @@ export const CourseDetailsPage: React.FC = () => {
                   Transparent pricing with flexible options to suit your preparation needs.
                 </p>
 
-                {isAlpha ? (
-                  <div className="tuition-pricing-grid">
-                    <div className="t-price-box recommended">
-                      <div className="t-rec-badge">Recommended • Best Value</div>
-                      <h3>Full 4-Month Course</h3>
-                      <div className="t-price-val">
-                        <span className="cur">৳</span>
-                        <span className="num">12,500</span>
-                        <span className="per">/ complete 4 months</span>
-                      </div>
-                      <p className="t-savings">Save ৳1,500 compared to monthly installments</p>
-
-                      <ul className="t-perks-list">
-                        <li><Check size={16} /> All 48 Live Interactive Sessions</li>
-                        <li><Check size={16} /> All 24 Botany & Zoology Chapters</li>
-                        <li><Check size={16} /> 80+ Annotated Diagram Notebook PDF</li>
-                        <li><Check size={16} /> Weekly Line-by-Line CQ Evaluation</li>
-                        <li><Check size={16} /> 24/7 Doubt-Clearing Student Portal</li>
-                      </ul>
-
-                      <Link to="/enroll?course=alpha-cohort&plan=full" className="btn btn-primary btn-block">
-                        Enroll in Full Program <ArrowRight size={16} />
-                      </Link>
+                <div className="tuition-pricing-grid">
+                  <div className="t-price-box recommended">
+                    <div className="t-rec-badge">Recommended • Best Value</div>
+                    <h3>Full 4-Month Course</h3>
+                    <div className="t-price-val">
+                      <span className="cur">৳</span>
+                      <span className="num">12,500</span>
+                      <span className="per">/ complete 4 months</span>
                     </div>
+                    <p className="t-savings">Save ৳1,500 compared to monthly installments</p>
 
-                    <div className="t-price-box">
-                      <h3>Monthly Installment</h3>
-                      <div className="t-price-val">
-                        <span className="cur">৳</span>
-                        <span className="num">3,500</span>
-                        <span className="per">/ month (4 installments)</span>
-                      </div>
-                      <p className="t-savings">Pay month-by-month per 12 live classes</p>
+                    <ul className="t-perks-list">
+                      <li><Check size={16} /> All 48 Live Interactive Sessions</li>
+                      <li><Check size={16} /> All 24 Botany & Zoology Chapters</li>
+                      <li><Check size={16} /> 80+ Annotated Diagram Notebook PDF</li>
+                      <li><Check size={16} /> Weekly Line-by-Line CQ Evaluation</li>
+                      <li><Check size={16} /> 24/7 Doubt-Clearing Student Portal</li>
+                    </ul>
 
-                      <ul className="t-perks-list">
-                        <li><Check size={16} /> 12 Live Classes per month</li>
-                        <li><Check size={16} /> Monthly Chapter Exam & Evaluation</li>
-                        <li><Check size={16} /> Full Portal & Recording Access</li>
-                        <li><Check size={16} /> Pay as you progress</li>
-                      </ul>
-
-                      <Link to="/enroll?course=alpha-cohort&plan=monthly" className="btn btn-outline btn-block">
-                        Choose Monthly Plan <ArrowRight size={16} />
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="ssc-tuition-card">
-                    <div className="ssc-t-header">
-                      <span className="badge badge-amber">Complete Package</span>
-                      <h3>SSC 2027 Model Test All-Access Pass</h3>
-                      <div className="t-price-val">
-                        <span className="cur">৳</span>
-                        <span className="num">2,200</span>
-                        <span className="per"><del>৳3,000</del> (One-Time Fee)</span>
-                      </div>
-                    </div>
-
-                    <div className="ssc-t-grid">
-                      <ul className="t-perks-list">
-                        <li><Check size={16} /> All 20 Board Standard Model Tests</li>
-                        <li><Check size={16} /> 100% Handwritten CQ Script Evaluation</li>
-                        <li><Check size={16} /> 8 Live Solution Masterclasses</li>
-                      </ul>
-                      <ul className="t-perks-list">
-                        <li><Check size={16} /> 35+ Mandatory Diagram Guide Notebook</li>
-                        <li><Check size={16} /> Top 10-Year Board Question Prediction Bank</li>
-                        <li><Check size={16} /> Instant MCQ Ranking & Analytics</li>
-                      </ul>
-                    </div>
-
-                    <Link to="/enroll?course=ssc-2027" className="btn btn-primary btn-lg btn-block" style={{ marginTop: '1.5rem' }}>
-                      Enroll in SSC Package <ArrowRight size={16} />
+                    <Link to="/enroll?course=alpha-cohort&plan=full" className="btn btn-primary btn-block">
+                      Enroll in Full Program <ArrowRight size={16} />
                     </Link>
                   </div>
-                )}
+
+                  <div className="t-price-box">
+                    <h3>Monthly Installment</h3>
+                    <div className="t-price-val">
+                      <span className="cur">৳</span>
+                      <span className="num">3,500</span>
+                      <span className="per">/ month (4 installments)</span>
+                    </div>
+                    <p className="t-savings">Pay month-by-month per 12 live classes</p>
+
+                    <ul className="t-perks-list">
+                      <li><Check size={16} /> 12 Live Classes per month</li>
+                      <li><Check size={16} /> Monthly Chapter Exam & Evaluation</li>
+                      <li><Check size={16} /> Full Portal & Recording Access</li>
+                      <li><Check size={16} /> Pay as you progress</li>
+                    </ul>
+
+                    <Link to="/enroll?course=alpha-cohort&plan=monthly" className="btn btn-outline btn-block">
+                      Choose Monthly Plan <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -728,7 +530,7 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="tab-pane-card bio-card">
                 <h2 className="tab-section-title">Frequently Asked Questions</h2>
                 <div className="faq-accordion-stack">
-                  {currentFaqs.map((item, idx) => (
+                  {alphaFaqs.map((item, idx) => (
                     <div 
                       key={idx} 
                       className={`faq-item-card ${expandedFaq === idx ? 'expanded' : ''}`}
@@ -759,31 +561,27 @@ export const CourseDetailsPage: React.FC = () => {
                 <span className="s-card-label">Tuition Fee:</span>
                 <div className="s-price-wrap">
                   <span className="cur">৳</span>
-                  <span className="num">
-                    {isAlpha ? '12,500' : '2,200'}
-                  </span>
-                  <span className="period">
-                    {isAlpha ? '/ full 4 mo' : '(One-time)'}
-                  </span>
+                  <span className="num">12,500</span>
+                  <span className="period">/ full 4 mo</span>
                 </div>
-                {isAlpha && <span className="s-or-sub">or ৳3,500 per month</span>}
+                <span className="s-or-sub">or ৳3,500 per month</span>
               </div>
 
               <div className="s-seats-banner">
                 <span className="pulse-dot"></span>
-                <span>{isAlpha ? `${availableSeats} Seats Left in Alpha Batch` : 'Active Registration'}</span>
+                <span>{availableSeats} Seats Left in Alpha Batch</span>
               </div>
 
               <div className="s-actions-list">
                 <Link 
-                  to={isAlpha ? "/enroll?course=alpha-cohort" : "/enroll?course=ssc-2027"}
+                  to="/enroll?course=alpha-cohort"
                   className="btn btn-primary btn-lg btn-block"
                 >
                   Enroll Now <ArrowRight size={18} />
                 </Link>
 
                 <a 
-                  href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20want%20to%20know%20more%20about%20the%20course"
+                  href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20want%20to%20know%20more%20about%20the%20HSC%20Alpha%20Cohort"
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-outline btn-block whatsapp-btn"
@@ -795,13 +593,13 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="s-divider" />
 
               <div className="s-includes-block">
-                <strong className="s-inc-title">This Course Includes:</strong>
+                <strong className="s-inc-title">Alpha Cohort Includes:</strong>
                 <ul className="s-inc-list">
-                  <li><BookOpen size={16} /> {isAlpha ? '48 Live Interactive Classes' : '20 Board Model Tests'}</li>
-                  <li><Layers size={16} /> {isAlpha ? '24 Botany & Zoology Chapters' : '14 SSC Biology Chapters'}</li>
+                  <li><BookOpen size={16} /> 48 Live Interactive Classes</li>
+                  <li><Layers size={16} /> 24 Botany & Zoology Chapters</li>
                   <li><FileText size={16} /> Handwritten CQ Paper Grading</li>
                   <li><PlayCircle size={16} /> Unlimited 1080p Recording Access</li>
-                  <li><Award size={16} /> Certificate of Completion</li>
+                  <li><ShieldCheck size={16} /> 80+ Annotated Diagrams Notebook</li>
                 </ul>
               </div>
 
@@ -818,85 +616,23 @@ export const CourseDetailsPage: React.FC = () => {
       </div>
 
       <style>{`
-        /* Course Switcher */
-        .course-switcher-bar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0.85rem 1.25rem;
-          margin-bottom: 2rem;
-          background: #FFFFFF;
-          border-radius: var(--radius-lg);
-          border: 1px solid var(--border-color);
-          flex-wrap: wrap;
-          gap: 0.75rem;
+        .details-back-nav {
+          margin-bottom: 1.5rem;
         }
 
-        .switcher-label {
-          font-size: 0.82rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          color: var(--text-muted);
-          letter-spacing: 0.04em;
-        }
-
-        .switcher-buttons-group {
-          display: flex;
+        .back-courses-link {
+          display: inline-flex;
           align-items: center;
-          gap: 0.75rem;
-          flex-wrap: wrap;
-        }
-
-        .switcher-pill {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-full);
-          border: 1px solid var(--border-color);
-          background: #FAFCFA;
+          gap: 6px;
           font-size: 0.88rem;
           font-weight: 600;
-          color: var(--text-dark);
-          cursor: pointer;
-          transition: all 0.2s ease;
+          color: var(--primary-green);
+          text-decoration: none;
+          transition: color 0.2s ease;
         }
 
-        .switcher-pill:hover {
-          border-color: var(--primary-green);
-        }
-
-        .switcher-pill.active {
-          background: var(--dark-green);
-          color: #FFFFFF;
-          border-color: var(--dark-green);
-        }
-
-        .pill-badge {
-          font-size: 0.7rem;
-          font-weight: 700;
-          padding: 2px 7px;
-          border-radius: var(--radius-full);
-        }
-
-        .pill-badge.green {
-          background: var(--light-green);
+        .back-courses-link:hover {
           color: var(--dark-green);
-        }
-
-        .switcher-pill.active .pill-badge.green {
-          background: rgba(255, 255, 255, 0.2);
-          color: #FFFFFF;
-        }
-
-        .pill-badge.amber {
-          background: #FEF7E6;
-          color: #B45309;
-        }
-
-        .switcher-pill.active .pill-badge.amber {
-          background: rgba(255, 255, 255, 0.2);
-          color: #FFFFFF;
         }
 
         /* Hero */
@@ -912,6 +648,7 @@ export const CourseDetailsPage: React.FC = () => {
           align-items: center;
           gap: 0.75rem;
           margin-bottom: 1.25rem;
+          flex-wrap: wrap;
         }
 
         .batch-status-pill {
@@ -1114,7 +851,7 @@ export const CourseDetailsPage: React.FC = () => {
           color: var(--text-dark);
         }
 
-        /* Curriculum & SSC Tests */
+        /* Curriculum */
         .syllabus-header-row {
           display: flex;
           align-items: center;
@@ -1183,71 +920,6 @@ export const CourseDetailsPage: React.FC = () => {
         .topic-icon {
           color: var(--primary-green);
           flex-shrink: 0;
-        }
-
-        /* SSC Test Cards */
-        .ssc-tests-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1rem;
-        }
-
-        .ssc-test-card {
-          border: 1px solid var(--border-subtle);
-          border-radius: var(--radius-md);
-          padding: 1.25rem;
-          background: #FAFCFA;
-          transition: all 0.2s ease;
-        }
-
-        .ssc-test-card:hover {
-          border-color: var(--primary-green);
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-sm);
-        }
-
-        .test-card-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 0.5rem;
-        }
-
-        .test-num-badge {
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: #B45309;
-          background: #FEF7E6;
-          padding: 2px 8px;
-          border-radius: var(--radius-full);
-        }
-
-        .test-type-pill {
-          font-size: 0.72rem;
-          color: var(--text-muted);
-          font-weight: 600;
-        }
-
-        .test-name {
-          font-size: 0.98rem;
-          color: var(--dark-green);
-          margin-bottom: 0.35rem;
-        }
-
-        .test-topics {
-          font-size: 0.8rem;
-          color: var(--text-muted);
-          margin-bottom: 0.75rem;
-          line-height: 1.35;
-        }
-
-        .test-meta-row {
-          display: flex;
-          justify-content: space-between;
-          font-size: 0.76rem;
-          color: var(--text-dark);
-          padding-top: 0.5rem;
-          border-top: 1px solid var(--border-subtle);
         }
 
         /* Methodology */
@@ -1612,30 +1284,6 @@ export const CourseDetailsPage: React.FC = () => {
           flex-shrink: 0;
         }
 
-        .ssc-tuition-card {
-          border: 2px solid var(--dark-green);
-          border-radius: var(--radius-lg);
-          padding: 2.25rem;
-          background: #FFFFFF;
-        }
-
-        .ssc-t-header {
-          margin-bottom: 1.5rem;
-        }
-
-        .ssc-t-header h3 {
-          font-size: 1.4rem;
-          color: var(--dark-green);
-          margin-top: 0.5rem;
-          margin-bottom: 0.5rem;
-        }
-
-        .ssc-t-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-        }
-
         /* FAQ */
         .faq-accordion-stack {
           display: flex;
@@ -1838,12 +1486,6 @@ export const CourseDetailsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
           .tuition-pricing-grid {
-            grid-template-columns: 1fr;
-          }
-          .ssc-tests-grid {
-            grid-template-columns: 1fr;
-          }
-          .ssc-t-grid {
             grid-template-columns: 1fr;
           }
           .ins-stats-row {

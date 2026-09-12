@@ -15,7 +15,8 @@ import {
   Target,
   PenTool,
   HelpCircle,
-  Layers
+  Layers,
+  ArrowLeft
 } from 'lucide-react';
 
 export const SscModelTestPage: React.FC = () => {
@@ -43,7 +44,13 @@ export const SscModelTestPage: React.FC = () => {
   ];
 
   return (
-    <div className="ssc-model-test-page">
+    <div className="ssc-model-test-page section-padding">
+      <div className="container" style={{ marginBottom: '1.5rem' }}>
+        <Link to="/courses" className="back-courses-link">
+          <ArrowLeft size={16} /> Back to All Courses
+        </Link>
+      </div>
+
       {/* Hero Banner */}
       <section className="ssc-hero-section">
         <div className="container">
@@ -409,6 +416,21 @@ export const SscModelTestPage: React.FC = () => {
 
         .text-green {
           color: var(--primary-green);
+        }
+
+        .back-courses-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.88rem;
+          font-weight: 600;
+          color: var(--primary-green);
+          text-decoration: none;
+          transition: color 0.2s ease;
+        }
+
+        .back-courses-link:hover {
+          color: var(--dark-green);
         }
 
         @media (max-width: 900px) {
