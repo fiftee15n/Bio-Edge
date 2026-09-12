@@ -21,7 +21,7 @@ export const CoursesPage: React.FC = () => {
     <div className="courses-hub-page">
       <div className="container">
         
-        {/* Header with Generous Spacing */}
+        {/* Header with Optimal Breathing Room */}
         <div className="courses-page-header text-center">
           <span className="section-pill">
             <Sparkles size={14} /> Academic Offerings
@@ -32,109 +32,111 @@ export const CoursesPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Minimalist Course Cards Grid */}
-        <div className="courses-minimal-grid">
-          
-          {/* COURSE 1: Alpha Cohort */}
-          <div className="course-minimal-card bio-card">
+        {/* Balanced Minimalist Cards Grid */}
+        <div className="courses-cards-container">
+          <div className="courses-minimal-grid">
             
-            <div className="c-card-top">
-              <div className="c-icon-badge-row">
-                <div className="c-card-icon green">
-                  <GraduationCap size={26} />
+            {/* COURSE 1: Alpha Cohort */}
+            <div className="course-minimal-card bio-card">
+              <div className="c-card-top">
+                <div className="c-icon-badge-row">
+                  <div className="c-card-icon green">
+                    <GraduationCap size={26} />
+                  </div>
+                  <div className="c-status-wrap">
+                    <span className="badge badge-green">HSC 2026 / 2027</span>
+                    <span className="c-live-seats">
+                      <span className="pulse-dot"></span>
+                      {availableSeats} Seats Left
+                    </span>
+                  </div>
                 </div>
-                <div className="c-status-wrap">
-                  <span className="badge badge-green">HSC 2026 / 2027</span>
-                  <span className="c-live-seats">
-                    <span className="pulse-dot"></span>
-                    {availableSeats} Seats Left
-                  </span>
+
+                <div className="c-title-box">
+                  <h2 className="c-course-title">
+                    Alpha Cohort — 4-Month Crash Course
+                  </h2>
+                </div>
+
+                {/* Minimal Spec Badges */}
+                <div className="c-specs-row">
+                  <div className="c-spec-pill">
+                    <Clock size={14} />
+                    <span>4 Months</span>
+                  </div>
+                  <div className="c-spec-pill">
+                    <Layers size={14} />
+                    <span>24 Chapters</span>
+                  </div>
+                  <div className="c-spec-pill">
+                    <ShieldCheck size={14} />
+                    <span>CQ Grading</span>
+                  </div>
                 </div>
               </div>
 
-              <h2 className="c-course-title">
-                Alpha Cohort — 4-Month Crash Course
-              </h2>
-
-              {/* Minimal Spec Badges */}
-              <div className="c-specs-row">
-                <div className="c-spec-pill">
-                  <Clock size={14} />
-                  <span>4 Months</span>
-                </div>
-                <div className="c-spec-pill">
-                  <Layers size={14} />
-                  <span>24 Chapters</span>
-                </div>
-                <div className="c-spec-pill">
-                  <ShieldCheck size={14} />
-                  <span>CQ Grading</span>
-                </div>
+              {/* CTA Buttons: Details & Enroll */}
+              <div className="c-card-actions">
+                <Link to="/courses/alpha-cohort" className="btn btn-outline c-cta-btn c-details-btn">
+                  <Info size={16} /> Details
+                </Link>
+                <Link to="/enroll?course=alpha-cohort" className="btn btn-primary c-cta-btn c-enroll-btn">
+                  Enroll <ArrowRight size={16} />
+                </Link>
               </div>
             </div>
 
-            {/* CTA Buttons: Details & Enroll */}
-            <div className="c-card-actions">
-              <Link to="/courses/alpha-cohort" className="btn btn-outline c-cta-btn c-details-btn">
-                <Info size={16} /> Details
-              </Link>
-              <Link to="/enroll?course=alpha-cohort" className="btn btn-primary c-cta-btn c-enroll-btn">
-                Enroll <ArrowRight size={16} />
-              </Link>
+            {/* COURSE 2: SSC 2027 Model Test Package */}
+            <div className="course-minimal-card bio-card">
+              <div className="c-card-top">
+                <div className="c-icon-badge-row">
+                  <div className="c-card-icon amber">
+                    <Target size={26} />
+                  </div>
+                  <div className="c-status-wrap">
+                    <span className="badge badge-amber">SSC 2027 Exclusive</span>
+                    <span className="c-batch-status">
+                      <span className="amber-dot"></span>
+                      New Batch
+                    </span>
+                  </div>
+                </div>
+
+                <div className="c-title-box">
+                  <h2 className="c-course-title">
+                    SSC 2027 Model Test Package
+                  </h2>
+                </div>
+
+                {/* Minimal Spec Badges */}
+                <div className="c-specs-row">
+                  <div className="c-spec-pill">
+                    <Award size={14} />
+                    <span>20 Model Tests</span>
+                  </div>
+                  <div className="c-spec-pill">
+                    <Layers size={14} />
+                    <span>14 Chapters</span>
+                  </div>
+                  <div className="c-spec-pill">
+                    <Zap size={14} />
+                    <span>8 Masterclasses</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Buttons: Details & Enroll */}
+              <div className="c-card-actions">
+                <Link to="/courses/ssc-2027-model-test" className="btn btn-outline c-cta-btn c-details-btn">
+                  <Info size={16} /> Details
+                </Link>
+                <Link to="/enroll?course=ssc-2027" className="btn btn-primary c-cta-btn c-enroll-btn">
+                  Enroll <ArrowRight size={16} />
+                </Link>
+              </div>
             </div>
 
           </div>
-
-          {/* COURSE 2: SSC 2027 Model Test Package */}
-          <div className="course-minimal-card bio-card">
-            
-            <div className="c-card-top">
-              <div className="c-icon-badge-row">
-                <div className="c-card-icon amber">
-                  <Target size={26} />
-                </div>
-                <div className="c-status-wrap">
-                  <span className="badge badge-amber">SSC 2027 Exclusive</span>
-                  <span className="c-batch-status">
-                    <span className="amber-dot"></span>
-                    New Batch
-                  </span>
-                </div>
-              </div>
-
-              <h2 className="c-course-title">
-                SSC 2027 Model Test Package
-              </h2>
-
-              {/* Minimal Spec Badges */}
-              <div className="c-specs-row">
-                <div className="c-spec-pill">
-                  <Award size={14} />
-                  <span>20 Model Tests</span>
-                </div>
-                <div className="c-spec-pill">
-                  <Layers size={14} />
-                  <span>14 Chapters</span>
-                </div>
-                <div className="c-spec-pill">
-                  <Zap size={14} />
-                  <span>8 Masterclasses</span>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Buttons: Details & Enroll */}
-            <div className="c-card-actions">
-              <Link to="/courses/ssc-2027-model-test" className="btn btn-outline c-cta-btn c-details-btn">
-                <Info size={16} /> Details
-              </Link>
-              <Link to="/enroll?course=ssc-2027" className="btn btn-primary c-cta-btn c-enroll-btn">
-                Enroll <ArrowRight size={16} />
-              </Link>
-            </div>
-
-          </div>
-
         </div>
 
       </div>
@@ -143,24 +145,30 @@ export const CoursesPage: React.FC = () => {
         .courses-hub-page {
           background: linear-gradient(180deg, #FBFDFB 0%, #F5F9F6 100%);
           min-height: calc(100vh - 72px);
-          padding: 4.5rem 0 5.5rem;
+          padding: 5rem 0 6.5rem;
+          display: flex;
+          align-items: center;
         }
 
         .courses-page-header {
-          margin-bottom: 3.5rem;
+          margin-bottom: 4rem;
         }
 
         .courses-page-header .section-title {
-          margin-top: 0.75rem;
-          margin-bottom: 0.75rem;
+          margin-top: 0.85rem;
+          margin-bottom: 0.85rem;
+        }
+
+        .courses-cards-container {
+          max-width: 960px;
+          margin: 0 auto;
         }
 
         .courses-minimal-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 2.25rem;
-          max-width: 960px;
-          margin: 0 auto;
+          gap: 2.5rem;
+          align-items: stretch;
         }
 
         .course-minimal-card {
@@ -168,34 +176,41 @@ export const CoursesPage: React.FC = () => {
           flex-direction: column;
           justify-content: space-between;
           padding: 2.5rem 2.25rem;
-          border-radius: var(--radius-xl);
+          border-radius: 20px;
           background: #FFFFFF;
-          border: 1px solid var(--border-color);
-          box-shadow: 0 10px 30px rgba(41, 78, 54, 0.05);
-          transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-          min-height: 290px;
+          border: 1px solid rgba(49, 91, 61, 0.14);
+          box-shadow: 0 10px 30px rgba(22, 51, 32, 0.05);
+          transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+          height: 100%;
         }
 
         .course-minimal-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-5px);
           border-color: var(--primary-green);
-          box-shadow: 0 18px 42px rgba(41, 78, 54, 0.1);
+          box-shadow: 0 20px 45px rgba(22, 51, 32, 0.11);
+        }
+
+        .c-card-top {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
         }
 
         .c-icon-badge-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
         }
 
         .c-card-icon {
-          width: 50px;
-          height: 50px;
+          width: 52px;
+          height: 52px;
           border-radius: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .c-card-icon.green {
@@ -254,12 +269,19 @@ export const CoursesPage: React.FC = () => {
           background: #D97706;
         }
 
+        .c-title-box {
+          min-height: 64px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+
         .c-course-title {
-          font-size: 1.65rem;
+          font-size: 1.55rem;
           font-weight: 800;
           color: var(--dark-green);
-          line-height: 1.25;
-          margin-bottom: 1.25rem;
+          line-height: 1.28;
+          margin: 0;
         }
 
         .c-specs-row {
@@ -275,11 +297,12 @@ export const CoursesPage: React.FC = () => {
           align-items: center;
           gap: 0.4rem;
           background: var(--light-green-subtle);
-          padding: 0.4rem 0.75rem;
+          padding: 0.45rem 0.75rem;
           border-radius: var(--radius-sm);
           font-size: 0.78rem;
           font-weight: 600;
           color: var(--dark-green);
+          border: 1px solid rgba(49, 91, 61, 0.08);
         }
 
         .c-spec-pill svg {
@@ -290,7 +313,7 @@ export const CoursesPage: React.FC = () => {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 0.85rem;
-          padding-top: 1.5rem;
+          padding-top: 1.75rem;
           border-top: 1px solid var(--border-subtle);
         }
 
@@ -303,36 +326,49 @@ export const CoursesPage: React.FC = () => {
           font-weight: 700;
           padding: 0.85rem 1.15rem;
           border-radius: var(--radius-md);
+          transition: all 0.2s ease;
         }
 
         .c-details-btn {
           background: #FFFFFF;
+          border: 1px solid var(--border-color);
+          color: var(--dark-green);
         }
 
         .c-details-btn:hover {
           background: var(--light-green-subtle);
           border-color: var(--primary-green);
+          transform: translateY(-1px);
         }
 
         .c-enroll-btn {
           background: var(--dark-green);
+          color: #FFFFFF;
         }
 
         .c-enroll-btn:hover {
           background: var(--primary-green);
+          transform: translateY(-1px);
         }
 
         @media (max-width: 860px) {
           .courses-minimal-grid {
             grid-template-columns: 1fr;
             max-width: 480px;
+            margin: 0 auto;
           }
           .courses-page-header {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2.75rem;
+          }
+          .c-title-box {
+            min-height: auto;
           }
         }
 
         @media (max-width: 480px) {
+          .courses-hub-page {
+            padding: 3.5rem 0 4.5rem;
+          }
           .course-minimal-card {
             padding: 1.75rem 1.5rem;
           }
