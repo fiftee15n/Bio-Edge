@@ -1335,6 +1335,10 @@ export const CourseDetailsPage: React.FC = () => {
         }
 
         /* Sticky Right-Side Pricing Card */
+        .course-sidebar-column {
+          padding-top: 54px;
+        }
+
         .sticky-enroll-card {
           position: sticky;
           top: 90px;
@@ -1490,6 +1494,9 @@ export const CourseDetailsPage: React.FC = () => {
         @media (max-width: 992px) {
           .course-content-layout-grid {
             grid-template-columns: 1fr;
+          }
+          .course-sidebar-column {
+            padding-top: 0;
           }
           .course-metrics-bar {
             grid-template-columns: repeat(2, 1fr);
