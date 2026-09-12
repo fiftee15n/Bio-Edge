@@ -1910,27 +1910,34 @@ input, select, textarea {
 .center-student-frame {
   position: relative;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
   z-index: 5;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .center-student-img {
   width: 100%;
   height: auto;
-  max-height: 490px;
+  max-height: 520px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.65));
-  border-radius: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.5));
 }
 
 .student-ambient-glow {
   position: absolute;
-  inset: 10%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
-  filter: blur(40px);
+  inset: 15%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, transparent 70%);
+  filter: blur(50px);
   z-index: -1;
+  pointer-events: none;
 }
 
 /* Overlapping White Bottom Card */

@@ -90,14 +90,14 @@ export const ReferenceHeroSection: React.FC = () => {
           </div>
 
           {/* ============================================================
-              CENTER COLUMN: Smiling Student Portrait & Overlapping White Card
+              CENTER COLUMN: Smiling Student Portrait & Overlapping White Card (No background / No box / No card)
              ============================================================ */}
           <div className="ref-hero-center-col">
-            {/* Center Student Main Visual */}
+            {/* Center Student Main Visual - Pure transparent cutout */}
             <div className="center-student-frame">
               <img 
-                src="/assets/hero/hero_student_center.jpg" 
-                alt="Bio Edge Biology Student" 
+                src="/assets/hero/hero_student_transparent.png" 
+                alt="Bio Edge Student" 
                 className="center-student-img"
               />
               <div className="student-ambient-glow"></div>
