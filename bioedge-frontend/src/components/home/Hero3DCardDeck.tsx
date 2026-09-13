@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, Eye, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
+import { Sparkles, Eye, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface CardItem {
@@ -207,7 +207,7 @@ export const Hero3DCardDeck: React.FC = () => {
         </div>
       </div>
 
-      {/* 3D Stage with Side Swap Buttons */}
+      {/* 3D Stage */}
       <div 
         className="deck-3d-stage"
         onTouchStart={handleTouchStart}
@@ -218,28 +218,6 @@ export const Hero3DCardDeck: React.FC = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Left Swap Button */}
-        <button
-          type="button"
-          onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-          className="deck-swap-nav-btn deck-swap-left"
-          aria-label="Swap Left"
-          title="Swap Left (Previous Concept)"
-        >
-          <ChevronLeft size={22} />
-        </button>
-
-        {/* Right Swap Button */}
-        <button
-          type="button"
-          onClick={(e) => { e.stopPropagation(); handleNext(); }}
-          className="deck-swap-nav-btn deck-swap-right"
-          aria-label="Swap Right"
-          title="Swap Right (Next Concept)"
-        >
-          <ChevronRight size={22} />
-        </button>
-
         {/* 3D Interactive Card Fan Stack */}
         <div className="deck-cards-fan">
           {filteredCards.map((card, idx) => {
@@ -356,16 +334,16 @@ export const Hero3DCardDeck: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Swap Controls & Pagination Dots */}
+      {/* Interactive Swap Controls: Icon-only buttons with pagination dots */}
       <div className="deck-swap-toolbar">
         <button
           type="button"
           onClick={handlePrev}
-          className="btn-swap-pill"
+          className="btn-swap-circle-icon"
           aria-label="Previous Concept"
+          title="Swap Left"
         >
-          <ChevronLeft size={16} />
-          <span>Swap Left</span>
+          <ChevronLeft size={20} />
         </button>
 
         <div className="deck-dots-indicator">
@@ -383,17 +361,12 @@ export const Hero3DCardDeck: React.FC = () => {
         <button
           type="button"
           onClick={handleNext}
-          className="btn-swap-pill"
+          className="btn-swap-circle-icon"
           aria-label="Next Concept"
+          title="Swap Right"
         >
-          <span>Swap Right</span>
-          <ChevronRight size={16} />
+          <ChevronRight size={20} />
         </button>
-      </div>
-
-      <div className="deck-hint-pill">
-        <MoveHorizontal size={14} />
-        <span>Swipe or click arrows to swap cards left & right • Click active card to inspect</span>
       </div>
 
       {/* Chapter 3D Inspection Modal */}
@@ -467,40 +440,6 @@ export const Hero3DCardDeck: React.FC = () => {
           touch-action: pan-y;
         }
 
-        .deck-swap-nav-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: #FFFFFF;
-          border: 1.5px solid var(--border-color);
-          box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.12);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--dark-green);
-          cursor: pointer;
-          transition: all 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
-          z-index: 50;
-        }
-
-        .deck-swap-nav-btn:hover {
-          background: var(--dark-green);
-          color: #FFFFFF;
-          transform: translateY(-50%) scale(1.12);
-          box-shadow: 0 14px 28px -4px rgba(49, 91, 61, 0.35);
-        }
-
-        .deck-swap-left {
-          left: max(5%, 15px);
-        }
-
-        .deck-swap-right {
-          right: max(5%, 15px);
-        }
-
         .active-card-glow {
           box-shadow: 0 24px 48px -12px rgba(49, 91, 61, 0.28), 0 0 0 1.5px rgba(49, 91, 61, 0.12);
         }
@@ -509,30 +448,35 @@ export const Hero3DCardDeck: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 1.25rem;
+          gap: 1rem;
           margin-top: 1.5rem;
         }
 
-        .btn-swap-pill {
+        .btn-swap-circle-icon {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
           display: flex;
           align-items: center;
-          gap: 0.4rem;
-          padding: 0.45rem 0.95rem;
+          justify-content: center;
           background: #FFFFFF;
           border: 1px solid var(--border-color);
-          border-radius: var(--radius-full);
-          font-size: 0.82rem;
-          font-weight: 600;
           color: var(--dark-green);
           cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: var(--shadow-sm);
+          transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
 
-        .btn-swap-pill:hover {
-          background: var(--light-green);
-          border-color: var(--primary-green);
-          transform: translateY(-1px);
+        .btn-swap-circle-icon:hover {
+          background: var(--dark-green);
+          color: #FFFFFF;
+          border-color: var(--dark-green);
+          transform: scale(1.1);
+          box-shadow: 0 6px 16px rgba(49, 91, 61, 0.25);
+        }
+
+        .btn-swap-circle-icon:active {
+          transform: scale(0.96);
         }
 
         .deck-dots-indicator {
@@ -556,32 +500,6 @@ export const Hero3DCardDeck: React.FC = () => {
           width: 24px;
           border-radius: var(--radius-full);
           background: var(--dark-green);
-        }
-
-        .deck-hint-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          background: rgba(49, 91, 61, 0.08);
-          color: var(--dark-green);
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 0.35rem 0.85rem;
-          border-radius: var(--radius-full);
-          margin-top: 1rem;
-        }
-
-        @media (max-width: 640px) {
-          .deck-swap-left {
-            left: 2px;
-          }
-          .deck-swap-right {
-            right: 2px;
-          }
-          .deck-swap-nav-btn {
-            width: 38px;
-            height: 38px;
-          }
         }
       `}</style>
     </div>
