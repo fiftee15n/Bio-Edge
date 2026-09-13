@@ -1,4 +1,4 @@
-# **Bio Edz by Afroza Tahmina**
+# **Bio Edge by Afroza Tahmina**
 
 ## **Premium HEC Biology Intensive Program**
 
@@ -10,7 +10,7 @@
 
 Build a modern, clean, minimalist and highly user-friendly educational web platform for:
 
-**Bio Edz by Afroza Tahmina**
+**Bio Edge by Afroza Tahmina**
 
 The flagship course/program will be:
 
@@ -43,7 +43,7 @@ The entire experience should communicate:
 
 ## **Brand**
 
-**Bio Edz**
+**Bio Edge**
 
 ## **Brand descriptor**
 
@@ -193,7 +193,7 @@ Teacher/course management dashboard.
 
 # **6.1 HOME PAGE**
 
-The homepage should immediately communicate what Bio Edz is and what the Premium HEC Biology Intensive Program offers.
+The homepage should immediately communicate what Bio Edge is and what the Premium HEC Biology Intensive Program offers.
 
 ## **Hero Section**
 
@@ -1463,7 +1463,7 @@ If enrollment is inactive:
 
 Show:
 
-**Your course access is currently inactive. Please contact Bio Edz.**
+**Your course access is currently inactive. Please contact Bio Edge.**
 
 Do not expose private course content publicly.
 
@@ -1723,7 +1723,7 @@ Suggested frontend routes:
 
 ## **Student Desktop Sidebar**
 
-Bio Edz logo
+Bio Edge logo
 
 Dashboard
 
@@ -1751,7 +1751,7 @@ Logout
 
 ## **Teacher Desktop Sidebar**
 
-Bio Edz logo
+Bio Edge logo
 
 Dashboard
 
@@ -1789,9 +1789,8 @@ Logout
 
 # **44\. HOMEPAGE NAVIGATION**
 
-Header:
-
-Bio Edz logo
+Top left:
+  * Bio Edge logo
 
 Program
 
@@ -2322,7 +2321,7 @@ Target concepts such as:
 * Biology First Paper  
 * Biology Second Paper  
 * Premium Biology Course  
-* Bio Edz
+* Bio Edge
 
 Create proper:
 
@@ -2419,32 +2418,16 @@ Button:
 
 # **65\. FOOTER**
 
-Footer should contain:
+Footer should:
 
-**Bio Edz**
-
-by Afroza Tahmina
-
-Navigation:
-
-* Program  
-* Structure  
-* Teacher  
-* Pricing  
-* Contact  
-* Login
-
-Contact:
-
-Teacher contact number
-
-Optional email
-
-Social links if provided
-
-Copyright:
-
-**© 2026 Bio Edz by Afroza Tahmina. All rights reserved.**
+* Brand name:
+  * **Bio Edge**
+* Subtitle:
+  * **by Afroza Tahmina**
+* Short description:
+  * **A modern educational platform dedicated to helping students master Biology through structured learning, consistent assessments, and personal mentor feedback.**
+* Bottom copyright:
+  * **© 2026 Bio Edge by Afroza Tahmina. All rights reserved.**
 
 ---
 
@@ -2586,7 +2569,7 @@ The entire system should be built around these two experiences.
 
 # **68\. CORE PRODUCT PHILOSOPHY**
 
-Bio Edz is not simply a website for advertising a coaching program.
+Bio Edge is not simply a website for advertising a coaching program.
 
 It is a structured digital learning environment for the:
 

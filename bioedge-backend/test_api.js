@@ -1,8 +1,8 @@
-// Automated API Test Script for Bio Edz Backend
+// Automated API Test Script for Bio Edge Backend
 const BASE_URL = 'http://localhost:5000/api';
 
 async function runTests() {
-  console.log('🧪 Starting Bio Edz Backend Integration Tests...\n');
+  console.log('🧪 Starting Bio Edge Backend Integration Tests...\n');
   let testsPassed = 0;
   let totalTests = 0;
 

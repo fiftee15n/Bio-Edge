@@ -370,7 +370,7 @@ export const EnrollPage: React.FC = () => {
 
                 <div className="trust-seal-row">
                   <ShieldCheck size={16} />
-                  <span>Official Bio Edz Guarantee • Limited batch to ensure individual attention</span>
+                  <span>Official Bio Edge Guarantee • Limited batch to ensure individual attention</span>
                 </div>
               </div>
             </div>
@@ -717,7 +717,7 @@ export const EnrollPage: React.FC = () => {
             <span className="badge badge-green mb-2">Admission Confirmed</span>
             <h2 className="success-title">Welcome to {enrollmentSuccess.courseTitle}!</h2>
             <p className="success-subtitle">
-              Your enrollment has been successfully recorded in the Bio Edz system under authoritative fee <strong>৳{enrollmentSuccess.authoritativeAmount?.toLocaleString()}</strong>.
+              Your enrollment has been successfully recorded in the Bio Edge system under authoritative fee <strong>৳{enrollmentSuccess.authoritativeAmount?.toLocaleString()}</strong>.
             </p>
 
             <div className="success-receipt-card">

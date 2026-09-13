@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    message: 'Bio Edz Backend API is active and healthy',
+    message: 'Bio Edge Backend API is active and healthy',
     timestamp: new Date().toISOString()
   });
 });
@@ -62,7 +62,7 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`\n=================================================`);
-  console.log(`🚀 Bio Edz Backend Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Bio Edge Backend Server running on http://localhost:${PORT}`);
   console.log(`📚 Public Courses API: http://localhost:${PORT}/api/courses`);
   console.log(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
   console.log(`💳 Enrollment API: http://localhost:${PORT}/api/enrollments`);

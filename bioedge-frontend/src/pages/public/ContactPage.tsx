@@ -24,7 +24,7 @@ export const ContactPage: React.FC = () => {
         {/* Header */}
         <div className="section-header text-center">
           <span className="section-pill">Direct Inquiries</span>
-          <h1 className="section-title">Get in Touch with Bio Edz</h1>
+          <h1 className="section-title">Get in Touch with Bio Edge</h1>
           <p className="section-subtitle">
             Have questions about program curriculum, batch schedules, or seat availability?
           </p>

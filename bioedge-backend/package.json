@@ -1,7 +1,7 @@
 {
   "name": "bioedge-backend",
   "version": "1.0.0",
-  "description": "Backend API for Bio Edz by Afroza Tahmina",
+  "description": "Backend API for Bio Edge by Afroza Tahmina",
   "main": "server.js",
   "type": "module",
   "scripts": {

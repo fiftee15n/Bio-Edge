@@ -184,7 +184,7 @@ export const AuthController = {
 
       return res.status(200).json({
         success: true,
-        message: 'Email verified successfully! Welcome to Bio Edz.',
+        message: 'Email verified successfully! Welcome to Bio Edge.',
         token,
         user: sanitizedUser
       });

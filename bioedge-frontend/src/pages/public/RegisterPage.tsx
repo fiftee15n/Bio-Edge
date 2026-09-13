@@ -93,7 +93,7 @@ export const RegisterPage: React.FC = () => {
             <div className="register-logo-circle">
               <Sparkles size={24} />
             </div>
-            <h1 className="register-brand-title">Bio Edz</h1>
+            <h1 className="register-brand-title">Bio Edge</h1>
             <p className="register-brand-subtitle">by Afroza Tahmina</p>
           </div>
 

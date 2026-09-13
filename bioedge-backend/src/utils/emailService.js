@@ -1,5 +1,5 @@
 /**
- * Email Service for Bio Edz Platform
+ * Email Service for Bio Edge Platform
  * Handles 6-digit OTP verification code delivery and notifications.
  */
 
@@ -14,13 +14,13 @@ export const EmailService = {
     const formattedDate = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
     console.log('\n======================================================');
-    console.log(`📧 [BIO EDZ EMAIL SERVICE] Verification Code Delivery`);
+    console.log(`📧 [BIO EDGE EMAIL SERVICE] Verification Code Delivery`);
     console.log(`To: ${name} <${email}>`);
-    console.log(`Subject: Verify Your Email - Bio Edz by Afroza Tahmina`);
+    console.log(`Subject: Verify Your Email - Bio Edge by Afroza Tahmina`);
     console.log(`Time: ${formattedDate}`);
     console.log(`------------------------------------------------------`);
     console.log(`Dear ${name},`);
-    console.log(`Your 6-digit Bio Edz verification code is:`);
+    console.log(`Your 6-digit Bio Edge verification code is:`);
     console.log(`\n       >>>  [ ${code} ]  <<<\n`);
     console.log(`This code will expire in 10 minutes.`);
     console.log(`If you did not request this, please disregard this email.`);

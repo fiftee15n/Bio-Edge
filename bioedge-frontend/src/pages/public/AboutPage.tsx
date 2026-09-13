@@ -24,7 +24,7 @@ export const AboutPage: React.FC = () => {
           <span className="section-pill">Faculty Profile</span>
           <h1 className="section-title">Meet Afroza Tahmina</h1>
           <p className="section-subtitle">
-            Senior Biology Specialist, Mentor & Founder of Bio Edz Intensive Learning Programs.
+            Senior Biology Specialist, Mentor & Founder of Bio Edge Intensive Learning Programs.
           </p>
         </div>
 
@@ -79,7 +79,7 @@ export const AboutPage: React.FC = () => {
         <div className="principles-section">
           <div className="section-header text-center">
             <span className="section-pill">Pedagogy</span>
-            <h2 className="section-title">The Bio Edz Teaching Philosophy</h2>
+            <h2 className="section-title">The Bio Edge Teaching Philosophy</h2>
             <p className="section-subtitle">
               Three unyielding standards that define every class, assessment, and feedback note.
             </p>

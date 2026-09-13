@@ -1,7 +1,7 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
 /**
- * Generic API helper for Bio Edz backend
+ * Generic API helper for Bio Edge backend
  */
 async function request(endpoint: string, options: RequestInit = {}) {
   const token = localStorage.getItem('bioedge_jwt_token');

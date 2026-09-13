@@ -1,8 +1,8 @@
-// Comprehensive E2E Scenario Test Suite for Bio Edz Platform
+// Comprehensive E2E Scenario Test Suite for Bio Edge Platform
 const BASE_URL = 'http://localhost:5000/api';
 
 async function runScenarioTests() {
-  console.log('🚀 Running Bio Edz Complete Backend & Scenario Test Suite...\n');
+  console.log('🚀 Running Bio Edge Complete Backend & Scenario Test Suite...\n');
   let passed = 0;
   let total = 0;
 

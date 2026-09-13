@@ -383,7 +383,7 @@ export const HomePage: React.FC = () => {
             <span className="section-pill">Academic Cycle</span>
             <h2 className="section-title">The 5-Step Continuous Improvement System</h2>
             <p className="section-subtitle">
-              How Bio Edz transforms understanding into top exam performance.
+              How Bio Edge transforms understanding into top exam performance.
             </p>
           </div>
 

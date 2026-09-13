@@ -1,6 +1,6 @@
-# Bio Edz by Afroza Tahmina - Premium HEC Biology Intensive Program
+# Bio Edge by Afroza Tahmina - Premium HSC Biology Intensive Program
 
-A modern, clean, minimalist and highly user-friendly educational web platform and management system for **Bio Edz by Afroza Tahmina**.
+A modern, clean, minimalist and highly user-friendly educational web platform and management system for **Bio Edge by Afroza Tahmina**.
 
 ---
 
@@ -24,7 +24,7 @@ Bio-Edge/
 │   ├── server.js
 │   └── package.json
 │
-├── Bio Edz by Afroza Tahmina.md  # Complete Product Specification Document
+├── Bio Edge by Afroza Tahmina.md # Complete Product Specification Document
 └── README.md
 ```
 
@@ -80,4 +80,4 @@ The backend API server will start on `http://localhost:5000/`.
 ---
 
 ## 📜 License & Copyright
-© 2026 Bio Edz by Afroza Tahmina. All rights reserved.
+© 2026 Bio Edge by Afroza Tahmina. All rights reserved.

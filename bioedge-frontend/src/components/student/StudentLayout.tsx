@@ -77,7 +77,7 @@ export const StudentLayout: React.FC = () => {
               <div className="mobile-drawer-header">
                 <div className="brand-logo">
                   <div className="logo-icon"><Sparkles size={18} /></div>
-                  <span className="brand-title">Bio Edz</span>
+                  <span className="brand-title">Bio Edge</span>
                 </div>
               </div>
               <nav className="mobile-drawer-links">

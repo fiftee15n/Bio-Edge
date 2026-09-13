@@ -195,7 +195,7 @@ export async function seedDatabase() {
       passwordHash: teacherPasswordHash,
       role: 'teacher',
       phone: '+880 1712-345678',
-      institution: 'Bio Edz Academic Faculty',
+      institution: 'Bio Edge Academic Faculty',
       examYear: '',
       studentId: 'BE-FAC-001',
       batch: 'Faculty',

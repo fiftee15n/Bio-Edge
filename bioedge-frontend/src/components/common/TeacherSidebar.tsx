@@ -52,7 +52,7 @@ export const TeacherSidebar: React.FC = () => {
             <Sparkles size={18} />
           </div>
           <div className="logo-text">
-            <span className="brand-title">Bio Edz</span>
+            <span className="brand-title">Bio Edge</span>
             <span className="brand-subtitle">Teacher Management</span>
           </div>
         </Link>

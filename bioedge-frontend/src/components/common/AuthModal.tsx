@@ -151,7 +151,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <Sparkles size={20} />
             </div>
             <h2 className="auth-modal-title">
-              {mode === 'login' ? 'Sign In to Bio Edz' : 'Create Student Account'}
+              {mode === 'login' ? 'Sign In to Bio Edge' : 'Create Student Account'}
             </h2>
             <p className="auth-modal-subtitle">
               {courseTitle 

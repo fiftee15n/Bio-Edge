@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
               <Sparkles size={20} />
             </div>
             <div className="logo-text">
-              <span className="brand-title">Bio Edz</span>
+              <span className="brand-title">Bio Edge</span>
               <span className="brand-subtitle">by Afroza Tahmina</span>
             </div>
           </Link>

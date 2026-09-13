@@ -279,7 +279,7 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="tab-pane-card bio-card">
                 <h2 className="tab-section-title">Teaching Methodology & 5 Core Pillars</h2>
                 <p className="tab-body-lead">
-                  At Bio Edz, we replace rote memorization with multi-dimensional conceptual understanding and active recall.
+                  At Bio Edge, we replace rote memorization with multi-dimensional conceptual understanding and active recall.
                 </p>
 
                 <div className="pillars-cards-grid">

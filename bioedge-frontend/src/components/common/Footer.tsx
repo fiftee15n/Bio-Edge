@@ -17,12 +17,12 @@ export const Footer: React.FC = () => {
                 <Sparkles size={18} />
               </div>
               <div className="logo-text">
-                <span className="brand-title">Bio Edz</span>
+                <span className="brand-title">Bio Edge</span>
                 <span className="brand-subtitle">by Afroza Tahmina</span>
               </div>
             </div>
             <p className="footer-desc">
-              A premium, structured digital learning environment dedicated exclusively to HEC Biology First Paper and Second Paper excellence.
+              A premium, structured digital learning environment dedicated exclusively to HSC Biology First Paper and Second Paper excellence.
             </p>
             <div className="footer-batch-badge">
               <span>{course.batchName || "Batch 01"}</span> • <span>Only {course.seatLimit} Students</span>
@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2026 Bio Edz by Afroza Tahmina. All rights reserved.</p>
+          <p>© 2026 Bio Edge by Afroza Tahmina. All rights reserved.</p>
           <div className="footer-bottom-links">
             <span>Academic Excellence</span>
             <span>•</span>
