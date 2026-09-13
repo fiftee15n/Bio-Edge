@@ -38,6 +38,16 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className={`navbar-wrapper ${isHome ? 'is-home-nav' : ''}`}>
+      {/* Top Notice: Under Development */}
+      <div className="dev-notice-banner">
+        <div className="container">
+          <div className="dev-notice-inner">
+            <span className="dev-notice-badge">Notice</span>
+            <span className="dev-notice-text">The website is under development</span>
+          </div>
+        </div>
+      </div>
+
       <div className="container">
         <div className="navbar-container">
           {/* Logo */}
@@ -150,6 +160,37 @@ export const Navbar: React.FC = () => {
       )}
 
       <style>{`
+        .dev-notice-banner {
+          background: #18281F;
+          color: #E2E8F0;
+          font-size: 0.76rem;
+          font-weight: 500;
+          padding: 0.35rem 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          letter-spacing: 0.01em;
+        }
+        .dev-notice-inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.55rem;
+        }
+        .dev-notice-badge {
+          background: var(--dark-green);
+          color: #FFFFFF;
+          font-size: 0.65rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          padding: 0.15rem 0.5rem;
+          border-radius: var(--radius-full);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .dev-notice-text {
+          font-weight: 600;
+          color: #F8FAFC;
+        }
+
         .navbar-wrapper {
           position: sticky;
           top: 0;
