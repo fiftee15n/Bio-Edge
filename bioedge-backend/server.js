@@ -16,9 +16,40 @@ const PORT = process.env.PORT || 5000;
 initDatabase();
 await seedDatabase();
 
-// Middleware
+// Root status endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'Bio Edge Backend API',
+    health: '/api/health',
+    courses: '/api/courses',
+    version: '1.0.0'
+  });
+});
+
+// Production-ready dynamic CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+  process.env.FRONTEND_URL,
+  process.env.CLIENT_URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.onrender.com') ||
+      process.env.NODE_ENV !== 'production'
+    ) {
+      return callback(null, true);
+    }
+    // Allow any origin with credentials
+    return callback(null, true);
+  },
   credentials: true
 }));
 app.use(express.json());
