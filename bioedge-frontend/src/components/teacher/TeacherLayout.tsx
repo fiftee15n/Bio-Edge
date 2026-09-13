@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Outlet, Navigate, Link } from 'react-router-dom';
 import { TeacherSidebar } from '../common/TeacherSidebar';
 import { useAuth } from '../../context/AuthContext';
-import { DemoRoleSwitcher } from '../common/DemoRoleSwitcher';
 import { PageTransition } from '../common/PageTransition';
 import { 
   Menu, 
@@ -124,8 +123,6 @@ export const TeacherLayout: React.FC = () => {
           </PageTransition>
         </main>
       </div>
-
-      <DemoRoleSwitcher />
 
       <style>{`
         .teacher-bc-badge {

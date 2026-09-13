@@ -37,17 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return null;
       }
     }
-    // Default initial student for instant preview
-    return {
-      id: "usr_tariqul_01",
-      name: "Tariqul Islam",
-      email: "tariqul@gmail.com",
-      role: "student",
-      studentId: "BE-2026-001",
-      batch: "Alpha Cohort",
-      status: "Active",
-      isVerified: true
-    };
+    return null;
   });
 
   const [token, setToken] = useState<string | null>(() => {
@@ -146,13 +136,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   ): Promise<AuthResponse> => {
     setIsLoading(true);
     try {
-      // If no credentials provided, use fallback demo logins
-      const targetEmail = email || (role === 'teacher' ? 'afroza.tahmina@bioedge.edu' : 'tariqul@gmail.com');
-      const targetPassword = password || (role === 'teacher' ? 'teacher123' : 'student123');
+      if (!email || !password) {
+        return {
+          success: false,
+          message: 'Please provide both email and password.'
+        };
+      }
 
       const res = await api.auth.login({
-        email: targetEmail,
-        password: targetPassword,
+        email,
+        password,
         role
       });
 
@@ -164,7 +157,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return {
           success: false,
           requiresVerification: true,
-          email: targetEmail,
+          email,
           message: res.message,
           verificationCode: res.verificationCode
         };

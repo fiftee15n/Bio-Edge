@@ -6,7 +6,6 @@ import { CourseDataProvider } from './context/CourseDataContext';
 // Public Components
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
-import { DemoRoleSwitcher } from './components/common/DemoRoleSwitcher';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { BackToTop } from './components/common/BackToTop';
 import { PageTransition } from './components/common/PageTransition';
@@ -70,7 +69,6 @@ const PublicLayout: React.FC = () => {
         </PageTransition>
       </main>
       <Footer />
-      <DemoRoleSwitcher />
     </div>
   );
 };

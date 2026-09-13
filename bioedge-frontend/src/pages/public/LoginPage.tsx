@@ -67,17 +67,6 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleQuickDemoLogin = async (role: 'student' | 'teacher') => {
-    const res = await login(
-      role === 'teacher' ? 'afroza.tahmina@bioedge.edu' : 'tariqul@gmail.com',
-      role === 'teacher' ? 'teacher123' : 'student123',
-      role
-    );
-    if (res.success) {
-      handlePostAuthRedirect(role);
-    }
-  };
-
   return (
     <div className="login-page-wrapper section-padding">
       <div className="container">
@@ -184,30 +173,6 @@ export const LoginPage: React.FC = () => {
                 </button>
               </form>
 
-              {/* Quick Demo Instant Sign-In */}
-              <div className="quick-demo-section">
-                <div className="demo-divider">
-                  <span>Instant Quick Sign-In</span>
-                </div>
-
-                <div className="demo-buttons-grid">
-                  <button
-                    type="button"
-                    onClick={() => handleQuickDemoLogin('student')}
-                    className="btn btn-secondary btn-sm"
-                  >
-                    <GraduationCap size={16} /> Enter as Student (Tariqul)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickDemoLogin('teacher')}
-                    className="btn btn-outline btn-sm"
-                  >
-                    <ShieldCheck size={16} /> Enter as Teacher (Afroza)
-                  </button>
-                </div>
-              </div>
-
               {/* Bottom "Didn't have account? Create Account" Link */}
               <div className="auth-bottom-switch-link text-center">
                 <p>
@@ -291,40 +256,6 @@ export const LoginPage: React.FC = () => {
           background: #FFFFFF;
           color: var(--dark-green);
           box-shadow: var(--shadow-sm);
-        }
-
-        .quick-demo-section {
-          margin-top: 1.75rem;
-          padding-top: 1.25rem;
-        }
-        .demo-divider {
-          text-align: center;
-          position: relative;
-          margin-bottom: 1rem;
-        }
-        .demo-divider::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 50%;
-          width: 100%;
-          height: 1px;
-          background: var(--border-color);
-        }
-        .demo-divider span {
-          position: relative;
-          background: #FFFFFF;
-          padding: 0 0.75rem;
-          font-size: 0.72rem;
-          font-weight: 600;
-          text-transform: uppercase;
-          color: var(--text-muted);
-          letter-spacing: 0.03em;
-        }
-        .demo-buttons-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
         }
 
         .auth-bottom-switch-link {
