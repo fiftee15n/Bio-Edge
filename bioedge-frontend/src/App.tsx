@@ -24,6 +24,7 @@ import { PricingPage } from './pages/public/PricingPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { EnrollPage } from './pages/public/EnrollPage';
 import { LoginPage } from './pages/public/LoginPage';
+import { RegisterPage } from './pages/public/RegisterPage';
 
 // Student Portal Layout & Pages
 import { StudentLayout } from './components/student/StudentLayout';
@@ -99,7 +100,7 @@ export default function App(): React.ReactElement {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/enroll" element={<EnrollPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
               </Route>
 
               {/* Authenticated Student Portal */}
