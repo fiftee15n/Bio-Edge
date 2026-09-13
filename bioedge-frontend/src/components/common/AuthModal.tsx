@@ -577,6 +577,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           border-color: var(--soft-green);
           color: var(--dark-green);
         }
+
+        @media (max-width: 480px) {
+          .auth-modal-overlay {
+            padding: 0.75rem;
+          }
+          .auth-modal-card {
+            padding: 1.75rem 1.15rem;
+            max-height: 94vh;
+          }
+          .auth-modal-title {
+            font-size: 1.25rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -158,6 +158,25 @@ export const TeacherTestsPage: React.FC = () => {
           gap: 0.5rem;
         }
         .flex-1 { flex: 1; }
+
+        @media (max-width: 768px) {
+          .tests-admin-grid {
+            grid-template-columns: 1fr;
+          }
+          .tests-admin-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .tests-admin-header .btn {
+            width: 100%;
+            justify-content: center;
+          }
+          .test-admin-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

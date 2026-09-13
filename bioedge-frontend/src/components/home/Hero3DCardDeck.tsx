@@ -501,6 +501,47 @@ export const Hero3DCardDeck: React.FC = () => {
           border-radius: var(--radius-full);
           background: var(--dark-green);
         }
+
+        @media (max-width: 640px) {
+          .deck-3d-stage {
+            min-height: 310px;
+          }
+          .deck-cards-fan {
+            height: 290px;
+            max-width: 100%;
+          }
+          .deck-3d-card-wrapper {
+            width: 205px !important;
+            height: 285px !important;
+          }
+          .card-image-box {
+            height: 145px !important;
+          }
+          .card-item-title {
+            font-size: 0.88rem !important;
+          }
+          .card-item-chapter {
+            font-size: 0.72rem !important;
+          }
+          .floating-3d-speech-bubble {
+            top: -24px !important;
+            font-size: 0.65rem !important;
+            padding: 0.22rem 0.55rem !important;
+          }
+          .deck-swap-toolbar {
+            margin-top: 1rem;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .deck-3d-card-wrapper {
+            width: 180px !important;
+            height: 265px !important;
+          }
+          .card-image-box {
+            height: 130px !important;
+          }
+        }
       `}</style>
     </div>
   );

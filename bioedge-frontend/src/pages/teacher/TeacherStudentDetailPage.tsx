@@ -327,6 +327,24 @@ export const TeacherStudentDetailPage: React.FC = () => {
             grid-template-columns: 1fr 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .student-dossier-header {
+            padding: 1.25rem 1rem;
+          }
+          .dossier-top {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.75rem;
+          }
+          .dossier-kpi-row {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+          }
+          .academic-breakdown-card, .test-history-card, .feedback-composer-card, .feedback-history-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

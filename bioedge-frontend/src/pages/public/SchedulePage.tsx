@@ -335,6 +335,43 @@ export const SchedulePage: React.FC = () => {
           padding: 3rem;
           color: var(--text-muted);
         }
+
+        @media (max-width: 768px) {
+          .schedule-cards-grid {
+            grid-template-columns: 1fr;
+          }
+          .schedule-filters-card {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+            padding: 1.25rem 1rem;
+          }
+          .search-bar-wrap {
+            min-width: 100%;
+          }
+          .filters-group-row {
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+          }
+          .filter-select {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .schedule-view-switcher {
+            flex-direction: column;
+            width: 100%;
+          }
+          .view-toggle-btn {
+            width: 100%;
+            justify-content: center;
+          }
+          .schedule-card-item {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

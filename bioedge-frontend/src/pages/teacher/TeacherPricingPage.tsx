@@ -274,6 +274,15 @@ export const TeacherPricingPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .pricing-mgr-header {
+            padding: 1.25rem 1rem;
+          }
+          .pricing-form-card, .seat-formula-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

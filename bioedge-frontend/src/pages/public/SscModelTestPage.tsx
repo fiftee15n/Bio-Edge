@@ -442,6 +442,33 @@ export const SscModelTestPage: React.FC = () => {
             font-size: 2.2rem;
           }
         }
+
+        @media (max-width: 600px) {
+          .ssc-hero-section {
+            padding: 2.5rem 0 2rem;
+          }
+          .ssc-hero-title {
+            font-size: 1.8rem;
+          }
+          .ssc-hero-card {
+            padding: 1.5rem 1rem;
+          }
+          .ssc-hero-cta-row {
+            flex-direction: column;
+            width: 100%;
+          }
+          .ssc-hero-cta-row .btn {
+            width: 100%;
+          }
+          .ssc-features-checklist {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.6rem;
+          }
+          .ssc-price-display .amount {
+            font-size: 2.5rem;
+          }
+        }
       `}</style>
     </div>
   );

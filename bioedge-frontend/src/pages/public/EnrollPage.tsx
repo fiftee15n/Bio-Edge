@@ -1328,6 +1328,31 @@ export const EnrollPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .enroll-page-wrapper {
+            padding-top: 1rem;
+            padding-bottom: 3rem;
+          }
+          .summary-card,
+          .action-card {
+            padding: 1.5rem 1rem;
+          }
+          .form-row-2 {
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+          }
+          .success-actions-row {
+            flex-direction: column;
+            width: 100%;
+          }
+          .success-actions-row .btn {
+            width: 100%;
+          }
+          .enroll-success-container {
+            padding: 2rem 1.25rem;
+          }
+        }
       `}</style>
     </div>
   );

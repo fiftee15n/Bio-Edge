@@ -312,6 +312,19 @@ export const TeacherClassesPage: React.FC = () => {
           grid-template-columns: 1fr 1fr;
           gap: 1rem;
         }
+
+        @media (max-width: 768px) {
+          .classes-admin-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .classes-admin-header .btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
       `}</style>
     </div>
   );

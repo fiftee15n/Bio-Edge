@@ -148,6 +148,56 @@ export const TeacherLayout: React.FC = () => {
         .teacher-avatar-top {
           background: #B45309;
         }
+
+        @media (max-width: 900px) {
+          .portal-mobile-menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.35rem;
+          }
+          .portal-top-bar {
+            padding: 0 1rem;
+          }
+          .portal-page-viewport {
+            padding: 1.25rem;
+          }
+          .top-user-name {
+            display: none;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .portal-top-bar {
+            height: 58px;
+            padding: 0 0.75rem;
+          }
+          .teacher-bc-badge {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.5rem;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .live-batch-pill {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.55rem;
+          }
+          .seats-free-tag {
+            display: none;
+          }
+          .portal-page-viewport {
+            padding: 1rem 0.65rem;
+          }
+          .mobile-drawer-pane {
+            width: min(270px, 84vw);
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

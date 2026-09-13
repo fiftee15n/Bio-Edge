@@ -220,6 +220,12 @@ export const TeacherTestCreatePage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 480px) {
+          .create-test-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

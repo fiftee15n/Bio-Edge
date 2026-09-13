@@ -334,6 +334,39 @@ export const ProgramPage: React.FC = () => {
           color: var(--text-muted);
           margin-bottom: 1.5rem;
         }
+
+        @media (max-width: 768px) {
+          .program-overview-cards-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+          }
+          .syllabus-header {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .paper-switcher-btn-group {
+            width: 100%;
+          }
+          .paper-switcher-btn {
+            flex: 1;
+            justify-content: center;
+            font-size: 0.82rem;
+            padding: 0.5rem 0.75rem;
+          }
+          .program-bottom-cta {
+            padding: 2rem 1.25rem;
+          }
+          .bottom-cta-heading {
+            font-size: 1.45rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .program-overview-cards-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
     </div>
   );

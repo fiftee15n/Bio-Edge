@@ -191,13 +191,29 @@ export const Footer: React.FC = () => {
           }
         }
         @media (max-width: 600px) {
+          .footer-wrapper {
+            padding-top: 2.5rem;
+            padding-bottom: 1.5rem;
+          }
           .footer-grid {
             grid-template-columns: 1fr;
+            gap: 1.75rem;
+            margin-bottom: 2rem;
+          }
+          .footer-desc {
+            max-width: 100%;
           }
           .footer-bottom {
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.85rem;
             text-align: center;
+            padding-top: 1.5rem;
+          }
+          .footer-bottom-links {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
           }
         }
       `}</style>

@@ -285,6 +285,28 @@ export const TeacherProfilePage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+        @media (max-width: 600px) {
+          .profile-mgr-header, .profile-edit-card, .profile-preview-card {
+            padding: 1.25rem 1rem !important;
+          }
+          .prof-mgr-title {
+            font-size: 1.35rem;
+          }
+          .btn-lg {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+        @media (max-width: 480px) {
+          .preview-avatar-box {
+            width: 72px;
+            height: 72px;
+            font-size: 1.6rem;
+          }
+          .preview-name {
+            font-size: 1.2rem;
+          }
+        }
       `}</style>
     </div>
   );

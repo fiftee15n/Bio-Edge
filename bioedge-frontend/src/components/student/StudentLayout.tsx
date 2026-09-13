@@ -278,7 +278,13 @@ export const StudentLayout: React.FC = () => {
 
         @media (max-width: 900px) {
           .portal-mobile-menu-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.35rem;
           }
           .portal-top-bar {
             padding: 0 1rem;
@@ -288,6 +294,40 @@ export const StudentLayout: React.FC = () => {
           }
           .top-user-name {
             display: none;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .portal-top-bar {
+            height: 58px;
+            padding: 0 0.75rem;
+          }
+          .bc-badge {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.5rem;
+            max-width: 130px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .top-bar-right {
+            gap: 0.45rem;
+          }
+          .top-bar-icon-btn {
+            width: 32px;
+            height: 32px;
+          }
+          .top-avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 0.78rem;
+          }
+          .portal-page-viewport {
+            padding: 1rem 0.65rem;
+          }
+          .mobile-drawer-pane {
+            width: min(270px, 84vw);
+            padding: 1.25rem 1rem;
           }
         }
       `}</style>

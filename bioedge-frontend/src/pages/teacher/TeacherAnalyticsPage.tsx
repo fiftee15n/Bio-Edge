@@ -288,6 +288,39 @@ export const TeacherAnalyticsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+        @media (max-width: 600px) {
+          .analytics-mgr-header, .tier-card, .chapter-difficulty-card, .a-kpi-box {
+            padding: 1.25rem 1rem !important;
+          }
+          .a-mgr-title {
+            font-size: 1.35rem;
+          }
+          .analytics-kpi-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem;
+          }
+          .a-kpi-val {
+            font-size: 1.45rem;
+          }
+          .diff-bar-head {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+          }
+        }
+        @media (max-width: 480px) {
+          .analytics-kpi-grid {
+            grid-template-columns: 1fr;
+          }
+          .tier-row {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+          }
+          .tier-score {
+            width: 100%;
+            text-align: right;
+          }
+        }
       `}</style>
     </div>
   );

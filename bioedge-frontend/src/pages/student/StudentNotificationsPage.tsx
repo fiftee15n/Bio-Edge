@@ -149,6 +149,21 @@ export const StudentNotificationsPage: React.FC = () => {
           background: var(--primary-green);
           align-self: center;
         }
+
+        @media (max-width: 600px) {
+          .notif-hero-card {
+            padding: 1.25rem 1rem;
+          }
+          .notif-item-card {
+            padding: 1rem 0.85rem;
+            gap: 0.75rem;
+          }
+          .notif-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -228,6 +228,27 @@ export const StudentPracticePage: React.FC = () => {
         .test-card-actions {
           margin-top: auto;
         }
+
+        @media (max-width: 768px) {
+          .practice-tests-grid {
+            grid-template-columns: 1fr;
+          }
+          .practice-header-card {
+            padding: 1.25rem 1rem;
+          }
+          .practice-category-tabs {
+            width: 100%;
+          }
+          .p-category-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.82rem;
+          }
+          .practice-test-item-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

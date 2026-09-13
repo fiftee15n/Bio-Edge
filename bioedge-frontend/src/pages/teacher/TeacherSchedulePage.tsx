@@ -138,6 +138,18 @@ export const TeacherSchedulePage: React.FC = () => {
         .tl-icon {
           color: var(--primary-green);
         }
+
+        @media (max-width: 768px) {
+          .schedule-timeline-admin-grid {
+            grid-template-columns: 1fr;
+          }
+          .sched-admin-header {
+            padding: 1.25rem 1rem;
+          }
+          .timeline-admin-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -229,6 +229,18 @@ export const PricingPage: React.FC = () => {
             flex-direction: column;
           }
         }
+
+        @media (max-width: 480px) {
+          .pricing-card {
+            padding: 1.75rem 1.25rem;
+          }
+          .price-val {
+            font-size: 2.35rem;
+          }
+          .seats-alert-card {
+            padding: 1.5rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

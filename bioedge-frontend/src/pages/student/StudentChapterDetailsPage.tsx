@@ -322,6 +322,22 @@ export const StudentChapterDetailsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .chapter-header-card {
+            padding: 1.5rem 1rem;
+          }
+          .ch-full-title {
+            font-size: 1.45rem;
+          }
+          .topics-detail-card, .related-classes-card, .practice-action-box {
+            padding: 1.25rem 1rem;
+          }
+          .ch-head-right {
+            min-width: 100%;
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

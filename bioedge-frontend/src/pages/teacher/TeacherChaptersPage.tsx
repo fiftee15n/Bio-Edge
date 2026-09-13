@@ -338,6 +338,37 @@ export const TeacherChaptersPage: React.FC = () => {
           padding: 0.5rem 0.85rem;
           font-size: 0.85rem;
         }
+
+        @media (max-width: 768px) {
+          .chapters-admin-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+          }
+          .admin-ch-actions {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .paper-switcher-btn-group {
+            width: 100%;
+          }
+          .paper-tab-select-btn {
+            flex: 1;
+            justify-content: center;
+          }
+          .ch-admin-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+          .chapter-admin-card {
+            padding: 1.25rem 1rem;
+          }
+          .add-topic-inline-row {
+            flex-direction: column;
+          }
+        }
       `}</style>
     </div>
   );

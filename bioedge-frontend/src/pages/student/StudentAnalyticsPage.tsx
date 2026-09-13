@@ -307,6 +307,20 @@ export const StudentAnalyticsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .analytics-header-card {
+            padding: 1.25rem 1rem;
+          }
+          .analytics-stats-grid {
+            grid-template-columns: 1fr;
+          }
+          .a-stat-card,
+          .paper-a-card,
+          .chapter-analytics-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

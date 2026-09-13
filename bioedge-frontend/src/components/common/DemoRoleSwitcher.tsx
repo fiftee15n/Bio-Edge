@@ -216,6 +216,23 @@ export const DemoRoleSwitcher: React.FC = () => {
           background: #F3F4F6;
           color: var(--error);
         }
+
+        @media (max-width: 640px) {
+          .demo-role-switcher {
+            bottom: 1rem;
+            left: 1rem;
+          }
+          .demo-switcher-toggle {
+            padding: 0.48rem 0.8rem;
+            font-size: 0.76rem;
+          }
+          .demo-switcher-menu {
+            width: calc(100vw - 2rem);
+            max-width: 290px;
+            left: 0;
+            padding: 0.85rem;
+          }
+        }
       `}</style>
     </div>
   );

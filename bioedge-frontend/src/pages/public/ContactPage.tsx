@@ -283,6 +283,13 @@ export const ContactPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 480px) {
+          .contact-info-card,
+          .contact-form-card {
+            padding: 1.5rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -679,6 +679,23 @@ export const StudentDashboard: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .dashboard-welcome-header {
+            padding: 1.25rem 1rem;
+          }
+          .welcome-title {
+            font-size: 1.35rem;
+          }
+          .progress-stats-triplet {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+          }
+          .welcome-right {
+            flex-wrap: wrap;
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

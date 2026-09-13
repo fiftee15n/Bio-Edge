@@ -454,6 +454,36 @@ export const StudentTestRunnerPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .test-runner-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1rem 0.85rem;
+            gap: 0.75rem;
+          }
+          .question-panel {
+            padding: 1.25rem 0.85rem;
+          }
+          .q-text-body {
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+          }
+          .q-options-container {
+            gap: 0.65rem;
+            margin-bottom: 1.5rem;
+          }
+          .q-option-row {
+            padding: 0.75rem 0.85rem;
+          }
+          .question-nav-actions {
+            flex-wrap: wrap;
+            gap: 0.65rem;
+          }
+          .palette-grid {
+            grid-template-columns: repeat(5, 1fr);
+          }
+        }
       `}</style>
     </div>
   );

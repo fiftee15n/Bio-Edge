@@ -1533,6 +1533,37 @@ export const CourseDetailsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .course-details-hero {
+            padding: 1.5rem 1rem;
+          }
+          .course-hero-title {
+            font-size: 1.55rem;
+          }
+          .course-metrics-bar {
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+          }
+          .details-tab-nav {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            gap: 0.35rem;
+            padding-bottom: 0.4rem;
+          }
+          .tab-btn {
+            white-space: nowrap;
+            padding: 0.55rem 0.8rem;
+            font-size: 0.8rem;
+          }
+          .tab-pane-card {
+            padding: 1.25rem 0.85rem;
+          }
+          .ins-stats-row {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
     </div>
   );

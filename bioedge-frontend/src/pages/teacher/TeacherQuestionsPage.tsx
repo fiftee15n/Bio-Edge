@@ -356,6 +356,29 @@ export const TeacherQuestionsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .questions-admin-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .q-head-actions {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .search-wrap {
+            width: 100%;
+          }
+          .search-input {
+            width: 100%;
+          }
+          .question-admin-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

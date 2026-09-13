@@ -239,6 +239,30 @@ export const StudentCoursePage: React.FC = () => {
           padding-top: 1rem;
           border-top: 1px solid var(--border-subtle);
         }
+
+        @media (max-width: 768px) {
+          .student-chapters-grid {
+            grid-template-columns: 1fr;
+          }
+          .course-hero-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .paper-tabs-row {
+            width: 100%;
+          }
+          .portal-tab-btn {
+            flex: 1;
+            justify-content: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.82rem;
+          }
+          .student-chapter-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

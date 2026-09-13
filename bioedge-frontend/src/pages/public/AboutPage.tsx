@@ -260,6 +260,23 @@ export const AboutPage: React.FC = () => {
             justify-content: center;
           }
         }
+
+        @media (max-width: 480px) {
+          .about-spotlight-card {
+            padding: 1.5rem 1rem;
+          }
+          .about-avatar-box {
+            width: 130px;
+            height: 130px;
+            font-size: 2.75rem;
+          }
+          .faculty-name {
+            font-size: 1.65rem;
+          }
+          .principles-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
     </div>
   );

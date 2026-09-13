@@ -341,6 +341,12 @@ export const RegisterPage: React.FC = () => {
         .auth-bottom-switch-link a:hover {
           color: #064E3B;
         }
+
+        @media (max-width: 480px) {
+          .register-card-container {
+            padding: 1.75rem 1.25rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -178,6 +178,20 @@ export const StudentProfilePage: React.FC = () => {
             text-align: center;
           }
         }
+
+        @media (max-width: 600px) {
+          .profile-hero-card {
+            padding: 1.5rem 1rem;
+          }
+          .profile-info-card {
+            padding: 1.25rem 1rem;
+          }
+          .info-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+          }
+        }
       `}</style>
     </div>
   );

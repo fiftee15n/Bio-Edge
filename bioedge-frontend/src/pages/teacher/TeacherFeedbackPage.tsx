@@ -237,6 +237,15 @@ export const TeacherFeedbackPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .feedback-mgr-header {
+            padding: 1.25rem 1rem;
+          }
+          .feedback-composer-card, .feedback-stream-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -230,6 +230,35 @@ export const StudentClassesPage: React.FC = () => {
         .t-ico {
           color: var(--primary-green);
         }
+
+        @media (max-width: 768px) {
+          .classes-list-grid {
+            grid-template-columns: 1fr;
+          }
+          .classes-header-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .classes-filter-row {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .search-wrap {
+            width: 100%;
+          }
+          .search-input {
+            width: 100%;
+          }
+          .filter-select {
+            width: 100%;
+          }
+          .student-class-item {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

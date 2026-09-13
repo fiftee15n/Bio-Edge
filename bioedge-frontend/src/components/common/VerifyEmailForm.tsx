@@ -437,6 +437,29 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         @keyframes spin {
           100% { transform: rotate(360deg); }
         }
+
+        @media (max-width: 480px) {
+          .otp-boxes-grid {
+            gap: 0.35rem;
+          }
+          .otp-digit-box {
+            height: 46px;
+            font-size: 1.2rem;
+          }
+          .otp-meta-row {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+          }
+          .dev-code-hint {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-start;
+          }
+          .verify-title {
+            font-size: 1.25rem;
+          }
+        }
       `}</style>
     </div>
   );

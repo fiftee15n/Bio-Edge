@@ -304,6 +304,15 @@ export const TeacherCoursePage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .course-mgr-header {
+            padding: 1.25rem 1rem;
+          }
+          .course-mgr-form-card, .course-live-preview-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

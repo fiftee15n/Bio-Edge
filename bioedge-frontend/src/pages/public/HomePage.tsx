@@ -1601,15 +1601,41 @@ export const HomePage: React.FC = () => {
             width: 100%;
           }
           .final-cta-card {
-            padding: 3rem 1.5rem;
+            padding: 2.5rem 1.25rem;
           }
           .final-cta-heading {
-            font-size: 1.85rem;
+            font-size: 1.75rem;
           }
           .seats-notice-bar {
             flex-direction: column;
             gap: 1rem;
             text-align: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-headline {
+            font-size: 1.85rem !important;
+            line-height: 1.2 !important;
+          }
+          .hero-supporting-message {
+            font-size: 0.98rem;
+          }
+          .hero-description {
+            font-size: 0.92rem;
+          }
+          .hero-section {
+            padding: 2rem 0 1.75rem;
+          }
+          .hero-trust-row {
+            flex-wrap: wrap;
+            gap: 0.6rem;
+          }
+          .final-cta-card {
+            padding: 2rem 1rem;
+          }
+          .final-cta-heading {
+            font-size: 1.45rem;
           }
         }
       `}</style>

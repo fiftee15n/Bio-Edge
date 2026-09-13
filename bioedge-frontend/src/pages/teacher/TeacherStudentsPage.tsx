@@ -242,6 +242,28 @@ export const TeacherStudentsPage: React.FC = () => {
           font-size: 0.8rem;
           border-radius: var(--radius-sm);
         }
+
+        @media (max-width: 768px) {
+          .students-head-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+          }
+          .s-head-filters {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .search-wrap {
+            width: 100%;
+          }
+          .search-input {
+            width: 100%;
+          }
+          .filter-select {
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

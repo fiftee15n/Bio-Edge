@@ -439,10 +439,54 @@ export const Navbar: React.FC = () => {
             display: none;
           }
           .mobile-toggle-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            padding: 0.35rem;
+            cursor: pointer;
           }
           .seats-indicator {
             display: none;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .navbar-container {
+            height: 62px;
+          }
+          .brand-title {
+            font-size: 1.1rem;
+          }
+          .brand-subtitle {
+            font-size: 0.65rem;
+          }
+          .logo-icon {
+            width: 32px;
+            height: 32px;
+          }
+          .dev-notice-banner {
+            font-size: 0.74rem;
+            padding: 0.35rem 0.5rem;
+          }
+          .dev-notice-badge {
+            font-size: 0.62rem;
+            padding: 0.12rem 0.45rem;
+          }
+          .nav-login-btn {
+            padding: 0.38rem 0.75rem;
+            font-size: 0.8rem;
+          }
+          .btn-sm {
+            padding: 0.38rem 0.8rem;
+            font-size: 0.8rem;
+          }
+          .mobile-menu-drawer {
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 1.25rem 1rem;
           }
         }
       `}</style>

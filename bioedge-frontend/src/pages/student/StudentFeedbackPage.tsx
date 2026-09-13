@@ -218,6 +218,24 @@ export const StudentFeedbackPage: React.FC = () => {
           padding: 3rem;
           color: var(--text-muted);
         }
+
+        @media (max-width: 600px) {
+          .feedback-hero-card {
+            padding: 1.25rem 1rem;
+          }
+          .feedback-card-item {
+            padding: 1.25rem 1rem;
+          }
+          .fb-categories-row {
+            width: 100%;
+          }
+          .fb-cat-btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.45rem 0.65rem;
+            font-size: 0.78rem;
+          }
+        }
       `}</style>
     </div>
   );

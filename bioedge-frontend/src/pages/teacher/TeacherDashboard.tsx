@@ -434,6 +434,32 @@ export const TeacherDashboard: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .teacher-welcome-banner {
+            padding: 1.25rem 1rem;
+          }
+          .t-wel-actions {
+            width: 100%;
+          }
+          .t-wel-actions .btn {
+            flex: 1;
+            justify-content: center;
+          }
+          .teacher-kpi-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          .kpi-card {
+            padding: 1.25rem 1rem;
+          }
+          .quick-management-hub {
+            padding: 1.25rem 1rem;
+          }
+          .hub-buttons-grid {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
     </div>
   );

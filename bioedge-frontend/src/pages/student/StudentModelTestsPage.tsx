@@ -163,6 +163,18 @@ export const StudentModelTestsPage: React.FC = () => {
           font-size: 0.78rem;
           color: var(--text-muted);
         }
+
+        @media (max-width: 768px) {
+          .model-tests-list-grid {
+            grid-template-columns: 1fr;
+          }
+          .model-tests-hero {
+            padding: 1.25rem 1rem;
+          }
+          .model-test-card {
+            padding: 1.25rem 1rem;
+          }
+        }
       `}</style>
     </div>
   );

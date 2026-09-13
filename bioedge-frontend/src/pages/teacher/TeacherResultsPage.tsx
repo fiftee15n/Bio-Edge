@@ -285,6 +285,21 @@ export const TeacherResultsPage: React.FC = () => {
           font-size: 0.78rem;
           color: var(--text-muted);
         }
+
+        @media (max-width: 768px) {
+          .results-head-card {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+          .search-wrap {
+            width: 100%;
+          }
+          .search-input {
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

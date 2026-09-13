@@ -413,6 +413,28 @@ export const StudentResultsPage: React.FC = () => {
             grid-template-columns: 1fr;
           }
         }
+
+        @media (max-width: 600px) {
+          .result-overview-card {
+            padding: 1.5rem 1rem;
+          }
+          .score-hero-grid {
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+          }
+          .score-metrics-grid {
+            width: 100%;
+          }
+          .results-bottom-actions {
+            flex-direction: column;
+            gap: 0.75rem;
+          }
+          .results-bottom-actions .btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
       `}</style>
     </div>
   );
