@@ -42,7 +42,10 @@ export const Navbar: React.FC = () => {
       <div className="dev-notice-banner">
         <div className="container">
           <div className="dev-notice-inner">
-            <span className="dev-notice-badge">Notice</span>
+            <span className="dev-notice-badge">
+              <span className="dev-pulse-dot"></span>
+              Notice
+            </span>
             <span className="dev-notice-text">The website is under development</span>
           </div>
         </div>
@@ -161,34 +164,51 @@ export const Navbar: React.FC = () => {
 
       <style>{`
         .dev-notice-banner {
-          background: #18281F;
-          color: #E2E8F0;
-          font-size: 0.76rem;
-          font-weight: 500;
-          padding: 0.35rem 0;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          background: linear-gradient(90deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+          color: #FFFFFF;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 0.42rem 0;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
           letter-spacing: 0.01em;
+          box-shadow: 0 2px 10px rgba(217, 119, 6, 0.28);
         }
         .dev-notice-inner {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.55rem;
+          gap: 0.65rem;
         }
         .dev-notice-badge {
-          background: var(--dark-green);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: rgba(0, 0, 0, 0.25);
           color: #FFFFFF;
-          font-size: 0.65rem;
+          font-size: 0.68rem;
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.04em;
-          padding: 0.15rem 0.5rem;
+          letter-spacing: 0.05em;
+          padding: 0.18rem 0.55rem;
           border-radius: var(--radius-full);
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dev-pulse-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #FFFFFF;
+          box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+          animation: devPulse 1.5s infinite;
+        }
+        @keyframes devPulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.7; }
         }
         .dev-notice-text {
           font-weight: 600;
-          color: #F8FAFC;
+          color: #FFFFFF;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         }
 
         .navbar-wrapper {
