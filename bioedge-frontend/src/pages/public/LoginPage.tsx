@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { VerifyEmailForm } from '../../components/common/VerifyEmailForm';
 import { 
@@ -18,13 +18,22 @@ import {
 
 export const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const redirectParam = searchParams.get('redirect') || searchParams.get('from');
   const defaultRole = (searchParams.get('role') === 'teacher' ? 'teacher' : 'student') as 'student' | 'teacher';
-  const defaultTab = searchParams.get('tab') === 'register' ? 'register' : 'login';
+  const isRegisterRoute = location.pathname === '/register' || searchParams.get('tab') === 'register';
 
-  const [activeTab, setActiveTab] = useState<'login' | 'register' | 'verify'>(defaultTab);
+  const [activeTab, setActiveTab] = useState<'login' | 'register' | 'verify'>(isRegisterRoute ? 'register' : 'login');
   const [activeRole, setActiveRole] = useState<'student' | 'teacher'>(defaultRole);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  useEffect(() => {
+    if (location.pathname === '/register' || searchParams.get('tab') === 'register') {
+      setActiveTab('register');
+    } else if (location.pathname === '/login') {
+      setActiveTab('login');
+    }
+  }, [location.pathname, searchParams]);
 
   // Form states
   const [loginEmail, setLoginEmail] = useState<string>('');

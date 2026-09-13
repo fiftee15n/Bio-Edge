@@ -77,8 +77,8 @@ export const Navbar: React.FC = () => {
                 <Link to="/login" className="nav-login-btn">
                   <LogIn size={15} /> <span>Login</span>
                 </Link>
-                <Link to="/enroll" className="btn btn-primary btn-sm">
-                  Enroll Now
+                <Link to="/register" className="btn btn-primary btn-sm">
+                  Get Started
                 </Link>
               </div>
             )}
@@ -137,11 +137,11 @@ export const Navbar: React.FC = () => {
                   Log In
                 </Link>
                 <Link
-                  to="/enroll"
+                  to="/register"
                   onClick={() => setMobileMenuOpen(false)}
                   className="btn btn-primary btn-block"
                 >
-                  Enroll Now
+                  Get Started
                 </Link>
               </div>
             )}

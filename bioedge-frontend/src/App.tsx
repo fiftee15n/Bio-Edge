@@ -99,6 +99,7 @@ export default function App(): React.ReactElement {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/enroll" element={<EnrollPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<LoginPage />} />
               </Route>
 
               {/* Authenticated Student Portal */}
