@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd bioedge-frontend && npm install && npm run build",
+  "outputDirectory": "bioedge-frontend/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
