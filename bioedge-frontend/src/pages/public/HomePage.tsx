@@ -5,7 +5,6 @@ import { ReferenceHeroSection } from '../../components/home/ReferenceHeroSection
 import { Hero3DCardDeck } from '../../components/home/Hero3DCardDeck';
 import { Interactive3DBento } from '../../components/home/Interactive3DBento';
 import { CurvedAvatarMarquee } from '../../components/home/CurvedAvatarMarquee';
-import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
   CheckCircle2, 
   Calendar, 
@@ -67,9 +66,6 @@ export const HomePage: React.FC = () => {
           <Hero3DCardDeck />
         </div>
       </section>
-
-      {/* Course Structure: HSC Biology Intensive Program (4-Month, 48-Class Blueprint) */}
-      <SyllabusCurriculumExplorer />
 
       {/* 2. Core Pillars */}
       <section className="section-padding benefits-section">
