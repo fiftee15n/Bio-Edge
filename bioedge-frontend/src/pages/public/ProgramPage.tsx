@@ -1,195 +1,554 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
-import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
   BookOpen, 
-  Calendar, 
   Clock, 
   CheckCircle2, 
-  ChevronRight, 
   Layers, 
   ArrowRight, 
   ShieldCheck, 
-  Users, 
-  Target 
+  Sparkles, 
+  Calendar, 
+  FileText, 
+  Award, 
+  ChevronDown, 
+  Phone, 
+  GraduationCap,
+  ChevronUp
 } from 'lucide-react';
 
 export const ProgramPage: React.FC = () => {
   const { course, papers, availableSeats } = useCourseData();
   const [selectedPaperId, setSelectedPaperId] = useState<string>('first-paper');
+  const [expandedChapterIds, setExpandedChapterIds] = useState<Record<string, boolean>>({
+    'c1-01': true,
+    'c2-01': true
+  });
 
   const activePaper = papers.find(p => p.id === selectedPaperId) || papers[0];
 
+  const toggleChapter = (id: string) => {
+    setExpandedChapterIds(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const expandAll = () => {
+    const all: Record<string, boolean> = {};
+    activePaper.chapters.forEach(ch => {
+      all[ch.id] = true;
+    });
+    setExpandedChapterIds(all);
+  };
+
+  const collapseAll = () => {
+    setExpandedChapterIds({});
+  };
+
+  const milestones = [
+    {
+      month: 'Month 01',
+      title: 'Cell Biology & Diversity',
+      duration: 'Weeks 01–04',
+      classes: '12 Classes',
+      topics: 'Cell structure, division (mitosis/meiosis), biomolecules & animal taxonomy.',
+      milestone: 'Milestone Exam 01',
+      accent: 'green'
+    },
+    {
+      month: 'Month 02',
+      title: 'Physiology & Vital Systems',
+      duration: 'Weeks 05–08',
+      classes: '12 Classes',
+      topics: 'Photosynthesis, respiration, human digestion, circulation, and excretion.',
+      milestone: 'Milestone Exam 02',
+      accent: 'green'
+    },
+    {
+      month: 'Month 03',
+      title: 'Genetics, Reproduction & Biotech',
+      duration: 'Weeks 09–12',
+      classes: '12 Classes',
+      topics: 'Mendelian genetics, gene disorders, plant tissue culture & genetic engineering.',
+      milestone: 'Milestone Exam 03',
+      accent: 'green'
+    },
+    {
+      month: 'Month 04',
+      title: 'Ecology & Board Rehearsals',
+      duration: 'Weeks 13–16',
+      classes: '12 Classes',
+      topics: 'Ecosystems, biodiversity conservation, timed Board simulations & CQ drills.',
+      milestone: 'Grand Board Simulation',
+      accent: 'amber'
+    }
+  ];
+
   return (
-    <div className="program-page-wrapper section-padding">
+    <div className="program-structure-page">
       <div className="container">
-        {/* Header */}
-        <div className="section-header text-center">
-          <span className="section-pill">Flagship Program</span>
-          <h1 className="section-title">{course.title}</h1>
-          <p className="section-subtitle">
-            A comprehensive 4-month academic blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology).
+        
+        {/* ====================================================================
+           1. AIRY HERO HEADER
+           ==================================================================== */}
+        <section className="prog-hero-header text-center">
+          <span className="section-pill">
+            <Layers size={14} /> Curriculum Architecture
+          </span>
+          <h1 className="prog-hero-title">
+            Program Academic Structure
+          </h1>
+          <p className="prog-hero-desc">
+            A comprehensive, high-yield 4-month blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) and 2nd Paper (Zoology) with interactive masterclasses and line-by-line CQ evaluations.
           </p>
-        </div>
 
-        {/* Key Metrics Overview */}
-        <div className="program-overview-cards-grid">
-          <div className="p-ov-card bio-card">
-            <span className="ov-label">Duration</span>
-            <strong className="ov-value">{course.duration}</strong>
-            <p className="ov-sub">16 Intensive Weeks</p>
-          </div>
-          <div className="p-ov-card bio-card">
-            <span className="ov-label">Live Classes</span>
-            <strong className="ov-value">{course.totalClasses} Sessions</strong>
-            <p className="ov-sub">90 mins per class</p>
-          </div>
-          <div className="p-ov-card bio-card">
-            <span className="ov-label">Curriculum Depth</span>
-            <strong className="ov-value">24 Chapters</strong>
-            <p className="ov-sub">Botany + Zoology</p>
-          </div>
-          <div className="p-ov-card bio-card highlight-ov-card">
-            <span className="ov-label">Cohort Size</span>
-            <strong className="ov-value">{course.seatLimit} Students</strong>
-            <p className="ov-sub">{availableSeats} seats remaining</p>
-          </div>
-        </div>
-
-        {/* 4-Month 48-Class Academic Blueprint */}
-        <div style={{ marginBottom: '3.5rem' }}>
-          <SyllabusCurriculumExplorer />
-        </div>
-
-        {/* Comprehensive Syllabus Explorer */}
-        <div className="syllabus-explorer-container" id="structure">
-          <div className="syllabus-header">
-            <h2 className="syllabus-title">Detailed Chapter Breakdown</h2>
-            <div className="paper-switcher-btn-group">
-              {papers.map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => setSelectedPaperId(p.id)}
-                  className={`paper-switcher-btn ${selectedPaperId === p.id ? 'active' : ''}`}
-                >
-                  <BookOpen size={16} />
-                  <span>{p.name}</span>
-                </button>
-              ))}
+          {/* 4 Essential Metric Badges */}
+          <div className="prog-metrics-ribbon">
+            <div className="ribbon-item">
+              <Clock size={16} className="ribbon-icon" />
+              <span><strong>4 Months</strong> (16 Weeks)</span>
+            </div>
+            <div className="ribbon-item">
+              <Calendar size={16} className="ribbon-icon" />
+              <span><strong>48 Classes</strong> (90m each)</span>
+            </div>
+            <div className="ribbon-item">
+              <BookOpen size={16} className="ribbon-icon" />
+              <span><strong>24 Chapters</strong> (Botany + Zoology)</span>
+            </div>
+            <div className="ribbon-item highlight">
+              <ShieldCheck size={16} className="ribbon-icon" />
+              <span><strong>CQ Grading</strong> (Examiner Feedback)</span>
             </div>
           </div>
+        </section>
 
-          <div className="detailed-chapters-accordion">
-            {activePaper.chapters.map((ch) => (
-              <div key={ch.id} className="detailed-chapter-card bio-card">
-                <div className="d-ch-header">
-                  <div className="d-ch-title-wrap">
-                    <span className="d-ch-badge">Chapter {ch.number}</span>
-                    <h3 className="d-ch-name">{ch.name}</h3>
-                  </div>
-                  <span className="d-ch-topics-pill">
-                    {(ch.topics || []).length} Topics Covered
-                  </span>
+        {/* ====================================================================
+           2. 4-MONTH PROGRESSIVE MILESTONES (MINIMAL ROADMAP)
+           ==================================================================== */}
+        <section className="prog-section">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <Sparkles size={14} /> Progression Model
+            </span>
+            <h2 className="clean-section-title">4-Month Milestone Roadmap</h2>
+            <p className="clean-section-desc">
+              The syllabus is organized into four progressive monthly phases, ensuring every chapter is taught conceptually before undergoing rigorous examination.
+            </p>
+          </div>
+
+          <div className="prog-milestones-grid">
+            {milestones.map((m, idx) => (
+              <div key={idx} className={`prog-milestone-card ${m.accent === 'amber' ? 'amber-accent' : ''}`}>
+                <div className="milestone-card-top">
+                  <span className="milestone-month-tag">{m.month}</span>
+                  <span className="milestone-classes-count">{m.classes}</span>
                 </div>
-
-                <div className="d-ch-topics-grid">
-                  {(ch.topics || []).map((t, idx) => (
-                    <div key={idx} className="d-topic-cell">
-                      <CheckCircle2 size={16} className="d-topic-icon" />
-                      <span className="d-topic-title">{t.title}</span>
-                    </div>
-                  ))}
+                <h3 className="milestone-card-title">{m.title}</h3>
+                <span className="milestone-duration-tag">{m.duration}</span>
+                <p className="milestone-topics-text">{m.topics}</p>
+                <div className="milestone-exam-tag">
+                  <Award size={14} />
+                  <span>{m.milestone}</span>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Study Materials & Handouts */}
-        <div className="materials-card bio-card">
-          <div className="materials-content">
-            <span className="section-pill">Resource Library</span>
-            <h2 className="materials-title">Included Study Materials & Guides</h2>
-            <ul className="materials-list">
-              <li>
-                <CheckCircle2 size={18} className="m-icon" />
-                <div>
-                  <strong>High-Resolution Annotated Diagram Notebook</strong>
-                  <p>Over 80+ standard Board exam diagrams with colored label keys.</p>
-                </div>
-              </li>
-              <li>
-                <CheckCircle2 size={18} className="m-icon" />
-                <div>
-                  <strong>Chapter-wise CQ Model Answer Repository</strong>
-                  <p>Exemplary 'A+' answers written and formatted according to grading rubrics.</p>
-                </div>
-              </li>
-              <li>
-                <CheckCircle2 size={18} className="m-icon" />
-                <div>
-                  <strong>1,500+ Curated Question Bank</strong>
-                  <p>MCQs categorized by difficulty, past board frequencies, and Olympiad concepts.</p>
-                </div>
-              </li>
-            </ul>
+        {/* ====================================================================
+           3. DETAILED 24-CHAPTER SYLLABUS BREAKDOWN (#structure)
+           ==================================================================== */}
+        <section className="prog-section" id="structure">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <BookOpen size={14} /> Full Syllabus Explorer
+            </span>
+            <h2 className="clean-section-title">Detailed Chapter-by-Chapter Breakdown</h2>
+            <p className="clean-section-desc">
+              Explore chapter topics and lecture contents for both HSC Biology papers. Click on any chapter to expand or review its covered concepts.
+            </p>
           </div>
-        </div>
 
-        {/* CTA Banner */}
-        <div className="program-bottom-cta text-center">
-          <h3 className="bottom-cta-heading">Ready to Master HEC Biology?</h3>
-          <p className="bottom-cta-sub">
-            Join the upcoming cohort before the remaining {availableSeats} seats fill up.
-          </p>
-          <Link to="/enroll" className="btn btn-primary btn-lg">
-            Enroll in Program Now <ArrowRight size={18} />
-          </Link>
-        </div>
+          {/* Paper Switcher Tabs & Expansion Controls */}
+          <div className="syllabus-controls-bar">
+            <div className="paper-switcher-pills">
+              {papers.map((p) => {
+                const isBotany = p.id === 'first-paper';
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setSelectedPaperId(p.id)}
+                    className={`paper-pill-btn ${selectedPaperId === p.id ? 'active' : ''}`}
+                  >
+                    <BookOpen size={16} />
+                    <span>{isBotany ? '1st Paper — Botany (12 Chapters)' : '2nd Paper — Zoology (12 Chapters)'}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="syllabus-toggle-actions">
+              <button type="button" onClick={expandAll} className="btn-text-action">
+                Expand All
+              </button>
+              <span className="action-divider">•</span>
+              <button type="button" onClick={collapseAll} className="btn-text-action">
+                Collapse All
+              </button>
+            </div>
+          </div>
+
+          {/* Chapters Accordion Cards */}
+          <div className="chapters-accordion-stack">
+            {activePaper.chapters.map((ch) => {
+              const isExpanded = !!expandedChapterIds[ch.id];
+              const topicsList = ch.topics || [];
+
+              return (
+                <div 
+                  key={ch.id} 
+                  className={`chapter-accordion-card bio-card ${isExpanded ? 'is-open' : ''}`}
+                >
+                  <div 
+                    className="chapter-card-header" 
+                    onClick={() => toggleChapter(ch.id)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="ch-header-left">
+                      <span className="ch-number-badge">Chapter {ch.number}</span>
+                      <h3 className="ch-title">{ch.name}</h3>
+                    </div>
+
+                    <div className="ch-header-right">
+                      <span className="ch-topics-count">
+                        {topicsList.length} Core Topics
+                      </span>
+                      <div className="ch-chevron-box">
+                        {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                      </div>
+                    </div>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="chapter-card-body">
+                      <div className="chapter-topics-grid">
+                        {topicsList.map((t, idx) => (
+                          <div key={t.id || idx} className="topic-badge-item">
+                            <CheckCircle2 size={15} className="topic-check-icon" />
+                            <span className="topic-text">{t.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ====================================================================
+           4. INCLUDED STUDY MATERIALS & GUIDES
+           ==================================================================== */}
+        <section className="prog-section">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <FileText size={14} /> Academic Tooling
+            </span>
+            <h2 className="clean-section-title">Included Study Materials & Guides</h2>
+            <p className="clean-section-desc">
+              Every enrolled student receives comprehensive physical and digital study companions designed for effortless Board revision.
+            </p>
+          </div>
+
+          <div className="materials-triad-grid">
+            <div className="material-card bio-card">
+              <div className="mat-icon-box green">
+                <FileText size={24} />
+              </div>
+              <h3 className="mat-title">80+ Diagram Blueprint Notebook</h3>
+              <p className="mat-desc">
+                Vector-sharp, color-coded diagrams with step-by-step drafting lines and precise English/Bangla labeling keys for full diagram marks.
+              </p>
+              <div className="mat-feature-tag">
+                <CheckCircle2 size={14} /> Full HD Printable PDF
+              </div>
+            </div>
+
+            <div className="material-card bio-card">
+              <div className="mat-icon-box amber">
+                <Award size={24} />
+              </div>
+              <h3 className="mat-title">CQ Model Answer Repository</h3>
+              <p className="mat-desc">
+                Top-tier 'A+' written model answers structured according to the latest NCTB board rubric standards with examiner commentary.
+              </p>
+              <div className="mat-feature-tag">
+                <CheckCircle2 size={14} /> 24 Chapter Answer Keys
+              </div>
+            </div>
+
+            <div className="material-card bio-card">
+              <div className="mat-icon-box green">
+                <GraduationCap size={24} />
+              </div>
+              <h3 className="mat-title">1,500+ Curated Question Bank</h3>
+              <p className="mat-desc">
+                Exhaustive multiple-choice bank categorized into Fundamental, Application, and Olympiad-level thinking with instant explanations.
+              </p>
+              <div className="mat-feature-tag">
+                <CheckCircle2 size={14} /> CBT Practice Portal
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ====================================================================
+           5. MINIMALIST ADMISSION CTA BANNER
+           ==================================================================== */}
+        <section className="prog-cta-section text-center">
+          <div className="prog-cta-box">
+            <span className="badge badge-green" style={{ marginBottom: '1rem', display: 'inline-flex' }}>
+              Limited 30-Seat Cohort • {availableSeats} Seats Left
+            </span>
+            <h2 className="prog-cta-title">
+              Ready to Master HSC Biology with Afroza Tahmina?
+            </h2>
+            <p className="prog-cta-sub">
+              Secure your place in the upcoming Alpha Cohort and start building true conceptual mastery today.
+            </p>
+
+            <div className="prog-cta-actions">
+              <Link to="/enroll?course=alpha-cohort" className="btn btn-primary btn-lg">
+                Enroll in Alpha Cohort <ArrowRight size={18} />
+              </Link>
+              <a 
+                href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20have%20questions%20about%20the%20program%20structure" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="btn btn-outline btn-lg"
+              >
+                <Phone size={16} /> Inquire via WhatsApp
+              </a>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <style>{`
-        .program-overview-cards-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 4rem;
-        }
-        .p-ov-card {
-          padding: 1.75rem;
-          text-align: center;
-        }
-        .highlight-ov-card {
-          background: var(--light-green);
-          border-color: rgba(49, 91, 61, 0.2);
-        }
-        .ov-label {
-          font-size: 0.8rem;
-          color: var(--text-muted);
-          text-transform: uppercase;
-          font-weight: 600;
-          display: block;
-          margin-bottom: 0.35rem;
-        }
-        .ov-value {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: var(--dark-green);
-          display: block;
-          font-family: var(--font-heading);
-          line-height: 1.2;
-        }
-        .ov-sub {
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          margin-top: 0.25rem;
+        /* ==========================================================================
+           PROGRAM STRUCTURE PAGE STYLES (CLEAN & MINIMALIST)
+           ========================================================================== */
+        .program-structure-page {
+          background: #FAFCFA;
+          min-height: calc(100vh - 72px);
+          padding: 3.5rem 0 6rem;
         }
 
-        .syllabus-explorer-container {
-          margin-bottom: 4rem;
+        /* 1. Hero Header */
+        .prog-hero-header {
+          margin-bottom: 3.75rem;
         }
-        .syllabus-header {
+
+        .prog-hero-title {
+          font-size: clamp(2rem, 4vw, 2.75rem);
+          font-weight: 800;
+          color: var(--dark-green);
+          line-height: 1.2;
+          margin: 0.5rem 0 1rem;
+        }
+
+        .prog-hero-desc {
+          font-size: 1.05rem;
+          color: var(--text-muted);
+          max-width: 680px;
+          margin: 0 auto 2rem;
+          line-height: 1.6;
+        }
+
+        /* Metrics Ribbon */
+        .prog-metrics-ribbon {
+          display: inline-flex;
+          align-items: center;
+          background: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          border-radius: var(--radius-full);
+          padding: 0.5rem 1.25rem;
+          box-shadow: var(--shadow-sm);
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 1.25rem;
+        }
+
+        .ribbon-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          color: var(--text-muted);
+        }
+
+        .ribbon-item strong {
+          color: var(--dark-green);
+        }
+
+        .ribbon-icon {
+          color: var(--primary-green);
+        }
+
+        .ribbon-item.highlight strong {
+          color: var(--primary-green);
+        }
+
+        /* Section Containers */
+        .prog-section {
+          margin-bottom: 4.5rem;
+        }
+
+        /* Clean Section Headers */
+        .clean-section-header {
+          margin-bottom: 2.75rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .section-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: var(--light-green);
+          color: var(--dark-green);
+          font-size: 0.8rem;
+          font-weight: 700;
+          padding: 5px 14px;
+          border-radius: var(--radius-full);
+          border: 1px solid rgba(41, 78, 54, 0.12);
+          margin-bottom: 0.35rem;
+        }
+
+        .clean-section-title {
+          font-size: clamp(1.75rem, 3.2vw, 2.3rem);
+          font-weight: 800;
+          color: var(--dark-green);
+          margin-top: 0.35rem;
+          margin-bottom: 0.6rem;
+          text-align: center;
+          width: 100%;
+        }
+
+        .clean-section-desc {
+          font-size: 1.02rem;
+          color: var(--text-muted);
+          max-width: 640px;
+          margin: 0 auto;
+          line-height: 1.6;
+          text-align: center;
+        }
+
+        /* 2. Milestones Grid */
+        .prog-milestones-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+        }
+
+        .prog-milestone-card {
+          background: #FFFFFF;
+          border-radius: 20px;
+          border: 1px solid var(--border-color);
+          padding: 1.75rem 1.35rem;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .prog-milestone-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(49, 91, 61, 0.08);
+          border-color: var(--primary-green);
+        }
+
+        .milestone-card-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+        }
+
+        .milestone-month-tag {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--dark-green);
+          background: var(--light-green);
+          padding: 3px 9px;
+          border-radius: var(--radius-full);
+        }
+
+        .milestone-classes-count {
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          font-weight: 600;
+        }
+
+        .milestone-card-title {
+          font-size: 1.15rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          line-height: 1.3;
+          margin-bottom: 0.35rem;
+        }
+
+        .milestone-duration-tag {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--primary-green);
+          margin-bottom: 0.85rem;
+          display: block;
+        }
+
+        .milestone-topics-text {
+          font-size: 0.85rem;
+          color: var(--text-muted);
+          line-height: 1.5;
+          flex-grow: 1;
+          margin-bottom: 1.25rem;
+        }
+
+        .milestone-exam-tag {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          background: var(--light-green-subtle);
+          padding: 6px 10px;
+          border-radius: var(--radius-sm);
+          border: 1px solid rgba(49, 91, 61, 0.08);
+        }
+
+        .prog-milestone-card.amber-accent .milestone-month-tag {
+          background: #FEF7E6;
+          color: #B45309;
+        }
+
+        .prog-milestone-card.amber-accent .milestone-exam-tag {
+          background: #FEF7E6;
+          color: #B45309;
+          border-color: rgba(180, 83, 9, 0.15);
+        }
+
+        /* 3. Controls Bar */
+        .syllabus-controls-bar {
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -197,189 +556,354 @@ export const ProgramPage: React.FC = () => {
           flex-wrap: wrap;
           gap: 1rem;
         }
-        .syllabus-title {
-          font-size: 1.75rem;
-          color: var(--dark-green);
+
+        .paper-switcher-pills {
+          display: inline-flex;
+          background: #EEF4F0;
+          padding: 4px;
+          border-radius: var(--radius-full);
+          gap: 4px;
         }
-        .paper-switcher-btn-group {
-          display: flex;
-          gap: 0.5rem;
-        }
-        .paper-switcher-btn {
+
+        .paper-pill-btn {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          padding: 0.6rem 1.2rem;
-          border-radius: var(--radius-md);
-          border: 1px solid var(--border-color);
-          background: #FFFFFF;
+          padding: 0.65rem 1.35rem;
+          border-radius: var(--radius-full);
+          border: none;
+          background: transparent;
           font-size: 0.9rem;
-          font-weight: 600;
-          color: var(--text-dark);
+          font-weight: 700;
+          color: var(--text-muted);
+          cursor: pointer;
           transition: all 0.2s ease;
         }
-        .paper-switcher-btn.active {
-          background: var(--dark-green);
-          color: #FFFFFF;
-          border-color: var(--dark-green);
+
+        .paper-pill-btn:hover {
+          color: var(--dark-green);
         }
 
-        .detailed-chapters-accordion {
+        .paper-pill-btn.active {
+          background: #FFFFFF;
+          color: var(--dark-green);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .syllabus-toggle-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+        }
+
+        .btn-text-action {
+          background: none;
+          border: none;
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          cursor: pointer;
+          padding: 4px 6px;
+          border-radius: 4px;
+          transition: color 0.2s ease;
+        }
+
+        .btn-text-action:hover {
+          color: var(--dark-green);
+          text-decoration: underline;
+        }
+
+        .action-divider {
+          color: var(--border-color);
+          font-size: 0.8rem;
+        }
+
+        /* Chapters Accordion Stack */
+        .chapters-accordion-stack {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 0.85rem;
         }
-        .detailed-chapter-card {
-          padding: 1.75rem;
+
+        .chapter-accordion-card {
+          background: #FFFFFF;
+          border-radius: 18px;
+          border: 1.5px solid var(--border-color);
+          overflow: hidden;
+          transition: all 0.2s ease;
         }
-        .d-ch-header {
+
+        .chapter-accordion-card:hover {
+          border-color: rgba(49, 91, 61, 0.3);
+        }
+
+        .chapter-accordion-card.is-open {
+          border-color: var(--dark-green);
+          box-shadow: 0 6px 20px rgba(49, 91, 61, 0.05);
+        }
+
+        .chapter-card-header {
+          padding: 1.25rem 1.5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 1.25rem;
-          padding-bottom: 0.75rem;
-          border-bottom: 1px solid var(--border-subtle);
-        }
-        .d-ch-title-wrap {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-        }
-        .d-ch-badge {
-          background: var(--light-green);
-          color: var(--dark-green);
-          font-size: 0.8rem;
-          font-weight: 700;
-          padding: 0.25rem 0.65rem;
-          border-radius: var(--radius-sm);
-        }
-        .d-ch-name {
-          font-size: 1.2rem;
-          color: var(--dark-green);
-        }
-        .d-ch-topics-pill {
-          font-size: 0.8rem;
-          color: var(--text-muted);
-          font-weight: 500;
-        }
-        .d-ch-topics-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 0.75rem;
-        }
-        .d-topic-cell {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          padding: 0.5rem 0.75rem;
-          background: var(--light-green-subtle);
-          border-radius: var(--radius-sm);
-          font-size: 0.85rem;
-          color: var(--text-dark);
-        }
-        .d-topic-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
-        }
-
-        .materials-card {
-          padding: 3rem;
-          margin-bottom: 4rem;
-          background: linear-gradient(135deg, #FFFFFF 0%, #FAFDFB 100%);
-        }
-        .materials-title {
-          font-size: 1.75rem;
-          color: var(--dark-green);
-          margin-top: 0.5rem;
-          margin-bottom: 1.5rem;
-        }
-        .materials-list {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-        .materials-list li {
-          display: flex;
-          align-items: flex-start;
+          cursor: pointer;
+          user-select: none;
           gap: 1rem;
         }
-        .m-icon {
-          color: var(--primary-green);
-          margin-top: 0.2rem;
-          flex-shrink: 0;
-        }
-        .materials-list strong {
-          font-size: 1rem;
-          color: var(--text-dark);
-        }
-        .materials-list p {
-          font-size: 0.88rem;
-          color: var(--text-muted);
+
+        .ch-header-left {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          flex-wrap: wrap;
         }
 
-        .program-bottom-cta {
+        .ch-number-badge {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--dark-green);
           background: var(--light-green);
-          border: 1px solid rgba(49, 91, 61, 0.15);
-          padding: 3rem 2rem;
-          border-radius: var(--radius-xl);
+          padding: 3px 10px;
+          border-radius: var(--radius-sm);
         }
-        .bottom-cta-heading {
-          font-size: 1.85rem;
+
+        .ch-title {
+          font-size: 1.12rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          margin: 0;
+        }
+
+        .ch-header-right {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .ch-topics-count {
+          font-size: 0.82rem;
+          color: var(--text-muted);
+          font-weight: 600;
+        }
+
+        .ch-chevron-box {
+          color: var(--primary-green);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .chapter-card-body {
+          padding: 0 1.5rem 1.5rem;
+          border-top: 1px solid var(--border-subtle);
+          padding-top: 1.25rem;
+        }
+
+        .chapter-topics-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+
+        .topic-badge-item {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          background: var(--light-green-subtle);
+          border: 1px solid rgba(49, 91, 61, 0.08);
+          padding: 0.65rem 0.95rem;
+          border-radius: var(--radius-md);
+        }
+
+        .topic-check-icon {
+          color: var(--primary-green);
+          flex-shrink: 0;
+        }
+
+        .topic-text {
+          font-size: 0.88rem;
+          font-weight: 600;
+          color: var(--text-dark);
+          line-height: 1.4;
+        }
+
+        /* 4. Materials Triad Grid */
+        .materials-triad-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.75rem;
+        }
+
+        .material-card {
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 2.25rem 1.75rem;
+          border: 1px solid var(--border-color);
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .material-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 28px rgba(49, 91, 61, 0.08);
+          border-color: var(--primary-green);
+        }
+
+        .mat-icon-box {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.25rem;
+        }
+
+        .mat-icon-box.green {
+          background: var(--light-green);
+          color: var(--dark-green);
+        }
+
+        .mat-icon-box.amber {
+          background: #FEF7E6;
+          color: #B45309;
+        }
+
+        .mat-title {
+          font-size: 1.25rem;
+          font-weight: 700;
           color: var(--dark-green);
           margin-bottom: 0.5rem;
         }
-        .bottom-cta-sub {
-          font-size: 1rem;
+
+        .mat-desc {
+          font-size: 0.92rem;
           color: var(--text-muted);
-          margin-bottom: 1.5rem;
+          line-height: 1.55;
+          flex-grow: 1;
+          margin-bottom: 1.25rem;
+        }
+
+        .mat-feature-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          background: var(--light-green-subtle);
+          padding: 5px 10px;
+          border-radius: var(--radius-sm);
+          align-self: flex-start;
+        }
+
+        /* 5. CTA Section */
+        .prog-cta-box {
+          background: linear-gradient(135deg, #FFFFFF 0%, #F5FAF6 100%);
+          border: 1.5px solid rgba(49, 91, 61, 0.15);
+          border-radius: 28px;
+          padding: 3.5rem 2rem;
+          max-width: 840px;
+          margin: 0 auto;
+          box-shadow: 0 10px 30px rgba(22, 51, 32, 0.05);
+        }
+
+        .prog-cta-title {
+          font-size: clamp(1.8rem, 3.5vw, 2.35rem);
+          font-weight: 800;
+          color: var(--dark-green);
+          margin-bottom: 0.75rem;
+        }
+
+        .prog-cta-sub {
+          font-size: 1.05rem;
+          color: var(--text-muted);
+          max-width: 580px;
+          margin: 0 auto 2rem;
+          line-height: 1.6;
+        }
+
+        .prog-cta-actions {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE DESIGN BREAKPOINTS
+           ========================================================================== */
+        @media (max-width: 992px) {
+          .prog-milestones-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+          }
+          .materials-triad-grid {
+            grid-template-columns: 1fr;
+            max-width: 520px;
+            margin: 0 auto;
+          }
         }
 
         @media (max-width: 768px) {
-          .program-overview-cards-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
+          .program-structure-page {
+            padding: 2.5rem 0 4.5rem;
           }
-          .syllabus-header {
+          .prog-metrics-ribbon {
+            border-radius: var(--radius-lg);
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+          }
+          .syllabus-controls-bar {
             flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
           }
-          .paper-switcher-btn-group {
+          .paper-switcher-pills {
+            width: 100%;
+            flex-direction: column;
+            border-radius: var(--radius-lg);
+          }
+          .paper-pill-btn {
+            justify-content: center;
+            border-radius: var(--radius-md);
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+          }
+          .chapter-topics-grid {
+            grid-template-columns: 1fr;
+          }
+          .chapter-card-header {
+            padding: 1rem 1.15rem;
+          }
+          .chapter-card-body {
+            padding: 0 1.15rem 1.15rem;
+          }
+          .prog-cta-box {
+            padding: 2.25rem 1.25rem;
+            border-radius: var(--radius-xl);
+          }
+          .prog-cta-actions {
+            flex-direction: column;
             width: 100%;
           }
-          .paper-switcher-btn {
-            flex: 1;
-            justify-content: center;
-            font-size: 0.82rem;
-            padding: 0.5rem 0.75rem;
-          }
-          .program-bottom-cta {
-            padding: 2rem 1.25rem;
-          }
-          .bottom-cta-heading {
-            font-size: 1.45rem;
+          .prog-cta-actions .btn {
+            width: 100%;
           }
         }
 
-        @media (max-width: 480px) {
-          .program-overview-cards-grid {
+        @media (max-width: 520px) {
+          .prog-milestones-grid {
             grid-template-columns: 1fr;
           }
-          .materials-card {
-            padding: 1.5rem 1rem;
-            margin-bottom: 2.5rem;
-          }
-          .materials-title {
-            font-size: 1.35rem;
-          }
-          .d-ch-header {
-            flex-direction: column;
-            align-items: flex-start;
+          .ch-header-left {
             gap: 0.5rem;
           }
-          .d-ch-name {
-            font-size: 1.05rem;
+          .ch-title {
+            font-size: 1rem;
           }
         }
       `}</style>
