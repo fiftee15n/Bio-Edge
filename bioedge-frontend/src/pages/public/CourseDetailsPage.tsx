@@ -1,633 +1,416 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
-import { SyllabusCurriculumExplorer } from '../../components/home/SyllabusCurriculumExplorer';
 import { 
-  BookOpen, 
-  Calendar, 
-  Clock, 
-  CheckCircle2, 
-  Layers, 
-  ArrowRight, 
-  ShieldCheck, 
-  Users, 
-  Target, 
-  Sparkles, 
-  FileText, 
-  Phone, 
   GraduationCap, 
+  Clock, 
+  BookOpen, 
+  Layers, 
+  Target, 
+  ShieldCheck, 
   Check, 
+  ArrowRight, 
+  ArrowLeft, 
+  Phone, 
   ChevronDown, 
-  PlayCircle, 
-  ArrowLeft 
+  Sparkles, 
+  Award, 
+  FileText, 
+  Video,
+  PenTool,
+  CheckCircle2 
 } from 'lucide-react';
 
 export const CourseDetailsPage: React.FC = () => {
-  const { course, papers, availableSeats } = useCourseData();
-
-  const [activeTab, setActiveTab] = useState<'overview' | 'curriculum' | 'methodology' | 'schedule' | 'instructor' | 'tuition' | 'faq'>('overview');
-  const [selectedPaperId, setSelectedPaperId] = useState<string>('first-paper');
+  const { availableSeats } = useCourseData();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
-  const activePaper = papers.find(p => p.id === selectedPaperId) || papers[0];
-
-  // Alpha Cohort FAQs
-  const alphaFaqs = [
+  // 4 Essential FAQs
+  const essentialFaqs = [
     {
-      q: 'Is this 4-month crash course suitable for both HSC 2026 and HSC 2027 students?',
-      a: 'Yes! The Alpha Cohort is meticulously planned to build deep conceptual clarity from the ground up for HSC 2026 students who need high-yield crash revision, as well as HSC 2027 students who want to master both 1st & 2nd Paper ahead of college tests.'
-    },
-    {
-      q: 'How are the 48 classes structured across the 4 months?',
-      a: 'There are 3 live classes per week (90 minutes each). Month 1 covers Cell Biology & Animal Diversity; Month 2 covers Plant Physiology & Human Physiology; Month 3 covers Genetics, Reproduction & Biotech; and Month 4 covers Ecology, Mega Revisions, and Board Model Tests.'
+      q: 'What is the live class routine and schedule?',
+      a: 'Live classes take place 3 days a week: Sunday, Tuesday, and Thursday from 8:00 PM to 9:30 PM. Each session is 90 minutes with live concept lectures, diagram demonstrations, and real-time doubt clearing.'
     },
     {
       q: 'What happens if I miss a live class?',
-      a: 'Every single live lecture is recorded in high-definition (1080p) and uploaded to your Student Portal within 2 hours with timestamped topic markers, lecture slides PDF, and practice CQ questions.'
+      a: 'Every single lecture is recorded in Full HD (1080p) and uploaded to your Student Portal within 2 hours. You get timestamped topic markers, PDF lecture slides, and practice CQ questions with unlimited playback until your final Board Exams.'
     },
     {
-      q: 'How are Creative Question (CQ) answer scripts graded?',
-      a: 'Students submit handwritten answer scripts via the Student Portal. Afroza Tahmina and her senior academic evaluators review each script line-by-line, providing numerical rubrics, diagram correction marks, and customized feedback.'
+      q: 'How does handwritten Creative Question (CQ) evaluation work?',
+      a: 'After completing your weekly test, you take clear photos of your handwritten answer script and submit them via the portal. Afroza Tahmina and senior academic mentors review each paper with red-pen annotations, rubric grading, and personalized improvement tips.'
     },
     {
-      q: 'What payment options are available?',
-      a: 'You can pay the full course fee of ৳12,500 (saving ৳1,500) or choose the monthly installment plan of ৳3,500 per month via bKash, Nagad, Rocket, or direct bank transfer.'
+      q: 'What payment methods are supported?',
+      a: 'You can pay using bKash, Nagad, Rocket, or direct bank transfer. Both the full course discount (৳12,500) and the monthly installment plan (৳3,500/month) are available upon checkout.'
     }
   ];
 
   return (
-    <div className="course-details-page-wrapper section-padding">
+    <div className="course-clean-page">
       <div className="container">
-        
-        {/* Back Link to Courses */}
-        <div className="details-back-nav">
-          <Link to="/courses" className="back-courses-link">
+
+        {/* Back Link */}
+        <div className="clean-back-nav">
+          <Link to="/courses" className="clean-back-link">
             <ArrowLeft size={16} /> Back to All Courses
           </Link>
         </div>
 
-        {/* Hero Section: HSC Alpha Cohort (Full Width) */}
-        <div className="course-details-hero bio-card">
-          <div className="hero-badge-row">
-            <span className="badge badge-green">
-              <GraduationCap size={14} /> Flagship 4-Month Intensive
+        {/* HERO SECTION */}
+        <section className="clean-hero-card">
+          <div className="hero-pill-row">
+            <span className="hero-status-tag">
+              <GraduationCap size={15} /> HSC 2026 / 2027 Intensive
             </span>
-            <span className="batch-status-pill">
-              <span className="dot"></span>
+            <span className="hero-seats-badge">
+              <span className="live-dot"></span>
               {availableSeats} Seats Remaining in Alpha Batch
             </span>
           </div>
 
-          <h1 className="course-hero-title">
+          <h1 className="clean-hero-title">
             Alpha Cohort: <span className="highlight-text">4-Month Biology Crash Course</span>
           </h1>
 
-          <p className="course-hero-desc">
-            An elite 4-month academic journey covering all 24 chapters across HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology). Combines 3D visualization, 48 live classes, weekly CQ grading, and comprehensive board rehearsals.
+          <p className="clean-hero-tagline">
+            A comprehensive, high-yield academic track covering all 24 chapters across HSC Biology 1st Paper (Botany) & 2nd Paper (Zoology) with interactive live classes, line-by-line handwritten CQ evaluations, and Board exam drills.
           </p>
 
-          {/* Quick Metrics Bar */}
-          <div className="course-metrics-bar">
-            <div className="metric-cell">
+          {/* Key Metrics Bar */}
+          <div className="clean-metrics-grid">
+            <div className="metric-box">
               <Clock size={20} className="metric-icon" />
               <div>
                 <strong>4 Months</strong>
-                <span>16 Intensive Weeks</span>
+                <span>16 Structured Weeks</span>
               </div>
             </div>
-            <div className="metric-cell">
+            <div className="metric-box">
               <BookOpen size={20} className="metric-icon" />
               <div>
                 <strong>48 Live Classes</strong>
                 <span>3 Sessions / Week</span>
               </div>
             </div>
-            <div className="metric-cell">
-              <Target size={20} className="metric-icon" />
+            <div className="metric-box">
+              <Layers size={20} className="metric-icon" />
               <div>
                 <strong>24 Chapters</strong>
-                <span>Botany + Zoology</span>
+                <span>Full Botany & Zoology</span>
               </div>
             </div>
-            <div className="metric-cell">
-              <Users size={20} className="metric-icon" />
+            <div className="metric-box">
+              <ShieldCheck size={20} className="metric-icon" />
               <div>
-                <strong>15–20 Limit</strong>
-                <span>Personalized Mentorship</span>
+                <strong>CQ Grading</strong>
+                <span>Line-by-Line Examiner Feedback</span>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Main Content Layout Grid with Right-Side Pricing Card */}
-        <div className="course-content-layout-grid">
-          
-          {/* Left Column: Tabbed Content Details */}
-          <div className="course-main-column">
+          {/* Quick Action Row */}
+          <div className="clean-hero-actions">
+            <Link to="/enroll?course=alpha-cohort" className="btn btn-primary btn-lg hero-cta-btn">
+              Enroll in Alpha Cohort <ArrowRight size={18} />
+            </Link>
+            <a 
+              href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20want%20to%20know%20more%20about%20the%20HSC%20Alpha%20Cohort" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="btn btn-outline btn-lg whatsapp-cta-btn"
+            >
+              <Phone size={16} /> Inquire via WhatsApp
+            </a>
+          </div>
+        </section>
+
+        {/* SECTION 1: 4 CORE FEATURES (WHY ALPHA COHORT?) */}
+        <section className="clean-section">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <Sparkles size={14} /> High-Yield Preparation
+            </span>
+            <h2 className="clean-section-title">What Makes Alpha Cohort Effective</h2>
+            <p className="clean-section-desc">
+              Designed to replace rote memorization with deep conceptual clarity, fast diagramming, and structured exam writing.
+            </p>
+          </div>
+
+          <div className="features-quad-grid">
+            <div className="feature-quad-card">
+              <div className="feature-icon-circle green">
+                <Video size={22} />
+              </div>
+              <h3 className="feature-card-title">Live Conceptual Lectures</h3>
+              <p className="feature-card-desc">
+                48 interactive 90-minute masterclasses breaking down convoluted biological systems into intuitive mental models with 3D models and clear logic.
+              </p>
+            </div>
+
+            <div className="feature-quad-card">
+              <div className="feature-icon-circle amber">
+                <PenTool size={22} />
+              </div>
+              <h3 className="feature-card-title">Handwritten CQ Script Grading</h3>
+              <p className="feature-card-desc">
+                Submit photos of your written answer scripts. Evaluators annotate mistakes with red-pen notes, rubric marks, and keyword suggestions.
+              </p>
+            </div>
+
+            <div className="feature-quad-card">
+              <div className="feature-icon-circle green">
+                <Target size={22} />
+              </div>
+              <h3 className="feature-card-title">Diagram Speed & Labeling</h3>
+              <p className="feature-card-desc">
+                Master 80+ essential board diagrams with step-by-step drawing techniques, accurate labeling, and time attack drills under 3 minutes.
+              </p>
+            </div>
+
+            <div className="feature-quad-card">
+              <div className="feature-icon-circle amber">
+                <FileText size={22} />
+              </div>
+              <h3 className="feature-card-title">1080p Recordings & Notes</h3>
+              <p className="feature-card-desc">
+                Every live class is archived in Full HD within 2 hours with timestamped markers and annotated lecture PDF notebooks accessible until board exams.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: 4-MONTH MILESTONE ROADMAP */}
+        <section className="clean-section">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <Layers size={14} /> Structured Curriculum
+            </span>
+            <h2 className="clean-section-title">4-Month Progressive Roadmap</h2>
+            <p className="clean-section-desc">
+              All 24 chapters of Botany and Zoology organized into four progressive monthly milestones.
+            </p>
+          </div>
+
+          <div className="roadmap-cards-grid">
+            <div className="roadmap-step-card">
+              <div className="step-header">
+                <span className="step-month-badge">Month 01</span>
+                <span className="step-classes-count">12 Classes</span>
+              </div>
+              <h3 className="step-title">Cell Biology & Diversity</h3>
+              <p className="step-desc">
+                Cell structure & function, cellular division, animal classification & characteristics.
+              </p>
+              <div className="step-footer-tag">
+                <CheckCircle2 size={14} /> Milestone Exam 01
+              </div>
+            </div>
+
+            <div className="roadmap-step-card">
+              <div className="step-header">
+                <span className="step-month-badge">Month 02</span>
+                <span className="step-classes-count">12 Classes</span>
+              </div>
+              <h3 className="step-title">Plant & Human Physiology</h3>
+              <p className="step-desc">
+                Photosynthesis, cellular respiration, human digestion, circulation, and gas exchange.
+              </p>
+              <div className="step-footer-tag">
+                <CheckCircle2 size={14} /> Milestone Exam 02
+              </div>
+            </div>
+
+            <div className="roadmap-step-card">
+              <div className="step-header">
+                <span className="step-month-badge">Month 03</span>
+                <span className="step-classes-count">12 Classes</span>
+              </div>
+              <h3 className="step-title">Genetics & Biotechnology</h3>
+              <p className="step-desc">
+                Mendelian genetics, genetic disorders, molecular biology, plant breeding, and biotechnology.
+              </p>
+              <div className="step-footer-tag">
+                <CheckCircle2 size={14} /> Milestone Exam 03
+              </div>
+            </div>
+
+            <div className="roadmap-step-card">
+              <div className="step-header">
+                <span className="step-month-badge">Month 04</span>
+                <span className="step-classes-count">12 Classes</span>
+              </div>
+              <h3 className="step-title">Ecology & Board Rehearsals</h3>
+              <p className="step-desc">
+                Ecosystem dynamics, conservation, full-length timed board model tests, and time drills.
+              </p>
+              <div className="step-footer-tag final">
+                <Award size={14} /> Full Board Simulation
+              </div>
+            </div>
+          </div>
+
+          {/* Link to Full Detailed Curriculum */}
+          <div className="roadmap-full-link-box text-center">
+            <Link to="/program" className="roadmap-detail-btn">
+              View Detailed Class-by-Class Syllabus & Explorer <ArrowRight size={16} />
+            </Link>
+          </div>
+        </section>
+
+        {/* SECTION 3: INSTRUCTOR SPOTLIGHT */}
+        <section className="clean-section">
+          <div className="instructor-clean-card">
+            <div className="ins-clean-photo-wrap">
+              <img 
+                src="/assets/hero/teacher_afroza_card.jpg" 
+                alt="Afroza Tahmina" 
+                className="ins-clean-photo" 
+              />
+            </div>
+            <div className="ins-clean-content">
+              <span className="ins-clean-tag">Lead Instructor & Mentor</span>
+              <h2 className="ins-clean-name">Afroza Tahmina</h2>
+              <p className="ins-clean-role">Senior Biology Specialist • B.Sc & M.Sc in Botany</p>
+              <p className="ins-clean-bio">
+                With over 12+ years of teaching excellence, Afroza Tahmina has guided more than 5,000 students to secure GPA 5.0 in Board Examinations and earn top admissions to Dhaka Medical College and leading medical institutions.
+              </p>
+              <blockquote className="ins-clean-quote">
+                “Biology is not about memorization—it is the elegant logic of living systems. When you understand the mechanisms, high marks follow naturally.”
+              </blockquote>
+              <div className="ins-clean-stats-row">
+                <div className="stat-item">
+                  <strong>12+</strong>
+                  <span>Years Teaching</span>
+                </div>
+                <div className="stat-item">
+                  <strong>5,000+</strong>
+                  <span>Students Guided</span>
+                </div>
+                <div className="stat-item">
+                  <strong>98.4%</strong>
+                  <span>A+ Rate in Biology</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: TUITION & ENROLLMENT (2 SIDE-BY-SIDE CARDS) */}
+        <section className="clean-section" id="enroll">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <Award size={14} /> Transparent Pricing
+            </span>
+            <h2 className="clean-section-title">Tuition & Enrollment Plans</h2>
+            <p className="clean-section-desc">
+              Choose the payment option that works best for you. No hidden charges.
+            </p>
+          </div>
+
+          <div className="pricing-clean-grid">
             
-            {/* Navigation Tabs */}
-            <div className="details-tab-nav">
-              <button 
-                className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
-                onClick={() => setActiveTab('overview')}
-              >
-                Overview & Outcomes
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'curriculum' ? 'active' : ''}`}
-                onClick={() => setActiveTab('curriculum')}
-              >
-                48-Class Curriculum
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'methodology' ? 'active' : ''}`}
-                onClick={() => setActiveTab('methodology')}
-              >
-                Pedagogy & Evaluation
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'schedule' ? 'active' : ''}`}
-                onClick={() => setActiveTab('schedule')}
-              >
-                Routine & Timeline
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'instructor' ? 'active' : ''}`}
-                onClick={() => setActiveTab('instructor')}
-              >
-                Instructor
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'tuition' ? 'active' : ''}`}
-                onClick={() => setActiveTab('tuition')}
-              >
-                Tuition & Fees
-              </button>
-              <button 
-                className={`tab-btn ${activeTab === 'faq' ? 'active' : ''}`}
-                onClick={() => setActiveTab('faq')}
-              >
-                FAQs
-              </button>
+            {/* PLAN 1: FULL COURSE (RECOMMENDED) */}
+            <div className="pricing-clean-card recommended">
+              <div className="pricing-rec-badge">Best Value • Save ৳1,500</div>
+              <h3 className="plan-name">Full 4-Month Program</h3>
+              <div className="plan-price-row">
+                <span className="currency">৳</span>
+                <span className="amount">12,500</span>
+                <span className="period">/ complete 4 months</span>
+              </div>
+              <p className="plan-savings-note">One-time payment covering all 48 classes and assessments</p>
+
+              <ul className="plan-perks-list">
+                <li><Check size={16} /> All 48 Live Masterclasses & Recordings</li>
+                <li><Check size={16} /> Complete 24 Botany & Zoology Chapters</li>
+                <li><Check size={16} /> 80+ Diagram Blueprint Notebook PDF</li>
+                <li><Check size={16} /> Weekly Line-by-Line CQ Script Evaluation</li>
+                <li><Check size={16} /> 24/7 Doubt-Clearing Student Portal Access</li>
+              </ul>
+
+              <Link to="/enroll?course=alpha-cohort&plan=full" className="btn btn-primary btn-lg btn-block plan-enroll-btn">
+                Enroll in Full Program <ArrowRight size={18} />
+              </Link>
             </div>
 
-            {/* TAB 1: OVERVIEW */}
-            {activeTab === 'overview' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Course Overview & Target Outcomes</h2>
-                <p className="tab-body-lead">
-                  The Alpha Cohort is an intensively structured 4-month biology immersion designed specifically for students who demand perfection in their HSC Board Exams and Medical Admission Aspirations.
-                </p>
-
-                <h3 className="subsection-title">What You Will Achieve</h3>
-                <div className="outcomes-grid">
-                  <div className="outcome-item">
-                    <CheckCircle2 size={18} className="outcome-icon" />
-                    <div>
-                      <strong>100% Syllabus Mastery</strong>
-                      <p>Deep theoretical clarity across all 24 chapters of Botany and Zoology.</p>
-                    </div>
-                  </div>
-                  <div className="outcome-item">
-                    <CheckCircle2 size={18} className="outcome-icon" />
-                    <div>
-                      <strong>Flawless CQ Writing Technique</strong>
-                      <p>Learn the exact 4-step structure to score full 4/4 marks in analytical and synthesis questions.</p>
-                    </div>
-                  </div>
-                  <div className="outcome-item">
-                    <CheckCircle2 size={18} className="outcome-icon" />
-                    <div>
-                      <strong>Diagram Speed & Accuracy</strong>
-                      <p>Master 80+ essential HSC diagrams under 3 minutes with proper labeling standards.</p>
-                    </div>
-                  </div>
-                  <div className="outcome-item">
-                    <CheckCircle2 size={18} className="outcome-icon" />
-                    <div>
-                      <strong>Unshakable MCQ Precision</strong>
-                      <p>Eliminate trap answers and achieve 95%+ accuracy under strict time limits.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="highlight-callout-box">
-                  <h4>Who Should Enroll in the Alpha Cohort?</h4>
-                  <ul>
-                    <li><strong>HSC 2026 Students:</strong> Seeking a structured, high-yield crash course to revise and master both 1st & 2nd paper before final exams.</li>
-                    <li><strong>HSC 2027 Students:</strong> Aiming to get 6 months ahead of college syllabus and build solid medical admission foundations.</li>
-                    <li><strong>Students struggling with diagrams and CQ structure:</strong> Who need line-by-line feedback on their written scripts.</li>
-                  </ul>
-                </div>
+            {/* PLAN 2: MONTHLY INSTALLMENT */}
+            <div className="pricing-clean-card">
+              <h3 className="plan-name">Monthly Installment Plan</h3>
+              <div className="plan-price-row">
+                <span className="currency">৳</span>
+                <span className="amount">3,500</span>
+                <span className="period">/ month (4 installments)</span>
               </div>
-            )}
+              <p className="plan-savings-note">Pay month-by-month as you progress through each milestone</p>
 
-            {/* TAB 2: CURRICULUM */}
-            {activeTab === 'curriculum' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Comprehensive 4-Month 48-Class Syllabus</h2>
-                <p className="tab-body-lead">
-                  Explore the complete class-by-class schedule divided into Botany (1st Paper) and Zoology (2nd Paper) with weekly CQ tests and monthly milestone exams.
-                </p>
+              <ul className="plan-perks-list">
+                <li><Check size={16} /> 12 Live Classes per month</li>
+                <li><Check size={16} /> Monthly Chapter Exam & Evaluation</li>
+                <li><Check size={16} /> Full 1080p Recording Access</li>
+                <li><Check size={16} /> Lecture slides and notes included</li>
+                <li><Check size={16} /> Cancel or pause anytime before next month</li>
+              </ul>
 
-                <div style={{ marginBottom: '2.5rem' }}>
-                  <SyllabusCurriculumExplorer />
-                </div>
-
-                <div className="syllabus-explorer-block">
-                  <div className="syllabus-header-row">
-                    <h3 className="subsection-title">Detailed Chapter Topics</h3>
-                    <div className="paper-switcher-btn-group">
-                      {papers.map((p) => (
-                        <button
-                          key={p.id}
-                          onClick={() => setSelectedPaperId(p.id)}
-                          className={`paper-switcher-btn ${selectedPaperId === p.id ? 'active' : ''}`}
-                        >
-                          <BookOpen size={16} />
-                          <span>{p.name}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="chapters-stack">
-                    {activePaper.chapters.map((ch) => (
-                      <div key={ch.id} className="chapter-accordion-item">
-                        <div className="ch-acc-header">
-                          <span className="ch-num-badge">Chapter {ch.number}</span>
-                          <strong className="ch-title">{ch.name}</strong>
-                          <span className="ch-count-badge">{(ch.topics || []).length} Topics</span>
-                        </div>
-                        <div className="ch-topics-list">
-                          {(ch.topics || []).map((t, idx) => (
-                            <div key={idx} className="topic-line">
-                              <Check size={14} className="topic-icon" />
-                              <span>{t.title}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 3: METHODOLOGY */}
-            {activeTab === 'methodology' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Teaching Methodology & 5 Core Pillars</h2>
-                <p className="tab-body-lead">
-                  At Bio Edge, we replace rote memorization with multi-dimensional conceptual understanding and active recall.
-                </p>
-
-                <div className="pillars-cards-grid">
-                  <div className="pillar-item-card">
-                    <div className="pillar-icon-box green">
-                      <Sparkles size={24} />
-                    </div>
-                    <h4>1. Concept Clarity</h4>
-                    <p>Visual 3D representations of cellular organelles, biochemical cycles, and human anatomical systems so you never forget mechanisms.</p>
-                  </div>
-
-                  <div className="pillar-item-card">
-                    <div className="pillar-icon-box amber">
-                      <FileText size={24} />
-                    </div>
-                    <h4>2. Active CQ Practice</h4>
-                    <p>Writing actual board-standard CQ responses under timed conditions with model answers and keyword highlighting.</p>
-                  </div>
-
-                  <div className="pillar-item-card">
-                    <div className="pillar-icon-box green">
-                      <Target size={24} />
-                    </div>
-                    <h4>3. Rigorous Exam Evaluation</h4>
-                    <p>Individualized grading of answer scripts with margin annotations, diagram accuracy marks, and score progression graphs.</p>
-                  </div>
-
-                  <div className="pillar-item-card">
-                    <div className="pillar-icon-box amber">
-                      <Layers size={24} />
-                    </div>
-                    <h4>4. Spaced Revision</h4>
-                    <p>Scheduled spaced repetition drills and quick-fire flashcards to maintain long-term memory through board exams.</p>
-                  </div>
-                </div>
-
-                <div className="evaluation-breakdown-card">
-                  <div className="ev-header">
-                    <ShieldCheck size={24} className="ev-icon" />
-                    <div>
-                      <h3>Line-by-Line Script Evaluation Process</h3>
-                      <p>How Afroza Tahmina evaluates every written submission:</p>
-                    </div>
-                  </div>
-                  <div className="ev-steps-list">
-                    <div className="ev-step">
-                      <span className="step-num">1</span>
-                      <div>
-                        <strong>Step 1: Submission via Portal</strong>
-                        <p>Student completes exam and uploads clear photos of handwritten pages within the designated submission window.</p>
-                      </div>
-                    </div>
-                    <div className="ev-step">
-                      <span className="step-num">2</span>
-                      <div>
-                        <strong>Step 2: Rubric-Based Correction</strong>
-                        <p>Evaluator annotates mistakes in red, suggests missing biological terms, and grades based on official board rubrics.</p>
-                      </div>
-                    </div>
-                    <div className="ev-step">
-                      <span className="step-num">3</span>
-                      <div>
-                        <strong>Step 3: Diagram Scoring</strong>
-                        <p>Diagrams are scored on proportion, arrow placement, correct spelling of labels, and underline conventions.</p>
-                      </div>
-                    </div>
-                    <div className="ev-step">
-                      <span className="step-num">4</span>
-                      <div>
-                        <strong>Step 4: Live Masterclass Debrief</strong>
-                        <p>Afroza Tahmina hosts a live session reviewing common pitfalls and showing exemplary student answers.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 4: SCHEDULE */}
-            {activeTab === 'schedule' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Weekly Routine & Academic Timeline</h2>
-                <p className="tab-body-lead">
-                  Designed to integrate seamlessly with your regular college routines.
-                </p>
-
-                <div className="schedule-timeline-grid">
-                  <div className="timeline-day-card">
-                    <div className="t-day-header">
-                      <Calendar size={18} />
-                      <strong>Sunday</strong>
-                      <span className="t-badge">Class Day</span>
-                    </div>
-                    <div className="t-day-body">
-                      <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">1st Paper (Botany) Live Masterclass</strong>
-                      <p className="t-sub">Concept breakdown + 3D Visual Demo + CQ Analysis</p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-day-card">
-                    <div className="t-day-header">
-                      <Calendar size={18} />
-                      <strong>Tuesday</strong>
-                      <span className="t-badge">Class Day</span>
-                    </div>
-                    <div className="t-day-body">
-                      <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">2nd Paper (Zoology) Live Masterclass</strong>
-                      <p className="t-sub">Anatomy breakdown + Diagram Workshop + Practice</p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-day-card">
-                    <div className="t-day-header">
-                      <Calendar size={18} />
-                      <strong>Thursday</strong>
-                      <span className="t-badge">Class Day</span>
-                    </div>
-                    <div className="t-day-body">
-                      <span className="t-time">8:00 PM – 9:30 PM</span>
-                      <strong className="t-class-title">Problem Solving & CQ Writing Workshop</strong>
-                      <p className="t-sub">Board question analysis + Timed drills</p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-day-card exam-day">
-                    <div className="t-day-header">
-                      <Target size={18} />
-                      <strong>Friday / Saturday</strong>
-                      <span className="t-badge red">Exam Window</span>
-                    </div>
-                    <div className="t-day-body">
-                      <span className="t-time">Anytime (24-Hour Portal Window)</span>
-                      <strong className="t-class-title">Weekly Chapter Exam (MCQ + Written CQ)</strong>
-                      <p className="t-sub">Automated MCQ score + Evaluated handwritten CQ upload</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="recording-policy-note">
-                  <PlayCircle size={20} className="r-icon" />
-                  <div>
-                    <strong>Full Recording Access Policy</strong>
-                    <p>All live sessions are uploaded within 2 hours in 1080p Full HD with timestamps. Access is guaranteed until your final board exams.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 5: INSTRUCTOR */}
-            {activeTab === 'instructor' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Meet Your Instructor: Afroza Tahmina</h2>
-                <div className="instructor-profile-card">
-                  <div className="ins-photo-col">
-                    <img 
-                      src="/assets/hero/teacher_afroza_card.jpg" 
-                      alt="Afroza Tahmina" 
-                      className="ins-photo-img" 
-                    />
-                  </div>
-                  <div className="ins-bio-text">
-                    <div className="ins-pill">Lead Biology Specialist</div>
-                    <h3 className="ins-name">Afroza Tahmina</h3>
-                    <p className="ins-role">B.Sc & M.Sc in Botany | 12+ Years Teaching Experience</p>
-                    <p className="ins-desc">
-                      Afroza Tahmina has trained over 5,000+ HSC students, helping hundreds achieve GPA 5.00 in Board examinations and gain top admissions to Dhaka Medical College, DMC, SSMC, and leading public medical colleges.
-                    </p>
-                    <p className="ins-desc">
-                      Her unique visual methodology breaks down convoluted biological mechanisms into intuitive mental models, ensuring students retain every concept with zero confusion.
-                    </p>
-
-                    <div className="ins-stats-row">
-                      <div className="ins-stat">
-                        <strong>5,000+</strong>
-                        <span>Students Mentored</span>
-                      </div>
-                      <div className="ins-stat">
-                        <strong>98.4%</strong>
-                        <span>GPA 5.00 Rate in Bio</span>
-                      </div>
-                      <div className="ins-stat">
-                        <strong>12+</strong>
-                        <span>Years Experience</span>
-                      </div>
-                      <div className="ins-stat">
-                        <strong>80+</strong>
-                        <span>Diagram Blueprints</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 6: TUITION */}
-            {activeTab === 'tuition' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Tuition & Enrollment Options</h2>
-                <p className="tab-body-lead">
-                  Transparent pricing with flexible options to suit your preparation needs.
-                </p>
-
-                <div className="tuition-pricing-grid">
-                  <div className="t-price-box recommended">
-                    <div className="t-rec-badge">Recommended • Best Value</div>
-                    <h3>Full 4-Month Course</h3>
-                    <div className="t-price-val">
-                      <span className="cur">৳</span>
-                      <span className="num">12,500</span>
-                      <span className="per">/ complete 4 months</span>
-                    </div>
-                    <p className="t-savings">Save ৳1,500 compared to monthly installments</p>
-
-                    <ul className="t-perks-list">
-                      <li><Check size={16} /> All 48 Live Interactive Sessions</li>
-                      <li><Check size={16} /> All 24 Botany & Zoology Chapters</li>
-                      <li><Check size={16} /> 80+ Annotated Diagram Notebook PDF</li>
-                      <li><Check size={16} /> Weekly Line-by-Line CQ Evaluation</li>
-                      <li><Check size={16} /> 24/7 Doubt-Clearing Student Portal</li>
-                    </ul>
-
-                    <Link to="/enroll?course=alpha-cohort&plan=full" className="btn btn-primary btn-block">
-                      Enroll in Full Program <ArrowRight size={16} />
-                    </Link>
-                  </div>
-
-                  <div className="t-price-box">
-                    <h3>Monthly Installment</h3>
-                    <div className="t-price-val">
-                      <span className="cur">৳</span>
-                      <span className="num">3,500</span>
-                      <span className="per">/ month (4 installments)</span>
-                    </div>
-                    <p className="t-savings">Pay month-by-month per 12 live classes</p>
-
-                    <ul className="t-perks-list">
-                      <li><Check size={16} /> 12 Live Classes per month</li>
-                      <li><Check size={16} /> Monthly Chapter Exam & Evaluation</li>
-                      <li><Check size={16} /> Full Portal & Recording Access</li>
-                      <li><Check size={16} /> Pay as you progress</li>
-                    </ul>
-
-                    <Link to="/enroll?course=alpha-cohort&plan=monthly" className="btn btn-outline btn-block">
-                      Choose Monthly Plan <ArrowRight size={16} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 7: FAQ */}
-            {activeTab === 'faq' && (
-              <div className="tab-pane-card bio-card">
-                <h2 className="tab-section-title">Frequently Asked Questions</h2>
-                <div className="faq-accordion-stack">
-                  {alphaFaqs.map((item, idx) => (
-                    <div 
-                      key={idx} 
-                      className={`faq-item-card ${expandedFaq === idx ? 'expanded' : ''}`}
-                      onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
-                    >
-                      <div className="faq-q-row">
-                        <strong>{item.q}</strong>
-                        <ChevronDown size={18} className={`faq-chevron ${expandedFaq === idx ? 'rotate' : ''}`} />
-                      </div>
-                      {expandedFaq === idx && (
-                        <div className="faq-a-body">
-                          <p>{item.a}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+              <Link to="/enroll?course=alpha-cohort&plan=monthly" className="btn btn-outline btn-lg btn-block plan-enroll-btn">
+                Choose Monthly Plan <ArrowRight size={18} />
+              </Link>
+            </div>
 
           </div>
 
-          {/* Right Column: Sticky Quick Action Pricing Card */}
-          <div className="course-sidebar-column">
-            <div className="sticky-enroll-card bio-card">
-              
-              <div className="s-card-top">
-                <span className="s-card-label">Tuition Fee:</span>
-                <div className="s-price-wrap">
-                  <span className="cur">৳</span>
-                  <span className="num">12,500</span>
-                  <span className="period">/ full 4 mo</span>
-                </div>
-                <span className="s-or-sub">or ৳3,500 per month</span>
-              </div>
+          <div className="pricing-footer-note text-center">
+            <span className="guarantee-text">
+              <ShieldCheck size={18} className="shield-icon" />
+              <strong>7-Day Money-Back Guarantee:</strong> Attend the first week risk-free. If not completely satisfied, receive a full refund.
+            </span>
+          </div>
+        </section>
 
-              <div className="s-seats-banner">
-                <span className="pulse-dot"></span>
-                <span>{availableSeats} Seats Left in Alpha Batch</span>
-              </div>
-
-              <div className="s-actions-list">
-                <Link 
-                  to="/enroll?course=alpha-cohort"
-                  className="btn btn-primary btn-lg btn-block s-enroll-btn"
-                >
-                  Enroll Now <ArrowRight size={18} />
-                </Link>
-
-                <a 
-                  href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20want%20to%20know%20more%20about%20the%20HSC%20Alpha%20Cohort"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-outline btn-block whatsapp-btn"
-                >
-                  <Phone size={16} /> Inquire via WhatsApp
-                </a>
-              </div>
-
-              <div className="s-divider" />
-
-              <div className="s-includes-block">
-                <strong className="s-inc-title">Alpha Cohort Includes:</strong>
-                <ul className="s-inc-list">
-                  <li><BookOpen size={16} /> 48 Live Interactive Classes</li>
-                  <li><Layers size={16} /> 24 Botany & Zoology Chapters</li>
-                  <li><FileText size={16} /> Handwritten CQ Paper Grading</li>
-                  <li><PlayCircle size={16} /> Unlimited 1080p Recording Access</li>
-                  <li><ShieldCheck size={16} /> 80+ Annotated Diagrams Notebook</li>
-                </ul>
-              </div>
-
-              <div className="s-money-back-note">
-                <ShieldCheck size={18} className="shield-icon" />
-                <span>7-Day Money-Back Guarantee if not fully satisfied.</span>
-              </div>
-
-            </div>
+        {/* SECTION 5: ESSENTIAL FAQS */}
+        <section className="clean-section">
+          <div className="clean-section-header text-center">
+            <span className="section-pill">
+              <BookOpen size={14} /> Clarifications
+            </span>
+            <h2 className="clean-section-title">Frequently Asked Questions</h2>
           </div>
 
-        </div>
+          <div className="clean-faq-stack">
+            {essentialFaqs.map((faq, idx) => (
+              <div 
+                key={idx} 
+                className={`clean-faq-item ${expandedFaq === idx ? 'expanded' : ''}`}
+                onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
+              >
+                <div className="faq-question-bar">
+                  <span className="faq-q-text">{faq.q}</span>
+                  <ChevronDown size={18} className={`faq-chevron ${expandedFaq === idx ? 'rotate' : ''}`} />
+                </div>
+                {expandedFaq === idx && (
+                  <div className="faq-answer-box">
+                    <p>{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
 
       </div>
 
       <style>{`
-        .details-back-nav {
+        /* Clean Course Details Page Styles */
+        .course-clean-page {
+          background: #FAFCFA;
+          min-height: calc(100vh - 72px);
+          padding: 2rem 0 5rem;
+        }
+
+        .clean-back-nav {
           margin-bottom: 1.5rem;
         }
 
-        .back-courses-link {
+        .clean-back-link {
           display: inline-flex;
           align-items: center;
           gap: 6px;
@@ -638,20 +421,21 @@ export const CourseDetailsPage: React.FC = () => {
           transition: color 0.2s ease;
         }
 
-        .back-courses-link:hover {
+        .clean-back-link:hover {
           color: var(--dark-green);
         }
 
-        /* Hero */
-        .course-details-hero {
-          padding: 3rem;
-          background: linear-gradient(135deg, #FFFFFF 0%, #F5FAF6 100%);
-          border: 1px solid var(--border-color);
-          margin-bottom: 2.5rem;
-          width: 100%;
+        /* Hero Card */
+        .clean-hero-card {
+          background: #FFFFFF;
+          border-radius: 24px;
+          border: 1px solid rgba(49, 91, 61, 0.12);
+          box-shadow: 0 10px 30px rgba(22, 51, 32, 0.05);
+          padding: 3rem 2.5rem;
+          margin-bottom: 3.5rem;
         }
 
-        .hero-badge-row {
+        .hero-pill-row {
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -659,54 +443,69 @@ export const CourseDetailsPage: React.FC = () => {
           flex-wrap: wrap;
         }
 
-        .batch-status-pill {
+        .hero-status-tag {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-size: 0.8rem;
-          font-weight: 600;
+          font-size: 0.82rem;
+          font-weight: 700;
           color: var(--dark-green);
           background: var(--light-green);
-          padding: 3px 10px;
+          padding: 4px 12px;
           border-radius: var(--radius-full);
         }
 
-        .batch-status-pill .dot {
-          width: 6px;
-          height: 6px;
+        .hero-seats-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          background: rgba(16, 185, 129, 0.12);
+          padding: 4px 12px;
+          border-radius: var(--radius-full);
+        }
+
+        .live-dot {
+          width: 7px;
+          height: 7px;
           border-radius: 50%;
           background: var(--success);
         }
 
-        .course-hero-title {
-          font-size: 2.4rem;
+        .clean-hero-title {
+          font-size: clamp(1.8rem, 4vw, 2.75rem);
           font-weight: 800;
           color: var(--dark-green);
-          margin-bottom: 1rem;
           line-height: 1.2;
+          margin-bottom: 1rem;
         }
 
-        .course-hero-title .highlight-text {
+        .clean-hero-title .highlight-text {
           color: var(--primary-green);
         }
 
-        .course-hero-desc {
+        .clean-hero-tagline {
           font-size: 1.05rem;
           color: var(--text-muted);
           line-height: 1.6;
-          max-width: 880px;
+          max-width: 820px;
           margin-bottom: 2rem;
         }
 
-        .course-metrics-bar {
+        /* Metrics Grid */
+        .clean-metrics-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 1.25rem;
-          padding-top: 1.75rem;
+          padding: 1.5rem 0;
           border-top: 1px solid var(--border-subtle);
+          border-bottom: 1px solid var(--border-subtle);
+          margin-bottom: 2rem;
         }
 
-        .metric-cell {
+        .metric-box {
           display: flex;
           align-items: center;
           gap: 0.85rem;
@@ -717,672 +516,493 @@ export const CourseDetailsPage: React.FC = () => {
           flex-shrink: 0;
         }
 
-        .metric-cell strong {
+        .metric-box strong {
           display: block;
           font-size: 1.05rem;
           color: var(--dark-green);
           line-height: 1.2;
         }
 
-        .metric-cell span {
+        .metric-box span {
           font-size: 0.78rem;
           color: var(--text-muted);
         }
 
-        /* 2-Column Layout Grid with Sticky Right Sidebar */
-        .course-content-layout-grid {
-          display: grid;
-          grid-template-columns: 1fr 340px;
-          gap: 2.25rem;
-          align-items: start;
-          width: 100%;
-        }
-
-        /* Tab Navigation */
-        .details-tab-nav {
+        /* Hero Actions */
+        .clean-hero-actions {
           display: flex;
           align-items: center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .hero-cta-btn {
+          display: inline-flex;
+          align-items: center;
           gap: 0.5rem;
-          overflow-x: auto;
-          padding-bottom: 0.5rem;
-          margin-bottom: 1.5rem;
-          border-bottom: 2px solid var(--border-subtle);
-        }
-
-        .tab-btn {
-          padding: 0.75rem 1.15rem;
-          font-size: 0.9rem;
-          font-weight: 600;
-          color: var(--text-muted);
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          white-space: nowrap;
-          border-radius: var(--radius-md) var(--radius-md) 0 0;
-          transition: all 0.2s ease;
-          border-bottom: 3px solid transparent;
-          margin-bottom: -2px;
-        }
-
-        .tab-btn:hover {
-          color: var(--dark-green);
-        }
-
-        .tab-btn.active {
-          color: var(--dark-green);
-          border-bottom-color: var(--dark-green);
-          background: rgba(49, 91, 61, 0.05);
-        }
-
-        /* Tab Panes */
-        .tab-pane-card {
-          padding: 2.5rem;
-          margin-bottom: 2rem;
-        }
-
-        .tab-section-title {
-          font-size: 1.6rem;
-          color: var(--dark-green);
-          margin-bottom: 0.75rem;
-        }
-
-        .tab-body-lead {
-          font-size: 1rem;
-          color: var(--text-muted);
-          line-height: 1.6;
-          margin-bottom: 2rem;
-        }
-
-        .subsection-title {
-          font-size: 1.2rem;
-          color: var(--dark-green);
-          margin-bottom: 1.25rem;
-        }
-
-        /* Outcomes */
-        .outcomes-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
-          margin-bottom: 2rem;
-        }
-
-        .outcome-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.75rem;
-          background: var(--light-green-subtle);
-          padding: 1.15rem;
+          padding: 0.9rem 1.85rem;
+          font-weight: 700;
+          font-size: 1.05rem;
           border-radius: var(--radius-md);
         }
 
-        .outcome-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
-          margin-top: 2px;
+        .whatsapp-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.85rem 1.4rem;
+          font-weight: 600;
+          color: #059669;
+          border-color: rgba(5, 150, 105, 0.35);
+          background: #FFFFFF;
         }
 
-        .outcome-item strong {
-          display: block;
-          font-size: 0.95rem;
+        .whatsapp-cta-btn:hover {
+          background: #ECFDF5;
+          border-color: #059669;
+        }
+
+        /* General Section Spacing */
+        .clean-section {
+          margin-bottom: 4.5rem;
+        }
+
+        .clean-section-header {
+          margin-bottom: 2.75rem;
+        }
+
+        .clean-section-title {
+          font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+          font-weight: 800;
           color: var(--dark-green);
-          margin-bottom: 0.25rem;
+          margin-top: 0.75rem;
+          margin-bottom: 0.6rem;
         }
 
-        .outcome-item p {
-          font-size: 0.82rem;
+        .clean-section-desc {
+          font-size: 1rem;
           color: var(--text-muted);
-          line-height: 1.4;
-          margin: 0;
+          max-width: 640px;
+          margin: 0 auto;
+          line-height: 1.55;
         }
 
-        .highlight-callout-box {
-          background: #FDFBF7;
-          border-left: 4px solid var(--primary-green);
-          padding: 1.5rem;
-          border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        /* Features 4-Grid */
+        .features-quad-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.75rem;
         }
 
-        .highlight-callout-box h4 {
-          font-size: 1.05rem;
+        .feature-quad-card {
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 2rem 1.75rem;
+          border: 1px solid rgba(49, 91, 61, 0.1);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-quad-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 30px rgba(22, 51, 32, 0.07);
+        }
+
+        .feature-icon-circle {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.25rem;
+        }
+
+        .feature-icon-circle.green {
+          background: var(--light-green);
           color: var(--dark-green);
-          margin-bottom: 0.75rem;
         }
 
-        .highlight-callout-box ul {
-          list-style: none;
-          padding: 0;
+        .feature-icon-circle.amber {
+          background: #FEF7E6;
+          color: #B45309;
+        }
+
+        .feature-card-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          margin-bottom: 0.5rem;
+        }
+
+        .feature-card-desc {
+          font-size: 0.92rem;
+          color: var(--text-muted);
+          line-height: 1.55;
           margin: 0;
+        }
+
+        /* 4-Month Roadmap */
+        .roadmap-cards-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+          margin-bottom: 1.75rem;
+        }
+
+        .roadmap-step-card {
+          background: #FFFFFF;
+          border-radius: 18px;
+          border: 1px solid rgba(49, 91, 61, 0.1);
+          padding: 1.5rem 1.25rem;
           display: flex;
           flex-direction: column;
-          gap: 0.6rem;
-          font-size: 0.88rem;
-          color: var(--text-dark);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
         }
 
-        /* Curriculum */
-        .syllabus-header-row {
+        .step-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 1.25rem;
-          flex-wrap: wrap;
-          gap: 0.75rem;
+          margin-bottom: 0.85rem;
         }
 
-        .paper-switcher-btn-group {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          flex-wrap: wrap;
-        }
-
-        .paper-switcher-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.45rem;
-          padding: 0.45rem 0.95rem;
-          font-size: 0.84rem;
-          font-weight: 600;
-          border-radius: var(--radius-full);
-          border: 1px solid var(--border-color);
-          background: #FFFFFF;
-          color: var(--text-dark);
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .paper-switcher-btn:hover {
-          border-color: var(--primary-green);
-          color: var(--dark-green);
-        }
-
-        .paper-switcher-btn.active {
-          background: var(--dark-green);
-          color: #FFFFFF;
-          border-color: var(--dark-green);
-        }
-
-        .chapters-stack {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .chapter-accordion-item {
-          border: 1px solid var(--border-subtle);
-          border-radius: var(--radius-md);
-          padding: 1.25rem;
-          background: #FAFCFA;
-        }
-
-        .ch-acc-header {
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          margin-bottom: 0.75rem;
-        }
-
-        .ch-num-badge {
+        .step-month-badge {
           font-size: 0.75rem;
-          font-weight: 700;
+          font-weight: 800;
           color: var(--dark-green);
           background: var(--light-green);
           padding: 2px 8px;
           border-radius: var(--radius-full);
         }
 
-        .ch-title {
-          font-size: 1rem;
-          color: var(--dark-green);
-          flex: 1;
-        }
-
-        .ch-count-badge {
+        .step-classes-count {
           font-size: 0.75rem;
           color: var(--text-muted);
+          font-weight: 600;
         }
 
-        .ch-topics-list {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.5rem;
-          padding-top: 0.75rem;
-          border-top: 1px solid var(--border-subtle);
-        }
-
-        .topic-line {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.82rem;
-          color: var(--text-dark);
-        }
-
-        .topic-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
-        }
-
-        /* Methodology */
-        .pillars-cards-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
-          margin-bottom: 2.25rem;
-        }
-
-        .pillar-item-card {
-          padding: 1.5rem;
-          border-radius: var(--radius-md);
-          background: var(--light-green-subtle);
-          border: 1px solid var(--border-subtle);
-        }
-
-        .pillar-icon-box {
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 1rem;
-        }
-
-        .pillar-icon-box.green {
-          background: var(--light-green);
-          color: var(--dark-green);
-        }
-
-        .pillar-icon-box.amber {
-          background: #FEF7E6;
-          color: #B45309;
-        }
-
-        .pillar-item-card h4 {
-          font-size: 1.1rem;
+        .step-title {
+          font-size: 1.05rem;
+          font-weight: 700;
           color: var(--dark-green);
           margin-bottom: 0.5rem;
+          line-height: 1.3;
         }
 
-        .pillar-item-card p {
+        .step-desc {
           font-size: 0.85rem;
           color: var(--text-muted);
-          line-height: 1.45;
-          margin: 0;
-        }
-
-        .evaluation-breakdown-card {
-          background: #FFFFFF;
-          border: 1px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          padding: 2rem;
-        }
-
-        .ev-header {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .ev-icon {
-          color: var(--primary-green);
-        }
-
-        .ev-header h3 {
-          font-size: 1.2rem;
-          color: var(--dark-green);
-          margin-bottom: 0.2rem;
-        }
-
-        .ev-header p {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-          margin: 0;
-        }
-
-        .ev-steps-list {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-
-        .ev-step {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-        }
-
-        .step-num {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          background: var(--dark-green);
-          color: #FFFFFF;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          font-size: 0.82rem;
-          flex-shrink: 0;
-        }
-
-        .ev-step strong {
-          display: block;
-          font-size: 0.95rem;
-          color: var(--dark-green);
-          margin-bottom: 0.2rem;
-        }
-
-        .ev-step p {
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          line-height: 1.4;
-          margin: 0;
-        }
-
-        /* Schedule */
-        .schedule-timeline-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.25rem;
-          margin-bottom: 2rem;
-        }
-
-        .timeline-day-card {
-          border: 1px solid var(--border-subtle);
-          border-radius: var(--radius-md);
-          padding: 1.25rem;
-          background: #FAFCFA;
-        }
-
-        .timeline-day-card.exam-day {
-          background: #FFFBFB;
-          border-color: #FECACA;
-        }
-
-        .t-day-header {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 0.75rem;
-          font-size: 0.95rem;
-          color: var(--dark-green);
-        }
-
-        .t-badge {
-          font-size: 0.7rem;
-          font-weight: 700;
-          color: var(--dark-green);
-          background: var(--light-green);
-          padding: 2px 7px;
-          border-radius: var(--radius-full);
-          margin-left: auto;
-        }
-
-        .t-badge.red {
-          color: #DC2626;
-          background: #FEE2E2;
-        }
-
-        .t-time {
-          display: block;
-          font-size: 0.78rem;
-          color: var(--primary-green);
-          font-weight: 700;
-          margin-bottom: 0.25rem;
-        }
-
-        .t-class-title {
-          display: block;
-          font-size: 0.95rem;
-          color: var(--dark-green);
-          margin-bottom: 0.25rem;
-        }
-
-        .t-sub {
-          font-size: 0.78rem;
-          color: var(--text-muted);
-          margin: 0;
-        }
-
-        .recording-policy-note {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          background: var(--light-green-subtle);
-          padding: 1.25rem;
-          border-radius: var(--radius-md);
-        }
-
-        .r-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
-        }
-
-        .recording-policy-note strong {
-          display: block;
-          font-size: 0.95rem;
-          color: var(--dark-green);
-          margin-bottom: 0.2rem;
-        }
-
-        .recording-policy-note p {
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          margin: 0;
-        }
-
-        /* Instructor Profile */
-        .instructor-profile-card {
-          background: var(--light-green-subtle);
-          border-radius: var(--radius-lg);
-          padding: 2.25rem;
-          display: flex;
-          gap: 2rem;
-          align-items: flex-start;
-        }
-        .ins-photo-col {
-          width: 140px;
-          height: 140px;
-          border-radius: var(--radius-md);
-          overflow: hidden;
-          flex-shrink: 0;
-          box-shadow: var(--shadow-md);
-          border: 3px solid var(--primary-green);
-        }
-        .ins-photo-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: top center;
-        }
-        @media (max-width: 768px) {
-          .instructor-profile-card {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-          }
-        }
-
-        .ins-pill {
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          color: var(--primary-green);
-          letter-spacing: 0.05em;
-          margin-bottom: 0.5rem;
-        }
-
-        .ins-name {
-          font-size: 1.8rem;
-          color: var(--dark-green);
-          margin-bottom: 0.25rem;
-        }
-
-        .ins-role {
-          font-size: 0.92rem;
-          color: var(--text-muted);
+          line-height: 1.5;
+          flex-grow: 1;
           margin-bottom: 1.25rem;
         }
 
-        .ins-desc {
+        .step-footer-tag {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          background: var(--light-green-subtle);
+          padding: 6px 10px;
+          border-radius: var(--radius-sm);
+        }
+
+        .step-footer-tag.final {
+          color: #B45309;
+          background: #FEF7E6;
+        }
+
+        .roadmap-full-link-box {
+          margin-top: 1rem;
+        }
+
+        .roadmap-detail-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
           font-size: 0.92rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          text-decoration: none;
+          padding: 0.5rem 1rem;
+          border-radius: var(--radius-md);
+          transition: all 0.2s ease;
+        }
+
+        .roadmap-detail-btn:hover {
+          color: var(--dark-green);
+          background: rgba(49, 91, 61, 0.05);
+        }
+
+        /* Instructor Clean Card */
+        .instructor-clean-card {
+          background: #FFFFFF;
+          border-radius: 24px;
+          border: 1px solid rgba(49, 91, 61, 0.12);
+          box-shadow: 0 10px 30px rgba(22, 51, 32, 0.04);
+          padding: 2.75rem 2.5rem;
+          display: flex;
+          align-items: center;
+          gap: 2.5rem;
+        }
+
+        .ins-clean-photo-wrap {
+          width: 170px;
+          height: 170px;
+          border-radius: 24px;
+          overflow: hidden;
+          flex-shrink: 0;
+          box-shadow: 0 8px 24px rgba(49, 91, 61, 0.15);
+          border: 3px solid #FFFFFF;
+        }
+
+        .ins-clean-photo {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 15%;
+        }
+
+        .ins-clean-tag {
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          display: block;
+          margin-bottom: 0.25rem;
+        }
+
+        .ins-clean-name {
+          font-size: 1.85rem;
+          font-weight: 800;
+          color: var(--dark-green);
+          margin-bottom: 0.25rem;
+        }
+
+        .ins-clean-role {
+          font-size: 0.92rem;
+          color: var(--text-muted);
+          margin-bottom: 1rem;
+        }
+
+        .ins-clean-bio {
+          font-size: 0.95rem;
           color: var(--text-dark);
           line-height: 1.6;
           margin-bottom: 1rem;
         }
 
-        .ins-stats-row {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-          margin-top: 1.75rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid rgba(49, 91, 61, 0.15);
+        .ins-clean-quote {
+          font-style: italic;
+          font-size: 0.92rem;
+          color: var(--dark-green);
+          background: var(--light-green-subtle);
+          padding: 0.85rem 1.15rem;
+          border-left: 3px solid var(--primary-green);
+          border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+          margin: 0 0 1.5rem 0;
         }
 
-        .ins-stat strong {
+        .ins-clean-stats-row {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          padding-top: 1.25rem;
+          border-top: 1px solid var(--border-subtle);
+        }
+
+        .stat-item strong {
           display: block;
-          font-size: 1.35rem;
+          font-size: 1.4rem;
           font-weight: 800;
           color: var(--dark-green);
           font-family: var(--font-heading);
+          line-height: 1.1;
         }
 
-        .ins-stat span {
-          font-size: 0.76rem;
+        .stat-item span {
+          font-size: 0.78rem;
           color: var(--text-muted);
         }
 
-        /* Tuition */
-        .tuition-pricing-grid {
+        /* Tuition Grid */
+        .pricing-clean-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem;
+          max-width: 920px;
+          margin: 0 auto 1.75rem;
         }
 
-        .t-price-box {
-          border: 1px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          padding: 2rem;
+        .pricing-clean-card {
           background: #FFFFFF;
+          border-radius: 22px;
+          border: 1px solid var(--border-color);
+          padding: 2.5rem 2rem;
           position: relative;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 6px 24px rgba(0, 0, 0, 0.03);
+          transition: transform 0.2s ease;
         }
 
-        .t-price-box.recommended {
+        .pricing-clean-card:hover {
+          transform: translateY(-3px);
+        }
+
+        .pricing-clean-card.recommended {
           border: 2px solid var(--dark-green);
-          box-shadow: 0 8px 30px rgba(49, 91, 61, 0.1);
+          box-shadow: 0 12px 36px rgba(49, 91, 61, 0.1);
         }
 
-        .t-rec-badge {
+        .pricing-rec-badge {
           position: absolute;
-          top: -12px;
+          top: -13px;
           left: 50%;
           transform: translateX(-50%);
           background: var(--dark-green);
           color: #FFFFFF;
           font-size: 0.72rem;
           font-weight: 700;
-          padding: 4px 12px;
+          padding: 4px 14px;
           border-radius: var(--radius-full);
           text-transform: uppercase;
+          letter-spacing: 0.04em;
         }
 
-        .t-price-box h3 {
-          font-size: 1.25rem;
+        .plan-name {
+          font-size: 1.35rem;
+          font-weight: 800;
           color: var(--dark-green);
           margin-bottom: 0.75rem;
         }
 
-        .t-price-val {
+        .plan-price-row {
           display: flex;
           align-items: baseline;
-          gap: 0.2rem;
+          gap: 0.25rem;
           margin-bottom: 0.35rem;
         }
 
-        .t-price-val .cur {
-          font-size: 1.2rem;
+        .plan-price-row .currency {
+          font-size: 1.35rem;
           font-weight: 700;
           color: var(--dark-green);
         }
 
-        .t-price-val .num {
-          font-size: 2.2rem;
+        .plan-price-row .amount {
+          font-size: 2.5rem;
           font-weight: 800;
           color: var(--dark-green);
           font-family: var(--font-heading);
+          line-height: 1;
         }
 
-        .t-price-val .per {
-          font-size: 0.82rem;
+        .plan-price-row .period {
+          font-size: 0.84rem;
           color: var(--text-muted);
-          margin-left: 0.35rem;
+          margin-left: 0.25rem;
         }
 
-        .t-savings {
-          font-size: 0.78rem;
+        .plan-savings-note {
+          font-size: 0.82rem;
           color: var(--primary-green);
           font-weight: 600;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
         }
 
-        .t-perks-list {
+        .plan-perks-list {
           list-style: none;
           padding: 0;
-          margin: 0 0 1.75rem 0;
+          margin: 0 0 2rem 0;
           display: flex;
           flex-direction: column;
-          gap: 0.65rem;
-          font-size: 0.85rem;
-          color: var(--text-dark);
+          gap: 0.75rem;
+          flex-grow: 1;
         }
 
-        .t-perks-list li {
+        .plan-perks-list li {
           display: flex;
           align-items: center;
           gap: 0.5rem;
+          font-size: 0.88rem;
+          color: var(--text-dark);
         }
 
-        .t-perks-list li svg {
+        .plan-perks-list li svg {
           color: var(--primary-green);
           flex-shrink: 0;
         }
 
-        /* FAQ */
-        .faq-accordion-stack {
+        .plan-enroll-btn {
+          width: 100%;
           display: flex;
-          flex-direction: column;
-          gap: 1rem;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          font-weight: 700;
+          padding: 0.85rem;
         }
 
-        .faq-item-card {
+        .pricing-footer-note {
+          margin-top: 1.5rem;
+        }
+
+        .guarantee-text {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          color: var(--text-muted);
+        }
+
+        .shield-icon {
+          color: var(--primary-green);
+        }
+
+        /* FAQ Stack */
+        .clean-faq-stack {
+          max-width: 820px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+        }
+
+        .clean-faq-item {
+          background: #FFFFFF;
+          border-radius: 16px;
           border: 1px solid var(--border-color);
-          border-radius: var(--radius-md);
-          padding: 1.25rem;
-          background: #FAFCFA;
+          padding: 1.25rem 1.5rem;
           cursor: pointer;
           transition: all 0.2s ease;
         }
 
-        .faq-item-card.expanded {
+        .clean-faq-item.expanded {
           border-color: var(--dark-green);
-          background: var(--light-green-subtle);
+          box-shadow: 0 4px 16px rgba(49, 91, 61, 0.06);
         }
 
-        .faq-q-row {
+        .faq-question-bar {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-size: 0.95rem;
+          gap: 1rem;
+        }
+
+        .faq-q-text {
+          font-size: 1.02rem;
+          font-weight: 700;
           color: var(--dark-green);
         }
 
         .faq-chevron {
-          transition: transform 0.2s ease;
           color: var(--text-muted);
+          transition: transform 0.25s ease;
           flex-shrink: 0;
         }
 
@@ -1390,470 +1010,124 @@ export const CourseDetailsPage: React.FC = () => {
           transform: rotate(180deg);
         }
 
-        .faq-a-body {
-          padding-top: 0.75rem;
-          margin-top: 0.75rem;
+        .faq-answer-box {
+          margin-top: 0.85rem;
+          padding-top: 0.85rem;
           border-top: 1px solid var(--border-subtle);
-          font-size: 0.88rem;
-          color: var(--text-dark);
-          line-height: 1.55;
         }
 
-        /* Sticky Right-Side Pricing Card */
-        .course-sidebar-column {
-          padding-top: 76px;
-        }
-
-        .sticky-enroll-card {
-          position: sticky;
-          top: 90px;
-          padding: 1.85rem;
-          background: #FFFFFF;
-          border: 1px solid var(--border-color);
-          border-radius: var(--radius-xl);
-          box-shadow: 0 12px 36px rgba(41, 78, 54, 0.08);
-        }
-
-        .s-card-top {
-          margin-bottom: 1.25rem;
-        }
-
-        .s-card-label {
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          font-weight: 700;
+        .faq-answer-box p {
+          font-size: 0.92rem;
           color: var(--text-muted);
-          display: block;
+          line-height: 1.6;
+          margin: 0;
         }
 
-        .s-price-wrap {
-          display: flex;
-          align-items: baseline;
-          gap: 0.2rem;
-        }
-
-        .s-price-wrap .cur {
-          font-size: 1.25rem;
-          font-weight: 700;
-          color: var(--dark-green);
-        }
-
-        .s-price-wrap .num {
-          font-size: 2.25rem;
-          font-weight: 800;
-          font-family: var(--font-heading);
-          color: var(--dark-green);
-          line-height: 1.1;
-        }
-
-        .s-price-wrap .period {
-          font-size: 0.82rem;
-          color: var(--text-muted);
-          margin-left: 0.25rem;
-        }
-
-        .s-or-sub {
-          display: block;
-          font-size: 0.76rem;
-          color: var(--primary-green);
-          font-weight: 600;
-          margin-top: 0.2rem;
-        }
-
-        .s-seats-banner {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          background: var(--light-green);
-          padding: 0.5rem 0.75rem;
-          border-radius: var(--radius-md);
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: var(--dark-green);
-          margin-bottom: 1.25rem;
-        }
-
-        .s-actions-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .s-enroll-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          font-size: 1rem;
-          font-weight: 700;
-          padding: 0.85rem 1.25rem;
-        }
-
-        .whatsapp-btn {
-          color: #059669;
-          border-color: rgba(5, 150, 105, 0.3);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          font-size: 0.9rem;
-          font-weight: 600;
-          padding: 0.75rem 1rem;
-        }
-
-        .whatsapp-btn:hover {
-          background: #ECFDF5;
-          border-color: #059669;
-        }
-
-        .s-divider {
-          height: 1px;
-          background: var(--border-subtle);
-          margin: 1.5rem 0;
-        }
-
-        .s-inc-title {
-          font-size: 0.85rem;
-          color: var(--dark-green);
-          display: block;
-          margin-bottom: 0.75rem;
-        }
-
-        .s-inc-list {
-          list-style: none;
-          padding: 0;
-          margin: 0 0 1.25rem 0;
-          display: flex;
-          flex-direction: column;
-          gap: 0.6rem;
-          font-size: 0.82rem;
-          color: var(--text-dark);
-        }
-
-        .s-inc-list li {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .s-inc-list li svg {
-          color: var(--primary-green);
-          flex-shrink: 0;
-        }
-
-        .s-money-back-note {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.5rem;
-          font-size: 0.76rem;
-          color: var(--text-muted);
-          line-height: 1.35;
-        }
-
-        .shield-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
+        /* ==========================================================================
+           RESPONSIVE BREAKPOINTS (TABLETS & MOBILE)
+           ========================================================================== */
 
         @media (max-width: 992px) {
-          .course-content-layout-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
+          .clean-hero-card {
+            padding: 2.25rem 1.75rem;
           }
-          .course-sidebar-column {
-            padding-top: 0;
-            order: 2;
-          }
-          .course-main-column {
-            order: 1;
-          }
-          .course-metrics-bar {
+          .clean-metrics-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
           }
-          .outcomes-grid {
-            grid-template-columns: 1fr;
-          }
-          .pillars-cards-grid {
-            grid-template-columns: 1fr;
-          }
-          .schedule-timeline-grid {
-            grid-template-columns: 1fr;
-          }
-          .tuition-pricing-grid {
-            grid-template-columns: 1fr;
-          }
-          .ins-stats-row {
+          .roadmap-cards-grid {
             grid-template-columns: repeat(2, 1fr);
           }
-          .sticky-enroll-card {
-            position: static;
-            top: auto;
+          .pricing-clean-grid {
+            grid-template-columns: 1fr;
+            max-width: 480px;
           }
         }
 
         @media (max-width: 768px) {
-          .course-details-page-wrapper {
-            padding-top: 2rem;
-            padding-bottom: 3.5rem;
+          .course-clean-page {
+            padding: 1.5rem 0 3.5rem;
           }
-          .course-details-hero {
+          .clean-hero-card {
             padding: 1.75rem 1.25rem;
-            border-radius: 18px;
-            margin-bottom: 1.75rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
           }
-          .course-hero-title {
-            font-size: clamp(1.45rem, 5vw, 1.85rem);
-            line-height: 1.25;
+          .clean-hero-title {
+            font-size: clamp(1.5rem, 5.5vw, 1.85rem);
           }
-          .course-hero-desc {
-            font-size: 0.92rem;
+          .clean-hero-tagline {
+            font-size: 0.95rem;
             margin-bottom: 1.5rem;
           }
-          .tab-pane-card {
-            padding: 1.5rem 1.15rem;
-            border-radius: 18px;
-            margin-bottom: 1.5rem;
-          }
-          .tab-section-title {
-            font-size: 1.35rem;
-          }
-          .tab-body-lead {
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-          }
-          .ch-topics-list {
-            grid-template-columns: 1fr;
-          }
-          .details-tab-nav {
-            gap: 0.35rem;
-            padding-bottom: 0.45rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-          }
-          .details-tab-nav::-webkit-scrollbar {
-            display: none;
-          }
-          .tab-btn {
-            white-space: nowrap;
-            flex-shrink: 0;
-            padding: 0.6rem 0.85rem;
-            font-size: 0.82rem;
-          }
-          .instructor-profile-card {
+          .clean-hero-actions {
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 1.5rem 1.15rem;
+            width: 100%;
+          }
+          .clean-hero-actions .btn {
+            width: 100%;
+            justify-content: center;
+          }
+          .features-quad-grid {
+            grid-template-columns: 1fr;
             gap: 1.25rem;
           }
-          .ins-photo-col {
-            width: 120px;
-            height: 120px;
-            border-radius: 18px;
+          .instructor-clean-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            gap: 1.5rem;
+          }
+          .ins-clean-photo-wrap {
+            width: 130px;
+            height: 130px;
             margin: 0 auto;
           }
-          .ins-bio-text {
-            width: 100%;
-          }
-          .ins-desc {
+          .ins-clean-bio {
             text-align: left;
-            font-size: 0.88rem;
-          }
-          .ins-stats-row {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
-            margin-top: 1.25rem;
-            padding-top: 1.25rem;
-          }
-          .evaluation-breakdown-card {
-            padding: 1.5rem 1.15rem;
-          }
-        }
-
-        @media (max-width: 600px) {
-          .course-details-hero {
-            padding: 1.35rem 1rem;
-            border-radius: 16px;
-          }
-          .hero-badge-row {
-            gap: 0.5rem;
-            margin-bottom: 0.85rem;
-          }
-          .batch-status-pill {
-            font-size: 0.75rem;
-            padding: 2px 8px;
-          }
-          .course-metrics-bar {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.65rem;
-            padding-top: 1.25rem;
-          }
-          .metric-cell {
-            background: rgba(49, 91, 61, 0.04);
-            padding: 0.65rem 0.75rem;
-            border-radius: 10px;
-            align-items: flex-start;
-            gap: 0.55rem;
-          }
-          .metric-cell strong {
             font-size: 0.9rem;
           }
-          .metric-cell span {
-            font-size: 0.72rem;
+          .ins-clean-quote {
+            text-align: left;
           }
-          .metric-icon {
-            width: 18px;
-            height: 18px;
-          }
-          .syllabus-header-row {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0.75rem;
-          }
-          .paper-switcher-btn-group {
-            width: 100%;
-          }
-          .paper-switcher-btn {
-            flex: 1;
+          .ins-clean-stats-row {
             justify-content: center;
-            font-size: 0.78rem;
-            padding: 0.45rem 0.6rem;
+            gap: 1.5rem;
           }
-          .chapter-accordion-item {
-            padding: 1rem 0.85rem;
-          }
-          .ch-acc-header {
-            flex-wrap: wrap;
-            gap: 0.4rem;
-          }
-          .ch-num-badge {
-            order: 1;
-            font-size: 0.7rem;
-          }
-          .ch-count-badge {
-            order: 2;
-            margin-left: auto;
-            font-size: 0.7rem;
-          }
-          .ch-title {
-            order: 3;
-            width: 100%;
-            font-size: 0.92rem;
-            margin-top: 2px;
-          }
-          .pillars-cards-grid {
+        }
+
+        @media (max-width: 580px) {
+          .clean-metrics-grid {
+            grid-template-columns: 1fr;
             gap: 0.85rem;
           }
-          .pillar-item-card {
-            padding: 1.15rem 0.95rem;
+          .metric-box {
+            background: rgba(49, 91, 61, 0.04);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
           }
-          .pillar-icon-box {
-            width: 38px;
-            height: 38px;
-            margin-bottom: 0.75rem;
+          .roadmap-cards-grid {
+            grid-template-columns: 1fr;
           }
-          .timeline-day-card {
-            padding: 1rem 0.85rem;
+          .pricing-clean-card {
+            padding: 2rem 1.25rem;
           }
-          .recording-policy-note {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.65rem;
-            padding: 1rem 0.85rem;
-          }
-          .tuition-pricing-grid {
-            gap: 1.25rem;
-          }
-          .t-price-box {
-            padding: 1.35rem 1rem;
-            border-radius: 16px;
-          }
-          .t-price-val .num {
-            font-size: 1.85rem;
-          }
-          .faq-item-card {
-            padding: 1rem 0.85rem;
-          }
-          .faq-q-row {
-            font-size: 0.88rem;
+          .ins-clean-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 0.5rem;
           }
-          .faq-a-body {
-            font-size: 0.82rem;
-            padding-top: 0.65rem;
-            margin-top: 0.65rem;
-          }
-          .sticky-enroll-card {
-            padding: 1.35rem 1rem;
-            border-radius: 16px;
-          }
-          .s-price-wrap .num {
-            font-size: 1.95rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .course-details-hero {
-            padding: 1.25rem 0.85rem;
-          }
-          .course-hero-title {
-            font-size: 1.35rem;
-          }
-          .tab-pane-card {
-            padding: 1.15rem 0.75rem;
-            border-radius: 14px;
-          }
-          .tab-section-title {
+          .stat-item strong {
             font-size: 1.2rem;
           }
-          .outcome-item {
-            padding: 0.85rem 0.75rem;
-            gap: 0.55rem;
-          }
-          .highlight-callout-box {
-            padding: 1rem 0.85rem;
-          }
-          .highlight-callout-box h4 {
-            font-size: 0.95rem;
-          }
-          .highlight-callout-box ul {
-            font-size: 0.82rem;
-          }
-          .ins-photo-col {
-            width: 100px;
-            height: 100px;
-          }
-          .ins-name {
-            font-size: 1.35rem;
-          }
-          .ins-stat strong {
-            font-size: 1.15rem;
-          }
-          .ins-stat span {
+          .stat-item span {
             font-size: 0.7rem;
           }
-          .s-enroll-btn {
-            font-size: 0.95rem;
-            padding: 0.75rem 1rem;
+          .clean-faq-item {
+            padding: 1rem 1.15rem;
           }
-          .whatsapp-btn {
-            font-size: 0.85rem;
-            padding: 0.7rem 0.85rem;
-          }
-        }
-
-        @media (max-width: 360px) {
-          .course-metrics-bar {
-            grid-template-columns: 1fr;
-          }
-          .ins-stats-row {
-            grid-template-columns: 1fr;
-          }
-          .paper-switcher-btn {
-            font-size: 0.72rem;
-            padding: 0.4rem 0.45rem;
+          .faq-q-text {
+            font-size: 0.92rem;
           }
         }
       `}</style>
