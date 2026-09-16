@@ -369,8 +369,8 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="text-center mt-4">
-            <Link to="/schedule" className="btn btn-outline">
-              View Full 48-Class Schedule <ChevronRight size={16} />
+            <Link to="/program#structure" className="btn btn-outline">
+              View Program Structure & Schedule <ChevronRight size={16} />
             </Link>
           </div>
         </div>

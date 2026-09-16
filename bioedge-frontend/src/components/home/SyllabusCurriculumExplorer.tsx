@@ -200,8 +200,8 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
 
         {/* Bottom CTA Row */}
         <div className="curriculum-footer-row text-center">
-          <Link to="/schedule" className="btn btn-outline">
-            View Real-Time Live Class Calendar <Calendar size={16} />
+          <Link to="/program#structure" className="btn btn-outline">
+            View Program Structure & Schedule <Calendar size={16} />
           </Link>
           <Link to="/enroll" className="btn btn-primary">
             Enroll in Full 48-Class Program <ArrowRight size={16} />

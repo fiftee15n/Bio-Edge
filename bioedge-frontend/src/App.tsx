@@ -18,7 +18,6 @@ import { ProgramPage } from './pages/public/ProgramPage';
 import { CoursesPage } from './pages/public/CoursesPage';
 import { CourseDetailsPage } from './pages/public/CourseDetailsPage';
 import { SscModelTestPage } from './pages/public/SscModelTestPage';
-import { SchedulePage } from './pages/public/SchedulePage';
 import { ContactPage } from './pages/public/ContactPage';
 import { EnrollPage } from './pages/public/EnrollPage';
 import { LoginPage } from './pages/public/LoginPage';
@@ -92,7 +91,7 @@ export default function App(): React.ReactElement {
                 <Route path="/courses/alpha-cohort" element={<CourseDetailsPage />} />
                 <Route path="/courses/ssc-2027-model-test" element={<SscModelTestPage />} />
                 <Route path="/courses/:slug" element={<CourseDetailsPage />} />
-                <Route path="/schedule" element={<SchedulePage />} />
+                <Route path="/schedule" element={<Navigate to="/program" replace />} />
                 <Route path="/pricing" element={<Navigate to="/courses" replace />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/enroll" element={<EnrollPage />} />
