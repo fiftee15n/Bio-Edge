@@ -569,22 +569,43 @@ export const CourseDetailsPage: React.FC = () => {
 
         .clean-section-header {
           margin-bottom: 2.75rem;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .section-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: var(--light-green);
+          color: var(--dark-green);
+          font-size: 0.8rem;
+          font-weight: 700;
+          padding: 5px 14px;
+          border-radius: var(--radius-full);
+          border: 1px solid rgba(41, 78, 54, 0.12);
+          margin-bottom: 0.35rem;
         }
 
         .clean-section-title {
-          font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+          font-size: clamp(1.75rem, 3.2vw, 2.3rem);
           font-weight: 800;
           color: var(--dark-green);
-          margin-top: 0.75rem;
+          margin-top: 0.35rem;
           margin-bottom: 0.6rem;
+          text-align: center;
+          width: 100%;
         }
 
         .clean-section-desc {
-          font-size: 1rem;
+          font-size: 1.02rem;
           color: var(--text-muted);
           max-width: 640px;
           margin: 0 auto;
-          line-height: 1.55;
+          line-height: 1.6;
+          text-align: center;
         }
 
         /* Features 4-Grid */
@@ -716,25 +737,33 @@ export const CourseDetailsPage: React.FC = () => {
         }
 
         .roadmap-full-link-box {
-          margin-top: 1rem;
+          margin-top: 2rem;
+          display: flex;
+          justify-content: center;
+          text-align: center;
         }
 
         .roadmap-detail-btn {
           display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-          font-size: 0.92rem;
+          font-size: 0.95rem;
           font-weight: 700;
-          color: var(--primary-green);
-          text-decoration: none;
-          padding: 0.5rem 1rem;
-          border-radius: var(--radius-md);
+          color: var(--dark-green);
+          background: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          padding: 0.75rem 1.5rem;
+          border-radius: var(--radius-full);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
           transition: all 0.2s ease;
         }
 
         .roadmap-detail-btn:hover {
           color: var(--dark-green);
-          background: rgba(49, 91, 61, 0.05);
+          background: var(--light-green-subtle);
+          border-color: var(--primary-green);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 14px rgba(49, 91, 61, 0.12);
         }
 
         /* Instructor Clean Card */
@@ -949,19 +978,28 @@ export const CourseDetailsPage: React.FC = () => {
         }
 
         .pricing-footer-note {
-          margin-top: 1.5rem;
+          margin-top: 2rem;
+          display: flex;
+          justify-content: center;
+          text-align: center;
         }
 
         .guarantee-text {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          font-size: 0.85rem;
+          justify-content: center;
+          gap: 8px;
+          font-size: 0.88rem;
           color: var(--text-muted);
+          background: #F4FAF6;
+          border: 1px solid rgba(49, 91, 61, 0.12);
+          padding: 0.6rem 1.4rem;
+          border-radius: var(--radius-full);
         }
 
         .shield-icon {
           color: var(--primary-green);
+          flex-shrink: 0;
         }
 
         /* FAQ Stack */

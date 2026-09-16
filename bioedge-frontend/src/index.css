@@ -2852,7 +2852,34 @@ html.lenis body {
   }
 }
 
+/* ==========================================================================
+   Global Layout & Text Utilities
+   ========================================================================== */
+.text-center {
+  text-align: center !important;
+}
 
+.text-left {
+  text-align: left !important;
+}
 
+.text-right {
+  text-align: right !important;
+}
 
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
 
+.d-flex {
+  display: flex !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.align-center {
+  align-items: center !important;
+}
