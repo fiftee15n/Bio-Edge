@@ -2408,11 +2408,12 @@ section, .public-section, .homepage-wrapper > section, [id] {
   }
 
   .center-student-frame {
-    max-width: 320px;
+    max-width: 380px;
+    width: 100%;
   }
 
   .center-student-img {
-    max-height: 380px;
+    max-height: 450px;
     transform: none;
   }
 
@@ -2494,11 +2495,12 @@ section, .public-section, .homepage-wrapper > section, [id] {
   }
 
   .center-student-frame {
-    max-width: 260px;
+    max-width: 330px;
+    width: 100%;
   }
 
   .center-student-img {
-    max-height: 290px;
+    max-height: 380px;
   }
 
   .ref-bottom-white-card {
