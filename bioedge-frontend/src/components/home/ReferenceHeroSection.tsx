@@ -84,7 +84,7 @@ export const ReferenceHeroSection: React.FC = () => {
 
               <div className="teacher-card-footer">
                 <div className="teacher-name-title">{teacher.name}</div>
-                <div className="teacher-exp-tag">{teacher.experience} Experience</div>
+                <div className="teacher-exp-tag">{teacher.experience.toLowerCase().includes('experience') ? teacher.experience : `${teacher.experience} Experience`}</div>
               </div>
             </div>
           </div>
