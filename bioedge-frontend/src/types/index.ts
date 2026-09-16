@@ -171,6 +171,7 @@ export interface Student {
   paper2Score?: number;
   lastActive: string;
   college?: string;
+  institution?: string;
 }
 
 export interface FeedbackItem {
