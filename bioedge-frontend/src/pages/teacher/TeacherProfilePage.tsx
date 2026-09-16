@@ -160,7 +160,11 @@ export const TeacherProfilePage: React.FC = () => {
           <h3 className="section-title-sm mb-3">Live Homepage Card Preview</h3>
 
           <div className="preview-avatar-box">
-            AT
+            <img 
+              src="/assets/hero/teacher_afroza_card.jpg" 
+              alt={form.name} 
+              className="preview-avatar-img" 
+            />
           </div>
 
           <h2 className="preview-name">{form.name}</h2>
@@ -243,6 +247,13 @@ export const TeacherProfilePage: React.FC = () => {
           font-family: var(--font-heading);
           margin-bottom: 1rem;
           border: 4px solid var(--light-green);
+          overflow: hidden;
+        }
+        .preview-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
         .preview-name {
           font-size: 1.35rem;

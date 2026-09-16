@@ -666,6 +666,14 @@ section, .public-section, .homepage-wrapper > section, [id] {
 
 .teacher-avatar {
   background: #B45309;
+  overflow: hidden;
+}
+
+.sidebar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .profile-meta {
@@ -2038,7 +2046,7 @@ section, .public-section, .homepage-wrapper > section, [id] {
 
 .teacher-card-portrait-frame {
   width: 100%;
-  height: 140px;
+  height: 155px;
   border-radius: 14px;
   overflow: hidden;
   background: #12281A;
@@ -2250,6 +2258,7 @@ section, .public-section, .homepage-wrapper > section, [id] {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
 }
 
 .video-demo-caption {

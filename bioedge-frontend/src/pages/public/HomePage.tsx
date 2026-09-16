@@ -232,7 +232,11 @@ export const HomePage: React.FC = () => {
             <div className="teacher-grid">
               <div className="teacher-visual-box">
                 <div className="teacher-avatar-large">
-                  AT
+                  <img 
+                    src="/assets/hero/teacher_afroza_card.jpg" 
+                    alt={teacher.name} 
+                    className="teacher-avatar-img" 
+                  />
                 </div>
                 <div className="teacher-quick-stats">
                   <div className="t-stat">
@@ -1067,6 +1071,13 @@ export const HomePage: React.FC = () => {
           margin-bottom: 1.25rem;
           border: 4px solid var(--light-green);
           box-shadow: 0 8px 24px rgba(41, 78, 54, 0.15);
+          overflow: hidden;
+        }
+        .teacher-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
         .teacher-quick-stats {
           display: grid;

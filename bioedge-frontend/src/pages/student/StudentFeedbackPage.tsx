@@ -57,7 +57,13 @@ export const StudentFeedbackPage: React.FC = () => {
             <div key={item.id} className="feedback-card-item bio-card">
               <div className="fb-item-top">
                 <div className="fb-item-author-info">
-                  <div className="fb-avatar">AT</div>
+                  <div className="fb-avatar">
+                    <img 
+                      src="/assets/hero/teacher_afroza_card.jpg" 
+                      alt={item.teacherName || teacher.name} 
+                      className="fb-avatar-img" 
+                    />
+                  </div>
                   <div>
                     <h4 className="fb-author-title">{item.teacherName || teacher.name}</h4>
                     <span className="fb-author-sub">Lead Biology Faculty</span>
@@ -166,6 +172,13 @@ export const StudentFeedbackPage: React.FC = () => {
           justify-content: center;
           font-size: 0.85rem;
           font-weight: 700;
+          overflow: hidden;
+        }
+        .fb-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
         .fb-author-title {
           font-size: 0.92rem;

@@ -435,6 +435,13 @@ export const CourseDetailsPage: React.FC = () => {
               <div className="tab-pane-card bio-card">
                 <h2 className="tab-section-title">Meet Your Instructor: Afroza Tahmina</h2>
                 <div className="instructor-profile-card">
+                  <div className="ins-photo-col">
+                    <img 
+                      src="/assets/hero/teacher_afroza_card.jpg" 
+                      alt="Afroza Tahmina" 
+                      className="ins-photo-img" 
+                    />
+                  </div>
                   <div className="ins-bio-text">
                     <div className="ins-pill">Lead Biology Specialist</div>
                     <h3 className="ins-name">Afroza Tahmina</h3>
@@ -1139,6 +1146,31 @@ export const CourseDetailsPage: React.FC = () => {
           background: var(--light-green-subtle);
           border-radius: var(--radius-lg);
           padding: 2.25rem;
+          display: flex;
+          gap: 2rem;
+          align-items: flex-start;
+        }
+        .ins-photo-col {
+          width: 140px;
+          height: 140px;
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          flex-shrink: 0;
+          box-shadow: var(--shadow-md);
+          border: 3px solid var(--primary-green);
+        }
+        .ins-photo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+        }
+        @media (max-width: 768px) {
+          .instructor-profile-card {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
         }
 
         .ins-pill {

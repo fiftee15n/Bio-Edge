@@ -208,7 +208,13 @@ export const StudentDashboard: React.FC = () => {
               <h4 className="fb-title">{recentFeedback.title}</h4>
               <p className="fb-message">"{recentFeedback.message}"</p>
               <div className="fb-author-row">
-                <div className="fb-author-avatar">AT</div>
+                <div className="fb-author-avatar">
+                  <img 
+                    src="/assets/hero/teacher_afroza_card.jpg" 
+                    alt={recentFeedback.teacherName} 
+                    className="fb-avatar-img" 
+                  />
+                </div>
                 <div>
                   <span className="fb-author-name">{recentFeedback.teacherName}</span>
                   <span className="fb-target">Target: {recentFeedback.attachedTo}</span>
@@ -574,6 +580,13 @@ export const StudentDashboard: React.FC = () => {
           justify-content: center;
           font-size: 0.75rem;
           font-weight: 700;
+          overflow: hidden;
+        }
+        .fb-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
         .fb-author-name {
           display: block;

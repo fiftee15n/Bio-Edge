@@ -61,7 +61,11 @@ export const TeacherSidebar: React.FC = () => {
       {/* Teacher Profile Badge */}
       <div className="student-profile-badge teacher-card-badge">
         <div className="avatar-circle teacher-avatar">
-          AT
+          <img 
+            src="/assets/hero/teacher_afroza_card.jpg" 
+            alt="Afroza Tahmina" 
+            className="sidebar-avatar-img" 
+          />
         </div>
         <div className="profile-meta">
           <p className="student-name">Afroza Tahmina</p>

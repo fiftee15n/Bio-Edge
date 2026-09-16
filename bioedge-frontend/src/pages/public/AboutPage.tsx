@@ -33,7 +33,11 @@ export const AboutPage: React.FC = () => {
           <div className="spotlight-grid">
             <div className="spotlight-visual">
               <div className="about-avatar-box">
-                AT
+                <img 
+                  src="/assets/hero/teacher_afroza_card.jpg" 
+                  alt={teacher.name} 
+                  className="about-avatar-img" 
+                />
               </div>
               <div className="about-quick-pill">
                 <Sparkles size={16} />
@@ -151,6 +155,13 @@ export const AboutPage: React.FC = () => {
           border: 6px solid var(--light-green);
           box-shadow: var(--shadow-lg);
           margin-bottom: 1.25rem;
+          overflow: hidden;
+        }
+        .about-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
         .about-quick-pill {
           display: flex;

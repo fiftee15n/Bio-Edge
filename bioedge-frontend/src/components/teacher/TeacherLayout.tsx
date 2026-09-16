@@ -58,7 +58,13 @@ export const TeacherLayout: React.FC = () => {
             </div>
 
             <Link to="/teacher/profile" className="top-bar-user-profile">
-              <div className="top-avatar teacher-avatar-top">AT</div>
+              <div className="top-avatar teacher-avatar-top">
+                <img 
+                  src="/assets/hero/teacher_afroza_card.jpg" 
+                  alt="Afroza Tahmina" 
+                  className="top-avatar-img" 
+                />
+              </div>
               <span className="top-user-name">Afroza Tahmina</span>
             </Link>
           </div>
@@ -147,6 +153,14 @@ export const TeacherLayout: React.FC = () => {
         }
         .teacher-avatar-top {
           background: #B45309;
+          overflow: hidden;
+          padding: 0;
+        }
+        .top-avatar-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
         }
 
         @media (max-width: 900px) {
