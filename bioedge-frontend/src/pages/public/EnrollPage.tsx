@@ -241,10 +241,10 @@ export const EnrollPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 4. Phone number whatsapp */}
+                  {/* 4. Phone Number (WhatsApp preferred) */}
                   <div className="form-item">
                     <label htmlFor="student-whatsapp" className="form-label">
-                      Phone number whatsapp <span className="req">*</span>
+                      Phone Number (WhatsApp preferred) <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <Phone size={16} className="input-icon" />
@@ -379,7 +379,7 @@ export const EnrollPage: React.FC = () => {
                   <span>{submittedData?.schoolCollege}</span>
                 </div>
                 <div className="receipt-row">
-                  <span>WhatsApp:</span>
+                  <span>Phone (WhatsApp):</span>
                   <span>{submittedData?.whatsappNumber}</span>
                 </div>
                 <div className="receipt-row">
