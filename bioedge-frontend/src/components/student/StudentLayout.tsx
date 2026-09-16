@@ -330,6 +330,15 @@ export const StudentLayout: React.FC = () => {
             padding: 1.25rem 1rem;
           }
         }
+
+        @media (max-width: 400px) {
+          .bc-badge {
+            display: none;
+          }
+          .portal-top-bar {
+            padding: 0 0.5rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -1581,8 +1581,12 @@ export const CourseDetailsPage: React.FC = () => {
             flex-wrap: nowrap;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
             gap: 0.35rem;
             padding-bottom: 0.4rem;
+          }
+          .details-tab-nav::-webkit-scrollbar {
+            display: none;
           }
           .tab-btn {
             white-space: nowrap;
@@ -1594,6 +1598,22 @@ export const CourseDetailsPage: React.FC = () => {
           }
           .ins-stats-row {
             grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .course-details-hero {
+            padding: 1.25rem 0.85rem;
+          }
+          .course-hero-title {
+            font-size: 1.35rem;
+          }
+          .instructor-profile-card {
+            padding: 1.25rem 0.85rem;
+          }
+          .ins-photo-col {
+            width: 110px;
+            height: 110px;
           }
         }
       `}</style>

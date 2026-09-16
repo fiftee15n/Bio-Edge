@@ -533,6 +533,23 @@ export const Hero3DCardDeck: React.FC = () => {
           }
         }
 
+        @media (max-width: 768px) {
+          .modal-3d-dialog {
+            width: 95vw !important;
+            max-height: 88vh !important;
+            overflow-y: auto !important;
+            padding: 1.25rem 1rem !important;
+          }
+          .modal-3d-actions {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .modal-3d-actions .btn {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+        }
+
         @media (max-width: 400px) {
           .deck-3d-card-wrapper {
             width: 180px !important;

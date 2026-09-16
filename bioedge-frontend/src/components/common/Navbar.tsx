@@ -489,6 +489,22 @@ export const Navbar: React.FC = () => {
             padding: 1.25rem 1rem;
           }
         }
+
+        @media (max-width: 420px) {
+          .guest-action-group .nav-login-btn {
+            display: none;
+          }
+          .navbar-actions {
+            gap: 0.5rem;
+          }
+          .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.76rem;
+          }
+          .brand-title {
+            font-size: 1.02rem;
+          }
+        }
       `}</style>
     </header>
   );

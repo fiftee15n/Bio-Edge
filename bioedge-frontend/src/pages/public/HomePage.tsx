@@ -1648,6 +1648,16 @@ export const HomePage: React.FC = () => {
           .final-cta-heading {
             font-size: 1.45rem;
           }
+          .teacher-profile-card {
+            padding: 1.5rem 1rem;
+          }
+          .teacher-avatar-large {
+            width: 105px;
+            height: 105px;
+          }
+          .teacher-quick-stats {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </div>

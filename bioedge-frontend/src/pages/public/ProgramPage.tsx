@@ -366,6 +366,21 @@ export const ProgramPage: React.FC = () => {
           .program-overview-cards-grid {
             grid-template-columns: 1fr;
           }
+          .materials-card {
+            padding: 1.5rem 1rem;
+            margin-bottom: 2.5rem;
+          }
+          .materials-title {
+            font-size: 1.35rem;
+          }
+          .d-ch-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+          .d-ch-name {
+            font-size: 1.05rem;
+          }
         }
       `}</style>
     </div>

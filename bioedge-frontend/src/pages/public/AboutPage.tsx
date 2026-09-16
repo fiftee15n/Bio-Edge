@@ -284,6 +284,11 @@ export const AboutPage: React.FC = () => {
           .faculty-name {
             font-size: 1.65rem;
           }
+          .contact-details-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.65rem;
+          }
           .principles-grid {
             grid-template-columns: 1fr;
           }
