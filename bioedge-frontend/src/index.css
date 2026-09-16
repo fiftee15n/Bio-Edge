@@ -2398,32 +2398,12 @@ section, .public-section, .homepage-wrapper > section, [id] {
   }
 
   /* Mobile Re-ordering: 
-     1. Display Typography (Headline)
-     2. Student Visual + Action Card (Primary CTA)
-     3. Teacher Card + Stats
+     1. Student Visual + Action Card (Photo of Person First)
+     2. Teacher Card + Stats
+     3. Display Typography (Headline) + Video Demo Block (After Teacher Card)
   */
-  .ref-hero-right-col {
-    order: 1;
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    gap: 1.5rem;
-    padding-bottom: 0;
-  }
-
-  .ref-hero-typography {
-    align-items: center;
-    text-align: center;
-  }
-
-  .hero-display-line {
-    font-size: clamp(2rem, 9vw, 3rem);
-    text-align: center;
-    line-height: 0.96;
-  }
-
   .ref-hero-center-col {
-    order: 2;
+    order: 1;
     width: 100%;
   }
 
@@ -2457,11 +2437,33 @@ section, .public-section, .homepage-wrapper > section, [id] {
   }
 
   .ref-hero-left-col {
-    order: 3;
+    order: 2;
     width: 100%;
     max-width: 380px;
     margin: 0 auto;
     gap: 1.25rem;
+  }
+
+  .ref-hero-right-col {
+    order: 3;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    padding-bottom: 0;
+  }
+
+  .ref-hero-typography {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-display-line {
+    font-size: clamp(2rem, 9vw, 3rem);
+    text-align: center;
+    line-height: 0.96;
   }
 
   .ref-video-demo-block {
