@@ -7,7 +7,8 @@ import {
   Student,
   FeedbackItem,
   NotificationItem,
-  FAQItem
+  FAQItem,
+  EnrollmentRecord
 } from '../types';
 
 export const initialCourseData: CourseData = {
@@ -1082,3 +1083,96 @@ export const initialFAQs: FAQItem[] = [
     a: "We offer both flexible monthly installments and a discounted full course package. Both options can be selected directly through the online enrollment portal."
   }
 ];
+
+export const initialEnrollments: EnrollmentRecord[] = [
+  {
+    id: "enr-001",
+    name: "Tariqul Islam",
+    email: "tariqul@gmail.com",
+    schoolCollege: "Notre Dame College, Dhaka",
+    whatsappNumber: "01711223344",
+    paymentNumber: "01711223344",
+    transactionId: "9K8J7H6G5F",
+    amount: "12500",
+    paymentMethod: "bKash",
+    courseKey: "alpha-cohort",
+    courseTitle: "Alpha Cohort (HSC Biology Intensive)",
+    plan: "full",
+    submittedAt: "2026-09-14T10:30:00Z",
+    status: "Approved",
+    reviewedAt: "2026-09-14T11:15:00Z",
+    reviewedBy: "admin.nioedge@gmail.com",
+    notes: "Verified payment via bKash statement. Full cohort seat confirmed."
+  },
+  {
+    id: "enr-002",
+    name: "Sumaiya Akter",
+    email: "sumaiya.akter@gmail.com",
+    schoolCollege: "Viqarunnisa Noon School & College",
+    whatsappNumber: "01822334455",
+    paymentNumber: "01822334455",
+    transactionId: "8A7B6C5D4E",
+    amount: "12500",
+    paymentMethod: "Nagad",
+    courseKey: "alpha-cohort",
+    courseTitle: "Alpha Cohort (HSC Biology Intensive)",
+    plan: "full",
+    submittedAt: "2026-09-16T18:45:00Z",
+    status: "Pending",
+    notes: "Applied for Alpha Cohort full course. Awaiting transaction verification."
+  },
+  {
+    id: "enr-003",
+    name: "Mehedi Hasan",
+    email: "mehedi.hasan@gmail.com",
+    schoolCollege: "Dhaka Residential Model College",
+    whatsappNumber: "01933445566",
+    paymentNumber: "01933445566",
+    transactionId: "7M6N5B4V3C",
+    amount: "2200",
+    paymentMethod: "bKash",
+    courseKey: "ssc-2027",
+    courseTitle: "SSC 2027 Model Test Package",
+    plan: "full",
+    submittedAt: "2026-09-16T21:10:00Z",
+    status: "Pending",
+    notes: "Submitted for 20 Model Tests batch. TrxID needs cross-check."
+  },
+  {
+    id: "enr-004",
+    name: "Rafiqul Alam",
+    email: "rafiqul.alam@gmail.com",
+    schoolCollege: "Ideal School and College, Motijheel",
+    whatsappNumber: "01544556677",
+    paymentNumber: "01544556677",
+    transactionId: "CASH",
+    amount: "2200",
+    paymentMethod: "Cash",
+    courseKey: "ssc-2027",
+    courseTitle: "SSC 2027 Model Test Package",
+    plan: "full",
+    submittedAt: "2026-09-15T14:20:00Z",
+    status: "Approved",
+    reviewedAt: "2026-09-15T15:00:00Z",
+    reviewedBy: "admin.nioedge@gmail.com",
+    notes: "Paid cash in person at Dhaka academic counseling desk."
+  },
+  {
+    id: "enr-005",
+    name: "Tasnim Jahan",
+    email: "tasnim.jahan@gmail.com",
+    schoolCollege: "Holy Cross College, Dhaka",
+    whatsappNumber: "01655667788",
+    paymentNumber: "01655667788",
+    transactionId: "5X4Y3Z2W1V",
+    amount: "3500",
+    paymentMethod: "Rocket",
+    courseKey: "alpha-cohort",
+    courseTitle: "Alpha Cohort (HSC Biology Intensive)",
+    plan: "monthly",
+    submittedAt: "2026-09-17T02:15:00Z",
+    status: "Pending",
+    notes: "First monthly installment. Awaiting Rocket Trx verification."
+  }
+];
+

@@ -143,27 +143,93 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         };
       }
 
-      const res = await api.auth.login({
-        email,
-        password,
-        role
-      });
+      const normalizedEmail = email.trim().toLowerCase();
 
-      if (res.success && res.user && res.token) {
-        setUser(res.user);
-        setToken(res.token);
-      } else if (res.unverified) {
-        // Unverified email requiring OTP
+      // 1. Direct Admin Authentication
+      if (
+        (normalizedEmail === 'admin.nioedge@gmail.com' || normalizedEmail === 'admin.bioedge@gmail.com') &&
+        password === 'BioEdge98765'
+      ) {
+        const adminUser: User = {
+          id: 'admin_001',
+          name: 'Bio Edge System Admin',
+          email: 'admin.nioedge@gmail.com',
+          role: 'admin',
+          isVerified: true
+        };
+        setUser(adminUser);
+        setToken('bioedge_admin_jwt_token_secret');
         return {
-          success: false,
-          requiresVerification: true,
-          email,
-          message: res.message,
-          verificationCode: res.verificationCode
+          success: true,
+          user: adminUser,
+          token: 'bioedge_admin_jwt_token_secret',
+          message: 'Admin authenticated successfully.'
         };
       }
 
-      return res;
+      // 2. Attempt API call to backend
+      try {
+        const res = await api.auth.login({
+          email: normalizedEmail,
+          password,
+          role
+        });
+
+        if (res.success && res.user && res.token) {
+          setUser(res.user);
+          setToken(res.token);
+          return res;
+        } else if (res.unverified) {
+          return {
+            success: false,
+            requiresVerification: true,
+            email: normalizedEmail,
+            message: res.message,
+            verificationCode: res.verificationCode
+          };
+        } else if (res.message && !res.message.includes('Network error')) {
+          return res;
+        }
+      } catch (apiErr) {
+        // Fallback to local sandbox accounts if backend server is offline
+      }
+
+      // 3. Robust Sandbox Fallbacks (Teacher & Student)
+      if (normalizedEmail === 'afroza.tahmina@bioedge.edu' && password === 'teacher123') {
+        const teacherUser: User = {
+          id: 'teacher_afroza',
+          name: 'Afroza Tahmina',
+          email: 'afroza.tahmina@bioedge.edu',
+          role: 'teacher',
+          designation: 'Senior Faculty & HEC Biology Specialist',
+          isVerified: true
+        };
+        setUser(teacherUser);
+        setToken('bioedge_teacher_jwt_token');
+        return { success: true, user: teacherUser, token: 'bioedge_teacher_jwt_token' };
+      }
+
+      if (normalizedEmail === 'tariqul@gmail.com' && password === 'student123') {
+        const studentUser: User = {
+          id: 'std_tariqul_01',
+          name: 'Tariqul Islam',
+          email: 'tariqul@gmail.com',
+          role: 'student',
+          studentId: 'BE-2026-001',
+          batch: 'Alpha Cohort',
+          enrolledCourses: ['alpha-cohort'],
+          status: 'Active',
+          isVerified: true
+        };
+        setUser(studentUser);
+        setToken('bioedge_student_jwt_token');
+        return { success: true, user: studentUser, token: 'bioedge_student_jwt_token' };
+      }
+
+      return {
+        success: false,
+        message: 'Invalid email address or password.'
+      };
     } catch (err: any) {
       return {
         success: false,
@@ -212,7 +278,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
    * Quick Role Switcher for instant testing
    */
   const switchRole = (newRole: UserRole) => {
-    if (newRole === 'teacher') {
+    if (newRole === 'admin') {
+      login('admin.nioedge@gmail.com', 'BioEdge98765', 'admin');
+    } else if (newRole === 'teacher') {
       login('afroza.tahmina@bioedge.edu', 'teacher123', 'teacher');
     } else if (newRole === 'student') {
       login('tariqul@gmail.com', 'student123', 'student');

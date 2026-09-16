@@ -10,7 +10,8 @@ import {
   Student,
   FeedbackItem,
   NotificationItem,
-  FAQItem
+  FAQItem,
+  EnrollmentRecord
 } from '../types';
 import {
   initialCourseData,
@@ -21,7 +22,8 @@ import {
   initialStudents,
   initialFeedbacks,
   initialNotifications,
-  initialFAQs
+  initialFAQs,
+  initialEnrollments
 } from '../data/initialMockData';
 
 interface CourseDataContextType {
@@ -58,6 +60,14 @@ interface CourseDataContextType {
   markNotificationRead: (notifId: string) => void;
   updateStudentStatus: (studentId: string, status: 'Active' | 'Inactive' | 'Pending' | 'Completed' | string) => void;
   enrollStudent: (studentData: Partial<Student>) => Student;
+  enrollments: EnrollmentRecord[];
+  pendingEnrollmentsCount: number;
+  addEnrollment: (record: Partial<EnrollmentRecord>) => EnrollmentRecord;
+  approveEnrollment: (enrollmentId: string, notes?: string) => void;
+  rejectEnrollment: (enrollmentId: string, reason?: string) => void;
+  revokeEnrollment: (enrollmentId: string) => void;
+  getEnrollmentsForStudent: (email: string) => EnrollmentRecord[];
+  hasAccessToCourse: (email: string, courseKey: string) => boolean;
   resetToDefaultData: () => void;
 }
 
@@ -85,6 +95,7 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>(() => getStored('feedbacks', initialFeedbacks));
   const [notifications, setNotifications] = useState<NotificationItem[]>(() => getStored('notifications', initialNotifications));
   const [faqs] = useState<FAQItem[]>(initialFAQs);
+  const [enrollments, setEnrollments] = useState<EnrollmentRecord[]>(() => getStored('enrollments', initialEnrollments));
 
   // Sync to local storage
   useEffect(() => { localStorage.setItem('bioedge_course', JSON.stringify(course)); }, [course]);
@@ -95,8 +106,10 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
   useEffect(() => { localStorage.setItem('bioedge_students', JSON.stringify(students)); }, [students]);
   useEffect(() => { localStorage.setItem('bioedge_feedbacks', JSON.stringify(feedbacks)); }, [feedbacks]);
   useEffect(() => { localStorage.setItem('bioedge_notifications', JSON.stringify(notifications)); }, [notifications]);
+  useEffect(() => { localStorage.setItem('bioedge_enrollments', JSON.stringify(enrollments)); }, [enrollments]);
 
   // Derived Dynamic Properties
+  const pendingEnrollmentsCount = enrollments.filter(e => e.status === 'Pending').length;
   const activeStudentsCount = students.filter(s => s.status === 'Active').length;
   const availableSeats = Math.max(0, course.seatLimit - activeStudentsCount);
   const completedClassesCount = classes.filter(c => c.status === 'Completed').length;
@@ -373,6 +386,158 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
     setStudents(initialStudents);
     setFeedbacks(initialFeedbacks);
     setNotifications(initialNotifications);
+    setEnrollments(initialEnrollments);
+  };
+
+  // Admin Enrollment Management
+  const addEnrollment = (record: Partial<EnrollmentRecord>): EnrollmentRecord => {
+    const newRecord: EnrollmentRecord = {
+      id: `enr-${Date.now()}`,
+      name: record.name || 'Student',
+      email: record.email || '',
+      schoolCollege: record.schoolCollege || '',
+      whatsappNumber: record.whatsappNumber || '',
+      paymentNumber: record.paymentNumber || '',
+      transactionId: record.transactionId || '',
+      amount: record.amount || '0',
+      paymentMethod: record.paymentMethod || 'bKash',
+      courseKey: record.courseKey || 'alpha-cohort',
+      courseTitle: record.courseTitle || 'Alpha Cohort (HSC Biology Intensive)',
+      plan: record.plan || 'full',
+      submittedAt: new Date().toISOString(),
+      status: 'Pending',
+      notes: record.notes || 'Submitted online. Pending administrator payment verification.'
+    };
+    setEnrollments(prev => [newRecord, ...prev]);
+    return newRecord;
+  };
+
+  const approveEnrollment = (enrollmentId: string, notes?: string) => {
+    let approvedCourseKey = '';
+    let studentEmail = '';
+    let studentName = '';
+    let courseTitle = '';
+
+    setEnrollments(prev => prev.map(item => {
+      if (item.id === enrollmentId) {
+        approvedCourseKey = item.courseKey;
+        studentEmail = item.email;
+        studentName = item.name;
+        courseTitle = item.courseTitle;
+        return {
+          ...item,
+          status: 'Approved',
+          reviewedAt: new Date().toISOString(),
+          reviewedBy: 'admin.nioedge@gmail.com',
+          notes: notes || item.notes || 'Payment verified. Full access granted by Admin.'
+        };
+      }
+      return item;
+    }));
+
+    if (studentEmail) {
+      // Activate student in roster
+      setStudents(prev => {
+        const exists = prev.find(s => s.email.toLowerCase() === studentEmail.toLowerCase());
+        if (exists) {
+          return prev.map(s => s.email.toLowerCase() === studentEmail.toLowerCase() ? {
+            ...s,
+            status: 'Active',
+            batch: approvedCourseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort'
+          } : s);
+        } else {
+          const newStudent: Student = {
+            id: `std-${Date.now()}`,
+            name: studentName,
+            studentId: `BE-2026-${String(prev.length + 1).padStart(3, '0')}`,
+            email: studentEmail,
+            phone: '01XXXXXXXXX',
+            batch: approvedCourseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort',
+            enrollmentDate: new Date().toISOString().split('T')[0],
+            status: 'Active',
+            courseProgress: 0,
+            averageScore: 0,
+            classesAttended: 0,
+            testsCompleted: 0,
+            lastActive: 'Active now'
+          };
+          return [...prev, newStudent];
+        }
+      });
+
+      // Update current logged-in user in localStorage if matching email
+      try {
+        const storedUser = localStorage.getItem('bioedge_auth_user');
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          if (parsed.email && parsed.email.toLowerCase() === studentEmail.toLowerCase()) {
+            const existingCourses: string[] = parsed.enrolledCourses || [];
+            if (!existingCourses.includes(approvedCourseKey)) {
+              existingCourses.push(approvedCourseKey);
+            }
+            parsed.enrolledCourses = existingCourses;
+            parsed.status = 'Active';
+            localStorage.setItem('bioedge_auth_user', JSON.stringify(parsed));
+          }
+        }
+      } catch (e) {}
+
+      // Add student notification
+      addNotification({
+        title: 'Course Access Granted 🎉',
+        message: `Admin verified your enrollment! You now have full access to ${courseTitle || 'your course'}.`,
+        type: 'material'
+      });
+    }
+  };
+
+  const rejectEnrollment = (enrollmentId: string, reason?: string) => {
+    setEnrollments(prev => prev.map(item => {
+      if (item.id === enrollmentId) {
+        return {
+          ...item,
+          status: 'Rejected',
+          reviewedAt: new Date().toISOString(),
+          reviewedBy: 'admin.nioedge@gmail.com',
+          notes: reason || 'Application rejected or payment verification failed.'
+        };
+      }
+      return item;
+    }));
+  };
+
+  const revokeEnrollment = (enrollmentId: string) => {
+    setEnrollments(prev => prev.map(item => {
+      if (item.id === enrollmentId) {
+        return {
+          ...item,
+          status: 'Pending',
+          notes: 'Access revoked for re-verification.'
+        };
+      }
+      return item;
+    }));
+  };
+
+  const getEnrollmentsForStudent = (email: string): EnrollmentRecord[] => {
+    if (!email) return [];
+    return enrollments.filter(e => e.email.toLowerCase() === email.toLowerCase());
+  };
+
+  const hasAccessToCourse = (email: string, courseKey: string): boolean => {
+    if (!email) return false;
+    const approved = enrollments.some(e => 
+      e.email.toLowerCase() === email.toLowerCase() && 
+      e.courseKey === courseKey && 
+      e.status === 'Approved'
+    );
+    if (approved) return true;
+
+    // Tariqul default demo access to Alpha Cohort
+    if (email.toLowerCase() === 'tariqul@gmail.com' && courseKey === 'alpha-cohort') {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -411,6 +576,14 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
         markNotificationRead,
         updateStudentStatus,
         enrollStudent,
+        enrollments,
+        pendingEnrollmentsCount,
+        addEnrollment,
+        approveEnrollment,
+        rejectEnrollment,
+        revokeEnrollment,
+        getEnrollmentsForStudent,
+        hasAccessToCourse,
         resetToDefaultData
       }}
     >

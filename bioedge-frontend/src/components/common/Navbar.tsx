@@ -79,6 +79,12 @@ export const Navbar: React.FC = () => {
           <div className="navbar-actions">
             {user ? (
               <div className="user-action-group">
+                <Link
+                  to={user.role === 'admin' ? '/admin/dashboard' : user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
+                  className="btn btn-secondary btn-sm"
+                >
+                  {user.role === 'admin' ? 'Admin Portal' : user.role === 'teacher' ? 'Faculty Portal' : 'Student Portal'}
+                </Link>
                 <button onClick={logout} className="nav-logout-btn">
                   Logout
                 </button>
@@ -128,12 +134,19 @@ export const Navbar: React.FC = () => {
             <div className="mobile-menu-divider" />
             {user ? (
               <div className="mobile-user-links">
+                <Link
+                  to={user.role === 'admin' ? '/admin/dashboard' : user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn btn-primary btn-block mb-2"
+                >
+                  {user.role === 'admin' ? 'Open Admin Portal' : user.role === 'teacher' ? 'Open Faculty Portal' : 'Open Student Portal'}
+                </Link>
                 <button
                   onClick={() => {
                     logout();
                     setMobileMenuOpen(false);
                   }}
-                  className="btn btn-outline btn-block"
+                  className="btn btn-outline btn-block mt-2"
                 >
                   Log Out
                 </button>

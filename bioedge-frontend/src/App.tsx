@@ -57,6 +57,12 @@ import { TeacherAnalyticsPage } from './pages/teacher/TeacherAnalyticsPage';
 import { TeacherPricingPage } from './pages/teacher/TeacherPricingPage';
 import { TeacherProfilePage } from './pages/teacher/TeacherProfilePage';
 
+// Admin Portal Layout & Pages
+import { AdminLayout } from './components/admin/AdminLayout';
+import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
+import { AdminEnrollmentsPage } from './pages/admin/AdminEnrollmentsPage';
+import { AdminStudentsPage } from './pages/admin/AdminStudentsPage';
+
 const PublicLayout: React.FC = () => {
   return (
     <div className="public-site-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -134,6 +140,14 @@ export default function App(): React.ReactElement {
                 <Route path="pricing" element={<TeacherPricingPage />} />
                 <Route path="profile" element={<TeacherProfilePage />} />
                 <Route path="settings" element={<TeacherCoursePage />} />
+              </Route>
+
+              {/* Authenticated Admin Management Portal */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                <Route path="dashboard" element={<AdminDashboardPage />} />
+                <Route path="enrollments" element={<AdminEnrollmentsPage />} />
+                <Route path="students" element={<AdminStudentsPage />} />
               </Route>
 
               {/* Fallback route */}

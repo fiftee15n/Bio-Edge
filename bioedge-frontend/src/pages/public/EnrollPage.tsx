@@ -33,7 +33,7 @@ export const EnrollPage: React.FC = () => {
     : 'Alpha Cohort (HSC Biology Intensive)';
 
   const { user } = useAuth();
-  const { enrollStudent } = useCourseData();
+  const { enrollStudent, addEnrollment } = useCourseData();
 
   // The 7 Required Fields
   const [name, setName] = useState<string>(user?.name || '');
@@ -87,20 +87,11 @@ export const EnrollPage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // 1. Register student in context state (visible in Teacher roster)
-      enrollStudent({
-        name: name.trim(),
-        email: email.trim(),
-        phone: whatsappNumber.trim(),
-        institution: schoolCollege.trim(),
-        batch: courseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort'
-      });
-
       const finalPaymentNumber = paymentNumber.trim() || (paymentMethod === 'Cash' ? (whatsappNumber.trim() || 'Cash in Person') : '');
       const finalTransactionId = transactionId.trim().toUpperCase() || (paymentMethod === 'Cash' ? 'CASH' : '');
 
-      // 2. Record enrollment in localStorage for persistence
-      const record = {
+      // 1. Add enrollment via context (sets status to 'Pending' for Admin review)
+      const record = addEnrollment({
         name: name.trim(),
         email: email.trim(),
         schoolCollege: schoolCollege.trim(),
@@ -111,12 +102,18 @@ export const EnrollPage: React.FC = () => {
         paymentMethod,
         courseTitle,
         courseKey,
-        submittedAt: new Date().toISOString()
-      };
+        plan
+      });
 
-      const existingRecords = JSON.parse(localStorage.getItem('bioedge_enrollments') || '[]');
-      existingRecords.push(record);
-      localStorage.setItem('bioedge_enrollments', JSON.stringify(existingRecords));
+      // 2. Also ensure registered in student roster with 'Pending' status
+      enrollStudent({
+        name: name.trim(),
+        email: email.trim(),
+        phone: whatsappNumber.trim(),
+        institution: schoolCollege.trim(),
+        batch: courseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort',
+        status: 'Pending'
+      });
 
       // 3. Attempt API call to backend if available
       try {
@@ -406,7 +403,7 @@ export const EnrollPage: React.FC = () => {
               </div>
 
               <p className="receipt-footer-text">
-                Portal access and class link will be activated within <strong>1–2 hours</strong> after verification.
+                Your application is currently <strong>Pending Admin Verification</strong>. Once payment is confirmed by administration, full access to your specific course materials will unlock immediately.
               </p>
 
               <div className="receipt-actions">

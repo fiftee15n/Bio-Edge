@@ -30,8 +30,25 @@ export const StudentDashboard: React.FC = () => {
     nextClass,
     completedClassesCount,
     totalClassesCount,
-    overallProgressPercentage
+    overallProgressPercentage,
+    enrollments,
+    hasAccessToCourse
   } = useCourseData();
+
+  const userEmail = user?.email || '';
+  const hasAlphaAccess = hasAccessToCourse(userEmail, 'alpha-cohort');
+  const hasSscAccess = hasAccessToCourse(userEmail, 'ssc-2027');
+  const myEnrollments = enrollments.filter(e => e.email.toLowerCase() === userEmail.toLowerCase());
+  const pendingEnrollment = myEnrollments.find(e => e.status === 'Pending');
+
+  // Enrolled course label
+  const activeCourseName = hasAlphaAccess && hasSscAccess
+    ? 'All Access (Alpha Cohort & SSC 2027 Model Tests)'
+    : hasAlphaAccess
+      ? 'Alpha Cohort (HSC Biology Intensive)'
+      : hasSscAccess
+        ? 'SSC 2027 Model Test Package'
+        : (pendingEnrollment ? pendingEnrollment.courseTitle : course.title);
 
   // Dynamic progress stats
   const totalChaptersCount = papers.reduce((acc, p) => acc + p.chapters.length, 0);
@@ -48,16 +65,51 @@ export const StudentDashboard: React.FC = () => {
 
   return (
     <div className="student-dashboard-page">
+      {/* Pending Admin Verification Banner */}
+      {pendingEnrollment && !hasAlphaAccess && !hasSscAccess && (
+        <div className="pending-verification-banner bio-card">
+          <div className="banner-left">
+            <div className="banner-icon-circle">
+              <Clock size={22} />
+            </div>
+            <div>
+              <h3 className="banner-title">Enrollment Under Admin Verification</h3>
+              <p className="banner-desc">
+                Your application for <strong>{pendingEnrollment.courseTitle}</strong> is currently being verified by administration. 
+                Payment details: <strong>৳{pendingEnrollment.amount}</strong> via <strong>{pendingEnrollment.paymentMethod}</strong> (TrxID: <code>{pendingEnrollment.transactionId}</code>).
+                Course materials will unlock as soon as administrator grants access.
+              </p>
+            </div>
+          </div>
+          <a 
+            href={`https://wa.me/8801712345678?text=${encodeURIComponent(
+              `Hello Admin, I have submitted payment for ${pendingEnrollment.courseTitle} (TrxID: ${pendingEnrollment.transactionId}). Could you please verify my access?`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary btn-sm"
+          >
+            <MessageSquare size={15} /> WhatsApp Admin
+          </a>
+        </div>
+      )}
+
       {/* 9.1 Dashboard Greeting Header */}
       <div className="dashboard-welcome-header bio-card">
         <div className="welcome-left">
           <div className="welcome-greeting-row">
             <h1 className="welcome-title">Good Morning, {user?.name || "Student"}</h1>
-            <span className="badge badge-green active-pill">
-              <span className="dot"></span> Active Enrollment
-            </span>
+            {hasAlphaAccess || hasSscAccess ? (
+              <span className="badge badge-green active-pill">
+                <span className="dot"></span> Verified Course Access
+              </span>
+            ) : (
+              <span className="badge badge-amber active-pill">
+                <span className="dot" style={{ background: '#D97706' }}></span> Awaiting Admin Approval
+              </span>
+            )}
           </div>
-          <p className="welcome-course-name">{course.title} • {course.batchName}</p>
+          <p className="welcome-course-name">{activeCourseName}</p>
         </div>
         <div className="welcome-right">
           <Link to="/student/practice" className="btn btn-primary btn-sm">
@@ -676,7 +728,58 @@ export const StudentDashboard: React.FC = () => {
           color: var(--text-dark);
         }
 
+        .pending-verification-banner {
+          background: #FFFBEB;
+          border: 1.5px solid #FCD34D;
+          padding: 1.25rem 1.5rem;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          border-radius: var(--radius-lg);
+        }
+        .banner-left {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .banner-icon-circle {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #FEF3C7;
+          color: #D97706;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .banner-title {
+          font-size: 1.15rem;
+          color: #92400E;
+          font-weight: 700;
+          margin-bottom: 0.25rem;
+        }
+        .banner-desc {
+          font-size: 0.88rem;
+          color: #78350F;
+          line-height: 1.5;
+          max-width: 750px;
+        }
+        .banner-desc code {
+          background: #FEF3C7;
+          padding: 0.1rem 0.35rem;
+          border-radius: 4px;
+          font-weight: 700;
+          color: #92400E;
+        }
+
         @media (max-width: 900px) {
+          .pending-verification-banner {
+            flex-direction: column;
+            align-items: flex-start;
+          }
           .dashboard-welcome-header {
             flex-direction: column;
             align-items: flex-start;

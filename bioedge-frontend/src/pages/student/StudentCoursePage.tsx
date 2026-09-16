@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
 import { ProgressBar } from '../../components/common/ProgressBar';
 import { 
@@ -9,22 +10,75 @@ import {
   ChevronRight, 
   Clock, 
   Layers,
-  ArrowRight
+  ArrowRight,
+  Award,
+  AlertCircle
 } from 'lucide-react';
 
 export const StudentCoursePage: React.FC = () => {
-  const { papers, toggleTopicStatus } = useCourseData();
+  const { user } = useAuth();
+  const { papers, toggleTopicStatus, hasAccessToCourse, enrollments } = useCourseData();
   const [selectedPaperTab, setSelectedPaperTab] = useState<string>('first-paper');
+
+  const userEmail = user?.email || '';
+  const hasAlphaAccess = hasAccessToCourse(userEmail, 'alpha-cohort');
+  const hasSscAccess = hasAccessToCourse(userEmail, 'ssc-2027');
+  const myPending = enrollments.find(e => e.email.toLowerCase() === userEmail.toLowerCase() && e.status === 'Pending');
 
   const activePaper = papers.find(p => p.id === selectedPaperTab) || papers[0];
 
   return (
     <div className="student-course-page">
+      {/* Access Restriction Notice if enrolled only in SSC 2027 */}
+      {!hasAlphaAccess && hasSscAccess && (
+        <div className="course-access-notice-card bio-card">
+          <div className="notice-left">
+            <Award size={24} className="notice-icon" />
+            <div>
+              <h3 className="notice-title">Enrolled Course: SSC 2027 Model Test Package</h3>
+              <p className="notice-desc">
+                Your verified course access includes all 20 Board-Standard Model Tests, handwritten evaluation, and solution classes. 
+                The 24 HSC Theory Chapters below are part of the <strong>Alpha Cohort (HSC Biology Intensive)</strong>.
+              </p>
+            </div>
+          </div>
+          <Link to="/student/model-tests" className="btn btn-primary btn-sm">
+            <Award size={16} /> Open SSC Model Tests
+          </Link>
+        </div>
+      )}
+
+      {/* Access Pending Verification Notice */}
+      {!hasAlphaAccess && !hasSscAccess && (
+        <div className="course-access-notice-card pending bio-card">
+          <div className="notice-left">
+            <Clock size={24} className="notice-icon amber" />
+            <div>
+              <h3 className="notice-title">Course Materials Awaiting Admin Verification</h3>
+              <p className="notice-desc">
+                {myPending 
+                  ? `Your payment for "${myPending.courseTitle}" is pending administrator approval. Full interactive access will unlock once verified.`
+                  : `You do not currently have an active course enrollment. Please enroll to unlock course materials.`}
+              </p>
+            </div>
+          </div>
+          {!myPending && (
+            <Link to="/enroll" className="btn btn-primary btn-sm">
+              Enroll Now <ArrowRight size={14} />
+            </Link>
+          )}
+        </div>
+      )}
+
       {/* Header Banner */}
       <div className="course-hero-header bio-card">
         <div className="c-hero-left">
           <span className="badge badge-green">Academic Curriculum</span>
-          <h1 className="c-hero-title">My Course: First & Second Paper</h1>
+          <h1 className="c-hero-title">
+            {hasSscAccess && !hasAlphaAccess 
+              ? 'Alpha Cohort Curriculum Overview' 
+              : 'My Course: First & Second Paper'}
+          </h1>
           <p className="c-hero-desc">
             Explore all 24 chapters, mark completed topics, and access chapter lecture notes.
           </p>
@@ -234,13 +288,52 @@ export const StudentCoursePage: React.FC = () => {
           color: var(--text-muted);
           text-decoration: line-through;
         }
-        .ch-card-footer {
-          margin-top: auto;
-          padding-top: 1rem;
-          border-top: 1px solid var(--border-subtle);
+        .course-access-notice-card {
+          background: #EFF6FF;
+          border: 1.5px solid #BFDBFE;
+          padding: 1.25rem 1.5rem;
+          margin-bottom: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          border-radius: var(--radius-lg);
+        }
+        .course-access-notice-card.pending {
+          background: #FFFBEB;
+          border-color: #FDE68A;
+        }
+        .notice-left {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .notice-icon {
+          color: #2563EB;
+          flex-shrink: 0;
+          margin-top: 0.2rem;
+        }
+        .notice-icon.amber {
+          color: #D97706;
+        }
+        .notice-title {
+          font-size: 1.1rem;
+          color: var(--dark-green);
+          font-weight: 700;
+          margin-bottom: 0.25rem;
+        }
+        .notice-desc {
+          font-size: 0.86rem;
+          color: var(--text-muted);
+          line-height: 1.5;
+          max-width: 700px;
         }
 
         @media (max-width: 768px) {
+          .course-access-notice-card {
+            flex-direction: column;
+            align-items: flex-start;
+          }
           .student-chapters-grid {
             grid-template-columns: 1fr;
           }

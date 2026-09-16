@@ -203,6 +203,23 @@ export async function seedDatabase() {
     });
   }
 
+  // Admin: System Admin
+  const adminPasswordHash = await bcrypt.hash('BioEdge98765', 10);
+  if (!UserModel.findByEmail('admin.nioedge@gmail.com')) {
+    UserModel.create({
+      name: 'Bio Edge System Admin',
+      email: 'admin.nioedge@gmail.com',
+      passwordHash: adminPasswordHash,
+      role: 'admin',
+      phone: '+880 1712-345678',
+      institution: 'Bio Edge Administration',
+      examYear: '',
+      studentId: 'BE-ADM-001',
+      batch: 'Administration',
+      isVerified: 1
+    });
+  }
+
   console.log('✅ Seed data successfully populated in database.');
 }
 

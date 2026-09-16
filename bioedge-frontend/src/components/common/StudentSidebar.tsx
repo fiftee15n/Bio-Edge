@@ -20,7 +20,11 @@ import { useCourseData } from '../../context/CourseDataContext';
 
 export const StudentSidebar: React.FC = () => {
   const { user, logout } = useAuth();
-  const { feedbacks, notifications } = useCourseData();
+  const { feedbacks, notifications, hasAccessToCourse, enrollments } = useCourseData();
+
+  const userEmail = user?.email || '';
+  const hasAccess = hasAccessToCourse(userEmail, 'alpha-cohort') || hasAccessToCourse(userEmail, 'ssc-2027');
+  const isPending = enrollments.some(e => e.email.toLowerCase() === userEmail.toLowerCase() && e.status === 'Pending');
 
   const unreadFeedbacks = feedbacks.filter(f => f.unread).length;
   const unreadNotifs = notifications.filter(n => !n.read).length;
@@ -61,7 +65,8 @@ export const StudentSidebar: React.FC = () => {
         <div className="profile-meta">
           <p className="student-name">{user?.name || "Student"}</p>
           <span className="student-badge-status">
-            <span className="status-dot"></span> Active Enrolled
+            <span className={`status-dot ${hasAccess ? '' : 'amber'}`}></span>
+            {hasAccess ? 'Active Access' : isPending ? 'Pending Approval' : 'Enrolled'}
           </span>
         </div>
       </div>
@@ -163,6 +168,9 @@ export const StudentSidebar: React.FC = () => {
           height: 6px;
           border-radius: 50%;
           background: var(--success);
+        }
+        .status-dot.amber {
+          background: #D97706;
         }
         .sidebar-nav {
           display: flex;

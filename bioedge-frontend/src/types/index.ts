@@ -1,4 +1,24 @@
-export type UserRole = 'student' | 'teacher' | 'guest';
+export type UserRole = 'student' | 'teacher' | 'admin' | 'guest';
+
+export interface EnrollmentRecord {
+  id: string;
+  name: string;
+  email: string;
+  schoolCollege: string;
+  whatsappNumber: string;
+  paymentNumber: string;
+  transactionId: string;
+  amount: string;
+  paymentMethod: 'bKash' | 'Nagad' | 'Rocket' | 'Cash';
+  courseKey: 'alpha-cohort' | 'ssc-2027' | string;
+  courseTitle: string;
+  plan: 'full' | 'monthly' | string;
+  submittedAt: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+  reviewedAt?: string;
+  reviewedBy?: string;
+  notes?: string;
+}
 
 export interface User {
   id: string;
@@ -14,6 +34,7 @@ export interface User {
   isVerified?: boolean;
   avatar?: string;
   designation?: string;
+  enrolledCourses?: string[];
 }
 
 export interface AuthResponse {
