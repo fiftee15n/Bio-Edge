@@ -17,11 +17,11 @@ export const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const redirectParam = searchParams.get('redirect') || searchParams.get('from');
   const queryRole = searchParams.get('role');
-  const defaultRole = (queryRole === 'admin' ? 'admin' : queryRole === 'teacher' ? 'teacher' : 'student') as 'student' | 'teacher' | 'admin';
+  const defaultRole = (queryRole === 'teacher' ? 'teacher' : 'student') as 'student' | 'teacher';
 
-  const [activeRole, setActiveRole] = useState<'student' | 'teacher' | 'admin'>(defaultRole);
+  const [activeRole, setActiveRole] = useState<'student' | 'teacher'>(defaultRole);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [loginEmail, setLoginEmail] = useState<string>(defaultRole === 'admin' ? 'admin.nioedge@gmail.com' : '');
+  const [loginEmail, setLoginEmail] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
 
   // If unverified account attempts login, switch to verification screen
@@ -32,7 +32,7 @@ export const LoginPage: React.FC = () => {
   const { login, loginWithGoogle, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  const handlePostAuthRedirect = (role: 'student' | 'teacher' | 'admin') => {
+  const handlePostAuthRedirect = (role: string) => {
     if (redirectParam) {
       navigate(redirectParam);
     } else if (role === 'admin') {
@@ -50,7 +50,7 @@ export const LoginPage: React.FC = () => {
 
     const res = await login(loginEmail, loginPassword, activeRole);
     if (res.success && res.user) {
-      const resolvedRole = (res.user.role as 'student' | 'teacher' | 'admin') || activeRole;
+      const resolvedRole = res.user.role || activeRole;
       handlePostAuthRedirect(resolvedRole);
     } else if (res.requiresVerification && res.email) {
       setVerifyEmailTarget(res.email);
@@ -69,11 +69,6 @@ export const LoginPage: React.FC = () => {
     } else {
       setErrorMessage(res.message || 'Google sign-in failed');
     }
-  };
-
-  const fillAdminCredentials = () => {
-    setLoginEmail('admin.nioedge@gmail.com');
-    setLoginPassword('BioEdge98765');
   };
 
   return (
@@ -99,7 +94,7 @@ export const LoginPage: React.FC = () => {
                   className={`role-tab-btn ${activeRole === 'student' ? 'active' : ''}`}
                 >
                   <GraduationCap size={16} />
-                  <span>Student</span>
+                  <span>Student Login</span>
                 </button>
                 <button
                   type="button"
@@ -107,33 +102,9 @@ export const LoginPage: React.FC = () => {
                   className={`role-tab-btn ${activeRole === 'teacher' ? 'active' : ''}`}
                 >
                   <ShieldCheck size={16} />
-                  <span>Teacher</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { 
-                    setActiveRole('admin'); 
-                    setErrorMessage('');
-                    if (!loginEmail) setLoginEmail('admin.nioedge@gmail.com');
-                  }}
-                  className={`role-tab-btn ${activeRole === 'admin' ? 'active' : ''}`}
-                >
-                  <Lock size={16} />
-                  <span>Admin</span>
+                  <span>Teacher Login</span>
                 </button>
               </div>
-
-              {/* Admin Quick Credentials Pill */}
-              {activeRole === 'admin' && (
-                <div className="admin-credentials-hint" onClick={fillAdminCredentials} title="Click to auto-fill credentials">
-                  <div className="hint-header">
-                    <span className="hint-badge">Admin Access</span>
-                    <button type="button" className="btn-quick-fill">Auto-Fill</button>
-                  </div>
-                  <p className="hint-text"><strong>Email:</strong> admin.nioedge@gmail.com</p>
-                  <p className="hint-text"><strong>Password:</strong> BioEdge98765</p>
-                </div>
-              )}
 
               {/* Error Alert */}
               {errorMessage && (
@@ -147,20 +118,14 @@ export const LoginPage: React.FC = () => {
               <form onSubmit={handleLogin} className="login-form">
                 <div className="form-group">
                   <label className="form-label">
-                    {activeRole === 'admin' ? 'Administrator Email' : activeRole === 'teacher' ? 'Faculty Email' : 'Student Email / ID'}
+                    {activeRole === 'teacher' ? 'Faculty Email' : 'Student Email / ID'}
                   </label>
                   <div className="input-with-icon">
                     <Mail size={18} className="input-icon" />
                     <input
                       type="email"
                       required
-                      placeholder={
-                        activeRole === 'admin' 
-                          ? 'admin.nioedge@gmail.com' 
-                          : activeRole === 'teacher' 
-                            ? 'afroza.tahmina@bioedge.edu' 
-                            : 'student@gmail.com'
-                      }
+                      placeholder={activeRole === 'teacher' ? 'afroza.tahmina@bioedge.edu' : 'student@gmail.com'}
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       className="form-input with-icon"
@@ -184,7 +149,7 @@ export const LoginPage: React.FC = () => {
                 </div>
 
                 <button type="submit" disabled={isLoading} className="btn btn-primary btn-block btn-lg mt-3">
-                  <LogIn size={18} /> {isLoading ? 'Signing In...' : `Sign In to ${activeRole === 'admin' ? 'Admin Portal' : activeRole === 'teacher' ? 'Teacher Management' : 'Student Portal'}`}
+                  <LogIn size={18} /> {isLoading ? 'Signing In...' : `Sign In to ${activeRole === 'teacher' ? 'Teacher Management' : 'Student Portal'}`}
                 </button>
               </form>
 
@@ -268,8 +233,8 @@ export const LoginPage: React.FC = () => {
 
         .role-tabs-row {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.35rem;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
           background: #F8FAF9;
           padding: 0.35rem;
           border-radius: var(--radius-md);
@@ -280,9 +245,9 @@ export const LoginPage: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.4rem;
-          padding: 0.6rem 0.35rem;
-          font-size: 0.84rem;
+          gap: 0.5rem;
+          padding: 0.6rem;
+          font-size: 0.88rem;
           font-weight: 600;
           color: var(--text-muted);
           border-radius: var(--radius-sm);
@@ -290,49 +255,6 @@ export const LoginPage: React.FC = () => {
           background: none;
           cursor: pointer;
           transition: all 0.2s ease;
-        }
-
-        .admin-credentials-hint {
-          background: #F0FDF4;
-          border: 1.5px dashed #86EFAC;
-          padding: 0.75rem 1rem;
-          border-radius: var(--radius-sm);
-          margin-bottom: 1.25rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          text-align: left;
-        }
-        .admin-credentials-hint:hover {
-          background: #DCFCE7;
-          border-color: #22C55E;
-          transform: translateY(-1px);
-        }
-        .hint-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 0.35rem;
-        }
-        .hint-badge {
-          font-size: 0.72rem;
-          font-weight: 700;
-          color: #15803D;
-          text-transform: uppercase;
-        }
-        .btn-quick-fill {
-          font-size: 0.74rem;
-          font-weight: 600;
-          color: #FFFFFF;
-          background: var(--dark-green);
-          padding: 0.2rem 0.6rem;
-          border-radius: var(--radius-full);
-          border: none;
-          cursor: pointer;
-        }
-        .hint-text {
-          font-size: 0.82rem;
-          color: #14532D;
-          margin-bottom: 0.15rem;
         }
 
         .role-tab-btn.active {

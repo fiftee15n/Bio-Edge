@@ -22,7 +22,7 @@ export const AdminLayout: React.FC = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
   if (!isAuthenticated || user?.role !== 'admin') {
-    return <Navigate to="/login?role=admin" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
 
   return (

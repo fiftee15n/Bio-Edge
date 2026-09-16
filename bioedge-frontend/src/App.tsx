@@ -59,6 +59,7 @@ import { TeacherProfilePage } from './pages/teacher/TeacherProfilePage';
 
 // Admin Portal Layout & Pages
 import { AdminLayout } from './components/admin/AdminLayout';
+import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminEnrollmentsPage } from './pages/admin/AdminEnrollmentsPage';
 import { AdminStudentsPage } from './pages/admin/AdminStudentsPage';
@@ -141,6 +142,9 @@ export default function App(): React.ReactElement {
                 <Route path="profile" element={<TeacherProfilePage />} />
                 <Route path="settings" element={<TeacherCoursePage />} />
               </Route>
+
+              {/* Dedicated Admin Login */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
 
               {/* Authenticated Admin Management Portal */}
               <Route path="/admin" element={<AdminLayout />}>
