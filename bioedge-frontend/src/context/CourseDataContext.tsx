@@ -428,7 +428,7 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
           ...item,
           status: 'Approved',
           reviewedAt: new Date().toISOString(),
-          reviewedBy: 'admin.nioedge@gmail.com',
+          reviewedBy: 'admin.bioedge@gmail.com',
           notes: notes || item.notes || 'Payment verified. Full access granted by Admin.'
         };
       }
@@ -498,7 +498,7 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
           ...item,
           status: 'Rejected',
           reviewedAt: new Date().toISOString(),
-          reviewedBy: 'admin.nioedge@gmail.com',
+          reviewedBy: 'admin.bioedge@gmail.com',
           notes: reason || 'Application rejected or payment verification failed.'
         };
       }

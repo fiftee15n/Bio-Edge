@@ -12,8 +12,8 @@ import {
 } from 'lucide-react';
 
 export const AdminLoginPage: React.FC = () => {
-  const [email, setEmail] = useState<string>('admin.nioedge@gmail.com');
-  const [password, setPassword] = useState<string>('BioEdge98765');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -28,11 +28,6 @@ export const AdminLoginPage: React.FC = () => {
     } else {
       setErrorMessage(res.message || 'Invalid administrator credentials.');
     }
-  };
-
-  const handleQuickFill = () => {
-    setEmail('admin.nioedge@gmail.com');
-    setPassword('BioEdge98765');
   };
 
   return (
@@ -52,16 +47,6 @@ export const AdminLoginPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Quick Credentials Info Box */}
-        <div className="admin-auth-credentials-box" onClick={handleQuickFill} title="Click to auto-fill credentials">
-          <div className="hint-header">
-            <span className="hint-badge">Administrator Credentials</span>
-            <button type="button" className="btn-quick-fill">Auto-Fill</button>
-          </div>
-          <p className="hint-line"><strong>Email:</strong> admin.nioedge@gmail.com</p>
-          <p className="hint-line"><strong>Password:</strong> BioEdge98765</p>
-        </div>
-
         {/* Error Alert */}
         {errorMessage && (
           <div className="admin-auth-error">
@@ -79,7 +64,7 @@ export const AdminLoginPage: React.FC = () => {
               <input
                 type="email"
                 required
-                placeholder="admin.nioedge@gmail.com"
+                placeholder="admin.bioedge@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-input with-icon"
@@ -140,7 +125,7 @@ export const AdminLoginPage: React.FC = () => {
         }
 
         .admin-login-header {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
         }
 
         .admin-login-logo {
@@ -181,54 +166,6 @@ export const AdminLoginPage: React.FC = () => {
           font-size: 0.86rem;
           color: var(--text-muted);
           line-height: 1.5;
-        }
-
-        .admin-auth-credentials-box {
-          background: #F0FDF4;
-          border: 1.5px dashed #86EFAC;
-          padding: 0.85rem 1.15rem;
-          border-radius: var(--radius-md);
-          margin-bottom: 1.5rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          text-align: left;
-        }
-
-        .admin-auth-credentials-box:hover {
-          background: #DCFCE7;
-          border-color: #22C55E;
-          transform: translateY(-1px);
-        }
-
-        .hint-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 0.35rem;
-        }
-
-        .hint-badge {
-          font-size: 0.72rem;
-          font-weight: 700;
-          color: #15803D;
-          text-transform: uppercase;
-        }
-
-        .btn-quick-fill {
-          font-size: 0.74rem;
-          font-weight: 600;
-          color: #FFFFFF;
-          background: var(--dark-green);
-          padding: 0.2rem 0.6rem;
-          border-radius: var(--radius-full);
-          border: none;
-          cursor: pointer;
-        }
-
-        .hint-line {
-          font-size: 0.82rem;
-          color: #14532D;
-          margin: 0.1rem 0;
         }
 
         .admin-auth-error {

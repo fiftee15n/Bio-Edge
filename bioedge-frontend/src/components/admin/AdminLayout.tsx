@@ -65,7 +65,7 @@ export const AdminLayout: React.FC = () => {
               <div className="top-avatar admin-top-avatar">A</div>
               <div className="admin-top-meta">
                 <span className="top-user-name">Admin</span>
-                <span className="top-user-sub">admin.nioedge@gmail.com</span>
+                <span className="top-user-sub">admin.bioedge@gmail.com</span>
               </div>
             </div>
           </div>

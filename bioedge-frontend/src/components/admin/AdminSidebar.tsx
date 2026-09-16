@@ -63,7 +63,7 @@ export const AdminSidebar: React.FC = () => {
           <span className="admin-badge-status">
             <span className="status-dot green"></span> Superadmin
           </span>
-          <span className="admin-email">{user?.email || "admin.nioedge@gmail.com"}</span>
+          <span className="admin-email">{user?.email || "admin.bioedge@gmail.com"}</span>
         </div>
       </div>
 

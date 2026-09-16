@@ -54,7 +54,7 @@ export const AdminEnrollmentsPage: React.FC = () => {
         ...selectedRecord,
         status: 'Approved',
         reviewedAt: new Date().toISOString(),
-        reviewedBy: 'admin.nioedge@gmail.com'
+        reviewedBy: 'admin.bioedge@gmail.com'
       });
     }
     setTimeout(() => setActionSuccessMsg(''), 4000);

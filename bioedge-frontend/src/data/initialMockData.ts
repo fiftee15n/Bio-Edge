@@ -1101,7 +1101,7 @@ export const initialEnrollments: EnrollmentRecord[] = [
     submittedAt: "2026-09-14T10:30:00Z",
     status: "Approved",
     reviewedAt: "2026-09-14T11:15:00Z",
-    reviewedBy: "admin.nioedge@gmail.com",
+    reviewedBy: "admin.bioedge@gmail.com",
     notes: "Verified payment via bKash statement. Full cohort seat confirmed."
   },
   {
@@ -1154,7 +1154,7 @@ export const initialEnrollments: EnrollmentRecord[] = [
     submittedAt: "2026-09-15T14:20:00Z",
     status: "Approved",
     reviewedAt: "2026-09-15T15:00:00Z",
-    reviewedBy: "admin.nioedge@gmail.com",
+    reviewedBy: "admin.bioedge@gmail.com",
     notes: "Paid cash in person at Dhaka academic counseling desk."
   },
   {

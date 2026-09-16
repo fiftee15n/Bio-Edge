@@ -147,13 +147,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       // 1. Direct Admin Authentication
       if (
-        (normalizedEmail === 'admin.nioedge@gmail.com' || normalizedEmail === 'admin.bioedge@gmail.com') &&
+        normalizedEmail === 'admin.bioedge@gmail.com' &&
         password === 'BioEdge98765'
       ) {
         const adminUser: User = {
           id: 'admin_001',
           name: 'Bio Edge System Admin',
-          email: 'admin.nioedge@gmail.com',
+          email: 'admin.bioedge@gmail.com',
           role: 'admin',
           isVerified: true
         };
@@ -279,7 +279,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
    */
   const switchRole = (newRole: UserRole) => {
     if (newRole === 'admin') {
-      login('admin.nioedge@gmail.com', 'BioEdge98765', 'admin');
+      login('admin.bioedge@gmail.com', 'BioEdge98765', 'admin');
     } else if (newRole === 'teacher') {
       login('afroza.tahmina@bioedge.edu', 'teacher123', 'teacher');
     } else if (newRole === 'student') {

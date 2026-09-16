@@ -205,10 +205,10 @@ export async function seedDatabase() {
 
   // Admin: System Admin
   const adminPasswordHash = await bcrypt.hash('BioEdge98765', 10);
-  if (!UserModel.findByEmail('admin.nioedge@gmail.com')) {
+  if (!UserModel.findByEmail('admin.bioedge@gmail.com')) {
     UserModel.create({
       name: 'Bio Edge System Admin',
-      email: 'admin.nioedge@gmail.com',
+      email: 'admin.bioedge@gmail.com',
       passwordHash: adminPasswordHash,
       role: 'admin',
       phone: '+880 1712-345678',
