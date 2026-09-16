@@ -4,45 +4,15 @@ import {
   Award, 
   CheckCircle2, 
   Calendar, 
-  Clock, 
-  BookOpen, 
   Sparkles, 
-  FileText, 
   ArrowRight, 
-  Users, 
-  ShieldCheck, 
-  Star,
   Target,
   PenTool,
-  HelpCircle,
   Layers,
   ArrowLeft
 } from 'lucide-react';
 
 export const SscModelTestPage: React.FC = () => {
-  const modelTestsList = [
-    { num: '01', title: 'Chapter 01 & 02 Model Test', topics: 'Life Lessons & Cells and Tissues of Plants and Animals', type: 'Paper 1 Standard', marks: '50 Marks' },
-    { num: '02', title: 'Chapter 03 & 04 Model Test', topics: 'Cell Division & Bioenergetics (Photosynthesis/Respiration)', type: 'Paper 1 Standard', marks: '50 Marks' },
-    { num: '03', title: 'Chapter 05 & 06 Model Test', topics: 'Food, Nutrition and Digestion & Transport in Organisms', type: 'Physiology Focus', marks: '50 Marks' },
-    { num: '04', title: 'Chapter 07 & 08 Model Test', topics: 'Exchange of Gases & Excretory System', type: 'Human Systems', marks: '50 Marks' },
-    { num: '05', title: 'Chapter 09 & 10 Model Test', topics: 'Firmness and Locomotion & Coordination', type: 'Nervous & Skeleton', marks: '50 Marks' },
-    { num: '06', title: 'Chapter 11 & 12 Model Test', topics: 'Reproduction in Organisms & Heredity and Evolution', type: 'Genetics Focus', marks: '50 Marks' },
-    { num: '07', title: 'Chapter 13 & 14 Model Test', topics: 'Environment of Life & Biotechnology', type: 'Ecology & Biotech', marks: '50 Marks' },
-    { num: '08', title: 'First Half Comprehensive Test (Ch 1–7)', topics: 'All Chapter 1 to 7 Full Board Standard Evaluation', type: 'Half Syllabus', marks: '100 Marks' },
-    { num: '09', title: 'Second Half Comprehensive Test (Ch 8–14)', topics: 'All Chapter 8 to 14 Full Board Standard Evaluation', type: 'Half Syllabus', marks: '100 Marks' },
-    { num: '10', title: 'SSC Grand Board Model Test 01', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks' },
-    { num: '11', title: 'SSC Grand Board Model Test 02', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks' },
-    { num: '12', title: 'SSC Grand Board Model Test 03', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks' },
-    { num: '13', title: 'SSC Grand Board Model Test 04', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks' },
-    { num: '14', title: 'SSC Grand Board Model Test 05', topics: 'Full SSC Biology Syllabus (Timed Simulation)', type: 'Grand Simulation', marks: '100 Marks' },
-    { num: '15', title: 'Top 100 MCQ Marathon Test', topics: 'High-Frequency Board Repeated MCQs', type: 'Speed & Accuracy', marks: '100 MCQs' },
-    { num: '16', title: 'CQ Writing & Time Attack Drill', topics: 'Structured CQ 4-Mark Problem Scenarios', type: 'Answer Mastery', marks: '70 Marks' },
-    { num: '17', title: 'Diagram & Labeling Master Test', topics: 'All 35+ Mandatory SSC Board Diagrams', type: 'Diagram Blitz', marks: '50 Marks' },
-    { num: '18', title: 'Cadet College & Top School Paper 01', topics: 'Exclusive High-Difficulty Question Bank', type: 'Advanced Test', marks: '100 Marks' },
-    { num: '19', title: 'Cadet College & Top School Paper 02', topics: 'Exclusive High-Difficulty Question Bank', type: 'Advanced Test', marks: '100 Marks' },
-    { num: '20', title: 'Final Pre-Board Mega Simulation', topics: 'Final Rehearsal Before SSC 2027 Examination', type: 'Mega Final', marks: '100 Marks' },
-  ];
-
   return (
     <div className="ssc-model-test-page section-padding">
       <div className="container" style={{ marginBottom: '1.5rem' }}>
@@ -77,8 +47,8 @@ export const SscModelTestPage: React.FC = () => {
                 <Link to="/enroll?course=ssc-2027" className="btn btn-primary btn-lg">
                   Enroll in SSC Package (৳2,200) <ArrowRight size={18} />
                 </Link>
-                <a href="#test-schedule" className="btn btn-outline btn-lg">
-                  View 20-Test Schedule
+                <a href="#enroll-pricing" className="btn btn-outline btn-lg">
+                  View Package Details
                 </a>
               </div>
             </div>
@@ -173,56 +143,8 @@ export const SscModelTestPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 20-Test Schedule Table */}
-      <section className="section-padding" id="test-schedule">
-        <div className="container">
-          <div className="section-header text-center">
-            <span className="section-pill">Complete Schedule</span>
-            <h2 className="section-title">20-Test Curriculum & Breakdown</h2>
-            <p className="section-subtitle">
-              Structured progressive schedule starting from chapter pairs to half-syllabus reviews and full 100-mark Board simulations.
-            </p>
-          </div>
-
-          <div className="table-container">
-            <table className="bio-table">
-              <thead>
-                <tr>
-                  <th>Test #</th>
-                  <th>Test Title</th>
-                  <th>Chapters & Key Topics</th>
-                  <th>Assessment Format</th>
-                  <th>Marks</th>
-                </tr>
-              </thead>
-              <tbody>
-                {modelTestsList.map((test) => (
-                  <tr key={test.num}>
-                    <td>
-                      <span className="badge badge-green">Test {test.num}</span>
-                    </td>
-                    <td>
-                      <strong>{test.title}</strong>
-                    </td>
-                    <td>
-                      <span className="text-muted">{test.topics}</span>
-                    </td>
-                    <td>
-                      <span className="badge badge-gray">{test.type}</span>
-                    </td>
-                    <td>
-                      <strong>{test.marks}</strong>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       {/* Pricing & Admission Box */}
-      <section className="section-padding bg-light-subtle">
+      <section className="section-padding" id="enroll-pricing">
         <div className="container">
           <div className="ssc-pricing-box bio-card text-center">
             <span className="badge badge-green" style={{ marginBottom: '1rem' }}>Limited 30-Seat Cohort</span>
