@@ -19,7 +19,6 @@ import { CoursesPage } from './pages/public/CoursesPage';
 import { CourseDetailsPage } from './pages/public/CourseDetailsPage';
 import { SscModelTestPage } from './pages/public/SscModelTestPage';
 import { SchedulePage } from './pages/public/SchedulePage';
-import { PricingPage } from './pages/public/PricingPage';
 import { ContactPage } from './pages/public/ContactPage';
 import { EnrollPage } from './pages/public/EnrollPage';
 import { LoginPage } from './pages/public/LoginPage';
@@ -94,7 +93,7 @@ export default function App(): React.ReactElement {
                 <Route path="/courses/ssc-2027-model-test" element={<SscModelTestPage />} />
                 <Route path="/courses/:slug" element={<CourseDetailsPage />} />
                 <Route path="/schedule" element={<SchedulePage />} />
-                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/pricing" element={<Navigate to="/courses" replace />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/enroll" element={<EnrollPage />} />
                 <Route path="/login" element={<LoginPage />} />

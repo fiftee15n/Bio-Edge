@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
               <li><Link to="/program">Program Curriculum</Link></li>
               <li><Link to="/about">About Teacher</Link></li>
               <li><Link to="/schedule">Live Class Schedule</Link></li>
-              <li><Link to="/pricing">Tuition & Pricing</Link></li>
+              <li><Link to="/courses">Courses & Tuition</Link></li>
               <li><Link to="/enroll">Online Enrollment</Link></li>
             </ul>
           </div>
