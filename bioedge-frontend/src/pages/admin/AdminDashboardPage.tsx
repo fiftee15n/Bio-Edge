@@ -659,13 +659,75 @@ export const AdminDashboardPage: React.FC = () => {
         @media (max-width: 1024px) {
           .admin-kpi-grid { grid-template-columns: repeat(2, 1fr); }
           .admin-course-breakdown-row { grid-template-columns: 1fr; }
-          .queue-item-card { grid-template-columns: 1fr; gap: 0.75rem; }
+          .queue-item-card { grid-template-columns: 1fr; gap: 1rem; }
+        }
+
+        @media (max-width: 768px) {
+          .admin-welcome-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.5rem 1.25rem;
+            gap: 1.25rem;
+          }
+
+          .welcome-right {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+
+          .welcome-right .btn {
+            width: 100%;
+            justify-content: center;
+          }
+
+          .course-stat-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .queue-actions {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+          }
+
+          .queue-actions .btn {
+            justify-content: center;
+          }
         }
 
         @media (max-width: 640px) {
-          .admin-dashboard-page { padding: 1.25rem 1rem; }
-          .admin-welcome-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-          .admin-kpi-grid { grid-template-columns: 1fr; }
+          .admin-dashboard-page {
+            padding: 1rem 0.85rem;
+            gap: 1.25rem;
+          }
+
+          .welcome-title {
+            font-size: 1.45rem;
+          }
+
+          .admin-kpi-grid {
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+          }
+
+          .queue-item-card {
+            padding: 1rem;
+          }
+
+          .queue-actions {
+            grid-template-columns: 1fr;
+          }
+
+          .c-meta-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
         }
       `}</style>
     </div>

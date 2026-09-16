@@ -1212,6 +1212,18 @@ export const AdminStudentsPage: React.FC = () => {
             flex-direction: column;
             align-items: flex-start;
             padding: 1.5rem 1.25rem;
+            gap: 1.25rem;
+          }
+          .header-actions-row {
+            width: 100%;
+          }
+          .view-toggle-pill {
+            width: 100%;
+            justify-content: center;
+          }
+          .view-toggle-btn {
+            flex: 1;
+            justify-content: center;
           }
           .admin-kpi-grid {
             grid-template-columns: 1fr;
@@ -1229,6 +1241,50 @@ export const AdminStudentsPage: React.FC = () => {
           }
           .admin-students-grid {
             grid-template-columns: 1fr;
+          }
+          .spacious-admin-table {
+            min-width: 780px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .admin-students-page {
+            padding: 1rem 0.85rem;
+            gap: 1.25rem;
+          }
+
+          .admin-page-title {
+            font-size: 1.45rem;
+          }
+
+          .admin-student-card {
+            padding: 1.25rem 1rem;
+          }
+
+          .controls-bottom-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+
+          .status-pills-list {
+            gap: 0.35rem;
+          }
+
+          .filter-pill {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+          }
+
+          .card-footer-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+          }
+
+          .access-action-btn {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}</style>

@@ -1205,11 +1205,66 @@ export const AdminEnrollmentsPage: React.FC = () => {
         @media (max-width: 900px) {
           .filters-search-row { grid-template-columns: 1fr; }
           .detail-section-grid { grid-template-columns: 1fr; }
+          .enrollments-table { min-width: 820px; }
+        }
+
+        @media (max-width: 768px) {
+          .admin-enrollments-page {
+            padding: 1.25rem 1rem;
+          }
+
+          .page-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem 1.25rem;
+          }
+
+          .admin-controls-card {
+            padding: 1.25rem 1rem;
+          }
+
+          .modal-container {
+            width: 94vw;
+            max-width: 94vw;
+            max-height: 88vh;
+            padding: 1.5rem 1.25rem;
+            overflow-y: auto;
+          }
         }
 
         @media (max-width: 640px) {
-          .admin-enrollments-page { padding: 1.25rem 1rem; }
-          .page-header-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+          .admin-enrollments-page {
+            padding: 1rem 0.85rem;
+          }
+
+          .page-title {
+            font-size: 1.45rem;
+          }
+
+          .status-tabs-row {
+            gap: 0.4rem;
+          }
+
+          .status-tab {
+            font-size: 0.8rem;
+            padding: 0.45rem 0.75rem;
+          }
+
+          .enrollments-table td,
+          .enrollments-table th {
+            padding: 0.85rem 1rem;
+          }
+
+          .modal-footer {
+            flex-direction: column-reverse;
+            gap: 0.5rem;
+          }
+
+          .modal-footer .btn {
+            width: 100%;
+            justify-content: center;
+          }
         }
       `}</style>
     </div>

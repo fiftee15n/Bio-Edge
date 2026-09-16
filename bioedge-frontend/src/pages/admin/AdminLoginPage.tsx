@@ -235,6 +235,21 @@ export const AdminLoginPage: React.FC = () => {
         .back-home-link:hover {
           color: var(--dark-green);
         }
+
+        @media (max-width: 480px) {
+          .admin-login-wrapper {
+            padding: 1.25rem 0.85rem;
+          }
+          .admin-login-card {
+            padding: 1.75rem 1.25rem;
+          }
+          .admin-login-title {
+            font-size: 1.45rem;
+          }
+          .admin-login-subtitle {
+            font-size: 0.82rem;
+          }
+        }
       `}</style>
     </div>
   );

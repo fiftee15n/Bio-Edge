@@ -115,6 +115,13 @@ export const AdminLayout: React.FC = () => {
         .admin-top-bar {
           background: #FFFFFF;
           border-bottom: 1px solid var(--border-color);
+          position: sticky;
+          top: 0;
+          z-index: 50;
+        }
+
+        .portal-mobile-menu-btn {
+          display: none;
         }
 
         .admin-bc-badge {
@@ -142,6 +149,7 @@ export const AdminLayout: React.FC = () => {
           border-radius: var(--radius-full);
           text-decoration: none;
           transition: all 0.2s ease;
+          white-space: nowrap;
         }
 
         .admin-pending-alert-pill:hover {
@@ -171,6 +179,7 @@ export const AdminLayout: React.FC = () => {
           background: #F4F6F5;
           padding: 0.25rem 0.65rem;
           border-radius: var(--radius-full);
+          white-space: nowrap;
         }
 
         .admin-top-avatar {
@@ -189,6 +198,165 @@ export const AdminLayout: React.FC = () => {
         .top-user-sub {
           font-size: 0.7rem;
           color: var(--text-muted);
+        }
+
+        /* Mobile Drawer Styles */
+        .mobile-drawer-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.45);
+          z-index: 1000;
+          backdrop-filter: blur(3px);
+          animation: fadeIn 0.2s ease-out;
+        }
+
+        .mobile-drawer-pane {
+          width: 290px;
+          max-width: 82vw;
+          height: 100%;
+          background: #FFFFFF;
+          padding: 1.75rem 1.25rem;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 6px 0 24px rgba(0, 0, 0, 0.15);
+          animation: slideDrawer 0.25s ease-out;
+        }
+
+        @keyframes slideDrawer {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+
+        .mobile-drawer-header {
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .mobile-drawer-header .brand-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+
+        .mobile-drawer-header .admin-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: var(--radius-sm);
+          background: var(--dark-green);
+          color: #FFFFFF;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mobile-drawer-header .brand-title {
+          font-size: 1.15rem;
+          font-weight: 800;
+          color: var(--dark-green);
+        }
+
+        .mobile-drawer-links {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        .m-link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.75rem 1rem;
+          border-radius: var(--radius-md);
+          color: var(--text-dark);
+          font-size: 0.92rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.15s ease;
+        }
+
+        .m-link:hover {
+          background: var(--light-green);
+          color: var(--dark-green);
+        }
+
+        .m-divider {
+          height: 1px;
+          background: var(--border-subtle);
+          margin: 0.85rem 0;
+        }
+
+        .m-link.public {
+          color: var(--text-muted);
+          font-size: 0.88rem;
+        }
+
+        .m-link.logout {
+          color: #DC2626;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 0.92rem;
+          font-weight: 600;
+          width: 100%;
+          text-align: left;
+          padding: 0.75rem 1rem;
+        }
+
+        .m-link.logout:hover {
+          background: #FEF2F2;
+          color: #B91C1C;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+          .portal-mobile-menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--dark-green);
+            padding: 0.4rem;
+            border-radius: var(--radius-sm);
+          }
+
+          .portal-mobile-menu-btn:hover {
+            background: var(--light-green);
+          }
+
+          .portal-top-bar {
+            padding: 0.75rem 1rem;
+          }
+
+          .top-user-sub {
+            display: none;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .admin-bc-badge {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.5rem;
+          }
+
+          .admin-pending-alert-pill {
+            font-size: 0.72rem;
+            padding: 0.25rem 0.55rem;
+          }
+
+          .admin-all-clear-pill {
+            display: none;
+          }
+
+          .portal-top-bar {
+            gap: 0.5rem;
+          }
+
+          .top-bar-right {
+            gap: 0.5rem;
+          }
         }
       `}</style>
     </div>
