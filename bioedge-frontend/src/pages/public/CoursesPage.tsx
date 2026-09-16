@@ -58,6 +58,10 @@ export const CoursesPage: React.FC = () => {
                   </h2>
                 </div>
 
+                <p className="c-course-desc">
+                  Comprehensive 4-month intensive program covering all 24 chapters of HSC Biology (Botany & Zoology) with live lectures, line-by-line CQ evaluations, and Board exam drills.
+                </p>
+
                 {/* Minimal Spec Badges */}
                 <div className="c-specs-row">
                   <div className="c-spec-pill">
@@ -107,6 +111,10 @@ export const CoursesPage: React.FC = () => {
                     SSC 2027 Model Test Package
                   </h2>
                 </div>
+
+                <p className="c-course-desc">
+                  Rigorous board-standard preparation featuring 20 full-length model tests across all 14 chapters of SSC Biology with live solution masterclasses and high-yield predictions.
+                </p>
 
                 {/* Minimal Spec Badges */}
                 <div className="c-specs-row">
@@ -270,10 +278,10 @@ export const CoursesPage: React.FC = () => {
         }
 
         .c-title-box {
-          min-height: 64px;
+          min-height: 56px;
           display: flex;
           align-items: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 0.75rem;
         }
 
         .c-course-title {
@@ -282,6 +290,14 @@ export const CoursesPage: React.FC = () => {
           color: var(--dark-green);
           line-height: 1.28;
           margin: 0;
+        }
+
+        .c-course-desc {
+          font-size: 0.92rem;
+          color: #4A5568;
+          line-height: 1.6;
+          margin: 0 0 1.5rem;
+          flex-grow: 1;
         }
 
         .c-specs-row {
@@ -371,6 +387,11 @@ export const CoursesPage: React.FC = () => {
           }
           .course-minimal-card {
             padding: 1.75rem 1.5rem;
+          }
+          .c-course-desc {
+            font-size: 0.88rem;
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
           }
           .c-card-actions {
             grid-template-columns: 1fr;
