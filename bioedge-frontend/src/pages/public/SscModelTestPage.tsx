@@ -469,6 +469,24 @@ export const SscModelTestPage: React.FC = () => {
             font-size: 2.5rem;
           }
         }
+
+        @media (max-width: 480px) {
+          .ssc-hero-title {
+            font-size: clamp(1.4rem, 6vw, 1.8rem);
+          }
+          .ssc-pricing-box {
+            padding: 2rem 1.25rem;
+            border-radius: var(--radius-lg);
+          }
+          .ssc-hero-card {
+            padding: 1.25rem 0.85rem;
+            border-radius: var(--radius-lg);
+          }
+          .ssc-meta-tag {
+            font-size: 0.76rem;
+            padding: 4px 10px;
+          }
+        }
       `}</style>
     </div>
   );

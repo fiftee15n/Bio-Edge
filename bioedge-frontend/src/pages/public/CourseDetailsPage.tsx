@@ -870,6 +870,39 @@ export const CourseDetailsPage: React.FC = () => {
           gap: 0.75rem;
         }
 
+        .paper-switcher-btn-group {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+
+        .paper-switcher-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          padding: 0.45rem 0.95rem;
+          font-size: 0.84rem;
+          font-weight: 600;
+          border-radius: var(--radius-full);
+          border: 1px solid var(--border-color);
+          background: #FFFFFF;
+          color: var(--text-dark);
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .paper-switcher-btn:hover {
+          border-color: var(--primary-green);
+          color: var(--dark-green);
+        }
+
+        .paper-switcher-btn.active {
+          background: var(--dark-green);
+          color: #FFFFFF;
+          border-color: var(--dark-green);
+        }
+
         .chapters-stack {
           display: flex;
           flex-direction: column;
@@ -1526,13 +1559,18 @@ export const CourseDetailsPage: React.FC = () => {
         @media (max-width: 992px) {
           .course-content-layout-grid {
             grid-template-columns: 1fr;
+            gap: 2rem;
           }
           .course-sidebar-column {
             padding-top: 0;
+            order: 2;
+          }
+          .course-main-column {
+            order: 1;
           }
           .course-metrics-bar {
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
+            gap: 1rem;
           }
           .outcomes-grid {
             grid-template-columns: 1fr;
@@ -1549,55 +1587,210 @@ export const CourseDetailsPage: React.FC = () => {
           .ins-stats-row {
             grid-template-columns: repeat(2, 1fr);
           }
+          .sticky-enroll-card {
+            position: static;
+            top: auto;
+          }
         }
 
         @media (max-width: 768px) {
+          .course-details-page-wrapper {
+            padding-top: 2rem;
+            padding-bottom: 3.5rem;
+          }
           .course-details-hero {
-            padding: 1.75rem 1.5rem;
+            padding: 1.75rem 1.25rem;
+            border-radius: 18px;
+            margin-bottom: 1.75rem;
           }
           .course-hero-title {
-            font-size: 1.85rem;
+            font-size: clamp(1.45rem, 5vw, 1.85rem);
+            line-height: 1.25;
+          }
+          .course-hero-desc {
+            font-size: 0.92rem;
+            margin-bottom: 1.5rem;
           }
           .tab-pane-card {
-            padding: 1.75rem 1.5rem;
+            padding: 1.5rem 1.15rem;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+          }
+          .tab-section-title {
+            font-size: 1.35rem;
+          }
+          .tab-body-lead {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
           }
           .ch-topics-list {
             grid-template-columns: 1fr;
           }
-        }
-
-        @media (max-width: 600px) {
-          .course-details-hero {
-            padding: 1.5rem 1rem;
-          }
-          .course-hero-title {
-            font-size: 1.55rem;
-          }
-          .course-metrics-bar {
-            grid-template-columns: 1fr;
-            gap: 0.85rem;
-          }
           .details-tab-nav {
-            flex-wrap: nowrap;
-            overflow-x: auto;
+            gap: 0.35rem;
+            padding-bottom: 0.45rem;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            gap: 0.35rem;
-            padding-bottom: 0.4rem;
           }
           .details-tab-nav::-webkit-scrollbar {
             display: none;
           }
           .tab-btn {
             white-space: nowrap;
-            padding: 0.55rem 0.8rem;
-            font-size: 0.8rem;
+            flex-shrink: 0;
+            padding: 0.6rem 0.85rem;
+            font-size: 0.82rem;
           }
-          .tab-pane-card {
-            padding: 1.25rem 0.85rem;
+          .instructor-profile-card {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem 1.15rem;
+            gap: 1.25rem;
+          }
+          .ins-photo-col {
+            width: 120px;
+            height: 120px;
+            border-radius: 18px;
+            margin: 0 auto;
+          }
+          .ins-bio-text {
+            width: 100%;
+          }
+          .ins-desc {
+            text-align: left;
+            font-size: 0.88rem;
           }
           .ins-stats-row {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+          }
+          .evaluation-breakdown-card {
+            padding: 1.5rem 1.15rem;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .course-details-hero {
+            padding: 1.35rem 1rem;
+            border-radius: 16px;
+          }
+          .hero-badge-row {
+            gap: 0.5rem;
+            margin-bottom: 0.85rem;
+          }
+          .batch-status-pill {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+          }
+          .course-metrics-bar {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.65rem;
+            padding-top: 1.25rem;
+          }
+          .metric-cell {
+            background: rgba(49, 91, 61, 0.04);
+            padding: 0.65rem 0.75rem;
+            border-radius: 10px;
+            align-items: flex-start;
+            gap: 0.55rem;
+          }
+          .metric-cell strong {
+            font-size: 0.9rem;
+          }
+          .metric-cell span {
+            font-size: 0.72rem;
+          }
+          .metric-icon {
+            width: 18px;
+            height: 18px;
+          }
+          .syllabus-header-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+          }
+          .paper-switcher-btn-group {
+            width: 100%;
+          }
+          .paper-switcher-btn {
+            flex: 1;
+            justify-content: center;
+            font-size: 0.78rem;
+            padding: 0.45rem 0.6rem;
+          }
+          .chapter-accordion-item {
+            padding: 1rem 0.85rem;
+          }
+          .ch-acc-header {
+            flex-wrap: wrap;
+            gap: 0.4rem;
+          }
+          .ch-num-badge {
+            order: 1;
+            font-size: 0.7rem;
+          }
+          .ch-count-badge {
+            order: 2;
+            margin-left: auto;
+            font-size: 0.7rem;
+          }
+          .ch-title {
+            order: 3;
+            width: 100%;
+            font-size: 0.92rem;
+            margin-top: 2px;
+          }
+          .pillars-cards-grid {
+            gap: 0.85rem;
+          }
+          .pillar-item-card {
+            padding: 1.15rem 0.95rem;
+          }
+          .pillar-icon-box {
+            width: 38px;
+            height: 38px;
+            margin-bottom: 0.75rem;
+          }
+          .timeline-day-card {
+            padding: 1rem 0.85rem;
+          }
+          .recording-policy-note {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.65rem;
+            padding: 1rem 0.85rem;
+          }
+          .tuition-pricing-grid {
+            gap: 1.25rem;
+          }
+          .t-price-box {
+            padding: 1.35rem 1rem;
+            border-radius: 16px;
+          }
+          .t-price-val .num {
+            font-size: 1.85rem;
+          }
+          .faq-item-card {
+            padding: 1rem 0.85rem;
+          }
+          .faq-q-row {
+            font-size: 0.88rem;
+            gap: 0.5rem;
+          }
+          .faq-a-body {
+            font-size: 0.82rem;
+            padding-top: 0.65rem;
+            margin-top: 0.65rem;
+          }
+          .sticky-enroll-card {
+            padding: 1.35rem 1rem;
+            border-radius: 16px;
+          }
+          .s-price-wrap .num {
+            font-size: 1.95rem;
           }
         }
 
@@ -1608,12 +1801,59 @@ export const CourseDetailsPage: React.FC = () => {
           .course-hero-title {
             font-size: 1.35rem;
           }
-          .instructor-profile-card {
-            padding: 1.25rem 0.85rem;
+          .tab-pane-card {
+            padding: 1.15rem 0.75rem;
+            border-radius: 14px;
+          }
+          .tab-section-title {
+            font-size: 1.2rem;
+          }
+          .outcome-item {
+            padding: 0.85rem 0.75rem;
+            gap: 0.55rem;
+          }
+          .highlight-callout-box {
+            padding: 1rem 0.85rem;
+          }
+          .highlight-callout-box h4 {
+            font-size: 0.95rem;
+          }
+          .highlight-callout-box ul {
+            font-size: 0.82rem;
           }
           .ins-photo-col {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
+          }
+          .ins-name {
+            font-size: 1.35rem;
+          }
+          .ins-stat strong {
+            font-size: 1.15rem;
+          }
+          .ins-stat span {
+            font-size: 0.7rem;
+          }
+          .s-enroll-btn {
+            font-size: 0.95rem;
+            padding: 0.75rem 1rem;
+          }
+          .whatsapp-btn {
+            font-size: 0.85rem;
+            padding: 0.7rem 0.85rem;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .course-metrics-bar {
+            grid-template-columns: 1fr;
+          }
+          .ins-stats-row {
+            grid-template-columns: 1fr;
+          }
+          .paper-switcher-btn {
+            font-size: 0.72rem;
+            padding: 0.4rem 0.45rem;
           }
         }
       `}</style>
