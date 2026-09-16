@@ -298,6 +298,33 @@ section, .public-section, .homepage-wrapper > section, [id] {
   padding-left: 2.75rem !important;
 }
 
+.input-with-icon .password-toggle-btn {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: var(--radius-sm);
+  z-index: 3;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.input-with-icon .password-toggle-btn:hover {
+  color: var(--dark-green);
+  background-color: rgba(41, 78, 54, 0.08);
+}
+
+.input-with-icon .form-input.has-password-toggle {
+  padding-right: 2.75rem !important;
+}
+
 /* Google Auth Button */
 .btn-google-auth-full {
   width: 100%;

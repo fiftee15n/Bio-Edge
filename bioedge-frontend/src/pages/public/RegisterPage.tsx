@@ -10,7 +10,9 @@ import {
   User as UserIcon,
   Phone,
   Building2,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
@@ -18,6 +20,8 @@ export const RegisterPage: React.FC = () => {
   const redirectParam = searchParams.get('redirect') || searchParams.get('from');
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -200,14 +204,23 @@ export const RegisterPage: React.FC = () => {
                     <div className="input-with-icon">
                       <Lock size={18} className="input-icon" />
                       <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         required
                         minLength={6}
                         placeholder="••••••••"
                         value={formData.password}
                         onChange={e => setFormData({ ...formData, password: e.target.value })}
-                        className="form-input with-icon"
+                        className="form-input with-icon has-password-toggle"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(prev => !prev)}
+                        className="password-toggle-btn"
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        tabIndex={-1}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
                     </div>
                   </div>
 
@@ -216,14 +229,23 @@ export const RegisterPage: React.FC = () => {
                     <div className="input-with-icon">
                       <Lock size={18} className="input-icon" />
                       <input
-                        type="password"
+                        type={showConfirmPassword ? 'text' : 'password'}
                         required
                         minLength={6}
                         placeholder="••••••••"
                         value={formData.confirmPassword}
                         onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })}
-                        className="form-input with-icon"
+                        className="form-input with-icon has-password-toggle"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(prev => !prev)}
+                        className="password-toggle-btn"
+                        aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                        tabIndex={-1}
+                      >
+                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
                     </div>
                   </div>
                 </div>

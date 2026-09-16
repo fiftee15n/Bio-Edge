@@ -8,12 +8,15 @@ import {
   LogIn, 
   Sparkles, 
   ArrowLeft,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export const AdminLoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
@@ -77,13 +80,22 @@ export const AdminLoginPage: React.FC = () => {
             <div className="input-with-icon">
               <Lock size={18} className="input-icon" />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="form-input with-icon"
+                className="form-input with-icon has-password-toggle"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(prev => !prev)}
+                className="password-toggle-btn"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
           </div>
 

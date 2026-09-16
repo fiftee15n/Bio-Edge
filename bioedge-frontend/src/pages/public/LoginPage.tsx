@@ -10,7 +10,9 @@ import {
   GraduationCap, 
   ShieldCheck, 
   ArrowRight,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -23,6 +25,7 @@ export const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [loginEmail, setLoginEmail] = useState<string>('');
   const [loginPassword, setLoginPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // If unverified account attempts login, switch to verification screen
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
@@ -138,13 +141,22 @@ export const LoginPage: React.FC = () => {
                   <div className="input-with-icon">
                     <Lock size={18} className="input-icon" />
                     <input
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       required
                       placeholder="••••••••"
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
-                      className="form-input with-icon"
+                      className="form-input with-icon has-password-toggle"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(prev => !prev)}
+                      className="password-toggle-btn"
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
                   </div>
                 </div>
 
