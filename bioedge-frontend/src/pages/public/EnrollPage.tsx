@@ -44,7 +44,7 @@ export const EnrollPage: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string>('');
   const [amount, setAmount] = useState<string>(defaultAmount);
 
-  const [paymentMethod, setPaymentMethod] = useState<'bKash' | 'Nagad' | 'Rocket'>('bKash');
+  const [paymentMethod, setPaymentMethod] = useState<'bKash' | 'Nagad' | 'Rocket' | 'Cash'>('bKash');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<any>(null);
@@ -71,11 +71,11 @@ export const EnrollPage: React.FC = () => {
       setErrorMessage('Please enter your WhatsApp phone number.');
       return;
     }
-    if (!paymentNumber.trim()) {
+    if (paymentMethod !== 'Cash' && !paymentNumber.trim()) {
       setErrorMessage('Please enter the number used for payment.');
       return;
     }
-    if (!transactionId.trim()) {
+    if (paymentMethod !== 'Cash' && !transactionId.trim()) {
       setErrorMessage('Please enter the Transaction ID (TrxID).');
       return;
     }
@@ -96,14 +96,17 @@ export const EnrollPage: React.FC = () => {
         batch: courseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort'
       });
 
+      const finalPaymentNumber = paymentNumber.trim() || (paymentMethod === 'Cash' ? (whatsappNumber.trim() || 'Cash in Person') : '');
+      const finalTransactionId = transactionId.trim().toUpperCase() || (paymentMethod === 'Cash' ? 'CASH' : '');
+
       // 2. Record enrollment in localStorage for persistence
       const record = {
         name: name.trim(),
         email: email.trim(),
         schoolCollege: schoolCollege.trim(),
         whatsappNumber: whatsappNumber.trim(),
-        paymentNumber: paymentNumber.trim(),
-        transactionId: transactionId.trim().toUpperCase(),
+        paymentNumber: finalPaymentNumber,
+        transactionId: finalTransactionId,
         amount: amount.trim(),
         paymentMethod,
         courseTitle,
@@ -121,7 +124,7 @@ export const EnrollPage: React.FC = () => {
           courseId: courseKey,
           plan,
           paymentMethod,
-          transactionId: transactionId.trim().toUpperCase()
+          transactionId: finalTransactionId
         });
       } catch (err) {
         // Safe fallback
@@ -168,7 +171,7 @@ export const EnrollPage: React.FC = () => {
                 </div>
                 <h1 className="compact-title">Enrollment Form</h1>
                 <p className="compact-subtitle">
-                  Send course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket Personal) and complete the form below.
+                  Send course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket) or choose <strong>Cash</strong>, and complete the form below.
                 </p>
               </div>
 
@@ -266,7 +269,7 @@ export const EnrollPage: React.FC = () => {
                       Payment Option <span className="req">*</span>
                     </label>
                     <div className="payment-options-wrap">
-                      {(['bKash', 'Nagad', 'Rocket'] as const).map((method) => (
+                      {(['bKash', 'Nagad', 'Rocket', 'Cash'] as const).map((method) => (
                         <button
                           key={method}
                           type="button"
@@ -282,18 +285,19 @@ export const EnrollPage: React.FC = () => {
                   {/* 6. Number used for payment */}
                   <div className="form-item">
                     <label htmlFor="payment-sender" className="form-label">
-                      Number used for payment <span className="req">*</span>
+                      {paymentMethod === 'Cash' ? 'Contact / Reference No.' : 'Number used for payment'}{' '}
+                      {paymentMethod === 'Cash' ? <span className="opt-tag">(Optional)</span> : <span className="req">*</span>}
                     </label>
                     <div className="input-wrap">
                       <CreditCard size={16} className="input-icon" />
                       <input
                         id="payment-sender"
-                        type="tel"
+                        type={paymentMethod === 'Cash' ? 'text' : 'tel'}
                         className="form-control"
-                        placeholder={`Sender ${paymentMethod} number`}
+                        placeholder={paymentMethod === 'Cash' ? 'e.g. Phone or Cash in Person' : `Sender ${paymentMethod} number`}
                         value={paymentNumber}
                         onChange={(e) => setPaymentNumber(e.target.value)}
-                        required
+                        required={paymentMethod !== 'Cash'}
                       />
                     </div>
                   </div>
@@ -301,7 +305,8 @@ export const EnrollPage: React.FC = () => {
                   {/* 7. Transaction ID */}
                   <div className="form-item">
                     <label htmlFor="transaction-id" className="form-label">
-                      Transaction ID <span className="req">*</span>
+                      Transaction ID{' '}
+                      {paymentMethod === 'Cash' ? <span className="opt-tag">(Receipt or CASH)</span> : <span className="req">*</span>}
                     </label>
                     <div className="input-wrap">
                       <Hash size={16} className="input-icon" />
@@ -309,10 +314,10 @@ export const EnrollPage: React.FC = () => {
                         id="transaction-id"
                         type="text"
                         className="form-control text-uppercase"
-                        placeholder="TrxID (e.g. BL92X88K)"
+                        placeholder={paymentMethod === 'Cash' ? 'Receipt No. or CASH' : 'TrxID (e.g. BL92X88K)'}
                         value={transactionId}
                         onChange={(e) => setTransactionId(e.target.value)}
-                        required
+                        required={paymentMethod !== 'Cash'}
                       />
                     </div>
                   </div>
@@ -493,8 +498,8 @@ export const EnrollPage: React.FC = () => {
         /* Payment Options Selector in Form */
         .payment-options-wrap {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.35rem;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.3rem;
           height: 38px;
         }
 
@@ -503,14 +508,15 @@ export const EnrollPage: React.FC = () => {
           align-items: center;
           justify-content: center;
           border-radius: var(--radius-md);
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           font-weight: 700;
           border: 1.5px solid var(--border-color);
           background: #FAFCFA;
           color: var(--text-dark);
           cursor: pointer;
           transition: all 0.2s ease;
-          padding: 0 0.25rem;
+          padding: 0 0.15rem;
+          white-space: nowrap;
         }
 
         .pay-opt-pill:hover {
@@ -523,6 +529,12 @@ export const EnrollPage: React.FC = () => {
           color: #FFFFFF;
           border-color: var(--dark-green);
           box-shadow: 0 2px 6px rgba(49, 91, 61, 0.25);
+        }
+
+        .opt-tag {
+          font-size: 0.72rem;
+          font-weight: normal;
+          color: var(--text-muted);
         }
 
         /* Error Alert */
