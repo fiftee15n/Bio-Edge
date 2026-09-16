@@ -172,34 +172,6 @@ export const EnrollPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Compact Channel Selector */}
-              <div className="compact-channel-row">
-                <span className="channel-label">Payment Channel:</span>
-                <div className="channel-btns">
-                  <button
-                    type="button"
-                    className={`channel-btn ${paymentMethod === 'bKash' ? 'active' : ''}`}
-                    onClick={() => setPaymentMethod('bKash')}
-                  >
-                    bKash
-                  </button>
-                  <button
-                    type="button"
-                    className={`channel-btn ${paymentMethod === 'Nagad' ? 'active' : ''}`}
-                    onClick={() => setPaymentMethod('Nagad')}
-                  >
-                    Nagad
-                  </button>
-                  <button
-                    type="button"
-                    className={`channel-btn ${paymentMethod === 'Rocket' ? 'active' : ''}`}
-                    onClick={() => setPaymentMethod('Rocket')}
-                  >
-                    Rocket
-                  </button>
-                </div>
-              </div>
-
               {/* Error Message */}
               {errorMessage && (
                 <div className="compact-error-alert">
@@ -208,7 +180,7 @@ export const EnrollPage: React.FC = () => {
                 </div>
               )}
 
-              {/* THE 7 FORM FIELDS (COMPACT 2-COLUMN GRID) */}
+              {/* THE FORM FIELDS (COMPACT 2-COLUMN GRID) */}
               <form onSubmit={handleSubmit} className="compact-form">
                 
                 <div className="form-grid-2col">
@@ -250,8 +222,8 @@ export const EnrollPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 3. School or College name (Full Width) */}
-                  <div className="form-item col-span-2">
+                  {/* 3. School or College name */}
+                  <div className="form-item">
                     <label htmlFor="student-school" className="form-label">
                       School or College name <span className="req">*</span>
                     </label>
@@ -261,7 +233,7 @@ export const EnrollPage: React.FC = () => {
                         id="student-school"
                         type="text"
                         className="form-control"
-                        placeholder="e.g. Notre Dame College, Dhaka"
+                        placeholder="School or College"
                         value={schoolCollege}
                         onChange={(e) => setSchoolCollege(e.target.value)}
                         required
@@ -288,7 +260,26 @@ export const EnrollPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 5. Number used for payment */}
+                  {/* 5. Payment Option */}
+                  <div className="form-item">
+                    <label className="form-label">
+                      Payment Option <span className="req">*</span>
+                    </label>
+                    <div className="payment-options-wrap">
+                      {(['bKash', 'Nagad', 'Rocket'] as const).map((method) => (
+                        <button
+                          key={method}
+                          type="button"
+                          className={`pay-opt-pill ${paymentMethod === method ? 'active' : ''}`}
+                          onClick={() => setPaymentMethod(method)}
+                        >
+                          {method}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 6. Number used for payment */}
                   <div className="form-item">
                     <label htmlFor="payment-sender" className="form-label">
                       Number used for payment <span className="req">*</span>
@@ -307,7 +298,7 @@ export const EnrollPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 6. Transaction ID */}
+                  {/* 7. Transaction ID */}
                   <div className="form-item">
                     <label htmlFor="transaction-id" className="form-label">
                       Transaction ID <span className="req">*</span>
@@ -326,7 +317,7 @@ export const EnrollPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* 7. Amount */}
+                  {/* 8. Amount */}
                   <div className="form-item">
                     <label htmlFor="payment-amount" className="form-label">
                       Amount <span className="req">*</span>
@@ -392,8 +383,12 @@ export const EnrollPage: React.FC = () => {
                   <span>{submittedData?.whatsappNumber}</span>
                 </div>
                 <div className="receipt-row">
+                  <span>Payment Option:</span>
+                  <strong>{submittedData?.paymentMethod}</strong>
+                </div>
+                <div className="receipt-row">
                   <span>Payment Number:</span>
-                  <span>{submittedData?.paymentNumber} ({submittedData?.paymentMethod})</span>
+                  <span>{submittedData?.paymentNumber}</span>
                 </div>
                 <div className="receipt-row">
                   <span>TrxID:</span>
@@ -495,52 +490,39 @@ export const EnrollPage: React.FC = () => {
           margin: 0;
         }
 
-        /* Compact Channel Selector */
-        .compact-channel-row {
+        /* Payment Options Selector in Form */
+        .payment-options-wrap {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.35rem;
+          height: 38px;
+        }
+
+        .pay-opt-pill {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          background: #F4FAF6;
-          border: 1px solid rgba(49, 91, 61, 0.1);
+          justify-content: center;
           border-radius: var(--radius-md);
-          padding: 0.5rem 0.85rem;
-          margin-bottom: 1.25rem;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .channel-label {
-          font-size: 0.8rem;
+          font-size: 0.82rem;
           font-weight: 700;
-          color: var(--dark-green);
-        }
-
-        .channel-btns {
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-        }
-
-        .channel-btn {
-          padding: 0.25rem 0.75rem;
-          border-radius: var(--radius-full);
-          font-size: 0.75rem;
-          font-weight: 700;
-          border: 1px solid var(--border-color);
-          background: #FFFFFF;
+          border: 1.5px solid var(--border-color);
+          background: #FAFCFA;
           color: var(--text-dark);
           cursor: pointer;
           transition: all 0.2s ease;
+          padding: 0 0.25rem;
         }
 
-        .channel-btn:hover {
+        .pay-opt-pill:hover {
           border-color: var(--primary-green);
+          background: #FFFFFF;
         }
 
-        .channel-btn.active {
+        .pay-opt-pill.active {
           background: var(--dark-green);
           color: #FFFFFF;
           border-color: var(--dark-green);
+          box-shadow: 0 2px 6px rgba(49, 91, 61, 0.25);
         }
 
         /* Error Alert */
@@ -751,10 +733,6 @@ export const EnrollPage: React.FC = () => {
           }
           .col-span-2 {
             grid-column: span 1;
-          }
-          .compact-channel-row {
-            flex-direction: column;
-            align-items: flex-start;
           }
           .receipt-row {
             flex-direction: column;
