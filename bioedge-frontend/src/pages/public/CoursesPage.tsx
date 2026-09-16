@@ -77,6 +77,19 @@ export const CoursesPage: React.FC = () => {
                     <span>CQ Grading</span>
                   </div>
                 </div>
+
+                {/* Course Price Tag */}
+                <div className="c-price-row">
+                  <div className="c-price-main">
+                    <span className="c-price-label">Fee</span>
+                    <div className="c-price-value">
+                      <span className="c-currency">৳</span>
+                      <span className="c-amount">12,500</span>
+                      <span className="c-duration">/ full course</span>
+                    </div>
+                  </div>
+                  <span className="c-price-installment">or ৳3,500/mo</span>
+                </div>
               </div>
 
               {/* CTA Buttons: Details & Enroll */}
@@ -130,6 +143,19 @@ export const CoursesPage: React.FC = () => {
                     <Zap size={14} />
                     <span>8 Masterclasses</span>
                   </div>
+                </div>
+
+                {/* Course Price Tag */}
+                <div className="c-price-row amber">
+                  <div className="c-price-main">
+                    <span className="c-price-label">Fee</span>
+                    <div className="c-price-value">
+                      <span className="c-currency">৳</span>
+                      <span className="c-amount">2,200</span>
+                      <span className="c-duration">/ full package</span>
+                    </div>
+                  </div>
+                  <span className="c-price-installment">one-time</span>
                 </div>
               </div>
 
@@ -305,7 +331,7 @@ export const CoursesPage: React.FC = () => {
           align-items: center;
           gap: 0.5rem;
           flex-wrap: wrap;
-          margin-bottom: 2rem;
+          margin-bottom: 1.15rem;
         }
 
         .c-spec-pill {
@@ -325,11 +351,95 @@ export const CoursesPage: React.FC = () => {
           color: var(--primary-green);
         }
 
+        /* Prominent Course Price Row */
+        .c-price-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #F4FAF6;
+          border: 1.5px solid rgba(49, 91, 61, 0.12);
+          border-radius: var(--radius-md);
+          padding: 0.65rem 0.95rem;
+          margin-bottom: 1.35rem;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+        }
+
+        .c-price-row.amber {
+          background: #FEF9EE;
+          border-color: rgba(217, 119, 6, 0.18);
+        }
+
+        .c-price-main {
+          display: flex;
+          align-items: baseline;
+          gap: 0.45rem;
+        }
+
+        .c-price-label {
+          font-size: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: var(--text-muted);
+        }
+
+        .c-price-value {
+          display: flex;
+          align-items: baseline;
+          gap: 2px;
+        }
+
+        .c-currency {
+          font-size: 1.05rem;
+          font-weight: 800;
+          color: var(--dark-green);
+        }
+
+        .c-price-row.amber .c-currency {
+          color: #B45309;
+        }
+
+        .c-amount {
+          font-size: 1.45rem;
+          font-weight: 900;
+          color: var(--dark-green);
+          line-height: 1;
+        }
+
+        .c-price-row.amber .c-amount {
+          color: #B45309;
+        }
+
+        .c-duration {
+          font-size: 0.78rem;
+          font-weight: 600;
+          color: var(--text-muted);
+          margin-left: 2px;
+        }
+
+        .c-price-installment {
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-green);
+          background: #FFFFFF;
+          padding: 3px 9px;
+          border-radius: var(--radius-full);
+          border: 1px solid rgba(49, 91, 61, 0.15);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+          white-space: nowrap;
+        }
+
+        .c-price-row.amber .c-price-installment {
+          color: #B45309;
+          border-color: rgba(217, 119, 6, 0.2);
+        }
+
         .c-card-actions {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 0.85rem;
-          padding-top: 1.75rem;
+          padding-top: 1.25rem;
           border-top: 1px solid var(--border-subtle);
         }
 
