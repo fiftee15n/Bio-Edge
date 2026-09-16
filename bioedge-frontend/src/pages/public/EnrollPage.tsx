@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
 import { api } from '../../services/api';
@@ -12,10 +12,8 @@ import {
   Hash, 
   CheckCircle2, 
   ArrowRight, 
-  ArrowLeft,
+  ArrowLeft, 
   ShieldCheck, 
-  Sparkles,
-  Lock,
   DollarSign,
   AlertCircle
 } from 'lucide-react';
@@ -23,19 +21,19 @@ import confetti from 'canvas-confetti';
 
 export const EnrollPage: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const initialCourseKey = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
-  const initialPlan = searchParams.get('plan') === 'monthly' ? 'monthly' : 'full';
+  const courseKey = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
+  const plan = searchParams.get('plan') === 'monthly' ? 'monthly' : 'full';
 
-  const defaultAmount = initialCourseKey === 'ssc-2027' 
+  const defaultAmount = courseKey === 'ssc-2027' 
     ? '2200' 
-    : (initialPlan === 'monthly' ? '3500' : '12500');
+    : (plan === 'monthly' ? '3500' : '12500');
+
+  const courseTitle = courseKey === 'ssc-2027'
+    ? 'SSC 2027 Model Test Package'
+    : 'Alpha Cohort (HSC Biology Intensive)';
 
   const { user } = useAuth();
   const { enrollStudent } = useCourseData();
-  const navigate = useNavigate();
-
-  // Selected Course
-  const [selectedCourse, setSelectedCourse] = useState<string>(initialCourseKey);
 
   // The 7 Required Fields
   const [name, setName] = useState<string>(user?.name || '');
@@ -52,22 +50,13 @@ export const EnrollPage: React.FC = () => {
   const [submittedData, setSubmittedData] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleCourseChange = (courseKey: string) => {
-    setSelectedCourse(courseKey);
-    if (courseKey === 'ssc-2027') {
-      setAmount('2200');
-    } else {
-      setAmount(initialPlan === 'monthly' ? '3500' : '12500');
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
     // Validations
     if (!name.trim()) {
-      setErrorMessage('Please enter your name.');
+      setErrorMessage('Please enter your full name.');
       return;
     }
     if (!email.trim() || !email.includes('@')) {
@@ -98,20 +87,16 @@ export const EnrollPage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const courseTitle = selectedCourse === 'ssc-2027' 
-        ? 'SSC 2027 Model Test Package' 
-        : 'Alpha Cohort (HSC Biology Intensive)';
-
       // 1. Register student in context state (visible in Teacher roster)
       enrollStudent({
         name: name.trim(),
         email: email.trim(),
         phone: whatsappNumber.trim(),
         institution: schoolCollege.trim(),
-        batch: selectedCourse === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort'
+        batch: courseKey === 'ssc-2027' ? 'SSC 2027' : 'Alpha Cohort'
       });
 
-      // 2. Record enrollment in localStorage for persistent record
+      // 2. Record enrollment in localStorage for persistence
       const record = {
         name: name.trim(),
         email: email.trim(),
@@ -122,7 +107,7 @@ export const EnrollPage: React.FC = () => {
         amount: amount.trim(),
         paymentMethod,
         courseTitle,
-        courseKey: selectedCourse,
+        courseKey,
         submittedAt: new Date().toISOString()
       };
 
@@ -133,23 +118,23 @@ export const EnrollPage: React.FC = () => {
       // 3. Attempt API call to backend if available
       try {
         await api.enrollments.create({
-          courseId: selectedCourse,
-          plan: initialPlan,
+          courseId: courseKey,
+          plan,
           paymentMethod,
           transactionId: transactionId.trim().toUpperCase()
         });
       } catch (err) {
-        // Safe fallback if offline
+        // Safe fallback
       }
 
       setSubmittedData(record);
       setIsSuccess(true);
 
-      // Trigger Celebration Confetti
+      // Celebration Confetti
       try {
         confetti({
-          particleCount: 120,
-          spread: 80,
+          particleCount: 100,
+          spread: 70,
           origin: { y: 0.6 }
         });
       } catch (err) {}
@@ -162,79 +147,52 @@ export const EnrollPage: React.FC = () => {
   };
 
   return (
-    <div className="enroll-clean-page">
+    <div className="enroll-compact-page">
       <div className="container">
         
         {/* Back Link */}
-        <div className="enroll-back-nav">
-          <Link to="/courses" className="enroll-back-link">
-            <ArrowLeft size={16} /> Back to Courses
+        <div className="enroll-top-nav">
+          <Link to="/courses" className="enroll-top-back">
+            <ArrowLeft size={15} /> Back to Courses
           </Link>
         </div>
 
-        <div className="enroll-form-card">
+        <div className="enroll-compact-card">
 
           {!isSuccess ? (
             <>
-              {/* Card Header */}
-              <div className="form-header text-center">
-                <span className="section-pill">
-                  <Sparkles size={14} /> Course Admission
-                </span>
-                <h1 className="form-title">Enrollment Form</h1>
-                <p className="form-subtitle">
-                  Please complete the form below with your details and payment information to secure your seat.
-                </p>
-              </div>
-
-              {/* Course Selector Tabs */}
-              <div className="course-select-row">
-                <button
-                  type="button"
-                  className={`course-choice-btn ${selectedCourse === 'alpha-cohort' ? 'active' : ''}`}
-                  onClick={() => handleCourseChange('alpha-cohort')}
-                >
-                  <span className="choice-title">Alpha Cohort (HSC Intensive)</span>
-                  <span className="choice-fee">৳12,500 Full / ৳3,500 Mo</span>
-                </button>
-
-                <button
-                  type="button"
-                  className={`course-choice-btn ${selectedCourse === 'ssc-2027' ? 'active' : ''}`}
-                  onClick={() => handleCourseChange('ssc-2027')}
-                >
-                  <span className="choice-title">SSC 2027 Model Test</span>
-                  <span className="choice-fee">৳2,200 Complete</span>
-                </button>
-              </div>
-
-              {/* Payment Instructions Note */}
-              <div className="payment-guide-box">
-                <div className="guide-title">
-                  <CreditCard size={17} />
-                  <strong>Payment Instructions (Send Money)</strong>
+              {/* Compact Header */}
+              <div className="compact-header">
+                <div className="header-badge-row">
+                  <span className="course-target-pill">{courseTitle}</span>
                 </div>
-                <p className="guide-desc">
-                  Send your course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket Personal) and enter the Transaction ID below.
+                <h1 className="compact-title">Enrollment Form</h1>
+                <p className="compact-subtitle">
+                  Send course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket Personal) and complete the form below.
                 </p>
-                <div className="channel-pills-row">
+              </div>
+
+              {/* Compact Channel Selector */}
+              <div className="compact-channel-row">
+                <span className="channel-label">Payment Channel:</span>
+                <div className="channel-btns">
                   <button
                     type="button"
-                    className={`channel-pill ${paymentMethod === 'bKash' ? 'active' : ''}`}
+                    className={`channel-btn ${paymentMethod === 'bKash' ? 'active' : ''}`}
                     onClick={() => setPaymentMethod('bKash')}
                   >
                     bKash
                   </button>
                   <button
                     type="button"
-                    className={`channel-pill ${paymentMethod === 'Nagad' ? 'active' : ''}`}
+                    className={`channel-btn ${paymentMethod === 'Nagad' ? 'active' : ''}`}
                     onClick={() => setPaymentMethod('Nagad')}
                   >
                     Nagad
                   </button>
                   <button
                     type="button"
-                    className={`channel-pill ${paymentMethod === 'Rocket' ? 'active' : ''}`}
+                    className={`channel-btn ${paymentMethod === 'Rocket' ? 'active' : ''}`}
                     onClick={() => setPaymentMethod('Rocket')}
                   >
                     Rocket
@@ -244,145 +202,147 @@ export const EnrollPage: React.FC = () => {
 
               {/* Error Message */}
               {errorMessage && (
-                <div className="form-error-alert">
-                  <AlertCircle size={18} />
+                <div className="compact-error-alert">
+                  <AlertCircle size={16} />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
-              {/* THE 7 FORM FIELDS */}
-              <form onSubmit={handleSubmit} className="enroll-inputs-form">
+              {/* THE 7 FORM FIELDS (COMPACT 2-COLUMN GRID) */}
+              <form onSubmit={handleSubmit} className="compact-form">
                 
-                {/* 1. Name */}
-                <div className="form-group">
-                  <label htmlFor="student-name" className="form-label">
-                    Full Name <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <UserIcon size={18} className="input-icon" />
-                    <input
-                      id="student-name"
-                      type="text"
-                      className="form-control"
-                      placeholder="e.g. Tariqul Islam"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                    />
+                <div className="form-grid-2col">
+                  {/* 1. Name */}
+                  <div className="form-item">
+                    <label htmlFor="student-name" className="form-label">
+                      Name <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <UserIcon size={16} className="input-icon" />
+                      <input
+                        id="student-name"
+                        type="text"
+                        className="form-control"
+                        placeholder="Full name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 2. Mail */}
-                <div className="form-group">
-                  <label htmlFor="student-email" className="form-label">
-                    Email Address <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <Mail size={18} className="input-icon" />
-                    <input
-                      id="student-email"
-                      type="email"
-                      className="form-control"
-                      placeholder="e.g. tariqul@gmail.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
+                  {/* 2. Mail */}
+                  <div className="form-item">
+                    <label htmlFor="student-email" className="form-label">
+                      Mail <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <Mail size={16} className="input-icon" />
+                      <input
+                        id="student-email"
+                        type="email"
+                        className="form-control"
+                        placeholder="email@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 3. School or College name */}
-                <div className="form-group">
-                  <label htmlFor="student-school" className="form-label">
-                    School or College Name <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <Building2 size={18} className="input-icon" />
-                    <input
-                      id="student-school"
-                      type="text"
-                      className="form-control"
-                      placeholder="e.g. Notre Dame College, Dhaka"
-                      value={schoolCollege}
-                      onChange={(e) => setSchoolCollege(e.target.value)}
-                      required
-                    />
+                  {/* 3. School or College name (Full Width) */}
+                  <div className="form-item col-span-2">
+                    <label htmlFor="student-school" className="form-label">
+                      School or College name <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <Building2 size={16} className="input-icon" />
+                      <input
+                        id="student-school"
+                        type="text"
+                        className="form-control"
+                        placeholder="e.g. Notre Dame College, Dhaka"
+                        value={schoolCollege}
+                        onChange={(e) => setSchoolCollege(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 4. Phone number whatsapp */}
-                <div className="form-group">
-                  <label htmlFor="student-whatsapp" className="form-label">
-                    WhatsApp Phone Number <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <Phone size={18} className="input-icon" />
-                    <input
-                      id="student-whatsapp"
-                      type="tel"
-                      className="form-control"
-                      placeholder="e.g. 01712345678"
-                      value={whatsappNumber}
-                      onChange={(e) => setWhatsappNumber(e.target.value)}
-                      required
-                    />
+                  {/* 4. Phone number whatsapp */}
+                  <div className="form-item">
+                    <label htmlFor="student-whatsapp" className="form-label">
+                      Phone number whatsapp <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <Phone size={16} className="input-icon" />
+                      <input
+                        id="student-whatsapp"
+                        type="tel"
+                        className="form-control"
+                        placeholder="017XXXXXXXX"
+                        value={whatsappNumber}
+                        onChange={(e) => setWhatsappNumber(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 5. Number used for payment */}
-                <div className="form-group">
-                  <label htmlFor="payment-sender" className="form-label">
-                    Number Used for Payment <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <CreditCard size={18} className="input-icon" />
-                    <input
-                      id="payment-sender"
-                      type="tel"
-                      className="form-control"
-                      placeholder={`e.g. 01812345678 (${paymentMethod} Sender Number)`}
-                      value={paymentNumber}
-                      onChange={(e) => setPaymentNumber(e.target.value)}
-                      required
-                    />
+                  {/* 5. Number used for payment */}
+                  <div className="form-item">
+                    <label htmlFor="payment-sender" className="form-label">
+                      Number used for payment <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <CreditCard size={16} className="input-icon" />
+                      <input
+                        id="payment-sender"
+                        type="tel"
+                        className="form-control"
+                        placeholder={`Sender ${paymentMethod} number`}
+                        value={paymentNumber}
+                        onChange={(e) => setPaymentNumber(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 6. Transaction ID */}
-                <div className="form-group">
-                  <label htmlFor="transaction-id" className="form-label">
-                    Transaction ID (TrxID) <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <Hash size={18} className="input-icon" />
-                    <input
-                      id="transaction-id"
-                      type="text"
-                      className="form-control text-uppercase"
-                      placeholder="e.g. BL92X88K90"
-                      value={transactionId}
-                      onChange={(e) => setTransactionId(e.target.value)}
-                      required
-                    />
+                  {/* 6. Transaction ID */}
+                  <div className="form-item">
+                    <label htmlFor="transaction-id" className="form-label">
+                      Transaction ID <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <Hash size={16} className="input-icon" />
+                      <input
+                        id="transaction-id"
+                        type="text"
+                        className="form-control text-uppercase"
+                        placeholder="TrxID (e.g. BL92X88K)"
+                        value={transactionId}
+                        onChange={(e) => setTransactionId(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                {/* 7. Amount */}
-                <div className="form-group">
-                  <label htmlFor="payment-amount" className="form-label">
-                    Amount (৳) <span className="req">*</span>
-                  </label>
-                  <div className="input-wrap">
-                    <DollarSign size={18} className="input-icon" />
-                    <input
-                      id="payment-amount"
-                      type="number"
-                      className="form-control"
-                      placeholder="e.g. 12500"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      required
-                    />
+                  {/* 7. Amount */}
+                  <div className="form-item">
+                    <label htmlFor="payment-amount" className="form-label">
+                      Amount <span className="req">*</span>
+                    </label>
+                    <div className="input-wrap">
+                      <DollarSign size={16} className="input-icon" />
+                      <input
+                        id="payment-amount"
+                        type="number"
+                        className="form-control"
+                        placeholder="e.g. 12500"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -390,71 +350,71 @@ export const EnrollPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn btn-primary btn-lg btn-block enroll-submit-btn"
+                  className="btn btn-primary btn-block compact-submit-btn"
                 >
-                  {isSubmitting ? 'Submitting Enrollment...' : 'Submit Enrollment'} <ArrowRight size={18} />
+                  {isSubmitting ? 'Processing Enrollment...' : 'Submit Enrollment'} <ArrowRight size={17} />
                 </button>
 
-                {/* Guarantee & Privacy Note */}
-                <div className="form-footer-guarantee text-center">
-                  <ShieldCheck size={16} className="shield-icon" />
-                  <span>Your information is encrypted & verified securely under Bio Edge admission guidelines.</span>
+                {/* Trust Line */}
+                <div className="compact-trust-note">
+                  <ShieldCheck size={14} />
+                  <span>Secure & verified admission under Bio Edge guidelines.</span>
                 </div>
 
               </form>
             </>
           ) : (
-            /* ENROLLMENT SUCCESS CONFIRMATION SCREEN */
-            <div className="enrollment-success-view text-center">
-              <div className="success-icon-circle">
-                <CheckCircle2 size={44} />
+            /* COMPACT SUCCESS RECEIPT */
+            <div className="compact-success-view text-center">
+              <div className="success-icon-badge">
+                <CheckCircle2 size={36} />
               </div>
               <h2 className="success-title">Enrollment Submitted!</h2>
-              <p className="success-subtitle">
-                Thank you, <strong>{submittedData?.name}</strong>! Your application for <strong>{submittedData?.courseTitle}</strong> has been received.
+              <p className="success-desc">
+                Thank you, <strong>{submittedData?.name}</strong>! Your payment for <strong>{submittedData?.courseTitle}</strong> is recorded.
               </p>
 
-              <div className="success-summary-card">
-                <div className="summary-line">
-                  <span className="s-label">Student Name:</span>
-                  <strong className="s-val">{submittedData?.name}</strong>
+              <div className="compact-receipt-card">
+                <div className="receipt-row">
+                  <span>Name:</span>
+                  <strong>{submittedData?.name}</strong>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">Email:</span>
-                  <span className="s-val">{submittedData?.email}</span>
+                <div className="receipt-row">
+                  <span>Mail:</span>
+                  <span>{submittedData?.email}</span>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">School / College:</span>
-                  <span className="s-val">{submittedData?.schoolCollege}</span>
+                <div className="receipt-row">
+                  <span>School/College:</span>
+                  <span>{submittedData?.schoolCollege}</span>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">WhatsApp Number:</span>
-                  <span className="s-val">{submittedData?.whatsappNumber}</span>
+                <div className="receipt-row">
+                  <span>WhatsApp:</span>
+                  <span>{submittedData?.whatsappNumber}</span>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">Payment Number:</span>
-                  <span className="s-val">{submittedData?.paymentNumber} ({submittedData?.paymentMethod})</span>
+                <div className="receipt-row">
+                  <span>Payment Number:</span>
+                  <span>{submittedData?.paymentNumber} ({submittedData?.paymentMethod})</span>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">Transaction ID:</span>
-                  <strong className="s-val highlight-trx">{submittedData?.transactionId}</strong>
+                <div className="receipt-row">
+                  <span>TrxID:</span>
+                  <strong className="code-tag">{submittedData?.transactionId}</strong>
                 </div>
-                <div className="summary-line">
-                  <span className="s-label">Amount:</span>
-                  <strong className="s-val amount-val">৳{submittedData?.amount}</strong>
+                <div className="receipt-row">
+                  <span>Amount:</span>
+                  <strong className="amt-tag">৳{submittedData?.amount}</strong>
                 </div>
               </div>
 
-              <p className="success-note">
-                Our academic team will verify your transaction within <strong>1–2 hours</strong> and send your portal login credentials and routine via WhatsApp and Email.
+              <p className="receipt-footer-text">
+                Portal access and class link will be activated within <strong>1–2 hours</strong> after verification.
               </p>
 
-              <div className="success-actions-row">
-                <Link to="/login" className="btn btn-primary btn-lg">
-                  Go to Student Portal <ArrowRight size={18} />
+              <div className="receipt-actions">
+                <Link to="/login" className="btn btn-primary">
+                  Go to Student Portal <ArrowRight size={16} />
                 </Link>
-                <Link to="/" className="btn btn-outline btn-lg">
-                  Return to Home
+                <Link to="/" className="btn btn-outline">
+                  Return Home
                 </Link>
               </div>
             </div>
@@ -465,140 +425,106 @@ export const EnrollPage: React.FC = () => {
       </div>
 
       <style>{`
-        .enroll-clean-page {
+        .enroll-compact-page {
           background: #FAFCFA;
           min-height: calc(100vh - 72px);
-          padding: 2.5rem 0 5rem;
+          padding: 1.5rem 0 3rem;
         }
 
-        .enroll-back-nav {
-          max-width: 620px;
-          margin: 0 auto 1.5rem;
+        .enroll-top-nav {
+          max-width: 580px;
+          margin: 0 auto 0.85rem;
         }
 
-        .enroll-back-link {
+        .enroll-top-back {
           display: inline-flex;
           align-items: center;
-          gap: 6px;
-          font-size: 0.88rem;
+          gap: 5px;
+          font-size: 0.84rem;
           font-weight: 600;
           color: var(--primary-green);
           text-decoration: none;
           transition: color 0.2s ease;
         }
 
-        .enroll-back-link:hover {
+        .enroll-top-back:hover {
           color: var(--dark-green);
         }
 
-        .enroll-form-card {
-          max-width: 620px;
+        .enroll-compact-card {
+          max-width: 580px;
           margin: 0 auto;
           background: #FFFFFF;
-          border-radius: 24px;
+          border-radius: 18px;
           border: 1px solid rgba(49, 91, 61, 0.12);
-          box-shadow: 0 12px 36px rgba(22, 51, 32, 0.05);
-          padding: 3rem 2.5rem;
+          box-shadow: 0 8px 24px rgba(22, 51, 32, 0.04);
+          padding: 2rem 2.25rem;
         }
 
-        .form-header {
-          margin-bottom: 2rem;
+        .compact-header {
+          text-align: center;
+          margin-bottom: 1.25rem;
         }
 
-        .form-title {
-          font-size: clamp(1.75rem, 4vw, 2.25rem);
+        .header-badge-row {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 0.4rem;
+        }
+
+        .course-target-pill {
+          font-size: 0.76rem;
+          font-weight: 700;
+          color: var(--dark-green);
+          background: var(--light-green);
+          padding: 3px 10px;
+          border-radius: var(--radius-full);
+        }
+
+        .compact-title {
+          font-size: 1.55rem;
           font-weight: 800;
           color: var(--dark-green);
-          margin-top: 0.75rem;
-          margin-bottom: 0.5rem;
+          margin: 0 0 0.35rem;
         }
 
-        .form-subtitle {
-          font-size: 0.95rem;
+        .compact-subtitle {
+          font-size: 0.86rem;
           color: var(--text-muted);
-          line-height: 1.55;
+          line-height: 1.45;
           margin: 0;
         }
 
-        /* Course choice buttons */
-        .course-select-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.85rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .course-choice-btn {
+        /* Compact Channel Selector */
+        .compact-channel-row {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 0.85rem 1rem;
+          align-items: center;
+          justify-content: space-between;
+          background: #F4FAF6;
+          border: 1px solid rgba(49, 91, 61, 0.1);
           border-radius: var(--radius-md);
-          border: 1.5px solid var(--border-color);
-          background: #FAFCFA;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          text-align: left;
+          padding: 0.5rem 0.85rem;
+          margin-bottom: 1.25rem;
+          flex-wrap: wrap;
+          gap: 0.5rem;
         }
 
-        .course-choice-btn:hover {
-          border-color: var(--primary-green);
-        }
-
-        .course-choice-btn.active {
-          border-color: var(--dark-green);
-          background: rgba(49, 91, 61, 0.05);
-        }
-
-        .choice-title {
-          font-size: 0.88rem;
+        .channel-label {
+          font-size: 0.8rem;
           font-weight: 700;
           color: var(--dark-green);
-          line-height: 1.25;
-          margin-bottom: 0.2rem;
         }
 
-        .choice-fee {
-          font-size: 0.75rem;
-          color: var(--primary-green);
-          font-weight: 600;
-        }
-
-        /* Payment Guide Box */
-        .payment-guide-box {
-          background: #F4FAF6;
-          border: 1px solid rgba(49, 91, 61, 0.15);
-          border-radius: var(--radius-md);
-          padding: 1.15rem 1.25rem;
-          margin-bottom: 2rem;
-        }
-
-        .guide-title {
+        .channel-btns {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          color: var(--dark-green);
-          font-size: 0.9rem;
-          margin-bottom: 0.35rem;
+          gap: 0.4rem;
         }
 
-        .guide-desc {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-          line-height: 1.45;
-          margin: 0 0 0.85rem 0;
-        }
-
-        .channel-pills-row {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .channel-pill {
-          padding: 0.35rem 0.95rem;
+        .channel-btn {
+          padding: 0.25rem 0.75rem;
           border-radius: var(--radius-full);
-          font-size: 0.78rem;
+          font-size: 0.75rem;
           font-weight: 700;
           border: 1px solid var(--border-color);
           background: #FFFFFF;
@@ -607,45 +533,55 @@ export const EnrollPage: React.FC = () => {
           transition: all 0.2s ease;
         }
 
-        .channel-pill:hover {
+        .channel-btn:hover {
           border-color: var(--primary-green);
         }
 
-        .channel-pill.active {
+        .channel-btn.active {
           background: var(--dark-green);
           color: #FFFFFF;
           border-color: var(--dark-green);
         }
 
-        /* Form Error Alert */
-        .form-error-alert {
+        /* Error Alert */
+        .compact-error-alert {
           display: flex;
           align-items: center;
-          gap: 0.65rem;
+          gap: 0.5rem;
           background: #FEE2E2;
           color: #B91C1C;
-          padding: 0.75rem 1rem;
+          padding: 0.6rem 0.85rem;
           border-radius: var(--radius-md);
-          font-size: 0.88rem;
+          font-size: 0.82rem;
           font-weight: 600;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
         }
 
-        /* Form Elements */
-        .enroll-inputs-form {
+        /* 2-Column Form Grid */
+        .compact-form {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 1rem;
         }
 
-        .form-group {
+        .form-grid-2col {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.85rem;
+        }
+
+        .col-span-2 {
+          grid-column: span 2;
+        }
+
+        .form-item {
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.3rem;
         }
 
         .form-label {
-          font-size: 0.88rem;
+          font-size: 0.8rem;
           font-weight: 700;
           color: var(--dark-green);
         }
@@ -662,15 +598,15 @@ export const EnrollPage: React.FC = () => {
 
         .input-icon {
           position: absolute;
-          left: 1rem;
+          left: 0.75rem;
           color: var(--text-muted);
           pointer-events: none;
         }
 
         .form-control {
           width: 100%;
-          padding: 0.85rem 1rem 0.85rem 2.75rem;
-          font-size: 0.95rem;
+          padding: 0.58rem 0.75rem 0.58rem 2.25rem;
+          font-size: 0.88rem;
           border-radius: var(--radius-md);
           border: 1.5px solid var(--border-color);
           background: #FAFCFA;
@@ -682,159 +618,154 @@ export const EnrollPage: React.FC = () => {
           outline: none;
           border-color: var(--dark-green);
           background: #FFFFFF;
-          box-shadow: 0 0 0 3px rgba(49, 91, 61, 0.1);
+          box-shadow: 0 0 0 2px rgba(49, 91, 61, 0.1);
         }
 
         .text-uppercase {
           text-transform: uppercase;
         }
 
-        .enroll-submit-btn {
+        .compact-submit-btn {
           width: 100%;
-          margin-top: 0.75rem;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          font-size: 1.05rem;
+          font-size: 0.95rem;
           font-weight: 700;
-          padding: 0.95rem;
+          padding: 0.75rem;
           border-radius: var(--radius-md);
+          margin-top: 0.25rem;
         }
 
-        .form-footer-guarantee {
+        .compact-trust-note {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          font-size: 0.78rem;
+          gap: 5px;
+          font-size: 0.74rem;
           color: var(--text-muted);
-          margin-top: 1rem;
+          text-align: center;
         }
 
-        .shield-icon {
-          color: var(--primary-green);
-          flex-shrink: 0;
+        /* Success Receipt */
+        .compact-success-view {
+          padding: 1rem 0;
         }
 
-        /* Success View */
-        .enrollment-success-view {
-          padding: 1.5rem 0.5rem;
-        }
-
-        .success-icon-circle {
-          width: 72px;
-          height: 72px;
+        .success-icon-badge {
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           background: var(--light-green);
           color: var(--dark-green);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin: 0 auto 1.5rem;
+          margin: 0 auto 1rem;
         }
 
         .success-title {
-          font-size: 1.85rem;
+          font-size: 1.45rem;
           font-weight: 800;
           color: var(--dark-green);
-          margin-bottom: 0.5rem;
+          margin: 0 0 0.35rem;
         }
 
-        .success-subtitle {
-          font-size: 1rem;
+        .success-desc {
+          font-size: 0.9rem;
           color: var(--text-muted);
-          margin-bottom: 2rem;
-          line-height: 1.55;
+          margin: 0 0 1.25rem;
+          line-height: 1.45;
         }
 
-        .success-summary-card {
+        .compact-receipt-card {
           background: #FAFCFA;
           border: 1px solid var(--border-color);
-          border-radius: var(--radius-lg);
-          padding: 1.5rem;
+          border-radius: var(--radius-md);
+          padding: 1rem 1.15rem;
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
-          margin-bottom: 1.75rem;
+          gap: 0.5rem;
+          margin-bottom: 1.25rem;
           text-align: left;
         }
 
-        .summary-line {
+        .receipt-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 0.9rem;
+          font-size: 0.84rem;
           border-bottom: 1px dashed var(--border-subtle);
-          padding-bottom: 0.5rem;
+          padding-bottom: 0.35rem;
         }
 
-        .summary-line:last-child {
+        .receipt-row:last-child {
           border-bottom: none;
           padding-bottom: 0;
         }
 
-        .s-label {
+        .receipt-row span {
           color: var(--text-muted);
         }
 
-        .s-val {
-          color: var(--text-dark);
-          font-weight: 600;
-        }
-
-        .highlight-trx {
+        .code-tag {
           font-family: monospace;
-          color: var(--dark-green);
-          font-weight: 700;
           background: var(--light-green-subtle);
-          padding: 2px 6px;
+          padding: 1px 6px;
           border-radius: 4px;
+          color: var(--dark-green);
         }
 
-        .amount-val {
-          font-size: 1.15rem;
+        .amt-tag {
           color: var(--primary-green);
+          font-size: 0.98rem;
           font-weight: 800;
         }
 
-        .success-note {
-          font-size: 0.88rem;
+        .receipt-footer-text {
+          font-size: 0.82rem;
           color: var(--text-muted);
-          line-height: 1.6;
-          max-width: 480px;
-          margin: 0 auto 2rem;
+          margin: 0 0 1.5rem;
+          line-height: 1.5;
         }
 
-        .success-actions-row {
+        .receipt-actions {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 1rem;
+          gap: 0.75rem;
           flex-wrap: wrap;
         }
 
-        @media (max-width: 600px) {
-          .enroll-clean-page {
-            padding: 1.5rem 0 3.5rem;
+        @media (max-width: 580px) {
+          .enroll-compact-page {
+            padding: 1rem 0 2.5rem;
           }
-          .enroll-form-card {
-            padding: 1.75rem 1.25rem;
-            border-radius: 20px;
+          .enroll-compact-card {
+            padding: 1.5rem 1.15rem;
+            border-radius: 16px;
           }
-          .course-select-row {
+          .form-grid-2col {
             grid-template-columns: 1fr;
           }
-          .summary-line {
+          .col-span-2 {
+            grid-column: span 1;
+          }
+          .compact-channel-row {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .receipt-row {
             flex-direction: column;
             align-items: flex-start;
             gap: 2px;
           }
-          .success-actions-row {
+          .receipt-actions {
             flex-direction: column;
             width: 100%;
           }
-          .success-actions-row .btn {
+          .receipt-actions .btn {
             width: 100%;
           }
         }
