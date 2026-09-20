@@ -70,9 +70,9 @@ const CARDS_DATA: CardItem[] = [
 const CARDS_DATA_BN: CardItem[] = [
   {
     id: 'heart',
-    title: 'মানব রক্ত ও সংবহনতন্ত্র',
+    title: 'মানব রক্ত ও সঞ্চালনতন্ত্র',
     paper: '২য় পত্র (প্রাণিবিজ্ঞান)',
-    chapter: 'অধ্যায় ৪ • মানব শারীরতত্ত্ব: রক্ত ও সংবহন',
+    chapter: 'অধ্যায় ৪ • মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন',
     tag: '@zoology_heart',
     tagColor: '#EF4444',
     image: '/assets/3d/bio_heart_3d.jpg',

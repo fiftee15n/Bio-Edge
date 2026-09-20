@@ -19,9 +19,9 @@ export const TeacherAnalyticsPage: React.FC = () => {
 
   const chapterDifficulty = [
     { chapter: "অধ্যায় ৯: উদ্ভিদ শারীরতত্ত্ব (C3/C4 ও শ্বসন)", avgScore: 74, status: "High Difficulty" },
-    { chapter: "অধ্যায় ৪ (২য় পত্র): মানব শারীরতত্ত্ব (রক্ত ও সংবহন)", avgScore: 76, status: "Medium Difficulty" },
+    { chapter: "অধ্যায় ৪ (২য় পত্র): মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন", avgScore: 76, status: "Medium Difficulty" },
     { chapter: "অধ্যায় ৪: অণুজীব (ভাইরাস ও ব্যাকটেরিয়াল জেনেটিক্স)", avgScore: 80, status: "Moderate" },
-    { chapter: "অধ্যায় ৩ (২য় পত্র): পরিপাক ও শোষণ", avgScore: 84, status: "Good" },
+    { chapter: "অধ্যায় ৩ (২য় পত্র): মানব শারীরতত্ত্ব: পরিপাক ও শোষণ", avgScore: 84, status: "Good" },
     { chapter: "অধ্যায় ৩: কোষ রসায়ন (জৈব অণুসমূহ)", avgScore: 85, status: "Good" },
     { chapter: "অধ্যায় ১ (২য় পত্র): প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", avgScore: 88, status: "Strong" },
     { chapter: "অধ্যায় ১: কোষ ও এর গঠন", avgScore: 92, status: "Excellent" }
