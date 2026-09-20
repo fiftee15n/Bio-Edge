@@ -126,14 +126,14 @@ export const TeacherChaptersPage: React.FC = () => {
 
             {/* Topics inside Chapter */}
             <div className="ch-admin-topics-block">
-              <h4 className="topics-subheading">Curriculum Topics ({(ch.topics || []).length}):</h4>
+              <h4 className="topics-subheading">{isBangla ? `পাঠ্য বিষয়সূচি (${toBnNum((ch.topics || []).length)}টি):` : `Curriculum Topics (${(ch.topics || []).length}):`}</h4>
               <div className="admin-topics-list">
                 {(ch.topics || []).map((topic, tIdx) => (
                   <div key={topic.id || tIdx} className="admin-topic-row">
                     <span className="topic-dot"></span>
-                    <span className="admin-topic-name">{topic.title}</span>
+                    <span className="admin-topic-name">{isBangla ? (topic.titleBn || topic.title) : (topic.titleEn || topic.title)}</span>
                     <span className={`badge ${topic.status === 'Completed' ? 'badge-green' : 'badge-gray'} ml-auto`}>
-                      {topic.status}
+                      {isBangla ? (topic.status === 'Completed' ? 'সম্পন্ন' : 'বাকি') : topic.status}
                     </span>
                   </div>
                 ))}

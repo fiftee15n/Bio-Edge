@@ -206,7 +206,7 @@ export const HomePage: React.FC = () => {
                   {(ch.topics || []).slice(0, 3).map((tItem, idx) => (
                     <div key={idx} className="ch-topic-bullet">
                       <span className="topic-bullet-dot"></span>
-                      <span>{tItem.title}</span>
+                      <span>{isBangla ? (tItem.titleBn || tItem.title) : (tItem.titleEn || tItem.title)}</span>
                     </div>
                   ))}
                   {(ch.topics || []).length > 3 && (

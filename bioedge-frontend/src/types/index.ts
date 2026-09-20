@@ -100,6 +100,8 @@ export interface TeacherData {
 export interface Topic {
   id: string;
   title: string;
+  titleBn?: string;
+  titleEn?: string;
   status: 'Completed' | 'In Progress' | 'Not Started' | 'Locked';
   classNum?: number;
 }

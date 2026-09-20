@@ -63,10 +63,10 @@ export const initialPapers: Paper[] = [
         progress: 100,
         status: "Completed",
         topics: [
-          { id: "t1-1", title: "Cell Wall & Plasma Membrane (Fluid Mosaic Model)", status: "Completed", classNum: 1 },
-          { id: "t1-2", title: "Cytoplasmic Organelles: Mitochondria & Plastids", status: "Completed", classNum: 2 },
-          { id: "t1-3", title: "Ribosomes, Endoplasmic Reticulum & Golgi Body", status: "Completed", classNum: 3 },
-          { id: "t1-4", title: "Nucleus, Chromatin & Nucleic Acids (DNA/RNA Structure)", status: "Completed", classNum: 4 }
+          { id: "t1-1", title: "কোষ প্রাচীর ও প্লাজমামেনব্রেন (ফ্লুইড মোজাইক মডেল)", titleBn: "কোষ প্রাচীর ও প্লাজমামেনব্রেন (ফ্লুইড মোজাইক মডেল)", titleEn: "Cell Wall & Plasma Membrane (Fluid Mosaic Model)", status: "Completed", classNum: 1 },
+          { id: "t1-2", title: "সাইটোপ্লাজমীয় অঙ্গাণু: মাইটোকনড্রিয়া ও প্লাস্টিড", titleBn: "সাইটোপ্লাজমীয় অঙ্গাণু: মাইটোকনড্রিয়া ও প্লাস্টিড", titleEn: "Cytoplasmic Organelles: Mitochondria & Plastids", status: "Completed", classNum: 2 },
+          { id: "t1-3", title: "রাইবোজোম, এন্ডোপ্লাজমিক রেটিকুলাম ও গলগি বডি", titleBn: "রাইবোজোম, এন্ডোপ্লাজমিক রেটিকুলাম ও গলগি বডি", titleEn: "Ribosomes, Endoplasmic Reticulum & Golgi Body", status: "Completed", classNum: 3 },
+          { id: "t1-4", title: "নিউক্লিয়াস, ক্রোমাটিন ও নিউক্লিক অ্যাসিড (ডিএনএ/আরএনএ)", titleBn: "নিউক্লিয়াস, ক্রোমাটিন ও নিউক্লিক অ্যাসিড (ডিএনএ/আরএনএ)", titleEn: "Nucleus, Chromatin & Nucleic Acids (DNA/RNA Structure)", status: "Completed", classNum: 4 }
         ]
       },
       {
@@ -80,10 +80,10 @@ export const initialPapers: Paper[] = [
         progress: 100,
         status: "Completed",
         topics: [
-          { id: "t2-1", title: "Amitosis & Mitosis Stages (Prophase to Telophase)", status: "Completed", classNum: 5 },
-          { id: "t2-2", title: "Significance of Mitosis & Uncontrolled Mitosis (Tumors)", status: "Completed", classNum: 6 },
-          { id: "t2-3", title: "Meiosis I & II Phases & Synapsis", status: "Completed", classNum: 7 },
-          { id: "t2-4", title: "Crossing Over Mechanism & Genetic Variation", status: "Completed", classNum: 8 }
+          { id: "t2-1", title: "অ্যামাইটোসিস ও মাইটোসিসের ধাপসমূহ (প্রোফেজ থেকে টেলোফেজ)", titleBn: "অ্যামাইটোসিস ও মাইটোসিসের ধাপসমূহ (প্রোফেজ থেকে টেলোফেজ)", titleEn: "Amitosis & Mitosis Stages (Prophase to Telophase)", status: "Completed", classNum: 5 },
+          { id: "t2-2", title: "মাইটোসিসের তাৎপর্য ও অনিয়ন্ত্রিত মাইটোসিস (টিউমার/ক্যান্সার)", titleBn: "মাইটোসিসের তাৎপর্য ও অনিয়ন্ত্রিত মাইটোসিস (টিউমার/ক্যান্সার)", titleEn: "Significance of Mitosis & Uncontrolled Mitosis (Tumors)", status: "Completed", classNum: 6 },
+          { id: "t2-3", title: "মায়োসিস ১ ও ২ এর ধাপসমূহ এবং সিন্যাপসিস", titleBn: "মায়োসিস ১ ও ২ এর ধাপসমূহ এবং সিন্যাপসিস", titleEn: "Meiosis I & II Phases & Synapsis", status: "Completed", classNum: 7 },
+          { id: "t2-4", title: "ক্রসিং ওভার কৌশল ও জিনগত বৈচিত্র্য", titleBn: "ক্রসিং ওভার কৌশল ও জিনগত বৈচিত্র্য", titleEn: "Crossing Over Mechanism & Genetic Variation", status: "Completed", classNum: 8 }
         ]
       },
       {
@@ -97,10 +97,10 @@ export const initialPapers: Paper[] = [
         progress: 100,
         status: "Completed",
         topics: [
-          { id: "t3-1", title: "Carbohydrates: Monosaccharides, Disaccharides & Polysaccharides", status: "Completed", classNum: 9 },
-          { id: "t3-2", title: "Amino Acids & Protein Folding Structures", status: "Completed", classNum: 10 },
-          { id: "t3-3", title: "Lipids Classification & Biological Significance", status: "Completed", classNum: 11 },
-          { id: "t3-4", title: "Enzymes: Mechanism of Action, Coenzymes & Inhibitors", status: "Completed", classNum: 12 }
+          { id: "t3-1", title: "কার্বোহাইড্রেট: মনোস্যাকারাইড, ডাইস্যাকারাইড ও পলিস্যাকারাইড", titleBn: "কার্বোহাইড্রেট: মনোস্যাকারাইড, ডাইস্যাকারাইড ও পলিস্যাকারাইড", titleEn: "Carbohydrates: Monosaccharides, Disaccharides & Polysaccharides", status: "Completed", classNum: 9 },
+          { id: "t3-2", title: "অ্যামিনো অ্যাসিড ও প্রোটিনের বিভিন্ন গঠন", titleBn: "অ্যামিনো অ্যাসিড ও প্রোটিনের বিভিন্ন গঠন", titleEn: "Amino Acids & Protein Folding Structures", status: "Completed", classNum: 10 },
+          { id: "t3-3", title: "লিপিডের শ্রেণিবিন্যাস ও জৈবিক গুরুত্ব", titleBn: "লিপিডের শ্রেণিবিন্যাস ও জৈবিক গুরুত্ব", titleEn: "Lipids Classification & Biological Significance", status: "Completed", classNum: 11 },
+          { id: "t3-4", title: "এনজাইম: ক্রিয়া কৌশল, কো-এনজাইম ও ইনহিবিটর", titleBn: "এনজাইম: ক্রিয়া কৌশল, কো-এনজাইম ও ইনহিবিটর", titleEn: "Enzymes: Mechanism of Action, Coenzymes & Inhibitors", status: "Completed", classNum: 12 }
         ]
       },
       {
@@ -114,10 +114,10 @@ export const initialPapers: Paper[] = [
         progress: 80,
         status: "In Progress",
         topics: [
-          { id: "t4-1", title: "Virus Structure, T2 Bacteriophage & Lytic Cycle", status: "Completed", classNum: 13 },
-          { id: "t4-2", title: "Lysogenic Cycle, Hepatitis B & Dengue Pathogenesis", status: "Completed", classNum: 14 },
-          { id: "t4-3", title: "Bacteria Morphology, Gram Staining & Reproduction", status: "In Progress", classNum: 15 },
-          { id: "t4-4", title: "Malaria Parasite (Plasmodium vivax) Life Cycle", status: "Not Started", classNum: 16 }
+          { id: "t4-1", title: "ভাইরাসের গঠন, টি২ ব্যাকটেরিওফাজ ও লাইটিক চক্র", titleBn: "ভাইরাসের গঠন, টি২ ব্যাকটেরিওফাজ ও লাইটিক চক্র", titleEn: "Virus Structure, T2 Bacteriophage & Lytic Cycle", status: "Completed", classNum: 13 },
+          { id: "t4-2", title: "লাইসোজেনিক চক্র, হেপাটাইটিস বি ও ডেঙ্গু রোগতত্ত্ব", titleBn: "লাইসোজেনিক চক্র, হেপাটাইটিস বি ও ডেঙ্গু রোগতত্ত্ব", titleEn: "Lysogenic Cycle, Hepatitis B & Dengue Pathogenesis", status: "Completed", classNum: 14 },
+          { id: "t4-3", title: "ব্যাকটেরিয়ার গঠন, গ্রাম স্টেইনিং ও জনন প্রক্রিয়া", titleBn: "ব্যাকটেরিয়ার গঠন, গ্রাম স্টেইনিং ও জনন প্রক্রিয়া", titleEn: "Bacteria Morphology, Gram Staining & Reproduction", status: "In Progress", classNum: 15 },
+          { id: "t4-4", title: "ম্যালেরিয়া পরজীবী (প্লাজমোডিয়াম)-এর জীবনচক্র", titleBn: "ম্যালেরিয়া পরজীবী (প্লাজমোডিয়াম)-এর জীবনচক্র", titleEn: "Malaria Parasite (Plasmodium vivax) Life Cycle", status: "Not Started", classNum: 16 }
         ]
       },
       {
@@ -131,9 +131,9 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t5-1", title: "Spirogyra Morphology & Scalariform Conjugation", status: "Not Started", classNum: 17 },
-          { id: "t5-2", title: "Agaricus (Mushroom) Anatomy & Basidiospores", status: "Not Started", classNum: 18 },
-          { id: "t5-3", title: "Phytophthora infestans (Late Blight) & Lichen Symbiosis", status: "Not Started", classNum: 19 }
+          { id: "t5-1", title: "স্পাইরোগাইরার গঠন ও মই-সদৃশ কনজুগেশন", titleBn: "স্পাইরোগাইরার গঠন ও মই-সদৃশ কনজুগেশন", titleEn: "Spirogyra Morphology & Scalariform Conjugation", status: "Not Started", classNum: 17 },
+          { id: "t5-2", title: "অ্যাগারিকাস (মাশরুম)-এর দৈহিক গঠন ও বেসিডিওস্পোর", titleBn: "অ্যাগারিকাস (মাশরুম)-এর দৈহিক গঠন ও বেসিডিওস্পোর", titleEn: "Agaricus (Mushroom) Anatomy & Basidiospores", status: "Not Started", classNum: 18 },
+          { id: "t5-3", title: "আলুর বিলম্বিত ধসা রোগ (ফাইটোপথোরা) ও লাইকেন", titleBn: "আলুর বিলম্বিত ধসা রোগ (ফাইটোপথোরা) ও লাইকেন", titleEn: "Phytophthora infestans (Late Blight) & Lichen Symbiosis", status: "Not Started", classNum: 19 }
         ]
       },
       {
@@ -147,8 +147,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t6-1", title: "Riccia Morphology & Alternation of Generation", status: "Not Started", classNum: 20 },
-          { id: "t6-2", title: "Pteris (Fern) Sporophyte & Gametophyte (Prothallus)", status: "Not Started", classNum: 21 }
+          { id: "t6-1", title: "রিকসিয়া-র দৈহিক গঠন ও জনুক্রম", titleBn: "রিকসিয়া-র দৈহিক গঠন ও জনুক্রম", titleEn: "Riccia Morphology & Alternation of Generation", status: "Not Started", classNum: 20 },
+          { id: "t6-2", title: "টেরিস (ফার্ন)-এর রেণুধর ও লিঙ্গধর (প্রোথ্যালাস) উদ্ভিদ", titleBn: "টেরিস (ফার্ন)-এর রেণুধর ও লিঙ্গধর (প্রোথ্যালাস) উদ্ভিদ", titleEn: "Pteris (Fern) Sporophyte & Gametophyte (Prothallus)", status: "Not Started", classNum: 21 }
         ]
       },
       {
@@ -162,8 +162,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t7-1", title: "Cycas Characteristics, Coralloid Root & Microsporophyll", status: "Not Started", classNum: 22 },
-          { id: "t7-2", title: "Floral Formula, Floral Diagram & Poaceae vs Malvaceae", status: "Not Started", classNum: 23 }
+          { id: "t7-1", title: "সাইকাস-এর বৈশিষ্ট্য, কোরালয়েড মূল ও পুংরেণুপত্র", titleBn: "সাইকাস-এর বৈশিষ্ট্য, কোরালয়েড মূল ও পুংরেণুপত্র", titleEn: "Cycas Characteristics, Coralloid Root & Microsporophyll", status: "Not Started", classNum: 22 },
+          { id: "t7-2", title: "পুষ্পপ্রতীক, পুষ্পসংকেত এবং পোয়াসি ও মালভেসি গোত্র", titleBn: "পুষ্পপ্রতীক, পুষ্পসংকেত এবং পোয়াসি ও মালভেসি গোত্র", titleEn: "Floral Formula, Floral Diagram & Poaceae vs Malvaceae", status: "Not Started", classNum: 23 }
         ]
       },
       {
@@ -177,8 +177,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t8-1", title: "Meristematic Tissue Types & Functional Anatomy", status: "Not Started", classNum: 24 },
-          { id: "t8-2", title: "Epidermal, Ground & Vascular Tissue Systems (Stomata & Xylem)", status: "Not Started", classNum: 25 }
+          { id: "t8-1", title: "ভাজক টিস্যুর প্রকারভেদ ও অভ্যন্তরীণ গঠন", titleBn: "ভাজক টিস্যুর প্রকারভেদ ও অভ্যন্তরীণ গঠন", titleEn: "Meristematic Tissue Types & Functional Anatomy", status: "Not Started", classNum: 24 },
+          { id: "t8-2", title: "ত্বকীয়, ভিত্তি ও সংবহন টিস্যুতন্ত্র (পত্ররন্ধ্র ও জাইলেম)", titleBn: "ত্বকীয়, ভিত্তি ও সংবহন টিস্যুতন্ত্র (পত্ররন্ধ্র ও জাইলেম)", titleEn: "Epidermal, Ground & Vascular Tissue Systems (Stomata & Xylem)", status: "Not Started", classNum: 25 }
         ]
       },
       {
@@ -192,10 +192,10 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t9-1", title: "Water & Active Mineral Absorption Mechanisms", status: "Not Started", classNum: 26 },
-          { id: "t9-2", title: "Photosynthesis: Light Reaction & Photophosphorylation", status: "Not Started", classNum: 27 },
-          { id: "t9-3", title: "Calvin (C3) & Hatch-Slack (C4) Cycles Comparison", status: "Not Started", classNum: 28 },
-          { id: "t9-4", title: "Respiration: Glycolysis, Krebs Cycle & ETS Yields", status: "Not Started", classNum: 29 }
+          { id: "t9-1", title: "পানি ও খনিজ লবণ পরিশোষণ কৌশল", titleBn: "পানি ও খনিজ লবণ পরিশোষণ কৌশল", titleEn: "Water & Active Mineral Absorption Mechanisms", status: "Not Started", classNum: 26 },
+          { id: "t9-2", title: "সালোকসংশ্লেষণ: আলোক পর্যায় ও ফটোফসফোরাইলেশন", titleBn: "সালোকসংশ্লেষণ: আলোক পর্যায় ও ফটোফসফোরাইলেশন", titleEn: "Photosynthesis: Light Reaction & Photophosphorylation", status: "Not Started", classNum: 27 },
+          { id: "t9-3", title: "ক্যালভিন চক্র (সি৩) ও হ্যাচ-স্ল্যাক চক্র (সি৪)-এর তুলনা", titleBn: "ক্যালভিন চক্র (সি৩) ও হ্যাচ-স্ল্যাক চক্র (সি৪)-এর তুলনা", titleEn: "Calvin (C3) & Hatch-Slack (C4) Cycles Comparison", status: "Not Started", classNum: 28 },
+          { id: "t9-4", title: "শ্বসন: গ্লাইকোলাইসিস, ক্রেবস চক্র ও ইটিএস", titleBn: "শ্বসন: গ্লাইকোলাইসিস, ক্রেবস চক্র ও ইটিএস", titleEn: "Respiration: Glycolysis, Krebs Cycle & ETS Yields", status: "Not Started", classNum: 29 }
         ]
       },
       {
@@ -209,8 +209,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t10-1", title: "Microsporogenesis & Megasporogenesis Development", status: "Not Started", classNum: 30 },
-          { id: "t10-2", title: "Double Fertilization & Endosperm Formation", status: "Not Started", classNum: 31 }
+          { id: "t10-1", title: "পুং ও স্ত্রী গ্যামেটোফাইটের উৎপত্তি ও পরিস্ফুটন", titleBn: "পুং ও স্ত্রী গ্যামেটোফাইটের উৎপত্তি ও পরিস্ফুটন", titleEn: "Microsporogenesis & Megasporogenesis Development", status: "Not Started", classNum: 30 },
+          { id: "t10-2", title: "দ্বি-নিষেক ও শস্য (এন্ডোস্পার্ম) গঠন", titleBn: "দ্বি-নিষেক ও শস্য (এন্ডোস্পার্ম) গঠন", titleEn: "Double Fertilization & Endosperm Formation", status: "Not Started", classNum: 31 }
         ]
       },
       {
@@ -224,8 +224,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t11-1", title: "Plant Tissue Culture Techniques & Micropropagation", status: "Not Started", classNum: 32 },
-          { id: "t11-2", title: "Recombinant DNA Technology, Plasmids & Restriction Enzymes", status: "Not Started", classNum: 33 }
+          { id: "t11-1", title: "উদ্ভিদ টিস্যু কালচার প্রযুক্তি ও মাইক্রোপ্রোপাগেশন", titleBn: "উদ্ভিদ টিস্যু কালচার প্রযুক্তি ও মাইক্রোপ্রোপাগেশন", titleEn: "Plant Tissue Culture Techniques & Micropropagation", status: "Not Started", classNum: 32 },
+          { id: "t11-2", title: "রিকম্বিনেন্ট ডিএনএ প্রযুক্তি, প্লাজমিড ও রেস্ট্রিকশন এনজাইম", titleBn: "রিকম্বিনেন্ট ডিএনএ প্রযুক্তি, প্লাজমিড ও রেস্ট্রিকশন এনজাইম", titleEn: "Recombinant DNA Technology, Plasmids & Restriction Enzymes", status: "Not Started", classNum: 33 }
         ]
       },
       {
@@ -239,8 +239,8 @@ export const initialPapers: Paper[] = [
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t12-1", title: "Ecosystem Components, Trophic Pyramids & Nutrient Cycles", status: "Not Started", classNum: 34 },
-          { id: "t12-2", title: "Biodiversity Conservation & Climate Change Impacts", status: "Not Started", classNum: 35 }
+          { id: "t12-1", title: "বাস্তুতন্ত্রের উপাদান, ট্রফিক পিরামিড ও পুষ্টি প্রবাহ", titleBn: "বাস্তুতন্ত্রের উপাদান, ট্রফিক পিরামিড ও পুষ্টি প্রবাহ", titleEn: "Ecosystem Components, Trophic Pyramids & Nutrient Cycles", status: "Not Started", classNum: 34 },
+          { id: "t12-2", title: "জীববৈচিত্র্য সংরক্ষণ ও জলবায়ু পরিবর্তনের প্রভাব", titleBn: "জীববৈচিত্র্য সংরক্ষণ ও জলবায়ু পরিবর্তনের প্রভাব", titleEn: "Biodiversity Conservation & Climate Change Impacts", status: "Not Started", classNum: 35 }
         ]
       }
     ]
@@ -256,156 +256,192 @@ export const initialPapers: Paper[] = [
       {
         id: "c2-01",
         number: "01",
-        name: "Animal Diversity & Classification",
+        numberBn: "১",
+        name: "প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস",
+        nameBn: "প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস",
+        nameEn: "Animal Diversity & Classification",
         paperId: "second-paper",
         progress: 100,
         status: "Completed",
         topics: [
-          { id: "t21-1", title: "Basis of Classification: Symmetry, Germ Layers, Coelom & Metamerism", status: "Completed", classNum: 36 },
-          { id: "t21-2", title: "Major Non-Chordate Phyla (Porifera to Echinodermata)", status: "Completed", classNum: 37 },
-          { id: "t21-3", title: "Phylum Chordata & Vertebrate Classes Overview", status: "Completed", classNum: 38 }
+          { id: "t21-1", title: "শ্রেণিবিন্যাসের ভিত্তি: প্রতিসাম্যতা, ভ্রূণস্তর, সিলোম ও খণ্ডকায়ন", titleBn: "শ্রেণিবিন্যাসের ভিত্তি: প্রতিসাম্যতা, ভ্রূণস্তর, সিলোম ও খণ্ডকায়ন", titleEn: "Basis of Classification: Symmetry, Germ Layers, Coelom & Metamerism", status: "Completed", classNum: 36 },
+          { id: "t21-2", title: "প্রধান নন-কর্ডাটা পর্বসমূহ (পরিফেরা থেকে একাইনোডার্মাটা)", titleBn: "প্রধান নন-কর্ডাটা পর্বসমূহ (পরিফেরা থেকে একাইনোডার্মাটা)", titleEn: "Major Non-Chordate Phyla (Porifera to Echinodermata)", status: "Completed", classNum: 37 },
+          { id: "t21-3", title: "কর্ডাটা পর্ব ও মেরুদণ্ডী শ্রেণির বৈশিষ্ট্য", titleBn: "কর্ডাটা পর্ব ও মেরুদণ্ডী শ্রেণির বৈশিষ্ট্য", titleEn: "Phylum Chordata & Vertebrate Classes Overview", status: "Completed", classNum: 38 }
         ]
       },
       {
         id: "c2-02",
         number: "02",
-        name: "Animal Identification & Morphology",
+        numberBn: "২",
+        name: "প্রাণীর পরিচিতি",
+        nameBn: "প্রাণীর পরিচিতি",
+        nameEn: "Animal Identification & Morphology",
         paperId: "second-paper",
         progress: 100,
         status: "Completed",
         topics: [
-          { id: "t22-1", title: "Hydra: Anatomy, Nematocysts, Locomotion & Budding", status: "Completed", classNum: 39 },
-          { id: "t22-2", title: "Grasshopper: Mouthparts, Digestive & Circulatory System", status: "Completed", classNum: 40 },
-          { id: "t22-3", title: "Rohu Fish: Operculum, Gills, Lateral Line & Swim Bladder", status: "Completed", classNum: 41 }
+          { id: "t22-1", title: "হাইড্রা: দৈহিক গঠন, নেমাটোসিস্ট, চলন ও মুকুলোদগম", titleBn: "হাইড্রা: দৈহিক গঠন, নেমাটোসিস্ট, চলন ও মুকুলোদগম", titleEn: "Hydra: Anatomy, Nematocysts, Locomotion & Budding", status: "Completed", classNum: 39 },
+          { id: "t22-2", title: "ঘাসফড়িং: মুখোপাঙ্গ, পৌষ্টিক ও সংবহনতন্ত্র", titleBn: "ঘাসফড়িং: মুখোপাঙ্গ, পৌষ্টিক ও সংবহনতন্ত্র", titleEn: "Grasshopper: Mouthparts, Digestive & Circulatory System", status: "Completed", classNum: 40 },
+          { id: "t22-3", title: "রুই মাছ: কানকো, ফুলকা, পার্শ্বরেখা ও পটকা", titleBn: "রুই মাছ: কানকো, ফুলকা, পার্শ্বরেখা ও পটকা", titleEn: "Rohu Fish: Operculum, Gills, Lateral Line & Swim Bladder", status: "Completed", classNum: 41 }
         ]
       },
       {
         id: "c2-03",
         number: "03",
-        name: "Human Physiology: Digestion & Absorption",
+        numberBn: "৩",
+        name: "মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
+        nameBn: "মানব শারীরতত্ত্ব: পরিপাক ও শোষণ",
+        nameEn: "Human Physiology: Digestion & Absorption",
         paperId: "second-paper",
         progress: 90,
         status: "In Progress",
         topics: [
-          { id: "t23-1", title: "Digestive Tract Anatomy & Dental Formula", status: "Completed", classNum: 42 },
-          { id: "t23-2", title: "Chemical Digestion of Carbohydrates, Proteins & Lipids", status: "Completed", classNum: 43 },
-          { id: "t23-3", title: "Liver Architecture, Bile Secretion & Metabolic Functions", status: "Completed", classNum: 44 },
-          { id: "t23-4", title: "Nutrient Absorption in Villi & Gastrointestinal Hormones", status: "In Progress", classNum: 45 }
+          { id: "t23-1", title: "পরিপাকনালীর গঠন ও দন্ত সংকেত", titleBn: "পরিপাকনালীর গঠন ও দন্ত সংকেত", titleEn: "Digestive Tract Anatomy & Dental Formula", status: "Completed", classNum: 42 },
+          { id: "t23-2", title: "কার্বোহাইড্রেট, প্রোটিন ও লিপিডের রাসায়নিক পরিপাক", titleBn: "কার্বোহাইড্রেট, প্রোটিন ও লিপিডের রাসায়নিক পরিপাক", titleEn: "Chemical Digestion of Carbohydrates, Proteins & Lipids", status: "Completed", classNum: 43 },
+          { id: "t23-3", title: "যকৃৎ-এর গঠন, পিত্তরস ও বিপাকীয় ভূমিকা", titleBn: "যকৃৎ-এর গঠন, পিত্তরস ও বিপাকীয় ভূমিকা", titleEn: "Liver Architecture, Bile Secretion & Metabolic Functions", status: "Completed", classNum: 44 },
+          { id: "t23-4", title: "ভিলাই দ্বারা খাদ্য উপাদান শোষণ ও পরিপাকীয় হরমোন", titleBn: "ভিলাই দ্বারা খাদ্য উপাদান শোষণ ও পরিপাকীয় হরমোন", titleEn: "Nutrient Absorption in Villi & Gastrointestinal Hormones", status: "In Progress", classNum: 45 }
         ]
       },
       {
         id: "c2-04",
         number: "04",
-        name: "Human Physiology: Blood & Circulation",
+        numberBn: "৪",
+        name: "মানব শারীরতত্ত্ব: রক্ত ও সংবহন",
+        nameBn: "মানব শারীরতত্ত্ব: রক্ত ও সংবহন",
+        nameEn: "Human Physiology: Blood & Circulation",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t24-1", title: "Blood Plasma & Formed Elements (RBC, WBC, Platelets)", status: "Not Started", classNum: 46 },
-          { id: "t24-2", title: "Cardiac Cycle, Conductive System (SA/AV Node) & ECG", status: "Not Started", classNum: 47 },
-          { id: "t24-3", title: "Blood Pressure Regulation, Coronary Circulation & Angioplasty", status: "Not Started", classNum: 48 }
+          { id: "t24-1", title: "রক্তরস ও রক্তকণিকা (লোহিত, শ্বেত ও অণুচক্রিকা)", titleBn: "রক্তরস ও রক্তকণিকা (লোহিত, শ্বেত ও অণুচক্রিকা)", titleEn: "Blood Plasma & Formed Elements (RBC, WBC, Platelets)", status: "Not Started", classNum: 46 },
+          { id: "t24-2", title: "কার্ডিয়াক চক্র, সংবহনতন্ত্র (এসএ/এভি নোড) ও ইসিজি", titleBn: "কার্ডিয়াক চক্র, সংবহনতন্ত্র (এসএ/এভি নোড) ও ইসিজি", titleEn: "Cardiac Cycle, Conductive System (SA/AV Node) & ECG", status: "Not Started", classNum: 47 },
+          { id: "t24-3", title: "রক্তচাপ নিয়ন্ত্রণ, করোনারি সংবহন ও এনজিওপ্লাস্টি", titleBn: "রক্তচাপ নিয়ন্ত্রণ, করোনারি সংবহন ও এনজিওপ্লাস্টি", titleEn: "Blood Pressure Regulation, Coronary Circulation & Angioplasty", status: "Not Started", classNum: 48 }
         ]
       },
       {
         id: "c2-05",
         number: "05",
-        name: "Human Physiology: Respiration & Gas Exchange",
+        numberBn: "৫",
+        name: "মানব শারীরতত্ত্ব: শ্বসন ও গ্যাস বিনিময়",
+        nameBn: "মানব শারীরতত্ত্ব: শ্বসন ও গ্যাস বিনিময়",
+        nameEn: "Human Physiology: Respiration & Gas Exchange",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t25-1", title: "Human Respiratory Tract & Alveolar Microstructure", status: "Not Started" },
-          { id: "t25-2", title: "Inspiration/Expiration Mechanism & Lung Volumes", status: "Not Started" },
-          { id: "t25-3", title: "Oxygen & Carbon Dioxide Transport in Blood", status: "Not Started" }
+          { id: "t25-1", title: "মানুষের শ্বসনতন্ত্র ও অ্যালভিওলাসের সূক্ষ্ম গঠন", titleBn: "মানুষের শ্বসনতন্ত্র ও অ্যালভিওলাসের সূক্ষ্ম গঠন", titleEn: "Human Respiratory Tract & Alveolar Microstructure", status: "Not Started" },
+          { id: "t25-2", title: "প্রশ্বাস-নিঃশ্বাস প্রক্রিয়া ও ফুসফুসের ধারণক্ষমতা", titleBn: "প্রশ্বাস-নিঃশ্বাস প্রক্রিয়া ও ফুসফুসের ধারণক্ষমতা", titleEn: "Inspiration/Expiration Mechanism & Lung Volumes", status: "Not Started" },
+          { id: "t25-3", title: "রক্তে অক্সিজেন ও কার্বন ডাই-অক্সাইড পরিবহন", titleBn: "রক্তে অক্সিজেন ও কার্বন ডাই-অক্সাইড পরিবহন", titleEn: "Oxygen & Carbon Dioxide Transport in Blood", status: "Not Started" }
         ]
       },
       {
         id: "c2-06",
         number: "06",
-        name: "Human Physiology: Excretion & Osmoregulation",
+        numberBn: "৬",
+        name: "মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
+        nameBn: "মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন",
+        nameEn: "Human Physiology: Excretion & Osmoregulation",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t26-1", title: "Kidney Anatomy & Microscopic Structure of Nephron", status: "Not Started" },
-          { id: "t26-2", title: "Ultrafiltration, Reabsorption & Countercurrent Mechanism", status: "Not Started" },
-          { id: "t26-3", title: "Renin-Angiotensin System & Hemodialysis", status: "Not Started" }
+          { id: "t26-1", title: "বৃক্কের গঠন ও নেফ্রনের আণুবীক্ষণিক গঠন", titleBn: "বৃক্কের গঠন ও নেফ্রনের আণুবীক্ষণিক গঠন", titleEn: "Kidney Anatomy & Microscopic Structure of Nephron", status: "Not Started" },
+          { id: "t26-2", title: "আল্ট্রাফিল্ট্রেশন, পুনঃশোষণ ও কাউন্টার-কারেন্ট কৌশল", titleBn: "আল্ট্রাফিল্ট্রেশন, পুনঃশোষণ ও কাউন্টার-কারেন্ট কৌশল", titleEn: "Ultrafiltration, Reabsorption & Countercurrent Mechanism", status: "Not Started" },
+          { id: "t26-3", title: "রেনিন-অ্যাঞ্জিওটেনসিন সিস্টেম ও হেমোডায়ালাইসিস", titleBn: "রেনিন-অ্যাঞ্জিওটেনসিন সিস্টেম ও হেমোডায়ালাইসিস", titleEn: "Renin-Angiotensin System & Hemodialysis", status: "Not Started" }
         ]
       },
       {
         id: "c2-07",
         number: "07",
-        name: "Human Physiology: Locomotion & Movement",
+        numberBn: "৭",
+        name: "মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
+        nameBn: "মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা",
+        nameEn: "Human Physiology: Locomotion & Movement",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t27-1", title: "Human Skeleton: Axial & Appendicular Divisions", status: "Not Started" },
-          { id: "t27-2", title: "Synovial Joints & Sliding Filament Theory of Muscle Contraction", status: "Not Started" }
+          { id: "t27-1", title: "মানব কঙ্কালতন্ত্র: অক্ষীয় ও উপাঙ্গীয় কঙ্কাল", titleBn: "মানব কঙ্কালতন্ত্র: অক্ষীয় ও উপাঙ্গীয় কঙ্কাল", titleEn: "Human Skeleton: Axial & Appendicular Divisions", status: "Not Started" },
+          { id: "t27-2", title: "সাইনোভিয়াল অস্থিসন্ধি ও পেশি সংকোচনের স্লাইডিং ফিলামেন্ট তত্ত্ব", titleBn: "সাইনোভিয়াল অস্থিসন্ধি ও পেশি সংকোচনের স্লাইডিং ফিলামেন্ট তত্ত্ব", titleEn: "Synovial Joints & Sliding Filament Theory of Muscle Contraction", status: "Not Started" }
         ]
       },
       {
         id: "c2-08",
         number: "08",
-        name: "Human Physiology: Coordination & Endocrine",
+        numberBn: "৮",
+        name: "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
+        nameBn: "মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ",
+        nameEn: "Human Physiology: Coordination & Endocrine",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t28-1", title: "Brain Divisions, Spinal Cord & Reflex Action", status: "Not Started" },
-          { id: "t28-2", title: "Major Endocrine Glands (Pituitary, Thyroid, Adrenal & Pancreas)", status: "Not Started" }
+          { id: "t28-1", title: "মস্তিষ্কের অংশসমূহ, সুষুম্নাকাণ্ড ও প্রতিবর্ত ক্রিয়া", titleBn: "মস্তিষ্কের অংশসমূহ, সুষুম্নাকাণ্ড ও প্রতিবর্ত ক্রিয়া", titleEn: "Brain Divisions, Spinal Cord & Reflex Action", status: "Not Started" },
+          { id: "t28-2", title: "প্রধান অন্তঃক্ষরা গ্রন্থিসমূহ (পিটুইটারি, থাইরয়েড, অ্যাড্রেনাল ও অগ্ন্যাশয়)", titleBn: "প্রধান অন্তঃক্ষরা গ্রন্থিসমূহ (পিটুইটারি, থাইরয়েড, অ্যাড্রেনাল ও অগ্ন্যাশয়)", titleEn: "Major Endocrine Glands (Pituitary, Thyroid, Adrenal & Pancreas)", status: "Not Started" }
         ]
       },
       {
         id: "c2-09",
         number: "09",
-        name: "Human Reproduction & Embryology",
+        numberBn: "৯",
+        name: "মানব জীবনের ধারাবাহিকতা",
+        nameBn: "মানব জীবনের ধারাবাহিকতা",
+        nameEn: "Human Reproduction & Embryology",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t29-1", title: "Male & Female Reproductive System Anatomy", status: "Not Started" },
-          { id: "t29-2", title: "Spermatogenesis, Oogenesis & Menstrual Hormonal Cycle", status: "Not Started" },
-          { id: "t29-3", title: "Fertilization, Blastocyst Formation & Placental Functions", status: "Not Started" }
+          { id: "t29-1", title: "পুরুষ ও স্ত্রী প্রজননতন্ত্রের অন্তর্গঠন", titleBn: "পুরুষ ও স্ত্রী প্রজননতন্ত্রের অন্তর্গঠন", titleEn: "Male & Female Reproductive System Anatomy", status: "Not Started" },
+          { id: "t29-2", title: "স্পার্মাটোজেনেসিস, ওওজেনেসিস ও ঋতুচক্র", titleBn: "স্পার্মাটোজেনেসিস, ওওজেনেসিস ও ঋতুচক্র", titleEn: "Spermatogenesis, Oogenesis & Menstrual Hormonal Cycle", status: "Not Started" },
+          { id: "t29-3", title: "নিষেক, ব্লাস্টোসিস্ট গঠন ও অমরার কাজ", titleBn: "নিষেক, ব্লাস্টোসিস্ট গঠন ও অমরার কাজ", titleEn: "Fertilization, Blastocyst Formation & Placental Functions", status: "Not Started" }
         ]
       },
       {
         id: "c2-10",
         number: "10",
-        name: "Human Body Immunity & Defense",
+        numberBn: "১০",
+        name: "মানবদেহের প্রতিরক্ষা (অনাক্রম্যতা)",
+        nameBn: "মানবদেহের প্রতিরক্ষা (অনাক্রম্যতা)",
+        nameEn: "Human Body Immunity & Defense",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t30-1", title: "First & Second Lines of Non-specific Defense", status: "Not Started" },
-          { id: "t30-2", title: "Specific Immunity: B-Cells, T-Cells & Antibody Architecture", status: "Not Started" },
-          { id: "t30-3", title: "Vaccination Types & Immunological Memory", status: "Not Started" }
+          { id: "t30-1", title: "দেহের প্রথম ও দ্বিতীয় প্রতিরক্ষা স্তর (অনির্দিষ্ট)", titleBn: "দেহের প্রথম ও দ্বিতীয় প্রতিরক্ষা স্তর (অনির্দিষ্ট)", titleEn: "First & Second Lines of Non-specific Defense", status: "Not Started" },
+          { id: "t30-2", title: "নির্দিষ্ট প্রতিরক্ষা: বি-কোষ, টি-কোষ ও অ্যান্টিবডির গঠন", titleBn: "নির্দিষ্ট প্রতিরক্ষা: বি-কোষ, টি-কোষ ও অ্যান্টিবডির গঠন", titleEn: "Specific Immunity: B-Cells, T-Cells & Antibody Architecture", status: "Not Started" },
+          { id: "t30-3", title: "টিকা বা ভ্যাকসিনের প্রকারভেদ ও স্মৃতি কোষ", titleBn: "টিকা বা ভ্যাকসিনের প্রকারভেদ ও স্মৃতি কোষ", titleEn: "Vaccination Types & Immunological Memory", status: "Not Started" }
         ]
       },
       {
         id: "c2-11",
         number: "11",
-        name: "Genetics and Evolution",
+        numberBn: "১১",
+        name: "জিনতত্ত্ব ও বিবর্তন",
+        nameBn: "জিনতত্ত্ব ও বিবর্তন",
+        nameEn: "Genetics and Evolution",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t31-1", title: "Mendel's Monohybrid & Dihybrid Cross Laws", status: "Not Started" },
-          { id: "t31-2", title: "Exceptions: Incomplete Dominance, Epistasis & Lethal Genes", status: "Not Started" },
-          { id: "t31-3", title: "Sex-Linked Inheritance: Hemophilia & Color Blindness", status: "Not Started" },
-          { id: "t31-4", title: "Darwinian Natural Selection & Speciation Evidence", status: "Not Started" }
+          { id: "t31-1", title: "মেন্ডেলের প্রথম ও দ্বিতীয় সূত্র (একসংকর ও দ্বিসংকর ক্রসিং)", titleBn: "মেন্ডেলের প্রথম ও দ্বিতীয় সূত্র (একসংকর ও দ্বিসংকর ক্রসিং)", titleEn: "Mendel's Monohybrid & Dihybrid Cross Laws", status: "Not Started" },
+          { id: "t31-2", title: "মেন্ডেলীয় ব্যতিক্রম: অসম্পূর্ণ প্রকটতা, এপিস্ট্যাসিস ও লিথাল জিন", titleBn: "মেন্ডেলীয় ব্যতিক্রম: অসম্পূর্ণ প্রকটতা, এপিস্ট্যাসিস ও লিথাল জিন", titleEn: "Exceptions: Incomplete Dominance, Epistasis & Lethal Genes", status: "Not Started" },
+          { id: "t31-3", title: "সেক্স-লিঙ্কড বংশগতি: হিমোফিলিয়া ও বর্ণান্ধতা", titleBn: "সেক্স-লিঙ্কড বংশগতি: হিমোফিলিয়া ও বর্ণান্ধতা", titleEn: "Sex-Linked Inheritance: Hemophilia & Color Blindness", status: "Not Started" },
+          { id: "t31-4", title: "ডারউইনের প্রাকৃতিক নির্বাচন মতবাদ ও বিবর্তনীয় প্রমাণ", titleBn: "ডারউইনের প্রাকৃতিক নির্বাচন মতবাদ ও বিবর্তনীয় প্রমাণ", titleEn: "Darwinian Natural Selection & Speciation Evidence", status: "Not Started" }
         ]
       },
       {
         id: "c2-12",
         number: "12",
-        name: "Animal Behavior",
+        numberBn: "১২",
+        name: "প্রাণীর আচরণ",
+        nameBn: "প্রাণীর আচরণ",
+        nameEn: "Animal Behavior",
         paperId: "second-paper",
         progress: 0,
         status: "Not Started",
         topics: [
-          { id: "t32-1", title: "Innate Behavior: Taxes, Reflexes & Fixed Action Patterns (FAP)", status: "Not Started" },
-          { id: "t32-2", title: "Learned Behavior: Habituation, Imprinting & Conditioning", status: "Not Started" }
+          { id: "t32-1", title: "সহজাত আচরণ: ট্যাক্সিস, রিফ্লেক্স ও নির্দিষ্ট কর্মপদ্ধতি (FAP)", titleBn: "সহজাত আচরণ: ট্যাক্সিস, রিফ্লেক্স ও নির্দিষ্ট কর্মপদ্ধতি (FAP)", titleEn: "Innate Behavior: Taxes, Reflexes & Fixed Action Patterns (FAP)", status: "Not Started" },
+          { id: "t32-2", title: "শিক্ষালব্ধ আচরণ: অভ্যাসগত, অনুকরণ ও সাপেক্ষ প্রতিবর্ত", titleBn: "শিক্ষালব্ধ আচরণ: অভ্যাসগত, অনুকরণ ও সাপেক্ষ প্রতিবর্ত", titleEn: "Learned Behavior: Habituation, Imprinting & Conditioning", status: "Not Started" }
         ]
       }
     ]

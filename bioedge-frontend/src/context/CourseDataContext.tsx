@@ -90,30 +90,29 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
   const [teacher, setTeacher] = useState<TeacherData>(() => getStored('teacher', initialTeacherData));
   const [papers, setPapers] = useState<Paper[]>(() => {
     const stored = getStored<Paper[]>('papers', initialPapers);
-    const fpStored = stored.find(p => p.id === 'first-paper');
-    const firstCh = fpStored?.chapters?.[0];
-    if (firstCh && (firstCh.name === 'Cell and Its Structure' || !firstCh.numberBn || firstCh.name !== 'কোষ ও এর গঠন')) {
-      const fpInitial = initialPapers.find(p => p.id === 'first-paper');
-      if (fpInitial) {
-        return stored.map(p => {
-          if (p.id !== 'first-paper') return p;
+    return stored.map(p => {
+      const initialPaper = initialPapers.find(ip => ip.id === p.id);
+      if (!initialPaper) return p;
+      return {
+        ...p,
+        name: initialPaper.name,
+        chapters: initialPaper.chapters.map(initCh => {
+          const existingCh = p.chapters.find(c => c.id === initCh.id);
           return {
-            ...p,
-            name: fpInitial.name,
-            chapters: fpInitial.chapters.map(initCh => {
-              const existingCh = p.chapters.find(c => c.id === initCh.id);
+            ...initCh,
+            progress: existingCh?.progress ?? initCh.progress,
+            status: existingCh?.status ?? initCh.status,
+            topics: (initCh.topics || []).map(initTopic => {
+              const existingTopic = existingCh?.topics?.find(t => t.id === initTopic.id);
               return {
-                ...initCh,
-                progress: existingCh?.progress ?? initCh.progress,
-                status: existingCh?.status ?? initCh.status,
-                topics: existingCh?.topics?.length ? existingCh.topics : initCh.topics
+                ...initTopic,
+                status: existingTopic?.status ?? initTopic.status
               };
             })
           };
-        });
-      }
-    }
-    return stored;
+        })
+      };
+    });
   });
   const [classes, setClasses] = useState<ClassSession[]>(() => {
     const stored = getStored<ClassSession[]>('classes', initialClasses);

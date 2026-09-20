@@ -122,13 +122,13 @@ export const StudentCoursePage: React.FC = () => {
             </div>
 
             <div className="ch-topics-interactive-list">
-              <h4 className="topics-list-title">Topics in this Chapter:</h4>
+              <h4 className="topics-list-title">{isBangla ? 'এই অধ্যায়ের আলোচ্য বিষয়সমূহ:' : 'Topics in this Chapter:'}</h4>
               {(ch.topics || []).map((topic) => (
                 <div 
                   key={topic.id} 
                   className={`topic-interactive-row ${topic.status === 'Completed' ? 'done' : ''}`}
                   onClick={() => toggleTopicStatus(activePaper.id, ch.id, topic.id)}
-                  title="Click to toggle completion status"
+                  title={isBangla ? 'সম্পন্ন হিসেবে চিহ্নিত করতে ক্লিক করুন' : 'Click to toggle completion status'}
                 >
                   <div className="topic-check-box">
                     {topic.status === 'Completed' ? (
@@ -137,7 +137,7 @@ export const StudentCoursePage: React.FC = () => {
                       <span className="empty-checkbox"></span>
                     )}
                   </div>
-                  <span className="topic-text">{topic.title}</span>
+                  <span className="topic-text">{isBangla ? (topic.titleBn || topic.title) : (topic.titleEn || topic.title)}</span>
                 </div>
               ))}
             </div>

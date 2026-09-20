@@ -84,8 +84,8 @@ export const StudentChapterDetailsPage: React.FC = () => {
       <div className="chapter-details-grid">
         {/* Left Column: Topic Checklist */}
         <div className="topics-detail-card bio-card">
-          <h3 className="section-card-title">Curriculum Topics Checklist</h3>
-          <p className="section-card-sub">Click a topic to toggle your preparation status</p>
+          <h3 className="section-card-title">{isBangla ? 'সিলেবাস টপিকসমূহ' : 'Curriculum Topics Checklist'}</h3>
+          <p className="section-card-sub">{isBangla ? 'প্রস্তুতির অগ্রগতি চিহ্নিত করতে টপিকে ক্লিক করুন' : 'Click a topic to toggle your preparation status'}</p>
 
           <div className="topics-list-large">
             {(currentChapter.topics || []).map((topic, idx) => (
@@ -102,13 +102,13 @@ export const StudentChapterDetailsPage: React.FC = () => {
                   )}
                 </div>
                 <div className="t-large-meta">
-                  <h4 className="t-large-title">{topic.title}</h4>
+                  <h4 className="t-large-title">{isBangla ? (topic.titleBn || topic.title) : (topic.titleEn || topic.title)}</h4>
                   <span className="t-large-class-info">
-                    {topic.classNum ? `Covered in Class ${topic.classNum}` : 'Self-study & CQ Practice'}
+                    {topic.classNum ? (isBangla ? `ক্লাস নং ${toBnNum(topic.classNum)}-এ আলোচিত` : `Covered in Class ${topic.classNum}`) : (isBangla ? 'স্ব-অধ্যয়ন ও সিকিউ অনুশীলন' : 'Self-study & CQ Practice')}
                   </span>
                 </div>
                 <span className={`badge ${topic.status === 'Completed' ? 'badge-green' : 'badge-gray'}`}>
-                  {topic.status}
+                  {isBangla ? (topic.status === 'Completed' ? 'সম্পন্ন' : 'বাকি') : topic.status}
                 </span>
               </div>
             ))}

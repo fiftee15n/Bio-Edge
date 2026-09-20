@@ -242,7 +242,7 @@ export const ProgramPage: React.FC = () => {
                         {topicsList.map((t, idx) => (
                           <div key={t.id || idx} className="topic-badge-item">
                             <CheckCircle2 size={15} className="topic-check-icon" />
-                            <span className="topic-text">{t.title}</span>
+                            <span className="topic-text">{isBangla ? (t.titleBn || t.title) : (t.titleEn || t.title)}</span>
                           </div>
                         ))}
                       </div>
