@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { VerifyEmailForm } from '../../components/common/VerifyEmailForm';
 import { 
   Lock, 
@@ -17,6 +18,7 @@ import {
 
 export const LoginPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { isBangla } = useLanguage();
   const redirectParam = searchParams.get('redirect') || searchParams.get('from');
   const queryRole = searchParams.get('role');
   const defaultRole = (queryRole === 'teacher' ? 'teacher' : 'student') as 'student' | 'teacher';
@@ -60,7 +62,7 @@ export const LoginPage: React.FC = () => {
       setInitialOtpCode(res.verificationCode || '');
       setIsVerifying(true);
     } else {
-      setErrorMessage(res.message || 'Invalid email or password.');
+      setErrorMessage(res.message || (isBangla ? 'ভুল ইমেইল বা পাসওয়ার্ড।' : 'Invalid email or password.'));
     }
   };
 
@@ -70,7 +72,7 @@ export const LoginPage: React.FC = () => {
     if (res.success) {
       handlePostAuthRedirect('student');
     } else {
-      setErrorMessage(res.message || 'Google sign-in failed');
+      setErrorMessage(res.message || (isBangla ? 'গুগল সাইন-ইন ব্যর্থ হয়েছে।' : 'Google sign-in failed'));
     }
   };
 
@@ -84,7 +86,7 @@ export const LoginPage: React.FC = () => {
               <Sparkles size={24} />
             </div>
             <h1 className="login-brand-title">Bio Edge</h1>
-            <p className="login-brand-subtitle">by Afroza Tahmina</p>
+            <p className="login-brand-subtitle">{isBangla ? 'আফরোজা তাহমিনার সাথে' : 'by Afroza Tahmina'}</p>
           </div>
 
           {!isVerifying ? (
@@ -97,7 +99,7 @@ export const LoginPage: React.FC = () => {
                   className={`role-tab-btn ${activeRole === 'student' ? 'active' : ''}`}
                 >
                   <GraduationCap size={16} />
-                  <span>Student Login</span>
+                  <span>{isBangla ? 'শিক্ষার্থী লগইন' : 'Student Login'}</span>
                 </button>
                 <button
                   type="button"
@@ -105,7 +107,7 @@ export const LoginPage: React.FC = () => {
                   className={`role-tab-btn ${activeRole === 'teacher' ? 'active' : ''}`}
                 >
                   <ShieldCheck size={16} />
-                  <span>Teacher Login</span>
+                  <span>{isBangla ? 'শিক্ষক লগইন' : 'Teacher Login'}</span>
                 </button>
               </div>
 
@@ -121,7 +123,9 @@ export const LoginPage: React.FC = () => {
               <form onSubmit={handleLogin} className="login-form">
                 <div className="form-group">
                   <label className="form-label">
-                    {activeRole === 'teacher' ? 'Faculty Email' : 'Student Email / ID'}
+                    {activeRole === 'teacher' 
+                      ? (isBangla ? 'শিক্ষক ইমেইল' : 'Faculty Email') 
+                      : (isBangla ? 'শিক্ষার্থী ইমেইল / আইডি' : 'Student Email / ID')}
                   </label>
                   <div className="input-with-icon">
                     <Mail size={18} className="input-icon" />
@@ -137,7 +141,7 @@ export const LoginPage: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Password</label>
+                  <label className="form-label">{isBangla ? 'পাসওয়ার্ড' : 'Password'}</label>
                   <div className="input-with-icon">
                     <Lock size={18} className="input-icon" />
                     <input
@@ -161,7 +165,9 @@ export const LoginPage: React.FC = () => {
                 </div>
 
                 <button type="submit" disabled={isLoading} className="btn btn-primary btn-block btn-lg mt-3">
-                  <LogIn size={18} /> {isLoading ? 'Signing In...' : `Sign In to ${activeRole === 'teacher' ? 'Teacher Management' : 'Student Portal'}`}
+                  <LogIn size={18} /> {isLoading 
+                    ? (isBangla ? 'লগইন হচ্ছে...' : 'Signing In...') 
+                    : (isBangla ? `${activeRole === 'teacher' ? 'শিক্ষক ড্যাশবোর্ডে' : 'স্টুডেন্ট পোর্টালে'} প্রবেশ করুন` : `Sign In to ${activeRole === 'teacher' ? 'Teacher Management' : 'Student Portal'}`)}
                 </button>
               </form>
 
@@ -169,7 +175,7 @@ export const LoginPage: React.FC = () => {
               {activeRole === 'student' && (
                 <>
                   <div className="auth-divider">
-                    <span>Or continue with</span>
+                    <span>{isBangla ? 'অথবা এর মাধ্যমে প্রবেশ করুন' : 'Or continue with'}</span>
                   </div>
 
                   <button
@@ -184,7 +190,7 @@ export const LoginPage: React.FC = () => {
                       <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
                       <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
                     </svg>
-                    <span>Continue with Google</span>
+                    <span>{isBangla ? 'গুগল দিয়ে প্রবেশ করুন' : 'Continue with Google'}</span>
                   </button>
                 </>
               )}
@@ -192,9 +198,9 @@ export const LoginPage: React.FC = () => {
               {/* Bottom "Didn't have account? Create Account" Link */}
               <div className="auth-bottom-switch-link text-center">
                 <p>
-                  Didn't have account?{' '}
+                  {isBangla ? 'কোনো অ্যাকাউন্ট নেই?' : "Didn't have account?"}{' '}
                   <Link to={`/register${redirectParam ? `?redirect=${encodeURIComponent(redirectParam)}` : ''}`}>
-                    Create Account
+                    {isBangla ? 'নতুন অ্যাকাউন্ট খুলুন' : 'Create Account'}
                   </Link>
                 </p>
               </div>
@@ -206,7 +212,7 @@ export const LoginPage: React.FC = () => {
               initialCode={initialOtpCode}
               onSuccess={() => handlePostAuthRedirect(activeRole)}
               onCancel={() => setIsVerifying(false)}
-              redirectNotice={redirectParam ? 'You will be redirected after verification.' : undefined}
+              redirectNotice={redirectParam ? (isBangla ? 'ভেরিফিকেশনের পর আপনাকে রিডাইরেক্ট করা হবে।' : 'You will be redirected after verification.') : undefined}
             />
           )}
         </div>

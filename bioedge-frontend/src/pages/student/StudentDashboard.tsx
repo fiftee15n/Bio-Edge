@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { ProgressBar } from '../../components/common/ProgressBar';
 import { 
   BookOpen, 
@@ -21,6 +22,7 @@ import {
 
 export const StudentDashboard: React.FC = () => {
   const { user } = useAuth();
+  const { isBangla, toBnNum } = useLanguage();
   const { 
     course, 
     papers, 
@@ -43,11 +45,11 @@ export const StudentDashboard: React.FC = () => {
 
   // Enrolled course label
   const activeCourseName = hasAlphaAccess && hasSscAccess
-    ? 'All Access (Alpha Cohort & SSC 2027 Model Tests)'
+    ? (isBangla ? 'সকল অ্যাক্সেস (আলফা ব্যাচ ও এসএসসি ২০২৭ মডেল টেস্ট)' : 'All Access (Alpha Cohort & SSC 2027 Model Tests)')
     : hasAlphaAccess
-      ? 'Alpha Cohort (HSC Biology Intensive)'
+      ? (isBangla ? 'আলফা ব্যাচ (এইচএসসি বায়োলজি ইনটেনসিভ)' : 'Alpha Cohort (HSC Biology Intensive)')
       : hasSscAccess
-        ? 'SSC 2027 Model Test Package'
+        ? (isBangla ? 'এসএসসি ২০২৭ মডেল টেস্ট প্যাকেজ' : 'SSC 2027 Model Test Package')
         : (pendingEnrollment ? pendingEnrollment.courseTitle : course.title);
 
   // Dynamic progress stats
@@ -73,11 +75,13 @@ export const StudentDashboard: React.FC = () => {
               <Clock size={22} />
             </div>
             <div>
-              <h3 className="banner-title">Enrollment Under Admin Verification</h3>
+              <h3 className="banner-title">{isBangla ? 'ভর্তি তথ্য অ্যাডমিন ভেরিফিকেশনে রয়েছে' : 'Enrollment Under Admin Verification'}</h3>
               <p className="banner-desc">
-                Your application for <strong>{pendingEnrollment.courseTitle}</strong> is currently being verified by administration. 
-                Payment details: <strong>৳{pendingEnrollment.amount}</strong> via <strong>{pendingEnrollment.paymentMethod}</strong> (TrxID: <code>{pendingEnrollment.transactionId}</code>).
-                Course materials will unlock as soon as administrator grants access.
+                {isBangla ? (
+                  <><strong>{pendingEnrollment.courseTitle}</strong>-এর জন্য আপনার আবেদনটি বর্তমানে প্রশাসন কর্তৃক যাচাই করা হচ্ছে। পেমেন্ট তথ্য: <strong>৳{pendingEnrollment.amount}</strong> ({pendingEnrollment.paymentMethod} - TrxID: <code>{pendingEnrollment.transactionId}</code>)। অ্যাডমিন অনুমোদন প্রদান মাত্র কোর্সের সকল স্টাডি ম্যাটেরিয়াল উন্মুক্ত হবে।</>
+                ) : (
+                  <>Your application for <strong>{pendingEnrollment.courseTitle}</strong> is currently being verified by administration. Payment details: <strong>৳{pendingEnrollment.amount}</strong> via <strong>{pendingEnrollment.paymentMethod}</strong> (TrxID: <code>{pendingEnrollment.transactionId}</code>). Course materials will unlock as soon as administrator grants access.</>
+                )}
               </p>
             </div>
           </div>
@@ -89,7 +93,7 @@ export const StudentDashboard: React.FC = () => {
             rel="noopener noreferrer"
             className="btn btn-secondary btn-sm"
           >
-            <MessageSquare size={15} /> WhatsApp Admin
+            <MessageSquare size={15} /> {isBangla ? 'অ্যাডমিনকে হোয়াটসঅ্যাপ করুন' : 'WhatsApp Admin'}
           </a>
         </div>
       )}
@@ -98,14 +102,14 @@ export const StudentDashboard: React.FC = () => {
       <div className="dashboard-welcome-header bio-card">
         <div className="welcome-left">
           <div className="welcome-greeting-row">
-            <h1 className="welcome-title">Good Morning, {user?.name || "Student"}</h1>
+            <h1 className="welcome-title">{isBangla ? `স্বাগতম, ${user?.name || "শিক্ষার্থী"}` : `Good Morning, ${user?.name || "Student"}`}</h1>
             {hasAlphaAccess || hasSscAccess ? (
               <span className="badge badge-green active-pill">
-                <span className="dot"></span> Verified Course Access
+                <span className="dot"></span> {isBangla ? 'ভেরিফায়েড কোর্স অ্যাক্সেস' : 'Verified Course Access'}
               </span>
             ) : (
               <span className="badge badge-amber active-pill">
-                <span className="dot" style={{ background: '#D97706' }}></span> Awaiting Admin Approval
+                <span className="dot" style={{ background: '#D97706' }}></span> {isBangla ? 'অ্যাডমিন অনুমোদনের অপেক্ষায়' : 'Awaiting Admin Approval'}
               </span>
             )}
           </div>
@@ -113,10 +117,10 @@ export const StudentDashboard: React.FC = () => {
         </div>
         <div className="welcome-right">
           <Link to="/student/practice" className="btn btn-primary btn-sm">
-            <Target size={16} /> Start Practice
+            <Target size={16} /> {isBangla ? 'অনুশীলন শুরু করুন' : 'Start Practice'}
           </Link>
           <Link to="/student/classes" className="btn btn-secondary btn-sm">
-            <Calendar size={16} /> View Schedule
+            <Calendar size={16} /> {isBangla ? 'সময়সূচি দেখুন' : 'View Schedule'}
           </Link>
         </div>
       </div>
@@ -126,10 +130,10 @@ export const StudentDashboard: React.FC = () => {
         {/* 9.2 Overall Progress Card */}
         <div className="overall-progress-card bio-card">
           <div className="dash-card-header">
-            <span className="dash-card-badge">Academic Milestones</span>
-            <span className="progress-num-big">{overallProgressPercentage}%</span>
+            <span className="dash-card-badge">{isBangla ? 'অ্যাকাডেমিক মাইলফলক' : 'Academic Milestones'}</span>
+            <span className="progress-num-big">{isBangla ? `${toBnNum(overallProgressPercentage)}%` : `${overallProgressPercentage}%`}</span>
           </div>
-          <h3 className="dash-card-title">Overall Course Progress</h3>
+          <h3 className="dash-card-title">{isBangla ? 'সার্বিক কোর্স অগ্রগতি' : 'Overall Course Progress'}</h3>
 
           <div className="main-progress-bar-wrap">
             <ProgressBar progress={overallProgressPercentage} height={10} variant="dark" />
@@ -137,21 +141,33 @@ export const StudentDashboard: React.FC = () => {
 
           <div className="progress-stats-triplet">
             <div className="p-stat-box">
-              <span className="p-stat-label">Classes</span>
-              <strong className="p-stat-val">{completedClassesCount} / {totalClassesCount}</strong>
-              <span className="p-stat-sub">{Math.max(0, totalClassesCount - completedClassesCount)} Remaining</span>
+              <span className="p-stat-label">{isBangla ? 'ক্লাস' : 'Classes'}</span>
+              <strong className="p-stat-val">
+                {isBangla ? `${toBnNum(completedClassesCount)} / ${toBnNum(totalClassesCount)}` : `${completedClassesCount} / ${totalClassesCount}`}
+              </strong>
+              <span className="p-stat-sub">
+                {isBangla ? `${toBnNum(Math.max(0, totalClassesCount - completedClassesCount))}টি বাকি` : `${Math.max(0, totalClassesCount - completedClassesCount)} Remaining`}
+              </span>
             </div>
 
             <div className="p-stat-box">
-              <span className="p-stat-label">Tests</span>
-              <strong className="p-stat-val">{completedTestsCount} Done</strong>
-              <span className="p-stat-sub">{remainingTestsCount} Pending</span>
+              <span className="p-stat-label">{isBangla ? 'পরীক্ষা' : 'Tests'}</span>
+              <strong className="p-stat-val">
+                {isBangla ? `${toBnNum(completedTestsCount)}টি সম্পন্ন` : `${completedTestsCount} Done`}
+              </strong>
+              <span className="p-stat-sub">
+                {isBangla ? `${toBnNum(remainingTestsCount)}টি বাকি` : `${remainingTestsCount} Pending`}
+              </span>
             </div>
 
             <div className="p-stat-box">
-              <span className="p-stat-label">Chapters</span>
-              <strong className="p-stat-val">{completedChaptersCount} / {totalChaptersCount}</strong>
-              <span className="p-stat-sub">{remainingChaptersCount} Remaining</span>
+              <span className="p-stat-label">{isBangla ? 'অধ্যায়' : 'Chapters'}</span>
+              <strong className="p-stat-val">
+                {isBangla ? `${toBnNum(completedChaptersCount)} / ${toBnNum(totalChaptersCount)}` : `${completedChaptersCount} / ${totalChaptersCount}`}
+              </strong>
+              <span className="p-stat-sub">
+                {isBangla ? `${toBnNum(remainingChaptersCount)}টি বাকি` : `${remainingChaptersCount} Remaining`}
+              </span>
             </div>
           </div>
         </div>
@@ -160,16 +176,18 @@ export const StudentDashboard: React.FC = () => {
         <div className="next-class-card bio-card">
           <div className="dash-card-header">
             <span className="badge badge-green">
-              <Clock size={13} /> Upcoming Live Session
+              <Clock size={13} /> {isBangla ? 'আসন্ন লাইভ ক্লাস' : 'Upcoming Live Session'}
             </span>
-            <span className="next-class-badge">Class {nextClass?.classNumber || 18}</span>
+            <span className="next-class-badge">
+              {isBangla ? `ক্লাস নং ${toBnNum(nextClass?.classNumber || 18)}` : `Class ${nextClass?.classNumber || 18}`}
+            </span>
           </div>
 
           <div className="next-class-meta">
             <span className="next-paper-tag">{nextClass?.paper}</span>
             <h3 className="next-class-title">{nextClass?.title}</h3>
             <p className="next-class-topic">
-              <strong>Chapter:</strong> {nextClass?.chapterName} • <strong>Topic:</strong> {nextClass?.topic}
+              <strong>{isBangla ? 'অধ্যায়:' : 'Chapter:'}</strong> {nextClass?.chapterName} • <strong>{isBangla ? 'টপিক:' : 'Topic:'}</strong> {nextClass?.topic}
             </p>
           </div>
 
@@ -191,7 +209,7 @@ export const StudentDashboard: React.FC = () => {
               rel="noreferrer" 
               className="btn btn-primary btn-block"
             >
-              <Video size={16} /> Enter Live Google Meet
+              <Video size={16} /> {isBangla ? 'লাইভ গুগল মিটে প্রবেশ করুন' : 'Enter Live Google Meet'}
             </a>
           </div>
         </div>
@@ -202,9 +220,9 @@ export const StudentDashboard: React.FC = () => {
         {/* 9.4 Upcoming Schedule */}
         <div className="upcoming-schedule-card bio-card">
           <div className="dash-card-header">
-            <h3 className="dash-card-title">Upcoming Schedule Timeline</h3>
+            <h3 className="dash-card-title">{isBangla ? 'আসন্ন ক্লাসের সময়সূচি' : 'Upcoming Schedule Timeline'}</h3>
             <Link to="/student/classes" className="view-all-link">
-              View All <ChevronRight size={14} />
+              {isBangla ? 'সব দেখুন' : 'View All'} <ChevronRight size={14} />
             </Link>
           </div>
 
@@ -216,7 +234,7 @@ export const StudentDashboard: React.FC = () => {
                 </div>
                 <div className="timeline-body">
                   <div className="timeline-top">
-                    <span className="tl-type badge badge-green">Live Class</span>
+                    <span className="tl-type badge badge-green">{isBangla ? 'লাইভ ক্লাস' : 'Live Class'}</span>
                     <span className="tl-time">{item.date} • {item.time}</span>
                   </div>
                   <h4 className="tl-title">{item.title}</h4>
@@ -232,11 +250,11 @@ export const StudentDashboard: React.FC = () => {
               </div>
               <div className="timeline-body">
                 <div className="timeline-top">
-                  <span className="tl-type badge badge-amber">Chapter Test</span>
-                  <span className="tl-time">Upcoming Sunday</span>
+                  <span className="tl-type badge badge-amber">{isBangla ? 'অধ্যায় পরীক্ষা' : 'Chapter Test'}</span>
+                  <span className="tl-time">{isBangla ? 'আসন্ন রবিবার' : 'Upcoming Sunday'}</span>
                 </div>
-                <h4 className="tl-title">Chapter 04 MCQ Intensive Quiz</h4>
-                <p className="tl-sub">15 Questions • 20 Mins</p>
+                <h4 className="tl-title">{isBangla ? 'অধ্যায় ০৪ MCQ নিবিড় কুইজ' : 'Chapter 04 MCQ Intensive Quiz'}</h4>
+                <p className="tl-sub">{isBangla ? '১৫টি প্রশ্ন • ২০ মিনিট' : '15 Questions • 20 Mins'}</p>
               </div>
             </div>
           </div>
@@ -245,9 +263,9 @@ export const StudentDashboard: React.FC = () => {
         {/* Recent Teacher Feedback Widget */}
         <div className="recent-feedback-widget bio-card">
           <div className="dash-card-header">
-            <h3 className="dash-card-title">Recent Teacher Feedback</h3>
+            <h3 className="dash-card-title">{isBangla ? 'শিক্ষকের সাম্প্রতিক ফিডব্যাক' : 'Recent Teacher Feedback'}</h3>
             <Link to="/student/feedback" className="view-all-link">
-              All Feedback <ChevronRight size={14} />
+              {isBangla ? 'সকল ফিডব্যাক' : 'All Feedback'} <ChevronRight size={14} />
             </Link>
           </div>
 
@@ -268,25 +286,25 @@ export const StudentDashboard: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <span className="fb-author-name">{recentFeedback.teacherName}</span>
-                  <span className="fb-target">Target: {recentFeedback.attachedTo}</span>
+                  <span className="fb-author-name">{isBangla ? 'আফরোজা তাহমিনা' : recentFeedback.teacherName}</span>
+                  <span className="fb-target">{isBangla ? 'টার্গেট:' : 'Target:'} {recentFeedback.attachedTo}</span>
                 </div>
               </div>
             </div>
           ) : (
-            <p className="empty-fb-text">No feedback received yet.</p>
+            <p className="empty-fb-text">{isBangla ? 'এখনও কোনো ফিডব্যাক নেই।' : 'No feedback received yet.'}</p>
           )}
 
           <div className="pending-tests-prompt">
             <div className="prompt-left">
               <Target size={20} className="prompt-icon" />
               <div>
-                <strong>Recommended Next Action</strong>
-                <p>Complete Chapter 04 MCQ Test to calibrate your accuracy.</p>
+                <strong>{isBangla ? 'পরবর্তী প্রস্তাবিত পদক্ষেপ' : 'Recommended Next Action'}</strong>
+                <p>{isBangla ? 'দক্ষতা যাচাইয়ে অধ্যায় ০৪ MCQ টেস্ট সম্পন্ন করুন।' : 'Complete Chapter 04 MCQ Test to calibrate your accuracy.'}</p>
               </div>
             </div>
             <Link to="/student/practice/test-02" className="btn btn-outline btn-sm">
-              Start Test
+              {isBangla ? 'টেস্ট শুরু করুন' : 'Start Test'}
             </Link>
           </div>
         </div>
@@ -296,11 +314,11 @@ export const StudentDashboard: React.FC = () => {
       <div className="dashboard-chapters-section bio-card">
         <div className="dash-card-header">
           <div>
-            <h3 className="dash-card-title">Chapter Completion Progress</h3>
-            <p className="dash-card-sub">Track syllabus coverage across First and Second Paper</p>
+            <h3 className="dash-card-title">{isBangla ? 'অধ্যায় সমাপ্তির অগ্রগতি' : 'Chapter Completion Progress'}</h3>
+            <p className="dash-card-sub">{isBangla ? '১ম ও ২য় পত্রের সিলেবাস কভারেজ ট্র্যাক করুন' : 'Track syllabus coverage across First and Second Paper'}</p>
           </div>
           <Link to="/student/course" className="btn btn-outline btn-sm">
-            Explore Full Curriculum <ArrowRight size={14} />
+            {isBangla ? 'সম্পূর্ণ সিলেবাস দেখুন' : 'Explore Full Curriculum'} <ArrowRight size={14} />
           </Link>
         </div>
 

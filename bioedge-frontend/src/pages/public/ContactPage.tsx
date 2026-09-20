@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   Phone, 
   Mail, 
@@ -20,6 +21,7 @@ import {
 
 export const ContactPage: React.FC = () => {
   const { teacher } = useCourseData();
+  const { t, isBangla } = useLanguage();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [form, setForm] = useState({
     name: '',
@@ -33,7 +35,7 @@ export const ContactPage: React.FC = () => {
   const rawPhone = teacher.contactNumber || '+8801712345678';
   const cleanPhone = rawPhone.replace(/[^0-9]/g, '');
   const whatsappUrl = `https://wa.me/${cleanPhone.startsWith('88') ? cleanPhone : '88' + cleanPhone}?text=${encodeURIComponent(
-    `Hello Afroza Ma'am & Bio Edge Team! I have an inquiry regarding the Biology program.`
+    isBangla ? `হ্যালো আফরোজা ম্যাম ও বায়ো এজ টিম! কোর্স সম্পর্কে জানতে চাই।` : `Hello Afroza Ma'am & Bio Edge Team! I have an inquiry regarding the Biology program.`
   )}`;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,11 +61,11 @@ export const ContactPage: React.FC = () => {
         {/* Header */}
         <div className="section-header text-center">
           <span className="section-pill">
-            <MessageSquare size={13} /> Direct Academic Communication
+            <MessageSquare size={13} /> {t.contact.tag}
           </span>
-          <h1 className="section-title">Get in Touch with Bio Edge</h1>
+          <h1 className="section-title">{t.contact.title}</h1>
           <p className="section-subtitle">
-            Have questions about cohort placement, syllabus coverage, or seat availability? Connect directly with Afroza Tahmina's academic team.
+            {t.contact.subtitle}
           </p>
         </div>
 
@@ -78,15 +80,17 @@ export const ContactPage: React.FC = () => {
               </div>
               <div className="desk-details">
                 <div className="desk-tag">
-                  <ShieldCheck size={13} /> Verified Academic Helpdesk
+                  <ShieldCheck size={13} /> {isBangla ? 'ভেরিফায়েড একাডেমিক হেল্পডেস্ক' : 'Verified Academic Helpdesk'}
                 </div>
-                <h3 className="desk-name">{teacher.name}</h3>
-                <p className="desk-role">{teacher.designation}</p>
+                <h3 className="desk-name">{isBangla ? 'আফরোজা তাহমিনা' : teacher.name}</h3>
+                <p className="desk-role">{isBangla ? 'সিনিয়র ফ্যাকাল্টি ও জীববিজ্ঞান বিশেষজ্ঞ' : teacher.designation}</p>
               </div>
             </div>
 
             <p className="contact-intro-text">
-              Our academic coordination desk provides fast, direct support for prospective students and guardians. Choose your preferred channel below:
+              {isBangla 
+                ? 'আমাদের একাডেমিক টিম শিক্ষার্থী ও অভিভাবকদের যেকোনো প্রশ্নের দ্রুত উত্তর দিতে প্রস্তুত। নিচের যেকোনো মাধ্যমে আমাদের সাথে যুক্ত হন:' 
+                : 'Our academic coordination desk provides fast, direct support for prospective students and guardians. Choose your preferred channel below:'}
             </p>
 
             {/* Direct Action Channel Cards */}
@@ -103,11 +107,11 @@ export const ContactPage: React.FC = () => {
                 </div>
                 <div className="channel-content">
                   <div className="channel-header-row">
-                    <span className="channel-label">Instant WhatsApp Chat</span>
-                    <span className="channel-pill-tag">Fastest</span>
+                    <span className="channel-label">{isBangla ? 'সরাসরি হোয়াটসঅ্যাপ চ্যাট' : 'Instant WhatsApp Chat'}</span>
+                    <span className="channel-pill-tag">{isBangla ? 'সবচেয়ে দ্রুত' : 'Fastest'}</span>
                   </div>
                   <strong className="channel-val">{teacher.contactNumber}</strong>
-                  <span className="channel-note">Direct counselor response • ~30 mins</span>
+                  <span className="channel-note">{isBangla ? 'দ্রুত রেসপন্স • ৩০ মিনিটের মধ্যে' : 'Direct counselor response • ~30 mins'}</span>
                 </div>
                 <ArrowUpRight size={18} className="channel-external-icon" />
               </a>
@@ -121,9 +125,9 @@ export const ContactPage: React.FC = () => {
                   <Phone size={19} />
                 </div>
                 <div className="channel-content">
-                  <span className="channel-label">Voice Call Counseling</span>
+                  <span className="channel-label">{t.contact.callUs}</span>
                   <strong className="channel-val">{teacher.contactNumber}</strong>
-                  <span className="channel-note">Saturday – Thursday • 10:00 AM – 8:00 PM</span>
+                  <span className="channel-note">{isBangla ? 'শনিবার – বৃহস্পতিবার • সকাল ১০:০০ – রাত ৮:০০' : 'Saturday – Thursday • 10:00 AM – 8:00 PM'}</span>
                 </div>
                 <ArrowUpRight size={18} className="channel-external-icon" />
               </a>
@@ -137,9 +141,9 @@ export const ContactPage: React.FC = () => {
                   <Mail size={19} />
                 </div>
                 <div className="channel-content">
-                  <span className="channel-label">Official Academic Email</span>
+                  <span className="channel-label">{t.contact.emailUs}</span>
                   <strong className="channel-val">{teacher.email}</strong>
-                  <span className="channel-note">Formal inquiries & documentation</span>
+                  <span className="channel-note">{isBangla ? 'অফিসিয়াল তথ্য ও যোগাযোগ' : 'Formal inquiries & documentation'}</span>
                 </div>
                 <ArrowUpRight size={18} className="channel-external-icon" />
               </a>
@@ -149,26 +153,26 @@ export const ContactPage: React.FC = () => {
             <div className="counseling-hours-box">
               <div className="hours-header">
                 <div className="hours-title">
-                  <Clock size={16} /> Academic Desk Schedule
+                  <Clock size={16} /> {isBangla ? 'কাউন্সেলিং সময়সূচি' : 'Academic Desk Schedule'}
                 </div>
                 <span className="status-live-pill">
-                  <span className="status-dot"></span> Inquiries Open
+                  <span className="status-dot"></span> {isBangla ? 'ইনকোয়ারি চালু আছে' : 'Inquiries Open'}
                 </span>
               </div>
               <div className="hours-grid">
                 <div className="hours-row">
-                  <span className="day-name">Sat – Thu:</span>
-                  <span className="day-time">10:00 AM – 8:00 PM</span>
+                  <span className="day-name">{isBangla ? 'শনি – বৃহস্পতি:' : 'Sat – Thu:'}</span>
+                  <span className="day-time">{isBangla ? 'সকাল ১০:০০ – রাত ৮:০০' : '10:00 AM – 8:00 PM'}</span>
                 </div>
                 <div className="hours-row">
-                  <span className="day-name">Friday:</span>
-                  <span className="day-time">Urgent WhatsApp Only</span>
+                  <span className="day-name">{isBangla ? 'শুক্রবার:' : 'Friday:'}</span>
+                  <span className="day-time">{isBangla ? 'শুধুমাত্র হোয়াটসঅ্যাপ' : 'Urgent WhatsApp Only'}</span>
                 </div>
               </div>
 
               <div className="location-footer-row">
                 <MapPin size={15} className="location-pin-icon" />
-                <span>Program Headquarters: <strong>Dhaka, Bangladesh</strong></span>
+                <span>{t.contact.headquarters}: <strong>{t.footer.location}</strong></span>
               </div>
             </div>
           </div>
@@ -181,25 +185,27 @@ export const ContactPage: React.FC = () => {
                   <CheckCircle2 size={40} />
                 </div>
                 <div className="success-badge-pill">
-                  <Sparkles size={13} /> Message Dispatched
+                  <Sparkles size={13} /> {isBangla ? 'মেসেজ পাঠানো হয়েছে' : 'Message Dispatched'}
                 </div>
-                <h3 className="success-title">Thank You, {form.name}!</h3>
+                <h3 className="success-title">{isBangla ? `ধন্যবাদ, ${form.name}!` : `Thank You, ${form.name}!`}</h3>
                 <p className="success-desc">
-                  Your inquiry regarding <strong>"{form.inquiryTopic}"</strong> has been delivered directly to Afroza Tahmina's academic team.
+                  {isBangla 
+                    ? <><strong>"{form.inquiryTopic}"</strong> সংক্রান্ত আপনার বার্তাটি আফরোজা তাহমিনার অ্যাকাডেমিক টিমের কাছে পৌঁছেছে।</>
+                    : <>Your inquiry regarding <strong>"{form.inquiryTopic}"</strong> has been delivered directly to Afroza Tahmina's academic team.</>}
                 </p>
 
                 <div className="success-dispatch-summary">
                   <div className="summary-item">
-                    <span className="sum-label">Target Level:</span>
+                    <span className="sum-label">{isBangla ? 'উদ্দিষ্ট ব্যাচ:' : 'Target Level:'}</span>
                     <span className="sum-val">{form.academicLevel}</span>
                   </div>
                   <div className="summary-item">
-                    <span className="sum-label">Contact Phone:</span>
+                    <span className="sum-label">{isBangla ? 'যোগাযোগ নম্বর:' : 'Contact Phone:'}</span>
                     <span className="sum-val">{form.phone}</span>
                   </div>
                   {form.email && (
                     <div className="summary-item">
-                      <span className="sum-label">Email:</span>
+                      <span className="sum-label">{isBangla ? 'ইমেইল:' : 'Email:'}</span>
                       <span className="sum-val">{form.email}</span>
                     </div>
                   )}
@@ -212,36 +218,38 @@ export const ContactPage: React.FC = () => {
                     rel="noopener noreferrer" 
                     className="btn btn-primary btn-block"
                   >
-                    <MessageCircle size={17} /> Chat Immediately on WhatsApp
+                    <MessageCircle size={17} /> {isBangla ? 'সরাসরি হোয়াটসঅ্যাপে চ্যাট করুন' : 'Chat Immediately on WhatsApp'}
                   </a>
                   <button 
                     onClick={handleReset}
                     className="btn btn-outline btn-block mt-2"
                   >
-                    <RotateCcw size={16} /> Send Another Inquiry
+                    <RotateCcw size={16} /> {isBangla ? 'আরেকটি বার্তা পাঠান' : 'Send Another Inquiry'}
                   </button>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="inquiry-form">
                 <div className="form-card-header">
-                  <h3 className="form-card-title">Send Us a Direct Message</h3>
+                  <h3 className="form-card-title">{isBangla ? 'আমাদের সরাসরি বার্তা পাঠান' : 'Send Us a Direct Message'}</h3>
                   <p className="form-card-subtitle">
-                    Fill out this quick form and our academic counselor will respond promptly on WhatsApp or phone.
+                    {isBangla 
+                      ? 'ফর্মটি পূরণ করুন; আমাদের অ্যাকাডেমিক কাউন্সিলর দ্রুত হোয়াটসঅ্যাপ বা ফোনে যোগাযোগ করবেন।' 
+                      : 'Fill out this quick form and our academic counselor will respond promptly on WhatsApp or phone.'}
                   </p>
                 </div>
 
                 {/* Full Name */}
                 <div className="form-group">
                   <label className="form-label">
-                    Full Name <span className="text-required">*</span>
+                    {isBangla ? 'পূর্ণ নাম' : 'Full Name'} <span className="text-required">*</span>
                   </label>
                   <div className="input-with-icon">
                     <User size={17} className="input-icon" />
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Tariqul Islam"
+                      placeholder={isBangla ? 'যেমন: তারিকুল ইসলাম' : 'e.g. Tariqul Islam'}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="form-input has-icon"
@@ -253,7 +261,7 @@ export const ContactPage: React.FC = () => {
                 <div className="form-row-2">
                   <div className="form-group">
                     <label className="form-label">
-                      Phone Number (WhatsApp preferred) <span className="text-required">*</span>
+                      {isBangla ? 'ফোন নম্বর (হোয়াটসঅ্যাপ অগ্রাধিকার)' : 'Phone Number (WhatsApp preferred)'} <span className="text-required">*</span>
                     </label>
                     <div className="input-with-icon">
                       <Phone size={17} className="input-icon" />
@@ -270,7 +278,7 @@ export const ContactPage: React.FC = () => {
 
                   <div className="form-group">
                     <label className="form-label">
-                      Email Address <span className="text-optional">(Optional)</span>
+                      {isBangla ? 'ইমেইল ঠিকানা' : 'Email Address'} <span className="text-optional">{isBangla ? '(ঐচ্ছিক)' : '(Optional)'}</span>
                     </label>
                     <div className="input-with-icon">
                       <Mail size={17} className="input-icon" />
@@ -289,7 +297,7 @@ export const ContactPage: React.FC = () => {
                 <div className="form-row-2">
                   <div className="form-group">
                     <label className="form-label">
-                      Academic Level / Target <span className="text-required">*</span>
+                      {isBangla ? 'অ্যাকাডেমিক লেভেল / টার্গেট' : 'Academic Level / Target'} <span className="text-required">*</span>
                     </label>
                     <div className="input-with-icon">
                       <GraduationCap size={17} className="input-icon" />
@@ -298,19 +306,19 @@ export const ContactPage: React.FC = () => {
                         onChange={(e) => setForm({ ...form, academicLevel: e.target.value })}
                         className="form-select has-icon"
                       >
-                        <option value="HSC 2026 (Comprehensive Foundation)">HSC 2026 (Foundation & Full Syllabus)</option>
-                        <option value="HSC 2025 (Board & Medical Pre-prep)">HSC 2025 (Board & Medical Prep)</option>
-                        <option value="Medical Admission Biology">Medical Admission Biology Specialist</option>
-                        <option value="SSC Biology Foundation">SSC Biology Advanced Foundation</option>
-                        <option value="Guardian / Parent Inquiry">Guardian / Parent Inquiry</option>
-                        <option value="Other Academic Queries">Other Academic Queries</option>
+                        <option value="HSC 2026 (Comprehensive Foundation)">{isBangla ? 'এইচএসসি ২০২৬ (সম্পূর্ণ সিলেবাস ও ভিত্তি)' : 'HSC 2026 (Foundation & Full Syllabus)'}</option>
+                        <option value="HSC 2025 (Board & Medical Pre-prep)">{isBangla ? 'এইচএসসি ২০২৫ (বোর্ড ও মেডিকেল প্রস্তুতি)' : 'HSC 2025 (Board & Medical Prep)'}</option>
+                        <option value="Medical Admission Biology">{isBangla ? 'মেডিকেল ভর্তি জীববিজ্ঞান স্পেশাল' : 'Medical Admission Biology Specialist'}</option>
+                        <option value="SSC Biology Foundation">{isBangla ? 'এসএসসি বায়োলজি অ্যাডভান্সড ভিত্তি' : 'SSC Biology Advanced Foundation'}</option>
+                        <option value="Guardian / Parent Inquiry">{isBangla ? 'অভিভাবকের অনুসন্ধান' : 'Guardian / Parent Inquiry'}</option>
+                        <option value="Other Academic Queries">{isBangla ? 'অন্যান্য অ্যাকাডেমিক প্রশ্ন' : 'Other Academic Queries'}</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label className="form-label">
-                      Inquiry Topic <span className="text-required">*</span>
+                      {isBangla ? 'অনুসন্ধানের বিষয়' : 'Inquiry Topic'} <span className="text-required">*</span>
                     </label>
                     <div className="input-with-icon">
                       <HelpCircle size={17} className="input-icon" />
@@ -319,12 +327,12 @@ export const ContactPage: React.FC = () => {
                         onChange={(e) => setForm({ ...form, inquiryTopic: e.target.value })}
                         className="form-select has-icon"
                       >
-                        <option value="Batch Enrollment & Seat Availability">Batch Enrollment & Seat Availability</option>
-                        <option value="Curriculum & Syllabus Details">Curriculum & Syllabus Details</option>
-                        <option value="Class Timings & Schedule">Class Timings & Schedule</option>
-                        <option value="Course Fee & Payment Options">Course Fee & Payment Options</option>
-                        <option value="1-on-1 Mentorship with Afroza Ma'am">1-on-1 Mentorship Counseling</option>
-                        <option value="General Academic Question">General Academic Question</option>
+                        <option value="Batch Enrollment & Seat Availability">{isBangla ? 'ব্যাচ ভর্তি ও আসন সংখ্যা' : 'Batch Enrollment & Seat Availability'}</option>
+                        <option value="Curriculum & Syllabus Details">{isBangla ? 'পাঠ্যক্রম ও সিলেবাস বিস্তারিত' : 'Curriculum & Syllabus Details'}</option>
+                        <option value="Class Timings & Schedule">{isBangla ? 'ক্লাসের সময় ও শিডিউল' : 'Class Timings & Schedule'}</option>
+                        <option value="Course Fee & Payment Options">{isBangla ? 'কোর্স ফি ও পেমেন্ট অপশন' : 'Course Fee & Payment Options'}</option>
+                        <option value="1-on-1 Mentorship with Afroza Ma'am">{isBangla ? 'আফরোজা ম্যামের সাথে ১-অন-১ কাউন্সেলিং' : '1-on-1 Mentorship Counseling'}</option>
+                        <option value="General Academic Question">{isBangla ? 'সাধারণ অ্যাকাডেমিক প্রশ্ন' : 'General Academic Question'}</option>
                       </select>
                     </div>
                   </div>
@@ -333,24 +341,24 @@ export const ContactPage: React.FC = () => {
                 {/* Message Box */}
                 <div className="form-group">
                   <label className="form-label">
-                    Your Question or Notes <span className="text-required">*</span>
+                    {isBangla ? 'আপনার প্রশ্ন বা মন্তব্য' : 'Your Question or Notes'} <span className="text-required">*</span>
                   </label>
                   <textarea
                     rows={4}
                     required
-                    placeholder="Ask any specific question regarding chapter progression, MCQ/CQ evaluation, or batch timings..."
+                    placeholder={isBangla ? 'অধ্যায় অগ্রগতি, CQ/MCQ মূল্যায়ন পদ্ধতি বা ব্যাচ সময়সূচি সম্পর্কে আপনার প্রশ্ন লিখুন...' : 'Ask any specific question regarding chapter progression, MCQ/CQ evaluation, or batch timings...'}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="form-textarea"
                   />
                   <span className="form-helper-text">
-                    Our academic counselor will review this note prior to reaching out.
+                    {isBangla ? 'যোগাযোগের পূর্বে আমাদের অ্যাকাডেমিক কাউন্সিলর আপনার মন্তব্যটি পর্যালোচনা করবেন।' : 'Our academic counselor will review this note prior to reaching out.'}
                   </span>
                 </div>
 
                 {/* Submit Action */}
                 <button type="submit" className="btn btn-primary btn-block btn-lg submit-inquiry-btn">
-                  <Send size={18} /> Submit Academic Inquiry
+                  <Send size={18} /> {isBangla ? 'অনুসন্ধান পাঠান' : 'Submit Academic Inquiry'}
                 </button>
               </form>
             )}
@@ -363,9 +371,11 @@ export const ContactPage: React.FC = () => {
             <div className="res-icon-circle">
               <GraduationCap size={20} />
             </div>
-            <h4 className="res-title">Batch Placement Guidance</h4>
+            <h4 className="res-title">{isBangla ? 'সঠিক ব্যাচ নির্বাচন নির্দেশিকা' : 'Batch Placement Guidance'}</h4>
             <p className="res-desc">
-              Unsure whether your student should begin with Paper 1 Botany or Paper 2 Zoology? Our faculty reviews current preparation to recommend the ideal pacing.
+              {isBangla 
+                ? 'শিক্ষার্থী ১ম পত্র (উদ্ভিদবিজ্ঞান) নাকি ২য় পত্র (প্রাণিবিজ্ঞান) দিয়ে শুরু করবে বুঝতে পারছেন না? বর্তমান প্রস্তুতি মূল্যায়ন করে আমরা সেরা পরামর্শ দিই।' 
+                : 'Unsure whether your student should begin with Paper 1 Botany or Paper 2 Zoology? Our faculty reviews current preparation to recommend the ideal pacing.'}
             </p>
           </div>
 
@@ -373,9 +383,11 @@ export const ContactPage: React.FC = () => {
             <div className="res-icon-circle">
               <MessageCircle size={20} />
             </div>
-            <h4 className="res-title">Rapid WhatsApp Turnaround</h4>
+            <h4 className="res-title">{isBangla ? 'দ্রুত হোয়াটসঅ্যাপ রেসপন্স' : 'Rapid WhatsApp Turnaround'}</h4>
             <p className="res-desc">
-              Messages received on WhatsApp during counseling hours are typically addressed within 30 to 60 minutes by our dedicated batch coordinator.
+              {isBangla 
+                ? 'কাউন্সেলিং চলাকালীন হোয়াটসঅ্যাপে প্রেরিত যেকোনো জিজ্ঞাসার উত্তর সাধারণত ৩০-৬০ মিনিটের মধ্যে সমন্বয়কারী প্রদান করেন।' 
+                : 'Messages received on WhatsApp during counseling hours are typically addressed within 30 to 60 minutes by our dedicated batch coordinator.'}
             </p>
           </div>
 
@@ -383,9 +395,11 @@ export const ContactPage: React.FC = () => {
             <div className="res-icon-circle">
               <Clock size={20} />
             </div>
-            <h4 className="res-title">Guardian Consultations</h4>
+            <h4 className="res-title">{isBangla ? 'অভিভাবকদের সাথে পরামর্শ' : 'Guardian Consultations'}</h4>
             <p className="res-desc">
-              Parents are warmly invited to book weekly counseling appointments to inspect line-by-line CQ evaluations and attendance track records.
+              {isBangla 
+                ? 'অভিভাবকদের প্রতি সপ্তাহে কাউন্সেলিং মিটিংয়ে আমন্ত্রণ জানানো হয়, যেখানে CQ নম্বর ও উপস্থিতির সরাসরি রেকর্ড পর্যালোচনা করা হয়।' 
+                : 'Parents are warmly invited to book weekly counseling appointments to inspect line-by-line CQ evaluations and attendance track records.'}
             </p>
           </div>
         </div>

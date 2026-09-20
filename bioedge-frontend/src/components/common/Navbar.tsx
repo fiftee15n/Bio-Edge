@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 import { 
   Menu, 
   X, 
@@ -12,12 +14,13 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
 
   const navLinks = [
-    { name: 'Course', path: '/courses' },
-    { name: 'About Teacher', path: '/about' },
-    { name: 'Structure', path: '/program#structure' },
-    { name: 'Contact', path: '/contact' }
+    { name: t.nav.course, path: '/courses' },
+    { name: t.nav.aboutTeacher, path: '/about' },
+    { name: t.nav.structure, path: '/program#structure' },
+    { name: t.nav.contact, path: '/contact' }
   ];
 
   const isActive = (path: string) => {
@@ -42,9 +45,9 @@ export const Navbar: React.FC = () => {
           <div className="dev-notice-inner">
             <span className="dev-notice-badge">
               <span className="dev-pulse-dot"></span>
-              Notice
+              {t.nav.noticeBadge}
             </span>
-            <span className="dev-notice-text">The website is under development</span>
+            <span className="dev-notice-text">{t.nav.noticeText}</span>
           </div>
         </div>
       </div>
@@ -66,7 +69,7 @@ export const Navbar: React.FC = () => {
           <nav className="desktop-nav">
             {navLinks.map((link) => (
               <Link
-                key={link.name}
+                key={link.path}
                 to={link.path}
                 className={`nav-item ${isActive(link.path) ? 'active' : ''}`}
               >
@@ -77,6 +80,9 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Area */}
           <div className="navbar-actions">
+            {/* Language Switcher */}
+            <LanguageToggle />
+
             {user ? (
               <div className="user-action-group">
                 {user.role !== 'admin' && (
@@ -84,20 +90,20 @@ export const Navbar: React.FC = () => {
                     to={user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
                     className="btn btn-secondary btn-sm"
                   >
-                    {user.role === 'teacher' ? 'Faculty Portal' : 'Student Portal'}
+                    {user.role === 'teacher' ? t.nav.facultyPortal : t.nav.studentPortal}
                   </Link>
                 )}
                 <button onClick={logout} className="nav-logout-btn">
-                  Logout
+                  {t.nav.logout}
                 </button>
               </div>
             ) : (
               <div className="guest-action-group">
                 <Link to="/login" className="nav-login-btn">
-                  <LogIn size={15} /> <span>Login</span>
+                  <LogIn size={15} /> <span>{t.nav.login}</span>
                 </Link>
                 <Link to="/register" className="btn btn-primary btn-sm">
-                  Get Started
+                  {t.nav.getStarted}
                 </Link>
               </div>
             )}
@@ -118,13 +124,18 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="mobile-menu-drawer">
           <div className="mobile-nav-links">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', padding: '0 0.5rem' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Language:</span>
+              <LanguageToggle />
+            </div>
+
             <Link to="/" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-item">
-              Home
+              {t.nav.home}
             </Link>
 
             {navLinks.map((link) => (
               <Link
-                key={link.name}
+                key={link.path}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`mobile-nav-item ${isActive(link.path) ? 'active' : ''}`}
@@ -142,7 +153,7 @@ export const Navbar: React.FC = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="btn btn-primary btn-block mb-2"
                   >
-                    {user.role === 'teacher' ? 'Open Faculty Portal' : 'Open Student Portal'}
+                    {user.role === 'teacher' ? t.nav.openFacultyPortal : t.nav.openStudentPortal}
                   </Link>
                 )}
                 <button
@@ -152,7 +163,7 @@ export const Navbar: React.FC = () => {
                   }}
                   className="btn btn-outline btn-block mt-2"
                 >
-                  Log Out
+                  {t.nav.logout}
                 </button>
               </div>
             ) : (
@@ -162,14 +173,14 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="btn btn-outline btn-block"
                 >
-                  Log In
+                  {t.nav.login}
                 </Link>
                 <Link
                   to="/register"
                   onClick={() => setMobileMenuOpen(false)}
                   className="btn btn-primary btn-block"
                 >
-                  Get Started
+                  {t.nav.getStarted}
                 </Link>
               </div>
             )}

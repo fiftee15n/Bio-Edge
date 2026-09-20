@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CourseDataProvider } from './context/CourseDataContext';
+import { LanguageProvider } from './context/LanguageContext';
 
 // Public Components
 import { Navbar } from './components/common/Navbar';
@@ -80,13 +81,14 @@ const PublicLayout: React.FC = () => {
 
 export default function App(): React.ReactElement {
   return (
-    <AuthProvider>
-      <CourseDataProvider>
-        <BrowserRouter>
-          <SmoothScrollProvider>
-            <ScrollToTop />
-            <BackToTop />
-            <Routes>
+    <LanguageProvider>
+      <AuthProvider>
+        <CourseDataProvider>
+          <BrowserRouter>
+            <SmoothScrollProvider>
+              <ScrollToTop />
+              <BackToTop />
+              <Routes>
               {/* Public Pages */}
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<HomePage />} />
@@ -159,7 +161,8 @@ export default function App(): React.ReactElement {
             </Routes>
           </SmoothScrollProvider>
         </BrowserRouter>
-      </CourseDataProvider>
-    </AuthProvider>
+        </CourseDataProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }

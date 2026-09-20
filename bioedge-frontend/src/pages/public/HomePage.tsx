@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { ReferenceHeroSection } from '../../components/home/ReferenceHeroSection';
 import { Hero3DCardDeck } from '../../components/home/Hero3DCardDeck';
 import { Interactive3DBento } from '../../components/home/Interactive3DBento';
@@ -38,6 +39,7 @@ export const HomePage: React.FC = () => {
     activeStudentsCount, 
     faqs 
   } = useCourseData();
+  const { t, isBangla, toBnNum } = useLanguage();
 
   const [activePaperTab, setActivePaperTab] = useState<string>('first-paper');
   const [openFaqIndex, setOpenFaqIndex] = useState<number>(0);
@@ -54,13 +56,13 @@ export const HomePage: React.FC = () => {
         <div className="container text-center">
           <div className="inline-floating-badge">
             <Sparkles size={16} />
-            <span>Interactive 3D Visual Experience</span>
+            <span>{t.deck3d.badge}</span>
           </div>
           <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>
-            A place to master your biological concepts.
+            {t.deck3d.title}
           </h2>
           <p className="section-subtitle" style={{ maxWidth: '640px', margin: '0 auto 1rem' }}>
-            Explore high-yield HSC Botany & Zoology chapters in interactive 3D perspective cards. Hover to fan out, click to inspect key CQ hotspots.
+            {t.deck3d.subtitle}
           </p>
 
           <Hero3DCardDeck />
@@ -71,10 +73,10 @@ export const HomePage: React.FC = () => {
       <section className="section-padding benefits-section">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-pill">Core Pillars</span>
-            <h2 className="section-title">Everything You Need for Biology Preparation</h2>
+            <span className="section-pill">{t.pillars.tag}</span>
+            <h2 className="section-title">{t.pillars.title}</h2>
             <p className="section-subtitle">
-              A comprehensive learning system built around deep conceptual clarity and structured exam performance.
+              {t.pillars.subtitle}
             </p>
           </div>
 
@@ -82,80 +84,80 @@ export const HomePage: React.FC = () => {
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Sparkles size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Concept Building</h4>
+                <h4 className="benefit-title">{t.pillars.p1Title}</h4>
               </div>
               <p className="benefit-text">
-                Build a deep, foundational understanding of cellular, botanical and physiological processes rather than relying solely on rote memorization.
+                {t.pillars.p1Desc}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <PenTool size={20} className="benefit-icon" />
-                <h4 className="benefit-title">CQ / SQ Answer Writing</h4>
+                <h4 className="benefit-title">{t.pillars.p2Title}</h4>
               </div>
               <p className="benefit-text">
-                Master structured Creative Question (CQ) answer frameworks to achieve maximum marks on Board examination evaluation rubrics.
+                {t.pillars.p2Desc}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Target size={20} className="benefit-icon" />
-                <h4 className="benefit-title">MCQ Speed & Accuracy</h4>
+                <h4 className="benefit-title">{isBangla ? 'এমসিকিউ গতি ও নির্ভুলতা' : 'MCQ Speed & Accuracy'}</h4>
               </div>
               <p className="benefit-text">
-                Regular timed MCQ practice sets designed to develop pattern recognition, eliminate negative bias, and maximize exam speed.
+                {isBangla ? 'নিয়মিত সময়বদ্ধ এমসিকিউ অনুশীলনের মাধ্যমে নির্ভুল উত্তর নির্বাচনের দক্ষতা ও গতি বৃদ্ধি।' : 'Regular timed MCQ practice sets designed to develop pattern recognition, eliminate negative bias, and maximize exam speed.'}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <FileText size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Board Question Analysis</h4>
+                <h4 className="benefit-title">{isBangla ? 'বোর্ড প্রশ্নপত্র বিশ্লেষণ' : 'Board Question Analysis'}</h4>
               </div>
               <p className="benefit-text">
-                Solve the most important past 10-year Board questions and critical Olympiad problem scenarios with step-by-step guidance.
+                {isBangla ? 'বিগত ১০ বছরের বোর্ড প্রশ্ন এবং অলিম্পিয়াড স্ট্যান্ডার্ড জটিল প্রশ্নের পূর্ণাঙ্গ সমাধান ও গাইডলাইন।' : 'Solve the most important past 10-year Board questions and critical Olympiad problem scenarios with step-by-step guidance.'}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Layers size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Important Biology Diagrams</h4>
+                <h4 className="benefit-title">{t.pillars.p3Title}</h4>
               </div>
               <p className="benefit-text">
-                Learn how to draw, label, and present accurate biological diagrams efficiently under strict examination time constraints.
+                {t.pillars.p3Desc}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <TrendingUp size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Regular Practice & Continuity</h4>
+                <h4 className="benefit-title">{t.pillars.p4Title}</h4>
               </div>
               <p className="benefit-text">
-                Maintain academic momentum through weekly scheduled homework, interactive quizzes, and structured chapter milestones.
+                {t.pillars.p4Desc}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <GraduationCap size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Personalized Teacher Feedback</h4>
+                <h4 className="benefit-title">{t.pillars.p5Title}</h4>
               </div>
               <p className="benefit-text">
-                Identify specific concept weaknesses and receive one-on-one written feedback directly from Afroza Tahmina.
+                {t.pillars.p5Desc}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Award size={20} className="benefit-icon" />
-                <h4 className="benefit-title">Exam Strategy & Mark Maximization</h4>
+                <h4 className="benefit-title">{isBangla ? 'পরীক্ষার কৌশল ও সর্বোচ্চ নম্বর' : 'Exam Strategy & Mark Maximization'}</h4>
               </div>
               <p className="benefit-text">
-                Learn time management tricks, question selection prioritization, and revision techniques for top competitive scores.
+                {isBangla ? 'সময় ব্যবস্থাপনা, প্রশ্ন নির্বাচন এবং রিভিশন কৌশল শিখে পরীক্ষায় সেরা ফলাফল নিশ্চিত করুন।' : 'Learn time management tricks, question selection prioritization, and revision techniques for top competitive scores.'}
               </p>
             </div>
           </div>
@@ -169,10 +171,10 @@ export const HomePage: React.FC = () => {
       <section className="section-padding curriculum-section">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-pill">Curriculum Explorer</span>
-            <h2 className="section-title">Complete HEC Biology Coverage</h2>
+            <span className="section-pill">{isBangla ? 'কারিকুলাম এক্সপ্লোরার' : 'Curriculum Explorer'}</span>
+            <h2 className="section-title">{isBangla ? 'সম্পূর্ণ এইচএসসি বায়োলজি সিলেবাস' : 'Complete HEC Biology Coverage'}</h2>
             <p className="section-subtitle">
-              Dynamically managed curriculum covering all 24 chapters across First Paper & Second Paper.
+              {isBangla ? '১ম পত্র ও ২য় পত্রের মোট ২৪টি অধ্যায় সুবিন্যস্তভাবে সাজানো।' : 'Dynamically managed curriculum covering all 24 chapters across First Paper & Second Paper.'}
             </p>
           </div>
 
@@ -185,8 +187,8 @@ export const HomePage: React.FC = () => {
                 className={`paper-tab-btn ${activePaperTab === paper.id ? 'active' : ''}`}
               >
                 <BookOpen size={18} />
-                <span>{paper.name}</span>
-                <span className="paper-ch-count">{paper.chapters.length} Chapters</span>
+                <span>{isBangla ? (paper.id === 'first-paper' ? '১ম পত্র (উদ্ভিদবিজ্ঞান)' : '২য় পত্র (প্রাণিবিজ্ঞান)') : paper.name}</span>
+                <span className="paper-ch-count">{toBnNum(paper.chapters.length)} {isBangla ? 'টি অধ্যায়' : 'Chapters'}</span>
               </button>
             ))}
           </div>
@@ -196,20 +198,20 @@ export const HomePage: React.FC = () => {
             {selectedPaper.chapters.map((ch) => (
               <div key={ch.id} className="chapter-item-card bio-card">
                 <div className="ch-header">
-                  <span className="ch-num-badge">Chapter {ch.number}</span>
-                  <span className="ch-topics-count">{(ch.topics || []).length} Topics</span>
+                  <span className="ch-num-badge">{isBangla ? `অধ্যায় ${toBnNum(ch.number)}` : `Chapter ${ch.number}`}</span>
+                  <span className="ch-topics-count">{toBnNum((ch.topics || []).length)} {isBangla ? 'টি বিষয়' : 'Topics'}</span>
                 </div>
                 <h4 className="ch-name">{ch.name}</h4>
                 <div className="ch-topics-list">
-                  {(ch.topics || []).slice(0, 3).map((t, idx) => (
+                  {(ch.topics || []).slice(0, 3).map((tItem, idx) => (
                     <div key={idx} className="ch-topic-bullet">
                       <span className="topic-bullet-dot"></span>
-                      <span>{t.title}</span>
+                      <span>{tItem.title}</span>
                     </div>
                   ))}
                   {(ch.topics || []).length > 3 && (
                     <span className="more-topics-tag">
-                      + {(ch.topics || []).length - 3} more sub-topics
+                      + {toBnNum((ch.topics || []).length - 3)} {isBangla ? 'টি আরও সাব-টপিক' : 'more sub-topics'}
                     </span>
                   )}
                 </div>
@@ -219,7 +221,7 @@ export const HomePage: React.FC = () => {
 
           <div className="curriculum-cta-row text-center">
             <Link to="/program" className="btn btn-outline">
-              View Detailed Topic-by-Topic Syllabus <ChevronRight size={16} />
+              {isBangla ? 'বিস্তারিত অধ্যায়ভিত্তিক সিলেবাস দেখুন' : 'View Detailed Topic-by-Topic Syllabus'} <ChevronRight size={16} />
             </Link>
           </div>
         </div>
@@ -240,39 +242,39 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="teacher-quick-stats">
                   <div className="t-stat">
-                    <strong>{teacher.experience}</strong>
-                    <span>Experience</span>
+                    <strong>{isBangla ? '১২+ বছর' : teacher.experience}</strong>
+                    <span>{isBangla ? 'শিক্ষাদানের অভিজ্ঞতা' : 'Experience'}</span>
                   </div>
                   <div className="t-stat">
-                    <strong>{teacher.totalStudentsTaught}</strong>
-                    <span>Students Mentored</span>
+                    <strong>{isBangla ? '৪,৫০০+' : teacher.totalStudentsTaught}</strong>
+                    <span>{isBangla ? 'সফল শিক্ষার্থী' : 'Students Mentored'}</span>
                   </div>
                   <div className="t-stat">
-                    <strong>{teacher.rating}</strong>
-                    <span>Rating</span>
+                    <strong>{toBnNum('4.98')}</strong>
+                    <span>{isBangla ? 'রেটিং' : 'Rating'}</span>
                   </div>
                 </div>
               </div>
 
               <div className="teacher-info-box">
-                <span className="badge badge-green">Lead Faculty</span>
-                <h2 className="teacher-name-heading">{teacher.name}</h2>
-                <p className="teacher-institution-text">{teacher.institution}</p>
+                <span className="badge badge-green">{isBangla ? 'প্রধান শিক্ষক' : 'Lead Faculty'}</span>
+                <h2 className="teacher-name-heading">{isBangla ? 'আফরোজা তাহমিনা' : teacher.name}</h2>
+                <p className="teacher-institution-text">{isBangla ? 'সিনিয়র ফ্যাকাল্টি ও জাতীয় জীববিজ্ঞান অলিম্পিয়াড মেন্টর' : teacher.institution}</p>
                 <p className="teacher-specialization-text">
-                  <strong>Specialization:</strong> {teacher.specialization}
+                  <strong>{isBangla ? 'বিশেষজ্ঞতা:' : 'Specialization:'}</strong> {isBangla ? 'এইচএসসি জীববিজ্ঞান ১ম পত্র (কোষ ও উদ্ভিদ শারীরতত্ত্ব) ও ২য় পত্র (মানব শারীরতত্ত্ব ও প্রাণিবিজ্ঞান)' : teacher.specialization}
                 </p>
-                <p className="teacher-bio-text">{teacher.bio}</p>
+                <p className="teacher-bio-text">{isBangla ? 'এক দশকেরও বেশি সময় ধরে হাজারো শিক্ষার্থীকে বোর্ড পরীক্ষায় জিপিএ ৫.০০ এবং মেডিকেল ও বিশ্ববিদ্যালয়ে শীর্ষ স্থান অর্জনে সফলভাবে প্রস্তুত করেছেন।' : teacher.bio}</p>
 
                 <div className="teacher-quote-box">
-                  <p>"{teacher.quote}"</p>
+                  <p>"{isBangla ? 'বায়োলজি মানে অযথা মুখস্থবিদ্যা নয়—এটি জীবদেহের চমৎকার এক যৌক্তিক বিজ্ঞান। মূল ধারণাটি একবার স্পষ্ট হয়ে গেলে পরীক্ষায় সর্বোচ্চ নম্বর পাওয়া অত্যন্ত সহজ হয়ে যায়।' : teacher.quote}"</p>
                 </div>
 
                 <div className="teacher-actions-row">
                   <Link to="/enroll" className="btn btn-primary">
-                    Learn with Afroza Tahmina <ArrowRight size={16} />
+                    {isBangla ? 'আফরোজা তাহমিনার সাথে প্রস্তুতি নিন' : 'Learn with Afroza Tahmina'} <ArrowRight size={16} />
                   </Link>
                   <Link to="/about" className="btn btn-outline">
-                    Read Full Background
+                    {isBangla ? 'সম্পূর্ণ পরিচিতি দেখুন' : 'Read Full Background'}
                   </Link>
                 </div>
               </div>
@@ -281,7 +283,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Curved Avatar Community Stage ("You will find yourself among us") */}
+      {/* Curved Avatar Community Stage */}
       <CurvedAvatarMarquee />
 
       {/* 6.7 Why Limited Seats? */}
@@ -289,47 +291,49 @@ export const HomePage: React.FC = () => {
         <div className="container">
           <div className="why-seats-card bio-card">
             <div className="why-seats-content">
-              <span className="section-pill">Batch Philosophy</span>
-              <h2 className="why-seats-title">Why Only 15–20 Students?</h2>
+              <span className="section-pill">{isBangla ? 'ব্যাচ দর্শন' : 'Batch Philosophy'}</span>
+              <h2 className="why-seats-title">{isBangla ? 'কেন মাত্র ১৫–২০ জন শিক্ষার্থী?' : 'Why Only 15–20 Students?'}</h2>
               <p className="why-seats-desc">
-                {course.whyLimitedSeats}
+                {isBangla 
+                  ? 'প্রতিটি শিক্ষার্থীর খাতার সৃজনশীল প্রশ্নের (CQ) লাইন-বাই-লাইন মূল্যায়ন, ক্লাসে সরাসরি প্রশ্নোত্তরের সুযোগ এবং ব্যক্তিগত মেন্টরিং নিশ্চিত করার জন্য আমাদের ব্যাচের আসন কঠোরভাবে ১৫-২০ জনে সীমাবদ্ধ রাখা হয়।' 
+                  : course.whyLimitedSeats}
               </p>
               <div className="why-seats-points">
                 <div className="seat-point">
                   <CheckCircle2 size={20} className="point-icon" />
                   <div>
-                    <strong>Line-by-line CQ written review</strong>
-                    <p>Every Creative Question answer is marked and annotated with improvement notes.</p>
+                    <strong>{isBangla ? 'হাতে লেখা সিকিউ (CQ) খাতার লাইন-বাই-লাইন মূল্যায়ন' : 'Line-by-line CQ written review'}</strong>
+                    <p>{isBangla ? 'প্রতিটি উত্তরপত্রে লাল কালিতে নম্বর ও উন্নতির পরামর্শ লিপিবদ্ধ করা হয়।' : 'Every Creative Question answer is marked and annotated with improvement notes.'}</p>
                   </div>
                 </div>
                 <div className="seat-point">
                   <CheckCircle2 size={20} className="point-icon" />
                   <div>
-                    <strong>Real-time doubt resolution in class</strong>
-                    <p>No student gets left behind in a crowded room with hundreds of nameless participants.</p>
+                    <strong>{isBangla ? 'ক্লাসেই সরাসরি ডাউট সলভের সুযোগ' : 'Real-time doubt resolution in class'}</strong>
+                    <p>{isBangla ? 'শত শত শিক্ষার্থীর ভিড়ে কেউ হারিয়ে যাবে না, প্রত্যেকে প্রশ্ন করার সুযোগ পাবে।' : 'No student gets left behind in a crowded room with hundreds of nameless participants.'}</p>
                   </div>
                 </div>
                 <div className="seat-point">
                   <CheckCircle2 size={20} className="point-icon" />
                   <div>
-                    <strong>Personalized progress tracking</strong>
-                    <p>Individualized test analytics to identify and eliminate specific chapter weak spots.</p>
+                    <strong>{isBangla ? 'ব্যক্তিগত অগ্রগতি ট্র্যাকিং' : 'Personalized progress tracking'}</strong>
+                    <p>{isBangla ? 'অধ্যায়ভিত্তিক টেস্ট অ্যানালিটিক্স দেখে দুর্বল অংশগুলো দ্রুত সমাধান করা হয়।' : 'Individualized test analytics to identify and eliminate specific chapter weak spots.'}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="why-seats-counter-box">
-              <span className="counter-label">Current Cohort Status</span>
+              <span className="counter-label">{isBangla ? 'বর্তমান ব্যাচ পরিস্থিতি' : 'Current Cohort Status'}</span>
               <div className="seats-circle">
-                <div className="seats-num">{availableSeats}</div>
-                <div className="seats-caption">Seats Remaining</div>
+                <div className="seats-num">{toBnNum(availableSeats)}</div>
+                <div className="seats-caption">{isBangla ? 'টি আসন অবশিষ্ট' : 'Seats Remaining'}</div>
               </div>
               <p className="counter-subtext">
-                {activeStudentsCount} of {course.seatLimit} seats currently reserved
+                {isBangla ? `মোট ${toBnNum(course.seatLimit)}টি আসনের মধ্যে ${toBnNum(activeStudentsCount)}টি সংরক্ষিত` : `${activeStudentsCount} of ${course.seatLimit} seats currently reserved`}
               </p>
               <Link to="/enroll" className="btn btn-primary btn-block">
-                Claim Your Seat
+                {isBangla ? 'আপনার আসন নিশ্চিত করুন' : 'Claim Your Seat'}
               </Link>
             </div>
           </div>
@@ -429,57 +433,57 @@ export const HomePage: React.FC = () => {
       <section className="section-padding pricing-section" id="pricing">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-pill">Transparent Tuition</span>
-            <h2 className="section-title">Simple, Transparent Investment</h2>
+            <span className="section-pill">{isBangla ? 'স্বচ্ছ টিউশন ফি' : 'Transparent Tuition'}</span>
+            <h2 className="section-title">{isBangla ? 'সহজ ও সাশ্রয়ী কোর্স ফি' : 'Simple, Transparent Investment'}</h2>
             <p className="section-subtitle">
-              Choose between flexible monthly installments or save with full program enrollment.
+              {isBangla ? 'সুবিধাজনক মাসিক কিস্তিতে অথবা সম্পূর্ণ কোর্সে এককালীন ভর্তি হয়ে ছাড় উপভোগ করুন।' : 'Choose between flexible monthly installments or save with full program enrollment.'}
             </p>
           </div>
 
           <div className="pricing-cards-grid">
             {/* Monthly Fee Plan */}
             <div className="pricing-card bio-card">
-              <div className="pricing-plan-name">Monthly Installment</div>
+              <div className="pricing-plan-name">{isBangla ? 'মাসিক কিস্তি' : 'Monthly Installment'}</div>
               <div className="pricing-amount">
                 <span className="currency">৳</span>
-                <span className="price-val">{course.monthlyFee.toLocaleString()}</span>
-                <span className="price-period">/ month</span>
+                <span className="price-val">{toBnNum(course.monthlyFee.toLocaleString())}</span>
+                <span className="price-period">{isBangla ? '/ প্রতি মাস' : '/ month'}</span>
               </div>
               <p className="pricing-plan-desc">
-                Pay per month as you progress through the 4-month intensive curriculum.
+                {isBangla ? '৪ মাসের ইন্টেনসিভ কারিকুলামে প্রতি মাসে ধাপে ধাপে ফি প্রদান করার সুবিধা।' : 'Pay per month as you progress through the 4-month intensive curriculum.'}
               </p>
               <ul className="pricing-features">
-                <li><CheckCircle2 size={16} className="p-check" /> 12 Live Classes per Month</li>
-                <li><CheckCircle2 size={16} className="p-check" /> Weekly Chapter Quizzes & MCQ Sets</li>
-                <li><CheckCircle2 size={16} className="p-check" /> Personal Written CQ Feedback</li>
-                <li><CheckCircle2 size={16} className="p-check" /> Access to Class Recordings</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'প্রতি মাসে ১২টি নিবিড় লাইভ ক্লাস' : '12 Live Classes per Month'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'সাপ্তাহিক অধ্যায়ভিত্তিক কুইজ ও এমসিকিউ টেস্ট' : 'Weekly Chapter Quizzes & MCQ Sets'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'হাতে লেখা সিকিউ খাতার ব্যক্তিগত মূল্যায়ন' : 'Personal Written CQ Feedback'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'ক্লাস রেকর্ডিংয়ের আনলিমিটেড অ্যাক্সেস' : 'Access to Class Recordings'}</li>
               </ul>
               <Link to="/enroll?plan=monthly" className="btn btn-outline btn-block">
-                Enroll Monthly
+                {isBangla ? 'মাসিক কিস্তিতে ভর্তি হোন' : 'Enroll Monthly'}
               </Link>
             </div>
 
             {/* Full Course Package */}
             <div className="pricing-card bio-card featured-pricing-card">
-              <div className="pricing-badge-popular">Best Value • Save ৳1,500</div>
-              <div className="pricing-plan-name">Full 4-Month Course</div>
+              <div className="pricing-badge-popular">{isBangla ? 'সর্বোত্তম সাশ্রয়ী • ১,৫০০ ৳ ছাড়' : 'Best Value • Save ৳1,500'}</div>
+              <div className="pricing-plan-name">{isBangla ? 'সম্পূর্ণ ৪ মাসের কোর্স' : 'Full 4-Month Course'}</div>
               <div className="pricing-amount">
                 <span className="currency">৳</span>
-                <span className="price-val">{course.fullCourseFee.toLocaleString()}</span>
-                <span className="price-period">/ complete course</span>
+                <span className="price-val">{toBnNum(course.fullCourseFee.toLocaleString())}</span>
+                <span className="price-period">{isBangla ? '/ সম্পূর্ণ কোর্স' : '/ complete course'}</span>
               </div>
               <p className="pricing-plan-desc">
-                One-time upfront payment for complete 4-month coverage of First & Second Paper.
+                {isBangla ? 'এককালীন পেমেন্টে ১ম পত্র ও ২য় পত্রের সম্পূর্ণ ২৪টি অধ্যায়ের পূর্ণাঙ্গ কভারেজ।' : 'One-time upfront payment for complete 4-month coverage of First & Second Paper.'}
               </p>
               <ul className="pricing-features">
-                <li><CheckCircle2 size={16} className="p-check" /> All 48 Intensive Live Classes</li>
-                <li><CheckCircle2 size={16} className="p-check" /> All Chapter Tests & Question Bank</li>
-                <li><CheckCircle2 size={16} className="p-check" /> Full Syllabus Board Model Tests</li>
-                <li><CheckCircle2 size={16} className="p-check" /> 1-on-1 Academic Mentorship</li>
-                <li><CheckCircle2 size={16} className="p-check" /> Printable Colored Diagram Notes PDF</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'সম্পূর্ণ ৪৮টি নিবিড় লাইভ মাস্টারক্লাস' : 'All 48 Intensive Live Classes'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'সকল অধ্যায়ের পরীক্ষা ও প্রশ্নব্যাংক' : 'All Chapter Tests & Question Bank'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'সম্পূর্ণ সিলেবাসের বোর্ড স্ট্যান্ডার্ড মডেল টেস্ট' : 'Full Syllabus Board Model Tests'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? '১-অন-১ ব্যক্তিগত একাডেমিক মেন্টরিং' : '1-on-1 Academic Mentorship'}</li>
+                <li><CheckCircle2 size={16} className="p-check" /> {isBangla ? 'রঙিন জীববিজ্ঞান ডায়াগ্রাম লেকচার নোটস (পিডিএফ)' : 'Printable Colored Diagram Notes PDF'}</li>
               </ul>
               <Link to="/enroll?plan=full" className="btn btn-primary btn-block">
-                Enroll in Full Program
+                {isBangla ? 'সম্পূর্ণ কোর্সে ভর্তি হোন' : 'Enroll in Full Program'}
               </Link>
             </div>
           </div>
@@ -488,12 +492,12 @@ export const HomePage: React.FC = () => {
             <div className="notice-left">
               <Users size={20} className="notice-icon" />
               <div>
-                <strong>Strict Seat Cap: {course.seatLimit} Students Only</strong>
-                <p>To preserve high-quality personal feedback, enrollment closes automatically when capacity is reached.</p>
+                <strong>{isBangla ? `কঠোর আসন সীমা: মাত্র ${toBnNum(course.seatLimit)} জন শিক্ষার্থী` : `Strict Seat Cap: ${course.seatLimit} Students Only`}</strong>
+                <p>{isBangla ? 'ব্যক্তিগত মান ও খাতা মূল্যায়নের ধারাবাহিকতা রক্ষার্থে আসন পূর্ণ হওয়ার সাথে সাথেই ভর্তি বন্ধ হয়ে যায়।' : 'To preserve high-quality personal feedback, enrollment closes automatically when capacity is reached.'}</p>
               </div>
             </div>
             <div className="notice-right">
-              <span className="remaining-tag">{availableSeats} seats remaining</span>
+              <span className="remaining-tag">{toBnNum(availableSeats)} {isBangla ? 'টি আসন বাকি' : 'seats remaining'}</span>
             </div>
           </div>
         </div>
@@ -503,10 +507,10 @@ export const HomePage: React.FC = () => {
       <section className="section-padding faq-section">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-pill">Got Questions?</span>
-            <h2 className="section-title">Frequently Asked Questions</h2>
+            <span className="section-pill">{isBangla ? 'প্রশ্ন আছে?' : 'Got Questions?'}</span>
+            <h2 className="section-title">{isBangla ? 'সাধারণ প্রশ্নোত্তর (FAQ)' : 'Frequently Asked Questions'}</h2>
             <p className="section-subtitle">
-              Everything you need to know about the Premium HEC Biology Intensive Program.
+              {isBangla ? 'বায়ো এজ ইন্টেনসিভ প্রোগ্রাম সম্পর্কে প্রয়োজনীয় তথ্যাবলী।' : 'Everything you need to know about the Premium HEC Biology Intensive Program.'}
             </p>
           </div>
 
@@ -539,21 +543,21 @@ export const HomePage: React.FC = () => {
         <div className="container">
           <div className="final-cta-card bio-card">
             <div className="final-cta-content">
-              <span className="final-pill">Enrollment Open</span>
-              <h2 className="final-cta-heading">Ready to Take Biology Preparation Seriously?</h2>
+              <span className="final-pill">{isBangla ? 'ভর্তি চলছে' : 'Enrollment Open'}</span>
+              <h2 className="final-cta-heading">{isBangla ? 'বায়োলজি প্রস্তুতিকে সর্বোচ্চ পর্যায়ে নিয়ে যেতে প্রস্তুত?' : 'Ready to Take Biology Preparation Seriously?'}</h2>
               <p className="final-cta-desc">
-                Join the Premium HEC Biology Intensive Program and follow a structured preparation journey designed around concepts, practice, assessment and performance.
+                {isBangla ? 'বায়ো এজ ইন্টেনসিভ প্রোগ্রামে যুক্ত হয়ে ধারণা, ধারাবাহিক অনুশীলন, নিয়মিত মূল্যায়ন এবং পরীক্ষার কৌশলের সুশৃঙ্খল যাত্রায় অংশ নিন।' : 'Join the Premium HEC Biology Intensive Program and follow a structured preparation journey designed around concepts, practice, assessment and performance.'}
               </p>
               <div className="final-cta-meta">
-                <span className="badge badge-green">Only 15–20 Students</span>
-                <span className="badge badge-amber">{availableSeats} Seats Left</span>
+                <span className="badge badge-green">{isBangla ? `প্রতি ব্যাচে মাত্র ১৫–২০ জন` : 'Only 15–20 Students'}</span>
+                <span className="badge badge-amber">{toBnNum(availableSeats)} {isBangla ? 'টি আসন বাকি' : 'Seats Left'}</span>
               </div>
               <div className="final-cta-actions">
                 <Link to="/enroll" className="btn btn-primary btn-lg">
-                  Enroll Now <ArrowRight size={18} />
+                  {isBangla ? 'এখনই ভর্তি হোন' : 'Enroll Now'} <ArrowRight size={18} />
                 </Link>
                 <Link to="/contact" className="btn btn-secondary btn-lg">
-                  Contact Afroza Tahmina
+                  {isBangla ? 'শিক্ষকের সাথে যোগাযোগ করুন' : 'Contact Afroza Tahmina'}
                 </Link>
               </div>
             </div>

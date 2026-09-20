@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Eye, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface CardItem {
   id: string;
   title: string;
-  paper: 'Paper 1 (Botany)' | 'Paper 2 (Zoology)';
+  paper: 'Paper 1 (Botany)' | 'Paper 2 (Zoology)' | '১ম পত্র (উদ্ভিদবিজ্ঞান)' | '২য় পত্র (প্রাণিবিজ্ঞান)';
   chapter: string;
   tag: string;
   tagColor: string;
@@ -66,7 +67,59 @@ const CARDS_DATA: CardItem[] = [
   },
 ];
 
+const CARDS_DATA_BN: CardItem[] = [
+  {
+    id: 'heart',
+    title: 'মানব রক্ত ও সংবহনতন্ত্র',
+    paper: '২য় পত্র (প্রাণিবিজ্ঞান)',
+    chapter: 'অধ্যায় ৪ • মানব শারীরতত্ত্ব: রক্ত ও সংবহন',
+    tag: '@zoology_heart',
+    tagColor: '#EF4444',
+    image: '/assets/3d/bio_heart_3d.jpg',
+    description: 'কার্ডিয়াক চক্র, হৃদপিণ্ডের সংবহনতন্ত্র, করোনারি সংবহন, রক্তচাপ নিয়ন্ত্রণ এবং পেসমেকার মেকানিজম।',
+    cqHotspots: ['কার্ডিয়াক চক্রের সময়রেখা ও চাপ', 'এসএ নোড থেকে পুরকিঞ্জি ফাইবার', 'করোনারি এনজিওপ্লাস্টি ও বাইপাস সার্জারি'],
+    boardWeightage: 'বোর্ড পরীক্ষায় ১৫ নম্বর',
+  },
+  {
+    id: 'microscope',
+    title: 'জীবপ্রযুক্তি ও ল্যাবরেটরি',
+    paper: '১ম পত্র (উদ্ভিদবিজ্ঞান)',
+    chapter: 'অধ্যায় ১১ • জীবপ্রযুক্তি',
+    tag: '@cq_topper',
+    tagColor: '#F59E0B',
+    image: '/assets/3d/bio_microscope_3d.jpg',
+    description: 'রিকম্বিনেন্ট ডিএনএ প্রযুক্তি, টিস্যু কালচার, প্লাজমিড ভেক্টর, পিসিআর পদ্ধতি ও ব্যবহারিক স্লাইড প্রস্তুতি।',
+    cqHotspots: ['রিকম্বিনেন্ট ডিএনএ তৈরির ধাপসমূহ', 'টিস্যু কালচার এক্সপ্লান্ট কালচার', 'প্লাজমিড pBR322 ভেক্টর বৈশিষ্ট্য'],
+    boardWeightage: 'বোর্ড পরীক্ষায় ১০-১২ নম্বর',
+  },
+  {
+    id: 'cell',
+    title: 'উদ্ভিদ কোষ ও কোষীয় অঙ্গাণু',
+    paper: '১ম পত্র (উদ্ভিদবিজ্ঞান)',
+    chapter: 'অধ্যায় ১ • কোষ ও এর গঠন',
+    tag: '@botany_core',
+    tagColor: '#10B981',
+    image: '/assets/3d/bio_cell_3d.jpg',
+    description: 'ক্লোরোপ্লাস্ট, মাইটোকন্ড্রিয়া, ফ্লুইড মোজাইক ঝিল্লি মডেল এবং কোষ প্রাচীরের রাসায়নিক গঠনের ত্রিমাত্রিক চিত্র।',
+    cqHotspots: ['ফ্লুইড মোজাইক মেমব্রেন মডেল', 'ক্লোরোপ্লাস্ট থাইলাকয়েড ও স্ট্রোমা', 'মাইটোকন্ড্রিয়া ক্রিস্টি ও এটিপি সিন্থেসিস'],
+    boardWeightage: 'বোর্ড পরীক্ষায় ১৫ নম্বর',
+  },
+  {
+    id: 'genetics',
+    title: 'আণবিক বংশগতি ও ডিএনএ',
+    paper: '১ম পত্র (উদ্ভিদবিজ্ঞান)',
+    chapter: 'অধ্যায় ৮ • কোষ রসায়ন ও বংশগতি',
+    tag: '@genetics_mastery',
+    tagColor: '#3B82F6',
+    image: '/assets/3d/bio_dna_3d.jpg',
+    description: 'ডিএনএ অনুলিপন, ট্রান্সক্রিপশন, ট্রান্সলেশন এবং ওয়াটসন-ক্রিক দ্বি-সূত্রক ডিএনএ মডেলের সম্পূর্ণ সিকিউ বিশ্লেষণ।',
+    cqHotspots: ['ওয়াটসন-ক্রিক ডাবল হেলিক্স গঠন', 'অর্ধ-রক্ষণশীল ডিএনএ অনুলিপন পদ্ধতি', 'টি-আরএনএ ক্লোভার লিফ মডেল'],
+    boardWeightage: 'বোর্ড পরীক্ষায় ১২-১৪ নম্বর',
+  },
+];
+
 export const Hero3DCardDeck: React.FC = () => {
+  const { isBangla } = useLanguage();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
   const [activeFilter, setActiveFilter] = useState<'all' | 'botany' | 'zoology'>('all');
@@ -77,9 +130,11 @@ export const Hero3DCardDeck: React.FC = () => {
   const [dragStartX, setDragStartX] = useState<number>(0);
   const deckRef = useRef<HTMLDivElement>(null);
 
-  const filteredCards = CARDS_DATA.filter(c => {
-    if (activeFilter === 'botany') return c.paper.includes('Botany');
-    if (activeFilter === 'zoology') return c.paper.includes('Zoology');
+  const currentCards = isBangla ? CARDS_DATA_BN : CARDS_DATA;
+
+  const filteredCards = currentCards.filter(c => {
+    if (activeFilter === 'botany') return c.paper.includes('Botany') || c.paper.includes('উদ্ভিদবিজ্ঞান');
+    if (activeFilter === 'zoology') return c.paper.includes('Zoology') || c.paper.includes('প্রাণিবিজ্ঞান');
     return true;
   });
 
@@ -167,7 +222,7 @@ export const Hero3DCardDeck: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [totalCards, selectedCard]);
+  }, [selectedCard, totalCards]);
 
   const handleCardClick = (idx: number, card: CardItem) => {
     if (Math.abs(dragX) > 10) return; // User was dragging, not clicking
@@ -188,21 +243,21 @@ export const Hero3DCardDeck: React.FC = () => {
             className={`segmented-pill ${activeFilter === 'all' ? 'active' : ''}`}
             onClick={() => setActiveFilter('all')}
           >
-            All 3D Modules
+            {isBangla ? 'সব অধ্যায়' : 'All 3D Modules'}
           </button>
           <button 
             type="button"
             className={`segmented-pill ${activeFilter === 'botany' ? 'active' : ''}`}
             onClick={() => setActiveFilter('botany')}
           >
-            🌿 Botany (Paper 1)
+            {isBangla ? '🌿 ১ম পত্র (উদ্ভিদবিজ্ঞান)' : '🌿 Botany (Paper 1)'}
           </button>
           <button 
             type="button"
             className={`segmented-pill ${activeFilter === 'zoology' ? 'active' : ''}`}
             onClick={() => setActiveFilter('zoology')}
           >
-            🫀 Zoology (Paper 2)
+            {isBangla ? '🫀 ২য় পত্র (প্রাণিবিজ্ঞান)' : '🫀 Zoology (Paper 2)'}
           </button>
         </div>
       </div>
@@ -400,7 +455,7 @@ export const Hero3DCardDeck: React.FC = () => {
                 <p className="modal-3d-desc">{selectedCard.description}</p>
 
                 <div className="cq-hotspots-box">
-                  <h4>Key High-Yield CQ Topics (Board & Medical):</h4>
+                  <h4>{isBangla ? 'গুরুত্বপূর্ণ সিকিউ (CQ) হটস্পটসমূহ:' : 'Key High-Yield CQ Topics (Board & Medical):'}</h4>
                   <ul>
                     {selectedCard.cqHotspots.map((topic, i) => (
                       <li key={i}>
@@ -417,14 +472,14 @@ export const Hero3DCardDeck: React.FC = () => {
                     className="btn btn-primary"
                     onClick={() => setSelectedCard(null)}
                   >
-                    View Full Syllabus <ArrowRight size={16} />
+                    {isBangla ? 'সম্পূর্ণ সিলেবাস দেখুন' : 'View Full Syllabus'} <ArrowRight size={16} />
                   </Link>
                   <Link 
                     to="/enroll" 
                     className="btn btn-secondary"
                     onClick={() => setSelectedCard(null)}
                   >
-                    Enroll in Batch
+                    {isBangla ? 'ভর্তি হোন' : 'Enroll in Batch'}
                   </Link>
                 </div>
               </div>

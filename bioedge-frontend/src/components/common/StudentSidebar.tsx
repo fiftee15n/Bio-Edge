@@ -17,10 +17,13 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 export const StudentSidebar: React.FC = () => {
   const { user, logout } = useAuth();
   const { feedbacks, notifications, hasAccessToCourse, enrollments } = useCourseData();
+  const { t, isBangla, toBnNum } = useLanguage();
 
   const userEmail = user?.email || '';
   const hasAccess = hasAccessToCourse(userEmail, 'alpha-cohort') || hasAccessToCourse(userEmail, 'ssc-2027');
@@ -30,16 +33,16 @@ export const StudentSidebar: React.FC = () => {
   const unreadNotifs = notifications.filter(n => !n.read).length;
 
   const links = [
-    { name: 'Dashboard', path: '/student/dashboard', icon: LayoutDashboard },
-    { name: 'My Course', path: '/student/course', icon: BookOpen },
-    { name: 'Schedule', path: '/student/classes', icon: Calendar },
-    { name: 'Practice', path: '/student/practice', icon: Target },
-    { name: 'Model Tests', path: '/student/model-tests', icon: Award },
-    { name: 'Results', path: '/student/results', icon: CheckCircle2 },
-    { name: 'Analytics', path: '/student/analytics', icon: BarChart3 },
-    { name: 'Feedback', path: '/student/feedback', icon: MessageSquare, badge: unreadFeedbacks },
-    { name: 'Notifications', path: '/student/notifications', icon: Bell, badge: unreadNotifs },
-    { name: 'Profile', path: '/student/profile', icon: User }
+    { name: t.studentPortal.dashboard, path: '/student/dashboard', icon: LayoutDashboard },
+    { name: t.studentPortal.myCourse, path: '/student/course', icon: BookOpen },
+    { name: t.studentPortal.schedule, path: '/student/classes', icon: Calendar },
+    { name: t.studentPortal.practice, path: '/student/practice', icon: Target },
+    { name: t.studentPortal.modelTests, path: '/student/model-tests', icon: Award },
+    { name: t.studentPortal.results, path: '/student/results', icon: CheckCircle2 },
+    { name: t.studentPortal.analytics, path: '/student/analytics', icon: BarChart3 },
+    { name: t.studentPortal.feedback, path: '/student/feedback', icon: MessageSquare, badge: unreadFeedbacks },
+    { name: t.studentPortal.notifications, path: '/student/notifications', icon: Bell, badge: unreadNotifs },
+    { name: t.studentPortal.profile, path: '/student/profile', icon: User }
   ];
 
   return (
@@ -52,7 +55,7 @@ export const StudentSidebar: React.FC = () => {
           </div>
           <div className="logo-text">
             <span className="brand-title">Bio Edge</span>
-            <span className="brand-subtitle">Student Portal</span>
+            <span className="brand-subtitle">{isBangla ? 'শিক্ষার্থী পোর্টাল' : 'Student Portal'}</span>
           </div>
         </Link>
       </div>
@@ -63,10 +66,14 @@ export const StudentSidebar: React.FC = () => {
           {user?.name?.charAt(0) || 'S'}
         </div>
         <div className="profile-meta">
-          <p className="student-name">{user?.name || "Student"}</p>
+          <p className="student-name">{user?.name || (isBangla ? 'শিক্ষার্থী' : 'Student')}</p>
           <span className="student-badge-status">
             <span className={`status-dot ${hasAccess ? '' : 'amber'}`}></span>
-            {hasAccess ? 'Active Access' : isPending ? 'Pending Approval' : 'Enrolled'}
+            {hasAccess 
+              ? (isBangla ? 'সক্রিয় শিক্ষার্থী' : 'Active Access') 
+              : isPending 
+                ? (isBangla ? 'অনুমোদনের অপেক্ষায়' : 'Pending Approval') 
+                : (isBangla ? 'এনরোলড' : 'Enrolled')}
           </span>
         </div>
       </div>
@@ -77,14 +84,14 @@ export const StudentSidebar: React.FC = () => {
           const Icon = link.icon;
           return (
             <NavLink
-              key={link.name}
+              key={link.path}
               to={link.path}
               className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
             >
               <Icon size={18} className="sidebar-icon" />
               <span className="sidebar-label">{link.name}</span>
               {Boolean(link.badge) && (link.badge as number) > 0 && (
-                <span className="sidebar-badge-count">{link.badge}</span>
+                <span className="sidebar-badge-count">{isBangla ? toBnNum(link.badge as number) : link.badge}</span>
               )}
             </NavLink>
           );
@@ -93,13 +100,16 @@ export const StudentSidebar: React.FC = () => {
 
       {/* Footer / Switch / Logout */}
       <div className="sidebar-footer">
+        <div className="sidebar-lang-row mb-2">
+          <LanguageToggle className="w-full justify-center" />
+        </div>
         <Link to="/" className="sidebar-link public-link">
           <ExternalLink size={16} />
-          <span>Public Website</span>
+          <span>{isBangla ? 'ওয়েবসাইটে ফিরুন' : 'Public Website'}</span>
         </Link>
         <button onClick={logout} className="sidebar-link logout-btn">
           <LogOut size={16} />
-          <span>Sign Out</span>
+          <span>{isBangla ? 'লগ আউট' : 'Sign Out'}</span>
         </button>
       </div>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   Award, 
   BookOpen, 
@@ -15,16 +16,17 @@ import {
 
 export const AboutPage: React.FC = () => {
   const { teacher } = useCourseData();
+  const { t, isBangla } = useLanguage();
 
   return (
     <div className="about-page-wrapper section-padding">
       <div className="container">
         {/* Header */}
         <div className="section-header text-center">
-          <span className="section-pill">Faculty Profile</span>
-          <h1 className="section-title">Meet Afroza Tahmina</h1>
+          <span className="section-pill">{t.about.tag}</span>
+          <h1 className="section-title">{t.about.title}</h1>
           <p className="section-subtitle">
-            Senior Biology Specialist, Mentor & Founder of Bio Edge Intensive Learning Programs.
+            {t.about.subtitle}
           </p>
         </div>
 
@@ -41,28 +43,28 @@ export const AboutPage: React.FC = () => {
               </div>
               <div className="about-quick-pill">
                 <Sparkles size={16} />
-                <span>12+ Years Excellence</span>
+                <span>{isBangla ? '১২+ বছরের শ্রেষ্ঠত্ব' : '12+ Years Excellence'}</span>
               </div>
             </div>
 
             <div className="spotlight-content">
-              <span className="badge badge-green">Academic Leadership</span>
-              <h2 className="faculty-name">{teacher.name}</h2>
-              <p className="faculty-sub">{teacher.designation}</p>
-              <p className="faculty-inst">{teacher.institution}</p>
+              <span className="badge badge-green">{t.about.leadershipBadge}</span>
+              <h2 className="faculty-name">{isBangla ? 'আফরোজা তাহমিনা' : teacher.name}</h2>
+              <p className="faculty-sub">{isBangla ? 'সিনিয়র ফ্যাকাল্টি ও জীববিজ্ঞান বিশেষজ্ঞ' : teacher.designation}</p>
+              <p className="faculty-inst">{isBangla ? 'ঢাকা উচ্চ মাধ্যমিক ও জাতীয় জীববিজ্ঞান অলিম্পিয়াড মেন্টর' : teacher.institution}</p>
 
               <div className="divider-line" />
 
               <p className="about-paragraph">
-                Afroza Tahmina is one of the most respected and sought-after Biology educators for Higher Secondary (HEC) preparation in Bangladesh. With over a decade of classroom instruction, curriculum authoring, and Olympiad coaching, she has pioneered an intuitive visual-first pedagogy for mastering Botany, Zoology, and Human Physiology.
+                {t.about.bioP1}
               </p>
 
               <p className="about-paragraph">
-                Her method eliminates the tedious memorization trap by emphasizing biochemical logic, physiological feedback loops, and structured CQ answer architectures that examiners love.
+                {t.about.bioP2}
               </p>
 
               <div className="quote-callout">
-                <p>"{teacher.quote}"</p>
+                <p>"{isBangla ? 'বায়োলজি মানে অযথা মুখস্থবিদ্যা নয়—এটি জীবদেহের চমৎকার এক যৌক্তিক বিজ্ঞান। মূল ধারণাটি একবার স্পষ্ট হয়ে গেলে পরীক্ষায় সর্বোচ্চ নম্বর পাওয়া অত্যন্ত সহজ হয়ে যায়।' : teacher.quote}"</p>
               </div>
 
               <div className="contact-details-row">
@@ -82,35 +84,35 @@ export const AboutPage: React.FC = () => {
         {/* Academic Principles */}
         <div className="principles-section">
           <div className="section-header text-center">
-            <span className="section-pill">Pedagogy</span>
-            <h2 className="section-title">The Bio Edge Teaching Philosophy</h2>
+            <span className="section-pill">{t.about.principlesTag}</span>
+            <h2 className="section-title">{t.about.principlesTitle}</h2>
             <p className="section-subtitle">
-              Three unyielding standards that define every class, assessment, and feedback note.
+              {t.about.principlesSubtitle}
             </p>
           </div>
 
           <div className="principles-grid">
             <div className="principle-card bio-card">
               <div className="p-num">01</div>
-              <h3 className="p-title">Concept-First Architecture</h3>
+              <h3 className="p-title">{t.about.pr1Title}</h3>
               <p className="p-desc">
-                Biology is understood when its biochemical and evolutionary logic is revealed. We dissect mechanisms step-by-step before writing down notes.
+                {t.about.pr1Desc}
               </p>
             </div>
 
             <div className="principle-card bio-card">
               <div className="p-num">02</div>
-              <h3 className="p-title">Structured CQ Presentation</h3>
+              <h3 className="p-title">{isBangla ? 'কাঠামোগত সিকিউ (CQ) উপস্থাপন' : 'Structured CQ Presentation'}</h3>
               <p className="p-desc">
-                Knowing the answer is only half the battle. We teach students how to organize introductory definitions, comparative tables, and labeled diagrams for full marks.
+                {isBangla ? 'সঠিক উত্তর জানা যেমন জরুরি, তেমনি পূর্ণ নম্বর পেতে ভূমিকা, তুলনামূলক ছক ও চিহ্নিত চিত্রের সঠিক কাঠামোও অপরিহার্য।' : 'Knowing the answer is only half the battle. We teach students how to organize introductory definitions, comparative tables, and labeled diagrams for full marks.'}
               </p>
             </div>
 
             <div className="principle-card bio-card">
               <div className="p-num">03</div>
-              <h3 className="p-title">Individualized Feedback Loops</h3>
+              <h3 className="p-title">{t.about.pr3Title}</h3>
               <p className="p-desc">
-                We believe large batches dilute learning. Every student in our 15–20 member cohort receives personal diagnostic remarks after every test.
+                {t.about.pr3Desc}
               </p>
             </div>
           </div>
@@ -119,7 +121,7 @@ export const AboutPage: React.FC = () => {
         {/* Call to action */}
         <div className="about-cta-bar text-center">
           <Link to="/enroll" className="btn btn-primary btn-lg">
-            Enroll in the Intensive Program <ArrowRight size={18} />
+            {isBangla ? 'ইন্টেনসিভ প্রোগ্রামে ভর্তি হোন' : 'Enroll in the Intensive Program'} <ArrowRight size={18} />
           </Link>
         </div>
       </div>

@@ -21,26 +21,29 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 export const TeacherSidebar: React.FC = () => {
   const { logout } = useAuth();
   const { students } = useCourseData();
+  const { t, isBangla, toBnNum } = useLanguage();
 
   const links = [
-    { name: 'Dashboard', path: '/teacher/dashboard', icon: LayoutDashboard },
-    { name: 'Students', path: '/teacher/students', icon: Users, badge: students.length },
-    { name: 'Course Settings', path: '/teacher/course', icon: BookOpen },
-    { name: 'Curriculum & Chapters', path: '/teacher/chapters', icon: Layers },
-    { name: 'Classes Management', path: '/teacher/classes', icon: Calendar },
-    { name: 'Schedule Calendar', path: '/teacher/schedule', icon: Clock },
-    { name: 'Practice Tests', path: '/teacher/tests', icon: FileCheck2 },
-    { name: 'Question Bank', path: '/teacher/questions', icon: HelpCircle },
-    { name: 'Model Tests', path: '/teacher/model-tests', icon: Award },
-    { name: 'Results & Evaluation', path: '/teacher/results', icon: GraduationCap },
-    { name: 'Student Feedback', path: '/teacher/feedback', icon: MessageSquare },
-    { name: 'Academic Analytics', path: '/teacher/analytics', icon: BarChart3 },
-    { name: 'Pricing & Capacity', path: '/teacher/pricing', icon: Tag },
-    { name: 'Teacher Profile', path: '/teacher/profile', icon: UserCheck }
+    { name: t.teacherPortal.dashboard, path: '/teacher/dashboard', icon: LayoutDashboard },
+    { name: t.teacherPortal.students, path: '/teacher/students', icon: Users, badge: students.length },
+    { name: t.teacherPortal.courseSettings, path: '/teacher/course', icon: BookOpen },
+    { name: t.teacherPortal.curriculum, path: '/teacher/chapters', icon: Layers },
+    { name: t.teacherPortal.classes, path: '/teacher/classes', icon: Calendar },
+    { name: t.teacherPortal.schedule, path: '/teacher/schedule', icon: Clock },
+    { name: t.teacherPortal.tests, path: '/teacher/tests', icon: FileCheck2 },
+    { name: t.teacherPortal.questions, path: '/teacher/questions', icon: HelpCircle },
+    { name: t.teacherPortal.modelTests, path: '/teacher/model-tests', icon: Award },
+    { name: t.teacherPortal.results, path: '/teacher/results', icon: GraduationCap },
+    { name: t.teacherPortal.feedback, path: '/teacher/feedback', icon: MessageSquare },
+    { name: t.teacherPortal.analytics, path: '/teacher/analytics', icon: BarChart3 },
+    { name: t.teacherPortal.pricing, path: '/teacher/pricing', icon: Tag },
+    { name: t.teacherPortal.profile, path: '/teacher/profile', icon: UserCheck }
   ];
 
   return (
@@ -53,7 +56,7 @@ export const TeacherSidebar: React.FC = () => {
           </div>
           <div className="logo-text">
             <span className="brand-title">Bio Edge</span>
-            <span className="brand-subtitle">Teacher Management</span>
+            <span className="brand-subtitle">{isBangla ? 'শিক্ষক ম্যানেজমেন্ট' : 'Teacher Management'}</span>
           </div>
         </Link>
       </div>
@@ -68,9 +71,9 @@ export const TeacherSidebar: React.FC = () => {
           />
         </div>
         <div className="profile-meta">
-          <p className="student-name">Afroza Tahmina</p>
+          <p className="student-name">{isBangla ? 'আফরোজা তাহমিনা' : 'Afroza Tahmina'}</p>
           <span className="student-badge-status teacher-status">
-            Lead Faculty & Admin
+            {isBangla ? 'প্রধান ফ্যাকাল্টি ও অ্যাডমিন' : 'Lead Faculty & Admin'}
           </span>
         </div>
       </div>
@@ -81,14 +84,14 @@ export const TeacherSidebar: React.FC = () => {
           const Icon = link.icon;
           return (
             <NavLink
-              key={link.name}
+              key={link.path}
               to={link.path}
               className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
             >
               <Icon size={17} className="sidebar-icon" />
               <span className="sidebar-label">{link.name}</span>
               {Boolean(link.badge) && (link.badge as number) > 0 && (
-                <span className="sidebar-badge-count">{link.badge}</span>
+                <span className="sidebar-badge-count">{isBangla ? toBnNum(link.badge as number) : link.badge}</span>
               )}
             </NavLink>
           );
@@ -97,13 +100,16 @@ export const TeacherSidebar: React.FC = () => {
 
       {/* Footer / Switch / Logout */}
       <div className="sidebar-footer">
+        <div className="sidebar-lang-row mb-2">
+          <LanguageToggle className="w-full justify-center" />
+        </div>
         <Link to="/" className="sidebar-link public-link">
           <ExternalLink size={16} />
-          <span>Public Website</span>
+          <span>{isBangla ? 'ওয়েবসাইটে ফিরুন' : 'Public Website'}</span>
         </Link>
         <button onClick={logout} className="sidebar-link logout-btn">
           <LogOut size={16} />
-          <span>Sign Out</span>
+          <span>{isBangla ? 'লগ আউট' : 'Sign Out'}</span>
         </button>
       </div>
 

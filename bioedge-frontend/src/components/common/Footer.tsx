@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 export const Footer: React.FC = () => {
   const { teacher, course } = useCourseData();
+  const { t, toBnNum } = useLanguage();
 
   return (
     <footer className="footer-wrapper">
@@ -22,40 +25,40 @@ export const Footer: React.FC = () => {
               </div>
             </div>
             <p className="footer-desc">
-              A premium, structured digital learning environment dedicated exclusively to HSC Biology First Paper and Second Paper excellence.
+              {t.footer.tagline}
             </p>
             <div className="footer-batch-badge">
-              <span>{course.batchName || "Batch 01"}</span> • <span>Only {course.seatLimit} Students</span>
+              <span>{course.batchName || "Batch 01"}</span> • <span>Only {toBnNum(course.seatLimit)} Students</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="footer-col">
-            <h4 className="footer-heading">Navigation</h4>
+            <h4 className="footer-heading">{t.footer.navigation}</h4>
             <ul className="footer-links">
-              <li><Link to="/program">Program Curriculum</Link></li>
-              <li><Link to="/about">About Teacher</Link></li>
-              <li><Link to="/program#structure">Program Structure</Link></li>
-              <li><Link to="/courses">Courses & Tuition</Link></li>
-              <li><Link to="/enroll">Online Enrollment</Link></li>
+              <li><Link to="/program">{t.footer.programCurriculum}</Link></li>
+              <li><Link to="/about">{t.footer.aboutTeacher}</Link></li>
+              <li><Link to="/program#structure">{t.footer.programStructure}</Link></li>
+              <li><Link to="/courses">{t.footer.coursesTuition}</Link></li>
+              <li><Link to="/enroll">{t.footer.onlineEnrollment}</Link></li>
             </ul>
           </div>
 
           {/* Academic Coverage */}
           <div className="footer-col">
-            <h4 className="footer-heading">Curriculum</h4>
+            <h4 className="footer-heading">{t.footer.curriculum}</h4>
             <ul className="footer-links">
-              <li><Link to="/program">Botany & Cell Genetics</Link></li>
-              <li><Link to="/program">Plant Physiology & Biotech</Link></li>
-              <li><Link to="/program">Human Physiology System</Link></li>
-              <li><Link to="/program">Animal Diversity & Taxonomy</Link></li>
-              <li><Link to="/program">Board Model Tests</Link></li>
+              <li><Link to="/program">{t.footer.botanyGenetics}</Link></li>
+              <li><Link to="/program">{t.footer.plantPhysiology}</Link></li>
+              <li><Link to="/program">{t.footer.humanPhysiology}</Link></li>
+              <li><Link to="/program">{t.footer.animalDiversity}</Link></li>
+              <li><Link to="/program">{t.footer.boardModelTests}</Link></li>
             </ul>
           </div>
 
           {/* Contact Direct */}
           <div className="footer-col">
-            <h4 className="footer-heading">Direct Contact</h4>
+            <h4 className="footer-heading">{t.footer.directContact}</h4>
             <div className="footer-contact-list">
               <div className="contact-item">
                 <Phone size={16} className="contact-icon" />
@@ -67,23 +70,25 @@ export const Footer: React.FC = () => {
               </div>
               <div className="contact-item">
                 <MapPin size={16} className="contact-icon" />
-                <span>Dhaka, Bangladesh</span>
+                <span>{t.footer.location}</span>
               </div>
             </div>
             <Link to="/contact" className="contact-action-link">
-              Send an inquiry <ArrowUpRight size={14} />
+              {t.footer.sendInquiry} <ArrowUpRight size={14} />
             </Link>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>© 2026 Bio Edge by Afroza Tahmina. All rights reserved.</p>
-          <div className="footer-bottom-links">
-            <span>Academic Excellence</span>
+          <p>{t.footer.copyright}</p>
+          <div className="footer-bottom-links" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <span>{t.footer.pillar1}</span>
             <span>•</span>
-            <span>Structured Discipline</span>
+            <span>{t.footer.pillar2}</span>
             <span>•</span>
-            <span>Personalized Feedback</span>
+            <span>{t.footer.pillar3}</span>
+            <span>•</span>
+            <LanguageToggle />
           </div>
         </div>
       </div>

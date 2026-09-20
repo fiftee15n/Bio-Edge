@@ -14,8 +14,10 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { HSC_BIOLOGY_CURRICULUM, MonthCurriculum } from '../../data/curriculumStructure';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const SyllabusCurriculumExplorer: React.FC = () => {
+  const { t, isBangla, toBnNum } = useLanguage();
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(0);
   const [activePaperView, setActivePaperView] = useState<'both' | 'botany' | 'zoology'>('both');
 
@@ -28,22 +30,22 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         <div className="section-header text-center">
           <div className="inline-floating-badge">
             <Sparkles size={16} />
-            <span>Structured 48-Class Academic Blueprint</span>
+            <span>{t.curriculumExplorer.badge}</span>
           </div>
           <h2 className="section-title">
-            HSC Biology Intensive Program Structure
+            {t.curriculumExplorer.title}
           </h2>
           <p className="section-subtitle">
-            Complete 1st Paper (Botany) & 2nd Paper (Zoology) syllabus divided into 4 progressive conceptual milestones.
+            {t.curriculumExplorer.subtitle}
           </p>
 
           {/* 5 Core Pillars Indicator */}
           <div className="five-pillars-row">
-            <span className="pillar-tag"><span className="dot"></span> Concept</span>
-            <span className="pillar-tag"><span className="dot"></span> Practice</span>
-            <span className="pillar-tag"><span className="dot"></span> Exam</span>
-            <span className="pillar-tag"><span className="dot"></span> Revision</span>
-            <span className="pillar-tag"><span className="dot"></span> Confidence</span>
+            <span className="pillar-tag"><span className="dot"></span> {t.curriculumExplorer.p1}</span>
+            <span className="pillar-tag"><span className="dot"></span> {t.curriculumExplorer.p2}</span>
+            <span className="pillar-tag"><span className="dot"></span> {t.curriculumExplorer.p3}</span>
+            <span className="pillar-tag"><span className="dot"></span> {t.curriculumExplorer.p4}</span>
+            <span className="pillar-tag"><span className="dot"></span> {t.curriculumExplorer.p5}</span>
           </div>
         </div>
 
@@ -56,9 +58,9 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
               className={`month-tab-btn ${selectedMonthIndex === idx ? 'active' : ''}`}
               onClick={() => setSelectedMonthIndex(idx)}
             >
-              <span className="m-num">Month 0{m.monthNumber}</span>
+              <span className="m-num">{isBangla ? `${toBnNum(m.monthNumber)}ম মাস` : `Month 0${m.monthNumber}`}</span>
               <span className="m-title">{m.title.replace(/MONTH \d — /, '')}</span>
-              <span className="m-badge">{m.totalClasses} Classes</span>
+              <span className="m-badge">{toBnNum(m.totalClasses)} {isBangla ? 'টি ক্লাস' : 'Classes'}</span>
             </button>
           ))}
         </div>
@@ -68,7 +70,7 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           {/* Month Overview Banner */}
           <div className="month-panel-top">
             <div className="month-meta-info">
-              <span className="month-badge-pill">Month {currentMonth.monthNumber} • {currentMonth.classRange}</span>
+              <span className="month-badge-pill">{isBangla ? `${toBnNum(currentMonth.monthNumber)}ম মাস` : `Month ${currentMonth.monthNumber}`} • {currentMonth.classRange}</span>
               <h3 className="month-panel-title">{currentMonth.title}</h3>
               <p className="month-panel-desc">{currentMonth.subtitle}</p>
             </div>
@@ -80,21 +82,21 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                 className={`paper-filter-btn ${activePaperView === 'both' ? 'active' : ''}`}
                 onClick={() => setActivePaperView('both')}
               >
-                Both Papers (Parallel)
+                {isBangla ? 'উভয় পত্রের ক্লাসসমূহ' : 'Both Papers (Parallel)'}
               </button>
               <button
                 type="button"
                 className={`paper-filter-btn ${activePaperView === 'botany' ? 'active' : ''}`}
                 onClick={() => setActivePaperView('botany')}
               >
-                🌿 1st Paper (Botany)
+                {isBangla ? '🌿 ১ম পত্র (উদ্ভিদবিজ্ঞান)' : '🌿 1st Paper (Botany)'}
               </button>
               <button
                 type="button"
                 className={`paper-filter-btn ${activePaperView === 'zoology' ? 'active' : ''}`}
                 onClick={() => setActivePaperView('zoology')}
               >
-                🧬 2nd Paper (Zoology)
+                {isBangla ? '🧬 ২য় পত্র (প্রাণিবিজ্ঞান)' : '🧬 2nd Paper (Zoology)'}
               </button>
             </div>
           </div>

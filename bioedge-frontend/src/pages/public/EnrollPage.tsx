@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { api } from '../../services/api';
 import { 
   User as UserIcon, 
@@ -21,6 +22,7 @@ import confetti from 'canvas-confetti';
 
 export const EnrollPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { isBangla } = useLanguage();
   const courseKey = searchParams.get('course') === 'ssc-2027' ? 'ssc-2027' : 'alpha-cohort';
   const plan = searchParams.get('plan') === 'monthly' ? 'monthly' : 'full';
 
@@ -29,8 +31,8 @@ export const EnrollPage: React.FC = () => {
     : (plan === 'monthly' ? '3500' : '12500');
 
   const courseTitle = courseKey === 'ssc-2027'
-    ? 'SSC 2027 Model Test Package'
-    : 'Alpha Cohort (HSC Biology Intensive)';
+    ? (isBangla ? 'এসএসসি ২০২৭ মডেল টেস্ট প্যাকেজ' : 'SSC 2027 Model Test Package')
+    : (isBangla ? 'আলফা ব্যাচ (এইচএসসি বায়োলজি ইনটেনসিভ)' : 'Alpha Cohort (HSC Biology Intensive)');
 
   const { user } = useAuth();
   const { enrollStudent, addEnrollment } = useCourseData();
@@ -56,31 +58,31 @@ export const EnrollPage: React.FC = () => {
 
     // Validations
     if (!name.trim()) {
-      setErrorMessage('Please enter your full name.');
+      setErrorMessage(isBangla ? 'অনুগ্রহ করে আপনার পুরো নাম লিখুন।' : 'Please enter your full name.');
       return;
     }
     if (!email.trim() || !email.includes('@')) {
-      setErrorMessage('Please enter a valid email address.');
+      setErrorMessage(isBangla ? 'অনুগ্রহ করে একটি সঠিক ইমেইল ঠিকানা দিন।' : 'Please enter a valid email address.');
       return;
     }
     if (!schoolCollege.trim()) {
-      setErrorMessage('Please enter your school or college name.');
+      setErrorMessage(isBangla ? 'আপনার স্কুল বা কলেজের নাম লিখুন।' : 'Please enter your school or college name.');
       return;
     }
     if (!whatsappNumber.trim()) {
-      setErrorMessage('Please enter your WhatsApp phone number.');
+      setErrorMessage(isBangla ? 'আপনার হোয়াটসঅ্যাপ নম্বর দিন।' : 'Please enter your WhatsApp phone number.');
       return;
     }
     if (paymentMethod !== 'Cash' && !paymentNumber.trim()) {
-      setErrorMessage('Please enter the number used for payment.');
+      setErrorMessage(isBangla ? 'পেমেন্ট করার নম্বরটি লিখুন।' : 'Please enter the number used for payment.');
       return;
     }
     if (paymentMethod !== 'Cash' && !transactionId.trim()) {
-      setErrorMessage('Please enter the Transaction ID (TrxID).');
+      setErrorMessage(isBangla ? 'অনুগ্রহ করে ট্রানজেকশন আইডি (TrxID) লিখুন।' : 'Please enter the Transaction ID (TrxID).');
       return;
     }
     if (!amount.trim()) {
-      setErrorMessage('Please enter the payment amount.');
+      setErrorMessage(isBangla ? 'পেমেন্টের পরিমাণ লিখুন।' : 'Please enter the payment amount.');
       return;
     }
 
@@ -140,7 +142,7 @@ export const EnrollPage: React.FC = () => {
       } catch (err) {}
 
     } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to submit enrollment. Please check your details.');
+      setErrorMessage(err.message || (isBangla ? 'ভর্তি তথ্য জমা দেওয়া যায়নি। তথ্য আবার যাচাই করুন।' : 'Failed to submit enrollment. Please check your details.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -153,7 +155,7 @@ export const EnrollPage: React.FC = () => {
         {/* Back Link */}
         <div className="enroll-top-nav">
           <Link to="/courses" className="enroll-top-back">
-            <ArrowLeft size={15} /> Back to Courses
+            <ArrowLeft size={15} /> {isBangla ? 'কোর্সে ফিরে যান' : 'Back to Courses'}
           </Link>
         </div>
 
@@ -166,9 +168,13 @@ export const EnrollPage: React.FC = () => {
                 <div className="header-badge-row">
                   <span className="course-target-pill">{courseTitle}</span>
                 </div>
-                <h1 className="compact-title">Enrollment Form</h1>
+                <h1 className="compact-title">{isBangla ? 'অনলাইন ভর্তি ফর্ম' : 'Enrollment Form'}</h1>
                 <p className="compact-subtitle">
-                  Send course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket) or choose <strong>Cash</strong>, and complete the form below.
+                  {isBangla ? (
+                    <>কোর্স ফি পাঠান <strong>01712-345678</strong> (বিকাশ / নগদ / রকেট) নম্বরে অথবা <strong>ক্যাশ</strong> নির্বাচন করুন এবং নিচের ফর্মটি পূরণ করুন।</>
+                  ) : (
+                    <>Send course fee to <strong>01712-345678</strong> (bKash / Nagad / Rocket) or choose <strong>Cash</strong>, and complete the form below.</>
+                  )}
                 </p>
               </div>
 
@@ -187,7 +193,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 1. Name */}
                   <div className="form-item">
                     <label htmlFor="student-name" className="form-label">
-                      Name <span className="req">*</span>
+                      {isBangla ? 'নাম' : 'Name'} <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <UserIcon size={16} className="input-icon" />
@@ -195,7 +201,7 @@ export const EnrollPage: React.FC = () => {
                         id="student-name"
                         type="text"
                         className="form-control"
-                        placeholder="Full name"
+                        placeholder={isBangla ? 'আপনার পূর্ণ নাম' : 'Full name'}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
@@ -206,7 +212,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 2. Mail */}
                   <div className="form-item">
                     <label htmlFor="student-email" className="form-label">
-                      Mail <span className="req">*</span>
+                      {isBangla ? 'ইমেইল' : 'Mail'} <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <Mail size={16} className="input-icon" />
@@ -225,7 +231,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 3. School or College name */}
                   <div className="form-item">
                     <label htmlFor="student-school" className="form-label">
-                      School or College name <span className="req">*</span>
+                      {isBangla ? 'স্কুল বা কলেজের নাম' : 'School or College name'} <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <Building2 size={16} className="input-icon" />
@@ -233,7 +239,7 @@ export const EnrollPage: React.FC = () => {
                         id="student-school"
                         type="text"
                         className="form-control"
-                        placeholder="School or College"
+                        placeholder={isBangla ? 'স্কুল বা কলেজ' : 'School or College'}
                         value={schoolCollege}
                         onChange={(e) => setSchoolCollege(e.target.value)}
                         required
@@ -244,7 +250,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 4. Phone Number (WhatsApp preferred) */}
                   <div className="form-item">
                     <label htmlFor="student-whatsapp" className="form-label">
-                      Phone Number (WhatsApp preferred) <span className="req">*</span>
+                      {isBangla ? 'ফোন নম্বর (হোয়াটসঅ্যাপ)' : 'Phone Number (WhatsApp preferred)'} <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <Phone size={16} className="input-icon" />
@@ -263,7 +269,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 5. Payment Option */}
                   <div className="form-item">
                     <label className="form-label">
-                      Payment Option <span className="req">*</span>
+                      {isBangla ? 'পেমেন্ট মাধ্যম' : 'Payment Option'} <span className="req">*</span>
                     </label>
                     <div className="payment-options-wrap">
                       {(['bKash', 'Nagad', 'Rocket', 'Cash'] as const).map((method) => (
@@ -273,7 +279,7 @@ export const EnrollPage: React.FC = () => {
                           className={`pay-opt-pill ${paymentMethod === method ? 'active' : ''}`}
                           onClick={() => setPaymentMethod(method)}
                         >
-                          {method}
+                          {method === 'Cash' && isBangla ? 'ক্যাশ' : method}
                         </button>
                       ))}
                     </div>
@@ -282,8 +288,10 @@ export const EnrollPage: React.FC = () => {
                   {/* 6. Number used for payment */}
                   <div className="form-item">
                     <label htmlFor="payment-sender" className="form-label">
-                      {paymentMethod === 'Cash' ? 'Contact / Reference No.' : 'Number used for payment'}{' '}
-                      {paymentMethod === 'Cash' ? <span className="opt-tag">(Optional)</span> : <span className="req">*</span>}
+                      {paymentMethod === 'Cash' 
+                        ? (isBangla ? 'যোগাযোগ / রেফারেন্স নং' : 'Contact / Reference No.') 
+                        : (isBangla ? 'যে নম্বর থেকে পেমেন্ট করা হয়েছে' : 'Number used for payment')}{' '}
+                      {paymentMethod === 'Cash' ? <span className="opt-tag">{isBangla ? '(ঐচ্ছিক)' : '(Optional)'}</span> : <span className="req">*</span>}
                     </label>
                     <div className="input-wrap">
                       <CreditCard size={16} className="input-icon" />
@@ -291,7 +299,7 @@ export const EnrollPage: React.FC = () => {
                         id="payment-sender"
                         type={paymentMethod === 'Cash' ? 'text' : 'tel'}
                         className="form-control"
-                        placeholder={paymentMethod === 'Cash' ? 'e.g. Phone or Cash in Person' : `Sender ${paymentMethod} number`}
+                        placeholder={paymentMethod === 'Cash' ? (isBangla ? 'যেমন: ফোন বা সরাসরি অফিসে ক্যাশ' : 'e.g. Phone or Cash in Person') : (isBangla ? `প্রেরকের ${paymentMethod} নম্বর` : `Sender ${paymentMethod} number`)}
                         value={paymentNumber}
                         onChange={(e) => setPaymentNumber(e.target.value)}
                         required={paymentMethod !== 'Cash'}
@@ -302,8 +310,8 @@ export const EnrollPage: React.FC = () => {
                   {/* 7. Transaction ID */}
                   <div className="form-item">
                     <label htmlFor="transaction-id" className="form-label">
-                      Transaction ID{' '}
-                      {paymentMethod === 'Cash' ? <span className="opt-tag">(Receipt or CASH)</span> : <span className="req">*</span>}
+                      {isBangla ? 'ট্রানজেকশন আইডি' : 'Transaction ID'}{' '}
+                      {paymentMethod === 'Cash' ? <span className="opt-tag">{isBangla ? '(রসিদ বা ক্যাশ)' : '(Receipt or CASH)'}</span> : <span className="req">*</span>}
                     </label>
                     <div className="input-wrap">
                       <Hash size={16} className="input-icon" />
@@ -311,7 +319,7 @@ export const EnrollPage: React.FC = () => {
                         id="transaction-id"
                         type="text"
                         className="form-control text-uppercase"
-                        placeholder={paymentMethod === 'Cash' ? 'Receipt No. or CASH' : 'TrxID (e.g. BL92X88K)'}
+                        placeholder={paymentMethod === 'Cash' ? (isBangla ? 'রসিদ নং বা ক্যাশ' : 'Receipt No. or CASH') : 'TrxID (e.g. BL92X88K)'}
                         value={transactionId}
                         onChange={(e) => setTransactionId(e.target.value)}
                         required={paymentMethod !== 'Cash'}
@@ -322,7 +330,7 @@ export const EnrollPage: React.FC = () => {
                   {/* 8. Amount */}
                   <div className="form-item">
                     <label htmlFor="payment-amount" className="form-label">
-                      Amount <span className="req">*</span>
+                      {isBangla ? 'টাকার পরিমাণ' : 'Amount'} <span className="req">*</span>
                     </label>
                     <div className="input-wrap">
                       <DollarSign size={16} className="input-icon" />
@@ -345,13 +353,15 @@ export const EnrollPage: React.FC = () => {
                   disabled={isSubmitting}
                   className="btn btn-primary btn-block compact-submit-btn"
                 >
-                  {isSubmitting ? 'Processing Enrollment...' : 'Submit Enrollment'} <ArrowRight size={17} />
+                  {isSubmitting 
+                    ? (isBangla ? 'ভর্তি সম্পন্ন হচ্ছে...' : 'Processing Enrollment...') 
+                    : (isBangla ? 'ভর্তি তথ্য নিশ্চিত করুন' : 'Submit Enrollment')} <ArrowRight size={17} />
                 </button>
 
                 {/* Trust Line */}
                 <div className="compact-trust-note">
                   <ShieldCheck size={14} />
-                  <span>Secure & verified admission under Bio Edge guidelines.</span>
+                  <span>{isBangla ? 'বায়ো এজ নীতিমালা অনুযায়ী সম্পূর্ণ নিরাপদ ও ভেরিফায়েড ভর্তি।' : 'Secure & verified admission under Bio Edge guidelines.'}</span>
                 </div>
 
               </form>
@@ -362,56 +372,64 @@ export const EnrollPage: React.FC = () => {
               <div className="success-icon-badge">
                 <CheckCircle2 size={36} />
               </div>
-              <h2 className="success-title">Enrollment Submitted!</h2>
+              <h2 className="success-title">{isBangla ? 'ভর্তি সফলভাবে জমা হয়েছে!' : 'Enrollment Submitted!'}</h2>
               <p className="success-desc">
-                Thank you, <strong>{submittedData?.name}</strong>! Your payment for <strong>{submittedData?.courseTitle}</strong> is recorded.
+                {isBangla ? (
+                  <>ধন্যবাদ, <strong>{submittedData?.name}</strong>! <strong>{submittedData?.courseTitle}</strong>-এর জন্য আপনার পেমেন্ট রেকর্ড করা হয়েছে।</>
+                ) : (
+                  <>Thank you, <strong>{submittedData?.name}</strong>! Your payment for <strong>{submittedData?.courseTitle}</strong> is recorded.</>
+                )}
               </p>
 
               <div className="compact-receipt-card">
                 <div className="receipt-row">
-                  <span>Name:</span>
+                  <span>{isBangla ? 'শিক্ষার্থীর নাম:' : 'Name:'}</span>
                   <strong>{submittedData?.name}</strong>
                 </div>
                 <div className="receipt-row">
-                  <span>Mail:</span>
+                  <span>{isBangla ? 'ইমেইল:' : 'Mail:'}</span>
                   <span>{submittedData?.email}</span>
                 </div>
                 <div className="receipt-row">
-                  <span>School/College:</span>
+                  <span>{isBangla ? 'শিক্ষা প্রতিষ্ঠান:' : 'School/College:'}</span>
                   <span>{submittedData?.schoolCollege}</span>
                 </div>
                 <div className="receipt-row">
-                  <span>Phone (WhatsApp):</span>
+                  <span>{isBangla ? 'ফোন (হোয়াটসঅ্যাপ):' : 'Phone (WhatsApp):'}</span>
                   <span>{submittedData?.whatsappNumber}</span>
                 </div>
                 <div className="receipt-row">
-                  <span>Payment Option:</span>
+                  <span>{isBangla ? 'পেমেন্ট মাধ্যম:' : 'Payment Option:'}</span>
                   <strong>{submittedData?.paymentMethod}</strong>
                 </div>
                 <div className="receipt-row">
-                  <span>Payment Number:</span>
+                  <span>{isBangla ? 'প্রেরক নম্বর:' : 'Payment Number:'}</span>
                   <span>{submittedData?.paymentNumber}</span>
                 </div>
                 <div className="receipt-row">
-                  <span>TrxID:</span>
+                  <span>{isBangla ? 'ট্রানজেকশন আইডি:' : 'TrxID:'}</span>
                   <strong className="code-tag">{submittedData?.transactionId}</strong>
                 </div>
                 <div className="receipt-row">
-                  <span>Amount:</span>
+                  <span>{isBangla ? 'পরিশোধিত অর্থ:' : 'Amount:'}</span>
                   <strong className="amt-tag">৳{submittedData?.amount}</strong>
                 </div>
               </div>
 
               <p className="receipt-footer-text">
-                Your application is currently <strong>Pending Admin Verification</strong>. Once payment is confirmed by administration, full access to your specific course materials will unlock immediately.
+                {isBangla ? (
+                  <>আপনার আবেদনটি বর্তমানে <strong>অ্যাডমিন ভেরিফিকেশনের অপেক্ষায়</strong> আছে। প্রশাসন কর্তৃক পেমেন্ট নিশ্চিত হওয়া মাত্র আপনার কোর্সের সকল ক্লাস ও স্টাডি ম্যাটেরিয়াল উন্মুক্ত হবে।</>
+                ) : (
+                  <>Your application is currently <strong>Pending Admin Verification</strong>. Once payment is confirmed by administration, full access to your specific course materials will unlock immediately.</>
+                )}
               </p>
 
               <div className="receipt-actions">
                 <Link to="/login" className="btn btn-primary">
-                  Go to Student Portal <ArrowRight size={16} />
+                  {isBangla ? 'স্টুডেন্ট পোর্টালে যান' : 'Go to Student Portal'} <ArrowRight size={16} />
                 </Link>
                 <Link to="/" className="btn btn-outline">
-                  Return Home
+                  {isBangla ? 'মূল পাতায় ফিরুন' : 'Return Home'}
                 </Link>
               </div>
             </div>

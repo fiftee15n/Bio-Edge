@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Mail, Clock, RefreshCw, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface VerifyEmailFormProps {
@@ -18,6 +19,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
   redirectNotice
 }) => {
   const { verifyEmail, resendVerificationCode, isLoading } = useAuth();
+  const { isBangla, toBnNum } = useLanguage();
   const [digits, setDigits] = useState<string[]>(() => {
     if (initialCode && initialCode.length === 6) {
       return initialCode.split('');
@@ -154,14 +156,14 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
     try {
       const res = await resendVerificationCode(email);
       if (res.success) {
-        setSuccessMessage('A fresh 6-digit verification code has been sent!');
+        setSuccessMessage(isBangla ? 'একটি নতুন ৬-সংখ্যার ভেরিফিকেশন কোড পাঠানো হয়েছে!' : 'A fresh 6-digit verification code has been sent!');
         setTimeLeft(600); // Reset to 10 minutes
         setResendCooldown(60); // Reset 60s cooldown
         if (res.verificationCode) {
           setActiveCodeHint(res.verificationCode);
         }
       } else {
-        setErrorMessage(res.message || 'Failed to resend code. Please try again.');
+        setErrorMessage(res.message || (isBangla ? 'কোড পুনরায় পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।' : 'Failed to resend code. Please try again.'));
       }
     } finally {
       setIsResending(false);
@@ -170,7 +172,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  const formattedTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  const formattedTime = `${isBangla ? toBnNum(minutes) : minutes}:${seconds < 10 ? '0' : ''}${isBangla ? toBnNum(seconds) : seconds}`;
 
   return (
     <div className="verify-email-form-wrapper">
@@ -178,9 +180,13 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         <div className="verify-icon-bubble">
           <Mail size={28} />
         </div>
-        <h2 className="verify-title">Verify Your Email Address</h2>
+        <h2 className="verify-title">{isBangla ? 'ইমেইল ঠিকানা যাচাই করুন' : 'Verify Your Email Address'}</h2>
         <p className="verify-subtitle">
-          We sent a 6-digit verification code to <strong>{email}</strong>
+          {isBangla ? (
+            <>আমরা <strong>{email}</strong> ঠিকানায় একটি ৬-সংখ্যার কোড পাঠিয়েছি</>
+          ) : (
+            <>We sent a 6-digit verification code to <strong>{email}</strong></>
+          )}
         </p>
 
         {redirectNotice && (
@@ -196,14 +202,14 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         <div className="dev-code-hint">
           <div className="dev-hint-content">
             <ShieldCheck size={16} />
-            <span>Verification Code: <strong>{activeCodeHint}</strong></span>
+            <span>{isBangla ? 'ভেরিফিকেশন কোড:' : 'Verification Code:'} <strong>{activeCodeHint}</strong></span>
           </div>
           <button 
             type="button" 
             className="dev-fill-btn"
             onClick={() => setDigits(activeCodeHint.split(''))}
           >
-            Auto-fill
+            {isBangla ? 'স্বয়ংক্রিয় পূরণ' : 'Auto-fill'}
           </button>
         </div>
       )}
@@ -244,7 +250,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         <div className="otp-meta-row">
           <div className={`otp-timer ${timeLeft < 60 ? 'warning' : ''}`}>
             <Clock size={15} />
-            <span>Expires in: <strong>{formattedTime}</strong></span>
+            <span>{isBangla ? 'মেয়াদ শেষ হবে:' : 'Expires in:'} <strong>{formattedTime}</strong></span>
           </div>
 
           <button
@@ -254,7 +260,9 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
             className="btn-resend-link"
           >
             <RefreshCw size={14} className={isResending ? 'spin' : ''} />
-            {resendCooldown > 0 ? `Resend code in ${resendCooldown}s` : 'Resend code'}
+            {resendCooldown > 0 
+              ? (isBangla ? `${toBnNum(resendCooldown)} সেকেন্ড পর আবার পাঠান` : `Resend code in ${resendCooldown}s`) 
+              : (isBangla ? 'কোড পুনরায় পাঠান' : 'Resend code')}
           </button>
         </div>
 
@@ -263,7 +271,9 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           disabled={isLoading || digits.join('').length !== 6}
           className="btn btn-primary btn-block btn-lg mt-3"
         >
-          {isLoading ? 'Verifying Code...' : 'Verify Email & Continue'} <ArrowRight size={18} />
+          {isLoading 
+            ? (isBangla ? 'যাচাই করা হচ্ছে...' : 'Verifying Code...') 
+            : (isBangla ? 'ইমেইল নিশ্চিত করে এগিয়ে যান' : 'Verify Email & Continue')} <ArrowRight size={18} />
         </button>
 
         {onCancel && (
@@ -272,7 +282,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
             onClick={onCancel}
             className="btn btn-ghost btn-block mt-2"
           >
-            Cancel & Change Email
+            {isBangla ? 'বাতিল ও ইমেইল পরিবর্তন' : 'Cancel & Change Email'}
           </button>
         )}
       </form>

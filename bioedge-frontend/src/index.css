@@ -35,6 +35,65 @@
 
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-bangla: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+body.lang-bn, [data-lang="bn"] {
+  font-family: var(--font-bangla);
+  line-height: 1.65;
+}
+
+body.lang-bn h1,
+body.lang-bn h2,
+body.lang-bn h3,
+body.lang-bn h4,
+body.lang-bn h5,
+body.lang-bn h6,
+body.lang-bn .section-title,
+body.lang-bn .hero-display-line,
+body.lang-bn .brand-title {
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  letter-spacing: 0;
+}
+
+/* Language Switcher Styles */
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #F1F6F2;
+  border: 1px solid #D5E5D8;
+  border-radius: var(--radius-full);
+  padding: 0.28rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark-green);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+.lang-toggle-btn:hover {
+  background: #E5EFE7;
+  border-color: #B5D4BB;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(41, 78, 54, 0.08);
+}
+.lang-toggle-btn .lang-flag {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.lang-toggle-btn .lang-pill-active {
+  background: var(--dark-green);
+  color: #FFFFFF;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.lang-toggle-btn .lang-pill-inactive {
+  color: var(--text-muted);
+  padding: 0.12rem 0.35rem;
+  font-size: 0.75rem;
 }
 
 * {

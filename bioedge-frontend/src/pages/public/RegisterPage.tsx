@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { VerifyEmailForm } from '../../components/common/VerifyEmailForm';
 import { 
   Lock, 
@@ -17,6 +18,7 @@ import {
 
 export const RegisterPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { isBangla } = useLanguage();
   const redirectParam = searchParams.get('redirect') || searchParams.get('from');
 
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -53,7 +55,7 @@ export const RegisterPage: React.FC = () => {
     setErrorMessage('');
 
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Passwords do not match.');
+      setErrorMessage(isBangla ? 'উভয় পাসওয়ার্ড মেলেনি।' : 'Passwords do not match.');
       return;
     }
 
@@ -74,7 +76,7 @@ export const RegisterPage: React.FC = () => {
     } else if (res.success && res.user) {
       handlePostAuthRedirect();
     } else {
-      setErrorMessage(res.message || 'Registration failed.');
+      setErrorMessage(res.message || (isBangla ? 'রেজিস্ট্রেশন ব্যর্থ হয়েছে।' : 'Registration failed.'));
     }
   };
 
@@ -84,7 +86,7 @@ export const RegisterPage: React.FC = () => {
     if (res.success) {
       handlePostAuthRedirect();
     } else {
-      setErrorMessage(res.message || 'Google sign-in failed');
+      setErrorMessage(res.message || (isBangla ? 'গুগল সাইন-ইন ব্যর্থ হয়েছে।' : 'Google sign-in failed'));
     }
   };
 
@@ -98,15 +100,17 @@ export const RegisterPage: React.FC = () => {
               <Sparkles size={24} />
             </div>
             <h1 className="register-brand-title">Bio Edge</h1>
-            <p className="register-brand-subtitle">by Afroza Tahmina</p>
+            <p className="register-brand-subtitle">{isBangla ? 'আফরোজা তাহমিনার সাথে' : 'by Afroza Tahmina'}</p>
           </div>
 
           {!isVerifying ? (
             <div>
               <div className="register-title-block text-center">
-                <h2 className="register-main-heading">Create Your Student Account</h2>
+                <h2 className="register-main-heading">{isBangla ? 'শিক্ষার্থী অ্যাকাউন্ট তৈরি করুন' : 'Create Your Student Account'}</h2>
                 <p className="register-main-sub">
-                  Join the focused Biology preparation platform for HSC & SSC examinees.
+                  {isBangla 
+                    ? 'এইচএসসি ও এসএসসি পরীক্ষার্থীদের জন্য বিশেষায়িত জীববিজ্ঞান প্রস্তুতি প্ল্যাটফর্ম।' 
+                    : 'Join the focused Biology preparation platform for HSC & SSC examinees.'}
                 </p>
               </div>
 
@@ -121,13 +125,13 @@ export const RegisterPage: React.FC = () => {
               {/* Registration Form */}
               <form onSubmit={handleRegister} className="register-form">
                 <div className="form-group">
-                  <label className="form-label">Full Name *</label>
+                  <label className="form-label">{isBangla ? 'পূর্ণ নাম *' : 'Full Name *'}</label>
                   <div className="input-with-icon">
                     <UserIcon size={18} className="input-icon" />
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Mahir Faisal"
+                      placeholder={isBangla ? 'যেমন: মাহির ফয়সাল' : 'e.g. Mahir Faisal'}
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
                       className="form-input with-icon"
@@ -137,7 +141,7 @@ export const RegisterPage: React.FC = () => {
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label className="form-label">Email Address *</label>
+                    <label className="form-label">{isBangla ? 'ইমেইল ঠিকানা *' : 'Email Address *'}</label>
                     <div className="input-with-icon">
                       <Mail size={18} className="input-icon" />
                       <input
@@ -152,7 +156,7 @@ export const RegisterPage: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Phone Number (WhatsApp) *</label>
+                    <label className="form-label">{isBangla ? 'ফোন নম্বর (হোয়াটসঅ্যাপ) *' : 'Phone Number (WhatsApp) *'}</label>
                     <div className="input-with-icon">
                       <Phone size={18} className="input-icon" />
                       <input
@@ -169,13 +173,13 @@ export const RegisterPage: React.FC = () => {
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label className="form-label">School / College Name *</label>
+                    <label className="form-label">{isBangla ? 'স্কুল বা কলেজের নাম *' : 'School / College Name *'}</label>
                     <div className="input-with-icon">
                       <Building2 size={18} className="input-icon" />
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Notre Dame College"
+                        placeholder={isBangla ? 'যেমন: নটর ডেম কলেজ' : 'e.g. Notre Dame College'}
                         value={formData.institution}
                         onChange={e => setFormData({ ...formData, institution: e.target.value })}
                         className="form-input with-icon"
@@ -184,23 +188,23 @@ export const RegisterPage: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Target Exam</label>
+                    <label className="form-label">{isBangla ? 'টার্গেট পরীক্ষা' : 'Target Exam'}</label>
                     <select
                       value={formData.examYear}
                       onChange={e => setFormData({ ...formData, examYear: e.target.value })}
                       className="form-select"
                     >
-                      <option value="HSC 2026">HSC Examination 2026</option>
-                      <option value="HSC 2027">HSC Examination 2027</option>
-                      <option value="SSC 2027">SSC Examination 2027</option>
-                      <option value="Alim / Other">Alim / Other</option>
+                      <option value="HSC 2026">{isBangla ? 'এইচএসসি পরীক্ষা ২০২৬' : 'HSC Examination 2026'}</option>
+                      <option value="HSC 2027">{isBangla ? 'এইচএসসি পরীক্ষা ২০২৭' : 'HSC Examination 2027'}</option>
+                      <option value="SSC 2027">{isBangla ? 'এসএসসি পরীক্ষা ২০২৭' : 'SSC Examination 2027'}</option>
+                      <option value="Alim / Other">{isBangla ? 'আলিম / অন্যান্য' : 'Alim / Other'}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label className="form-label">Password * (Min 6 chars)</label>
+                    <label className="form-label">{isBangla ? 'পাসওয়ার্ড * (কমপক্ষে ৬ অক্ষর)' : 'Password * (Min 6 chars)'}</label>
                     <div className="input-with-icon">
                       <Lock size={18} className="input-icon" />
                       <input
@@ -225,7 +229,7 @@ export const RegisterPage: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Confirm Password *</label>
+                    <label className="form-label">{isBangla ? 'পাসওয়ার্ড নিশ্চিত করুন *' : 'Confirm Password *'}</label>
                     <div className="input-with-icon">
                       <Lock size={18} className="input-icon" />
                       <input
@@ -251,13 +255,15 @@ export const RegisterPage: React.FC = () => {
                 </div>
 
                 <button type="submit" disabled={isLoading} className="btn btn-primary btn-block btn-lg mt-3">
-                  {isLoading ? 'Creating Account...' : 'Continue to Email Verification'} <ArrowRight size={18} />
+                  {isLoading 
+                    ? (isBangla ? 'অ্যাকাউন্ট তৈরি হচ্ছে...' : 'Creating Account...') 
+                    : (isBangla ? 'ইমেইল ভেরিফিকেশনে এগিয়ে যান' : 'Continue to Email Verification')} <ArrowRight size={18} />
                 </button>
               </form>
 
               {/* Google Sign In (After form) */}
               <div className="auth-divider">
-                <span>Or continue with</span>
+                <span>{isBangla ? 'অথবা এর মাধ্যমে এগিয়ে যান' : 'Or continue with'}</span>
               </div>
 
               <button
@@ -272,15 +278,15 @@ export const RegisterPage: React.FC = () => {
                   <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
                   <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
                 </svg>
-                <span>Continue with Google</span>
+                <span>{isBangla ? 'গুগল দিয়ে এগিয়ে যান' : 'Continue with Google'}</span>
               </button>
 
               {/* Bottom "Already have an account? Sign In" Link */}
               <div className="auth-bottom-switch-link text-center">
                 <p>
-                  Already have an account?{' '}
+                  {isBangla ? 'ইতিমধ্যে অ্যাকাউন্ট আছে?' : 'Already have an account?'}{' '}
                   <Link to={`/login${redirectParam ? `?redirect=${encodeURIComponent(redirectParam)}` : ''}`}>
-                    Sign In
+                    {isBangla ? 'লগইন করুন' : 'Sign In'}
                   </Link>
                 </p>
               </div>
@@ -292,7 +298,7 @@ export const RegisterPage: React.FC = () => {
               initialCode={initialOtpCode}
               onSuccess={handlePostAuthRedirect}
               onCancel={() => setIsVerifying(false)}
-              redirectNotice={redirectParam ? 'You will be redirected after verification.' : undefined}
+              redirectNotice={redirectParam ? (isBangla ? 'ভেরিফিকেশনের পর আপনাকে রিডাইরেক্ট করা হবে।' : 'You will be redirected after verification.') : undefined}
             />
           )}
         </div>

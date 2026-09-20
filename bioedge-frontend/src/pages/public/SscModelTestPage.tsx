@@ -11,13 +11,16 @@ import {
   Layers,
   ArrowLeft
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const SscModelTestPage: React.FC = () => {
+  const { t, isBangla, toBnNum } = useLanguage();
+
   return (
     <div className="ssc-model-test-page section-padding">
       <div className="container" style={{ marginBottom: '1.5rem' }}>
         <Link to="/courses" className="back-courses-link">
-          <ArrowLeft size={16} /> Back to All Courses
+          <ArrowLeft size={16} /> {isBangla ? 'সকল কোর্সে ফিরে যান' : 'Back to All Courses'}
         </Link>
       </div>
 
@@ -28,60 +31,60 @@ export const SscModelTestPage: React.FC = () => {
             <div className="ssc-hero-content">
               <div className="inline-floating-badge" style={{ background: '#FEF7E6', color: '#B45309', borderColor: '#FDE68A' }}>
                 <Sparkles size={16} />
-                <span>SSC 2027 Batch Exclusive</span>
+                <span>{isBangla ? 'এসএসসি ২০২৭ ব্যাচ এক্সক্লুসিভ' : 'SSC 2027 Batch Exclusive'}</span>
               </div>
               <h1 className="ssc-hero-title">
-                SSC 2027 Biology Model Test Package
+                {t.courses.sscTitle}
               </h1>
               <p className="ssc-hero-subtitle">
-                20 Full-Length Board Standard Model Tests • Line-by-Line CQ Evaluation • Live Solution Masterclasses • 100% Exam Readiness.
+                {t.courses.sscDesc}
               </p>
               
               <div className="ssc-hero-meta-row">
-                <span className="ssc-meta-tag"><Calendar size={14} /> 20 Scheduled Tests</span>
-                <span className="ssc-meta-tag"><Target size={14} /> Full SSC Syllabus (Ch 1–14)</span>
-                <span className="ssc-meta-tag"><Award size={14} /> Afroza Tahmina's Review</span>
+                <span className="ssc-meta-tag"><Calendar size={14} /> {isBangla ? '২০টি নির্ধারিত টেস্ট' : '20 Scheduled Tests'}</span>
+                <span className="ssc-meta-tag"><Target size={14} /> {isBangla ? 'সম্পূর্ণ এসএসসি সিলেবাস (অধ্যায় ১-১৪)' : 'Full SSC Syllabus (Ch 1–14)'}</span>
+                <span className="ssc-meta-tag"><Award size={14} /> {isBangla ? 'আফরোজা তাহমিনার সরাসরি মূল্যায়ন' : "Afroza Tahmina's Review"}</span>
               </div>
 
               <div className="ssc-hero-cta-row">
                 <Link to="/enroll?course=ssc-2027" className="btn btn-primary btn-lg">
-                  Enroll in SSC Package (৳2,200) <ArrowRight size={18} />
+                  {isBangla ? 'এসএসসি প্যাকেজে ভর্তি হোন (২২০০ ৳)' : 'Enroll in SSC Package (৳2,200)'} <ArrowRight size={18} />
                 </Link>
                 <a href="#enroll-pricing" className="btn btn-outline btn-lg">
-                  View Package Details
+                  {isBangla ? 'প্যাকেজের বিস্তারিত দেখুন' : 'View Package Details'}
                 </a>
               </div>
             </div>
 
             <div className="ssc-hero-card bio-card">
               <div className="ssc-card-header">
-                <span className="badge badge-amber">Target: GPA 5.0 in Biology</span>
-                <h3 className="ssc-card-title">Package Summary</h3>
+                <span className="badge badge-amber">{isBangla ? 'টার্গেট: বায়োলজিতে জিপিএ ৫.০০' : 'Target: GPA 5.0 in Biology'}</span>
+                <h3 className="ssc-card-title">{isBangla ? 'প্যাকেজ সারসংক্ষেপ' : 'Package Summary'}</h3>
               </div>
               <div className="ssc-stat-rows">
                 <div className="ssc-stat-row">
-                  <span className="label">Total Model Tests:</span>
-                  <strong>20 Full Tests</strong>
+                  <span className="label">{isBangla ? 'মোট মডেল টেস্ট:' : 'Total Model Tests:'}</span>
+                  <strong>{isBangla ? '২০টি পূর্ণাঙ্গ টেস্ট' : '20 Full Tests'}</strong>
                 </div>
                 <div className="ssc-stat-row">
-                  <span className="label">Syllabus Covered:</span>
-                  <strong>Chapters 01 to 14 (Full)</strong>
+                  <span className="label">{isBangla ? 'সিলেবাস কভারেজ:' : 'Syllabus Covered:'}</span>
+                  <strong>{isBangla ? 'অধ্যায় ০১ থেকে ১৪ (সম্পূর্ণ)' : 'Chapters 01 to 14 (Full)'}</strong>
                 </div>
                 <div className="ssc-stat-row">
-                  <span className="label">CQ Evaluation:</span>
-                  <strong>Line-by-line Marked PDF</strong>
+                  <span className="label">{isBangla ? 'সিকিউ মূল্যায়ন:' : 'CQ Evaluation:'}</span>
+                  <strong>{isBangla ? 'লাইন-বাই-লাইন চিহ্নিত পিডিএফ' : 'Line-by-line Marked PDF'}</strong>
                 </div>
                 <div className="ssc-stat-row">
-                  <span className="label">Live Solution Classes:</span>
-                  <strong>8 Special Masterclasses</strong>
+                  <span className="label">{isBangla ? 'লাইভ সলিউশন ক্লাস:' : 'Live Solution Classes:'}</span>
+                  <strong>{isBangla ? '৮টি বিশেষ মাস্টারক্লাস' : '8 Special Masterclasses'}</strong>
                 </div>
                 <div className="ssc-stat-row">
-                  <span className="label">Tuition Fee:</span>
-                  <strong className="text-price">৳2,200 <span className="old-price">৳3,000</span></strong>
+                  <span className="label">{isBangla ? 'টিউশন ফি:' : 'Tuition Fee:'}</span>
+                  <strong className="text-price">৳{toBnNum('2,200')} <span className="old-price">৳{toBnNum('3,000')}</span></strong>
                 </div>
               </div>
               <Link to="/enroll?course=ssc-2027" className="btn btn-primary btn-block">
-                Claim SSC 2027 Seat
+                {isBangla ? 'এসএসসি ২০২৭ আসন নিশ্চিত করুন' : 'Claim SSC 2027 Seat'}
               </Link>
             </div>
           </div>
@@ -92,10 +95,10 @@ export const SscModelTestPage: React.FC = () => {
       <section className="section-padding bg-light-subtle">
         <div className="container">
           <div className="section-header text-center">
-            <span className="section-pill">Preparation Framework</span>
-            <h2 className="section-title">Why Choose This Model Test Package?</h2>
+            <span className="section-pill">{isBangla ? 'প্রস্তুতি রূপরেখা' : 'Preparation Framework'}</span>
+            <h2 className="section-title">{isBangla ? 'কেন এই মডেল টেস্ট প্যাকেজটি সেরা?' : 'Why Choose This Model Test Package?'}</h2>
             <p className="section-subtitle">
-              Designed specifically to transform textbook knowledge into flawless board exam presentation and top GPA 5.0 results.
+              {isBangla ? 'পাঠ্যবইয়ের তত্ত্বগুলোকে নিখুঁত বোর্ড পরীক্ষার উপস্থাপন এবং শতভাগ জিপিএ ৫.০০ ফলাফলে রূপান্তর করতে বিশেষভাবে প্রণীত।' : 'Designed specifically to transform textbook knowledge into flawless board exam presentation and top GPA 5.0 results.'}
             </p>
           </div>
 
@@ -103,40 +106,40 @@ export const SscModelTestPage: React.FC = () => {
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <PenTool size={22} className="benefit-icon" />
-                <h4 className="benefit-title">Individual CQ Evaluation</h4>
+                <h4 className="benefit-title">{isBangla ? 'ব্যক্তিগত সিকিউ মূল্যায়ন' : 'Individual CQ Evaluation'}</h4>
               </div>
               <p className="benefit-text">
-                Every written Creative Question answer is graded with red-pen annotations, rubric scoring, and specific feedback for mark maximization.
+                {isBangla ? 'প্রতিটি লিখিত সৃজনশীল প্রশ্নের খাতা লাল কালির মন্তব্য, রুব্রিক মূল্যায়ন এবং সর্বোচ্চ নম্বর পাওয়ার পরামর্শ সহ ফেরত দেওয়া হয়।' : 'Every written Creative Question answer is graded with red-pen annotations, rubric scoring, and specific feedback for mark maximization.'}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Target size={22} className="benefit-icon" />
-                <h4 className="benefit-title">MCQ Speed & Negative Elimination</h4>
+                <h4 className="benefit-title">{isBangla ? 'এমসিকিউ গতি ও নেগেটিভ মার্ক পরিহার' : 'MCQ Speed & Negative Elimination'}</h4>
               </div>
               <p className="benefit-text">
-                Timed 25-minute online CBT tests to hone rapid reading comprehension, eliminate confusing options, and build 25/25 accuracy.
+                {isBangla ? '২৫ মিনিটের অনলাইন টাইমার পরীক্ষায় কনফিউজিং অপশনগুলো বাদ দিয়ে ২৫/২৫ নম্বর নিশ্চিত করার স্পিড ড্রিল।' : 'Timed 25-minute online CBT tests to hone rapid reading comprehension, eliminate confusing options, and build 25/25 accuracy.'}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Layers size={22} className="benefit-icon" />
-                <h4 className="benefit-title">All 35+ Mandatory Diagrams</h4>
+                <h4 className="benefit-title">{isBangla ? '৩৫+ আবশ্যক জীববিজ্ঞান চিত্র' : 'All 35+ Mandatory Diagrams'}</h4>
               </div>
               <p className="benefit-text">
-                Learn precise drawing steps for Plant Cell, Nephron, Neuron, Chloroplast, Heart, and Flower reproductive organs under exam conditions.
+                {isBangla ? 'উদ্ভিদ কোষ, নেফ্রন, নিউরন, ক্লোরোপ্লাস্ট, হৃদপিণ্ড ও ফুলের প্রজনন অঙ্গের দ্রুত ও সঠিক ছবি আঁকার গাইডলাইন।' : 'Learn precise drawing steps for Plant Cell, Nephron, Neuron, Chloroplast, Heart, and Flower reproductive organs under exam conditions.'}
               </p>
             </div>
 
             <div className="benefit-card bio-card">
               <div className="benefit-header">
                 <Award size={22} className="benefit-icon" />
-                <h4 className="benefit-title">Leaderboard & Rank Analytics</h4>
+                <h4 className="benefit-title">{isBangla ? 'লিডারবোর্ড ও জাতীয় র‍্যাঙ্কিং' : 'Leaderboard & Rank Analytics'}</h4>
               </div>
               <p className="benefit-text">
-                Compare your score against serious SSC examinees across Bangladesh and track weekly improvements across all 14 chapters.
+                {isBangla ? 'সারাদেশের মেধাবী এসএসসি পরীক্ষার্থীদের সাথে নিজের নম্বর তুলনা করে সাপ্তাহিক অগ্রগতি পর্যবেক্ষণ করুন।' : 'Compare your score against serious SSC examinees across Bangladesh and track weekly improvements across all 14 chapters.'}
               </p>
             </div>
           </div>
@@ -147,29 +150,29 @@ export const SscModelTestPage: React.FC = () => {
       <section className="section-padding" id="enroll-pricing">
         <div className="container">
           <div className="ssc-pricing-box bio-card text-center">
-            <span className="badge badge-green" style={{ marginBottom: '1rem' }}>Limited 30-Seat Cohort</span>
+            <span className="badge badge-green" style={{ marginBottom: '1rem' }}>{isBangla ? 'সীমিত ৩০ আসনের কোহোর্ট' : 'Limited 30-Seat Cohort'}</span>
             <h2 style={{ fontSize: '2.2rem', color: 'var(--dark-green)', marginBottom: '0.75rem' }}>
-              Enroll in SSC 2027 Model Test Package
+              {isBangla ? 'এসএসসি ২০২৭ মডেল টেস্ট প্যাকেজে ভর্তি' : 'Enroll in SSC 2027 Model Test Package'}
             </h2>
             <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 1.75rem' }}>
-              One-time complete investment for all 20 Model Tests, line-by-line CQ evaluations, 8 solution masterclasses, and colored diagram notes PDF.
+              {isBangla ? 'এককালীন পেমেন্টে ২০টি মডেল টেস্ট, লাইন-বাই-লাইন সিকিউ মূল্যায়ন, ৮টি লাইভ সলিউশন মাস্টারক্লাস এবং রঙিন ডায়াগ্রাম নোটস।' : 'One-time complete investment for all 20 Model Tests, line-by-line CQ evaluations, 8 solution masterclasses, and colored diagram notes PDF.'}
             </p>
 
             <div className="ssc-price-display">
               <span className="currency">৳</span>
-              <span className="amount">2,200</span>
-              <span className="regular-cut">৳3,000</span>
+              <span className="amount">{toBnNum('2,200')}</span>
+              <span className="regular-cut">৳{toBnNum('3,000')}</span>
             </div>
 
             <div className="ssc-features-checklist">
-              <span><CheckCircle2 size={16} className="text-green" /> 20 Full Board Standard Tests</span>
-              <span><CheckCircle2 size={16} className="text-green" /> Annotated Written Feedback</span>
-              <span><CheckCircle2 size={16} className="text-green" /> 8 Live Masterclasses</span>
-              <span><CheckCircle2 size={16} className="text-green" /> High-Yield CQ Prediction Bank</span>
+              <span><CheckCircle2 size={16} className="text-green" /> {isBangla ? '২০টি বোর্ড স্ট্যান্ডার্ড টেস্ট' : '20 Full Board Standard Tests'}</span>
+              <span><CheckCircle2 size={16} className="text-green" /> {isBangla ? 'লিখিত খাতার সুনির্দিষ্ট ফিডব্যাক' : 'Annotated Written Feedback'}</span>
+              <span><CheckCircle2 size={16} className="text-green" /> {isBangla ? '৮টি লাইভ মাস্টারক্লাস' : '8 Live Masterclasses'}</span>
+              <span><CheckCircle2 size={16} className="text-green" /> {isBangla ? 'হাই-ইয়েল্ড সিকিউ সাজেশন ব্যাংক' : 'High-Yield CQ Prediction Bank'}</span>
             </div>
 
             <Link to="/enroll?course=ssc-2027" className="btn btn-primary btn-lg" style={{ marginTop: '2rem' }}>
-              Enroll in SSC 2027 Package Now <ArrowRight size={18} />
+              {isBangla ? 'এখনই এসএসসি ২০২৭ প্যাকেজে ভর্তি হোন' : 'Enroll in SSC 2027 Package Now'} <ArrowRight size={18} />
             </Link>
           </div>
         </div>

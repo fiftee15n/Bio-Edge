@@ -13,9 +13,11 @@ import {
   Zap
 } from 'lucide-react';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const CoursesPage: React.FC = () => {
   const { availableSeats } = useCourseData();
+  const { t, isBangla, toBnNum } = useLanguage();
 
   return (
     <div className="courses-hub-page">
@@ -24,11 +26,11 @@ export const CoursesPage: React.FC = () => {
         {/* Header with Optimal Breathing Room */}
         <div className="courses-page-header text-center">
           <span className="section-pill">
-            <Sparkles size={14} /> Academic Offerings
+            <Sparkles size={14} /> {t.courses.badge}
           </span>
-          <h1 className="section-title">Biology Programs & Courses</h1>
+          <h1 className="section-title">{t.courses.title}</h1>
           <p className="section-subtitle">
-            Curated preparation tracks designed by Afroza Tahmina for HSC Mastery and SSC Board Exam Excellence.
+            {t.courses.subtitle}
           </p>
         </div>
 
@@ -44,61 +46,61 @@ export const CoursesPage: React.FC = () => {
                     <GraduationCap size={26} />
                   </div>
                   <div className="c-status-wrap">
-                    <span className="badge badge-green">HSC 2026 / 2027</span>
+                    <span className="badge badge-green">{isBangla ? 'এইচএসসি ২০২৬ / ২০২৭' : 'HSC 2026 / 2027'}</span>
                     <span className="c-live-seats">
                       <span className="pulse-dot"></span>
-                      {availableSeats} Seats Left
+                      {toBnNum(availableSeats)} {t.courses.seatsLeft}
                     </span>
                   </div>
                 </div>
 
                 <div className="c-title-box">
                   <h2 className="c-course-title">
-                    Alpha Cohort — 4-Month Crash Course
+                    {t.courses.alphaTitle}
                   </h2>
                 </div>
 
                 <p className="c-course-desc">
-                  Comprehensive 4-month intensive program covering all 24 chapters of HSC Biology (Botany & Zoology) with live lectures, line-by-line CQ evaluations, and Board exam drills.
+                  {t.courses.alphaDesc}
                 </p>
 
                 {/* Minimal Spec Badges */}
                 <div className="c-specs-row">
                   <div className="c-spec-pill">
                     <Clock size={14} />
-                    <span>4 Months</span>
+                    <span>{t.courses.fourMonths}</span>
                   </div>
                   <div className="c-spec-pill">
                     <Layers size={14} />
-                    <span>24 Chapters</span>
+                    <span>{t.courses.chaptersCount}</span>
                   </div>
                   <div className="c-spec-pill">
                     <ShieldCheck size={14} />
-                    <span>CQ Grading</span>
+                    <span>{t.courses.cqGrading}</span>
                   </div>
                 </div>
 
                 {/* Course Price Tag */}
                 <div className="c-price-row">
                   <div className="c-price-main">
-                    <span className="c-price-label">Fee</span>
+                    <span className="c-price-label">{t.courses.fee}</span>
                     <div className="c-price-value">
                       <span className="c-currency">৳</span>
-                      <span className="c-amount">12,500</span>
-                      <span className="c-duration">/ full course</span>
+                      <span className="c-amount">{toBnNum('12,500')}</span>
+                      <span className="c-duration">{t.courses.fullCourse}</span>
                     </div>
                   </div>
-                  <span className="c-price-installment">or ৳3,500/mo</span>
+                  <span className="c-price-installment">{t.courses.monthlyOption}</span>
                 </div>
               </div>
 
               {/* CTA Buttons: Details & Enroll */}
               <div className="c-card-actions">
                 <Link to="/courses/alpha-cohort" className="btn btn-outline c-cta-btn c-details-btn">
-                  <Info size={16} /> Details
+                  <Info size={16} /> {t.courses.detailsBtn}
                 </Link>
                 <Link to="/enroll?course=alpha-cohort" className="btn btn-primary c-cta-btn c-enroll-btn">
-                  Enroll <ArrowRight size={16} />
+                  {t.courses.enrollBtn} <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
@@ -111,61 +113,61 @@ export const CoursesPage: React.FC = () => {
                     <Target size={26} />
                   </div>
                   <div className="c-status-wrap">
-                    <span className="badge badge-amber">SSC 2027 Exclusive</span>
+                    <span className="badge badge-amber">{isBangla ? 'এসএসসি ২০২৭ এক্সক্লুসিভ' : 'SSC 2027 Exclusive'}</span>
                     <span className="c-batch-status">
                       <span className="amber-dot"></span>
-                      New Batch
+                      {isBangla ? 'নতুন ব্যাচ' : 'New Batch'}
                     </span>
                   </div>
                 </div>
 
                 <div className="c-title-box">
                   <h2 className="c-course-title">
-                    SSC 2027 Model Test Package
+                    {t.courses.sscTitle}
                   </h2>
                 </div>
 
                 <p className="c-course-desc">
-                  Rigorous board-standard preparation featuring 20 full-length model tests across all 14 chapters of SSC Biology with live solution masterclasses and high-yield predictions.
+                  {t.courses.sscDesc}
                 </p>
 
                 {/* Minimal Spec Badges */}
                 <div className="c-specs-row">
                   <div className="c-spec-pill">
                     <Award size={14} />
-                    <span>20 Model Tests</span>
+                    <span>{isBangla ? '২০টি মডেল টেস্ট' : '20 Model Tests'}</span>
                   </div>
                   <div className="c-spec-pill">
                     <Layers size={14} />
-                    <span>14 Chapters</span>
+                    <span>{isBangla ? '১৪টি অধ্যায়' : '14 Chapters'}</span>
                   </div>
                   <div className="c-spec-pill">
                     <Zap size={14} />
-                    <span>8 Masterclasses</span>
+                    <span>{isBangla ? '৮টি মাস্টারক্লাস' : '8 Masterclasses'}</span>
                   </div>
                 </div>
 
                 {/* Course Price Tag */}
                 <div className="c-price-row amber">
                   <div className="c-price-main">
-                    <span className="c-price-label">Fee</span>
+                    <span className="c-price-label">{t.courses.fee}</span>
                     <div className="c-price-value">
                       <span className="c-currency">৳</span>
-                      <span className="c-amount">2,200</span>
-                      <span className="c-duration">/ full package</span>
+                      <span className="c-amount">{toBnNum('2,200')}</span>
+                      <span className="c-duration">{isBangla ? '/ সম্পূর্ণ প্যাকেজ' : '/ full package'}</span>
                     </div>
                   </div>
-                  <span className="c-price-installment">one-time</span>
+                  <span className="c-price-installment">{isBangla ? 'এককালীন' : 'one-time'}</span>
                 </div>
               </div>
 
               {/* CTA Buttons: Details & Enroll */}
               <div className="c-card-actions">
                 <Link to="/courses/ssc-2027-model-test" className="btn btn-outline c-cta-btn c-details-btn">
-                  <Info size={16} /> Details
+                  <Info size={16} /> {t.courses.detailsBtn}
                 </Link>
                 <Link to="/enroll?course=ssc-2027" className="btn btn-primary c-cta-btn c-enroll-btn">
-                  Enroll <ArrowRight size={16} />
+                  {t.courses.enrollBtn} <ArrowRight size={16} />
                 </Link>
               </div>
             </div>

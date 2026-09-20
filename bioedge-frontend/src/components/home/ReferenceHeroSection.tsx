@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   ArrowUpRight, 
   Play, 
@@ -13,6 +14,7 @@ import {
 
 export const ReferenceHeroSection: React.FC = () => {
   const { course, teacher, availableSeats, activeStudentsCount } = useCourseData();
+  const { t, isBangla, toBnNum } = useLanguage();
   const [showDemoVideo, setShowDemoVideo] = useState<boolean>(false);
 
   return (
@@ -43,7 +45,7 @@ export const ReferenceHeroSection: React.FC = () => {
                 <GraduationCap size={16} />
               </div>
               <p className="mini-badge-text">
-                A Smarter <strong>Way To Learn, Grow</strong> And Advance
+                {t.hero.badge}
               </p>
             </div>
 
@@ -55,8 +57,8 @@ export const ReferenceHeroSection: React.FC = () => {
                 <div className="stat-avatar av-3">FK</div>
               </div>
               <div className="stat-number-block">
-                <h3 className="stat-huge-number">500+</h3>
-                <p className="stat-label-text">HSC Achievers Guided</p>
+                <h3 className="stat-huge-number">{isBangla ? '৫০০+' : '500+'}</h3>
+                <p className="stat-label-text">{t.hero.studentsGuided}</p>
               </div>
             </div>
 
@@ -64,9 +66,9 @@ export const ReferenceHeroSection: React.FC = () => {
             <div className="ref-teacher-card bio-clay-card">
               <div className="teacher-card-top-header">
                 <div>
-                  <h2 className="teacher-stat-percent">94%</h2>
+                  <h2 className="teacher-stat-percent">{toBnNum(94)}%</h2>
                   <p className="teacher-stat-sub">
-                    Of students achieved A+ & Medical selection through guided learning
+                    {t.hero.teacherStat}
                   </p>
                 </div>
                 <Link to="/about" className="teacher-arrow-btn" aria-label="About Teacher">
@@ -83,8 +85,8 @@ export const ReferenceHeroSection: React.FC = () => {
               </div>
 
               <div className="teacher-card-footer">
-                <div className="teacher-name-title">{teacher.name}</div>
-                <div className="teacher-exp-tag">{teacher.experience.toLowerCase().includes('experience') ? teacher.experience : `${teacher.experience} Experience`}</div>
+                <div className="teacher-name-title">{isBangla ? 'আফরোজা তাহমিনা' : teacher.name}</div>
+                <div className="teacher-exp-tag">{isBangla ? '১২+ বছরের অভিজ্ঞতা' : `${teacher.experience}`}</div>
               </div>
             </div>
           </div>
@@ -107,17 +109,17 @@ export const ReferenceHeroSection: React.FC = () => {
             <div className="ref-bottom-white-card">
               <div className="card-left-action">
                 <h3 className="card-cta-headline">
-                  Ready To Develop Your Biology Edge?
+                  {t.hero.readyHeadline}
                 </h3>
                 <Link to="/enroll" className="btn-dark-pill">
-                  Start now
+                  {t.hero.startNow}
                 </Link>
               </div>
 
               <div className="card-right-step">
-                <span className="step-tag-pill">/ Step 1 /</span>
+                <span className="step-tag-pill">{t.hero.step1Tag}</span>
                 <p className="step-desc-text">
-                  Follow our guided intensive classes and start your journey toward Board GPA 5.0 and top Medical rank today.
+                  {t.hero.step1Desc}
                 </p>
               </div>
             </div>
@@ -129,10 +131,10 @@ export const ReferenceHeroSection: React.FC = () => {
           <div className="ref-hero-right-col">
             {/* Massive Modern Bold Display Typography */}
             <div className="ref-hero-typography">
-              <h1 className="hero-display-line">SMART</h1>
-              <h1 className="hero-display-line">LEARNING</h1>
-              <h1 className="hero-display-line">BIOLOGY</h1>
-              <h1 className="hero-display-line glow-accent">FUTURE</h1>
+              <h1 className="hero-display-line">{t.hero.line1}</h1>
+              <h1 className="hero-display-line">{t.hero.line2}</h1>
+              <h1 className="hero-display-line">{t.hero.line3}</h1>
+              <h1 className="hero-display-line glow-accent">{t.hero.line4}</h1>
             </div>
 
             {/* Video Demo Action Block at Bottom Right */}
@@ -156,7 +158,7 @@ export const ReferenceHeroSection: React.FC = () => {
               </div>
 
               <p className="video-demo-caption">
-                Improve Real-World Exam Skills <strong>Through Diagram Analysis</strong> And Guided CQ Instruction
+                {t.hero.videoCaption}
               </p>
 
               <button 
@@ -164,7 +166,7 @@ export const ReferenceHeroSection: React.FC = () => {
                 className="btn-view-demo-link"
                 onClick={() => setShowDemoVideo(true)}
               >
-                VIEW DEMO CLASS <ArrowUpRight size={14} />
+                {t.hero.viewDemo} <ArrowUpRight size={14} />
               </button>
             </div>
           </div>
@@ -185,9 +187,9 @@ export const ReferenceHeroSection: React.FC = () => {
             </button>
 
             <div className="demo-modal-header">
-              <span className="badge badge-green">Live Masterclass Preview</span>
-              <h3>Cell Structure & Fluid Mosaic Membrane Analysis</h3>
-              <p>Faculty: Afroza Tahmina • 4-Mark CQ Diagram Technique Breakdown</p>
+              <span className="badge badge-green">{t.hero.demoModalBadge}</span>
+              <h3>{t.hero.demoModalTitle}</h3>
+              <p>{t.hero.demoModalFaculty}</p>
             </div>
 
             <div className="demo-video-player-container">
@@ -202,14 +204,14 @@ export const ReferenceHeroSection: React.FC = () => {
 
             <div className="demo-modal-actions">
               <div className="demo-seats-note">
-                <span className="live-dot"></span> Only {availableSeats} seats remaining in upcoming batch
+                <span className="live-dot"></span> {isBangla ? `আসন্ন ব্যাচে মাত্র ${toBnNum(availableSeats)}টি আসন বাকি` : `Only ${availableSeats} seats remaining in upcoming batch`}
               </div>
               <Link 
                 to="/enroll" 
                 className="btn btn-primary"
                 onClick={() => setShowDemoVideo(false)}
               >
-                Enroll in Full 48-Class Course <ArrowUpRight size={16} />
+                {t.courses.enrollBtn} <ArrowUpRight size={16} />
               </Link>
             </div>
           </div>
