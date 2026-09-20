@@ -7,14 +7,15 @@ import {
   Menu, 
   X, 
   LogIn, 
-  Sparkles
+  Sparkles,
+  Globe
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { user, logout } = useAuth();
-  const { t } = useLanguage();
+  const { t, isBangla } = useLanguage();
 
   const navLinks = [
     { name: t.nav.course, path: '/courses' },
@@ -80,8 +81,10 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Area */}
           <div className="navbar-actions">
-            {/* Language Switcher */}
-            <LanguageToggle />
+            {/* Desktop Language Switcher (Hidden on Mobile) */}
+            <div className="desktop-lang-toggle">
+              <LanguageToggle />
+            </div>
 
             {user ? (
               <div className="user-action-group">
@@ -124,8 +127,12 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="mobile-menu-drawer">
           <div className="mobile-nav-links">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', padding: '0 0.5rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Language:</span>
+            {/* Language Switcher inside Drawer */}
+            <div className="mobile-drawer-lang-row">
+              <span className="drawer-lang-label">
+                <Globe size={15} />
+                <span>{isBangla ? 'ভাষা পরিবর্তন' : 'Language'}</span>
+              </span>
               <LanguageToggle />
             </div>
 
@@ -460,7 +467,32 @@ export const Navbar: React.FC = () => {
           width: 100%;
           margin-bottom: 0.5rem;
         }
+        .desktop-lang-toggle {
+          display: flex;
+          align-items: center;
+        }
+        .mobile-drawer-lang-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.65rem 0.85rem;
+          background: #F1F6F2;
+          border: 1px solid #D5E5D8;
+          border-radius: var(--radius-md);
+          margin-bottom: 0.85rem;
+        }
+        .drawer-lang-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: var(--dark-green);
+        }
         @media (max-width: 992px) {
+          .desktop-lang-toggle {
+            display: none !important;
+          }
           .desktop-nav {
             display: none;
           }
