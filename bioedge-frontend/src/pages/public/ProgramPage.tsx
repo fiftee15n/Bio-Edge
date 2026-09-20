@@ -51,39 +51,47 @@ export const ProgramPage: React.FC = () => {
 
   const milestones = [
     {
-      month: 'Month 01',
-      title: 'Cell Biology & Diversity',
-      duration: 'Weeks 01–04',
-      classes: '12 Classes',
-      topics: 'Cell structure, division (mitosis/meiosis), biomolecules & animal taxonomy.',
-      milestone: 'Milestone Exam 01',
+      month: isBangla ? '১ম মাস' : 'Month 01',
+      title: isBangla ? 'কোষ জীববিজ্ঞান ও শ্রেণিবিন্যাস' : 'Cell Biology & Diversity',
+      duration: isBangla ? 'সপ্তাহ ০১–০৪' : 'Weeks 01–04',
+      classes: isBangla ? '১২টি ক্লাস' : '12 Classes',
+      topics: isBangla 
+        ? 'কোষের গঠন, কোষ বিভাজন (মাইটোসিস/মায়োসিস), কোষ রসায়নের জৈব অণুসমূহ ও প্রাণীর শ্রেণিবিন্যাসের ভিত্তি।' 
+        : 'Cell structure, division (mitosis/meiosis), biomolecules & animal taxonomy.',
+      milestone: isBangla ? 'মাইলস্টোন পরীক্ষা ০১' : 'Milestone Exam 01',
       accent: 'green'
     },
     {
-      month: 'Month 02',
-      title: 'Physiology & Vital Systems',
-      duration: 'Weeks 05–08',
-      classes: '12 Classes',
-      topics: 'Photosynthesis, respiration, human digestion, circulation, and excretion.',
-      milestone: 'Milestone Exam 02',
+      month: isBangla ? '২য় মাস' : 'Month 02',
+      title: isBangla ? 'শারীরতত্ত্ব ও অত্যাবশ্যকীয় অঙ্গতন্ত্র' : 'Physiology & Vital Systems',
+      duration: isBangla ? 'সপ্তাহ ০৫–০৮' : 'Weeks 05–08',
+      classes: isBangla ? '১২টি ক্লাস' : '12 Classes',
+      topics: isBangla 
+        ? 'সালোকসংশ্লেষণ, শ্বসন, মানব শারীরতত্ত্ব: পরিপাক ও শোষণ, রক্ত ও সঞ্চালন, এবং বর্জ্য নিষ্কাশন।' 
+        : 'Photosynthesis, respiration, human digestion, circulation, and excretion.',
+      milestone: isBangla ? 'মাইলস্টোন পরীক্ষা ০২' : 'Milestone Exam 02',
       accent: 'green'
     },
     {
-      month: 'Month 03',
-      title: 'Genetics, Reproduction & Biotech',
-      duration: 'Weeks 09–12',
-      classes: '12 Classes',
-      topics: 'Mendelian genetics, gene disorders, plant tissue culture & genetic engineering.',
-      milestone: 'Milestone Exam 03',
+      month: isBangla ? '৩য় মাস' : 'Month 03',
+      title: isBangla ? 'জিনতত্ত্ব, প্রজনন ও জীবপ্রযুক্তি' : 'Genetics, Reproduction & Biotech',
+      duration: isBangla ? 'সপ্তাহ ০৯–১২' : 'Weeks 09–12',
+      classes: isBangla ? '১২টি ক্লাস' : '12 Classes',
+      topics: isBangla 
+        ? 'মেন্ডেলীয় জিনতত্ত্ব, বংশগতীয় রোগ, উদ্ভিদ প্রজনন, টিস্যু কালচার ও রিকম্বিনেন্ট ডিএনএ প্রযুক্তি।' 
+        : 'Mendelian genetics, gene disorders, plant tissue culture & genetic engineering.',
+      milestone: isBangla ? 'মাইলস্টোন পরীক্ষা ০৩' : 'Milestone Exam 03',
       accent: 'green'
     },
     {
-      month: 'Month 04',
-      title: 'Ecology & Board Rehearsals',
-      duration: 'Weeks 13–16',
-      classes: '12 Classes',
-      topics: 'Ecosystems, biodiversity conservation, timed Board simulations & CQ drills.',
-      milestone: 'Grand Board Simulation',
+      month: isBangla ? '৪র্থ মাস' : 'Month 04',
+      title: isBangla ? 'বাস্তুতন্ত্র ও পূর্ণাঙ্গ বোর্ড মহড়া' : 'Ecology & Board Rehearsals',
+      duration: isBangla ? 'সপ্তাহ ১৩–১৬' : 'Weeks 13–16',
+      classes: isBangla ? '১২টি ক্লাস' : '12 Classes',
+      topics: isBangla 
+        ? 'বাস্তুতন্ত্র, জীববৈচিত্র্য সংরক্ষণ, সময় নিয়ন্ত্রিত পূর্ণাঙ্গ বোর্ড সিমুলেশন ও দ্রুত সিকিউ ড্রিল।' 
+        : 'Ecosystems, biodiversity conservation, timed Board simulations & CQ drills.',
+      milestone: isBangla ? 'গ্র্যান্ড বোর্ড সিমুলেশন' : 'Grand Board Simulation',
       accent: 'amber'
     }
   ];
@@ -97,32 +105,34 @@ export const ProgramPage: React.FC = () => {
            ==================================================================== */}
         <section className="prog-hero-header text-center">
           <span className="section-pill">
-            <Layers size={14} /> Curriculum Architecture
+            <Layers size={14} /> {isBangla ? 'কারিকুলাম ও রূপরেখা' : 'Curriculum Architecture'}
           </span>
           <h1 className="prog-hero-title">
-            Program Academic Structure
+            {isBangla ? 'একাডেমিক কোর্স কাঠামো ও রূপরেখা' : 'Program Academic Structure'}
           </h1>
           <p className="prog-hero-desc">
-            A comprehensive, high-yield 4-month blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) and 2nd Paper (Zoology) with interactive masterclasses and line-by-line CQ evaluations.
+            {isBangla 
+              ? 'এইচএসসি জীববিজ্ঞান ১ম পত্র (উদ্ভিদবিজ্ঞান) ও ২য় পত্র (প্রাণিবিজ্ঞান)-এর সম্পূর্ণ ২৪টি অধ্যায় নিয়ে গঠিত একটি সমন্বিত ৪ মাসের একাডেমিক ব্লুপ্রিন্ট; যাতে রয়েছে লাইভ ইন্টারঅ্যাক্টিভ ক্লাস এবং প্রতিটি লাইনের নিখুঁত সিকিউ (CQ) মূল্যায়ন।' 
+              : 'A comprehensive, high-yield 4-month blueprint encompassing all 24 chapters of HSC Biology 1st Paper (Botany) and 2nd Paper (Zoology) with interactive masterclasses and line-by-line CQ evaluations.'}
           </p>
 
           {/* 4 Essential Metric Badges */}
           <div className="prog-metrics-ribbon">
             <div className="ribbon-item">
               <Clock size={16} className="ribbon-icon" />
-              <span><strong>4 Months</strong> (16 Weeks)</span>
+              <span><strong>{isBangla ? '৪ মাস' : '4 Months'}</strong> ({isBangla ? '১৬ সপ্তাহ' : '16 Weeks'})</span>
             </div>
             <div className="ribbon-item">
               <Calendar size={16} className="ribbon-icon" />
-              <span><strong>48 Classes</strong> (90m each)</span>
+              <span><strong>{isBangla ? '৪৮টি ক্লাস' : '48 Classes'}</strong> ({isBangla ? 'প্রতিটি ৯০ মি.' : '90m each'})</span>
             </div>
             <div className="ribbon-item">
               <BookOpen size={16} className="ribbon-icon" />
-              <span><strong>24 Chapters</strong> (Botany + Zoology)</span>
+              <span><strong>{isBangla ? '২৪টি অধ্যায়' : '24 Chapters'}</strong> ({isBangla ? 'উদ্ভিদ + প্রাণিবিজ্ঞান' : 'Botany + Zoology'})</span>
             </div>
             <div className="ribbon-item highlight">
               <ShieldCheck size={16} className="ribbon-icon" />
-              <span><strong>CQ Grading</strong> (Examiner Feedback)</span>
+              <span><strong>{isBangla ? 'সিকিউ খাতা মূল্যায়ন' : 'CQ Grading'}</strong> ({isBangla ? 'শিক্ষকের সরাসরি ফিডব্যাক' : 'Examiner Feedback'})</span>
             </div>
           </div>
         </section>
@@ -133,11 +143,13 @@ export const ProgramPage: React.FC = () => {
         <section className="prog-section">
           <div className="clean-section-header text-center">
             <span className="section-pill">
-              <Sparkles size={14} /> Progression Model
+              <Sparkles size={14} /> {isBangla ? 'অগ্রগতি মডেল' : 'Progression Model'}
             </span>
-            <h2 className="clean-section-title">4-Month Milestone Roadmap</h2>
+            <h2 className="clean-section-title">{isBangla ? '৪ মাসের মাইলস্টোন রোডম্যাপ' : '4-Month Milestone Roadmap'}</h2>
             <p className="clean-section-desc">
-              The syllabus is organized into four progressive monthly phases, ensuring every chapter is taught conceptually before undergoing rigorous examination.
+              {isBangla 
+                ? 'পুরো পাঠ্যক্রমটি চারটি ধারাবাহিক মাসিক ধাপে বিন্যস্ত, যা নিশ্চিত করে প্রতিটি অধ্যায় নিবিড়ভাবে অনুশীলনের পর বোর্ড স্ট্যান্ডার্ড মূল্যায়নের মুখোমুখি হওয়া।' 
+                : 'The syllabus is organized into four progressive monthly phases, ensuring every chapter is taught conceptually before undergoing rigorous examination.'}
             </p>
           </div>
 
@@ -166,11 +178,13 @@ export const ProgramPage: React.FC = () => {
         <section className="prog-section" id="structure">
           <div className="clean-section-header text-center">
             <span className="section-pill">
-              <BookOpen size={14} /> Full Syllabus Explorer
+              <BookOpen size={14} /> {isBangla ? 'সম্পূর্ণ সিলেবাস অন্বেষণ' : 'Full Syllabus Explorer'}
             </span>
-            <h2 className="clean-section-title">Detailed Chapter-by-Chapter Breakdown</h2>
+            <h2 className="clean-section-title">{isBangla ? 'অধ্যায়ভিত্তিক বিস্তারিত বিষয়বস্তুর বিশ্লেষণ' : 'Detailed Chapter-by-Chapter Breakdown'}</h2>
             <p className="clean-section-desc">
-              Explore chapter topics and lecture contents for both HSC Biology papers. Click on any chapter to expand or review its covered concepts.
+              {isBangla 
+                ? 'এইচএসসি জীববিজ্ঞানের উভয় পত্রের অধ্যায়ের বিষয়সমূহ ও লেকচার রূপরেখা দেখুন। যেকোনো অধ্যায়ে ক্লিক করে এর বিস্তারিত টপিক পর্যালোচনা করুন।' 
+                : 'Explore chapter topics and lecture contents for both HSC Biology papers. Click on any chapter to expand or review its covered concepts.'}
             </p>
           </div>
 
@@ -187,7 +201,11 @@ export const ProgramPage: React.FC = () => {
                     className={`paper-pill-btn ${selectedPaperId === p.id ? 'active' : ''}`}
                   >
                     <BookOpen size={16} />
-                    <span>{isBotany ? '1st Paper — Botany (12 Chapters)' : '2nd Paper — Zoology (12 Chapters)'}</span>
+                    <span>
+                      {isBotany 
+                        ? (isBangla ? '১ম পত্র — উদ্ভিদবিজ্ঞান (১২টি অধ্যায়)' : '1st Paper — Botany (12 Chapters)')
+                        : (isBangla ? '২য় পত্র — প্রাণিবিজ্ঞান (১২টি অধ্যায়)' : '2nd Paper — Zoology (12 Chapters)')}
+                    </span>
                   </button>
                 );
               })}
@@ -195,11 +213,11 @@ export const ProgramPage: React.FC = () => {
 
             <div className="syllabus-toggle-actions">
               <button type="button" onClick={expandAll} className="btn-text-action">
-                Expand All
+                {isBangla ? 'সব উন্মুক্ত করুন' : 'Expand All'}
               </button>
               <span className="action-divider">•</span>
               <button type="button" onClick={collapseAll} className="btn-text-action">
-                Collapse All
+                {isBangla ? 'সব বন্ধ করুন' : 'Collapse All'}
               </button>
             </div>
           </div>
@@ -260,11 +278,13 @@ export const ProgramPage: React.FC = () => {
         <section className="prog-section">
           <div className="clean-section-header text-center">
             <span className="section-pill">
-              <FileText size={14} /> Academic Tooling
+              <FileText size={14} /> {isBangla ? 'অধ্যয়ন সহায়িকা ও উপকরণ' : 'Academic Tooling'}
             </span>
-            <h2 className="clean-section-title">Included Study Materials & Guides</h2>
+            <h2 className="clean-section-title">{isBangla ? 'কোর্সের সাথে অন্তর্ভুক্ত স্টাডি ম্যাটেরিয়ালস' : 'Included Study Materials & Guides'}</h2>
             <p className="clean-section-desc">
-              Every enrolled student receives comprehensive physical and digital study companions designed for effortless Board revision.
+              {isBangla 
+                ? 'ভর্তি হওয়া প্রতিটি শিক্ষার্থী বোর্ড পরীক্ষার চূড়ান্ত প্রস্তুতির জন্য পাবেন প্রয়োজনীয় ডিজিটাল ও প্রিন্ট উপযোগী বিশেষ স্টাডি গাইড।' 
+                : 'Every enrolled student receives comprehensive physical and digital study companions designed for effortless Board revision.'}
             </p>
           </div>
 
@@ -273,12 +293,14 @@ export const ProgramPage: React.FC = () => {
               <div className="mat-icon-box green">
                 <FileText size={24} />
               </div>
-              <h3 className="mat-title">80+ Diagram Blueprint Notebook</h3>
+              <h3 className="mat-title">{isBangla ? '৮০+ বায়োলজি ডায়াগ্রাম ব্লুপ্রিন্ট নোটবুক' : '80+ Diagram Blueprint Notebook'}</h3>
               <p className="mat-desc">
-                Vector-sharp, color-coded diagrams with step-by-step drafting lines and precise English/Bangla labeling keys for full diagram marks.
+                {isBangla 
+                  ? 'এইচএসসি পরীক্ষায় বায়োলজি চিত্রে সম্পূর্ণ নম্বর নিশ্চিত করার জন্য স্পষ্ট, কালার-কোডেড ও ধাপে ধাপে আঁকার গাইডসহ বাংলা ও ইংরেজি নির্ভুল লেবেলিং।' 
+                  : 'Vector-sharp, color-coded diagrams with step-by-step drafting lines and precise English/Bangla labeling keys for full diagram marks.'}
               </p>
               <div className="mat-feature-tag">
-                <CheckCircle2 size={14} /> Full HD Printable PDF
+                <CheckCircle2 size={14} /> {isBangla ? 'ফুল এইচডি প্রিন্টযোগ্য পিডিএফ' : 'Full HD Printable PDF'}
               </div>
             </div>
 
@@ -286,12 +308,14 @@ export const ProgramPage: React.FC = () => {
               <div className="mat-icon-box amber">
                 <Award size={24} />
               </div>
-              <h3 className="mat-title">CQ Model Answer Repository</h3>
+              <h3 className="mat-title">{isBangla ? 'সিকিউ (CQ) মডেল উত্তর রিপোজিটরি' : 'CQ Model Answer Repository'}</h3>
               <p className="mat-desc">
-                Top-tier 'A+' written model answers structured according to the latest NCTB board rubric standards with examiner commentary.
+                {isBangla 
+                  ? 'সর্বশেষ এনসিটিবি বোর্ড মূল্যায়ন রুব্রিক অনুসারে প্রণীত এ+ মানের লিখিত মডেল উত্তর এবং পরীক্ষকদের পছন্দের কাঠামোগত টিপস।' 
+                  : 'Top-tier \'A+\' written model answers structured according to the latest NCTB board rubric standards with examiner commentary.'}
               </p>
               <div className="mat-feature-tag">
-                <CheckCircle2 size={14} /> 24 Chapter Answer Keys
+                <CheckCircle2 size={14} /> {isBangla ? '২৪টি অধ্যায়ের পূর্ণাঙ্গ উত্তরমালা' : '24 Chapter Answer Keys'}
               </div>
             </div>
 
@@ -299,12 +323,14 @@ export const ProgramPage: React.FC = () => {
               <div className="mat-icon-box green">
                 <GraduationCap size={24} />
               </div>
-              <h3 className="mat-title">1,500+ Curated Question Bank</h3>
+              <h3 className="mat-title">{isBangla ? '১,৫০০+ প্রশ্নব্যাংক ও সমাধান' : '1,500+ Curated Question Bank'}</h3>
               <p className="mat-desc">
-                Exhaustive multiple-choice bank categorized into Fundamental, Application, and Olympiad-level thinking with instant explanations.
+                {isBangla 
+                  ? 'বেসিক, প্রয়োগমূলক ও উচ্চতর চিন্তন দক্ষতায় বিভক্ত সমৃদ্ধ বহুনির্বাচনী প্রশ্নব্যাংক এবং প্রতিটি প্রশ্নের তাৎক্ষণিক ব্যাখ্যা।' 
+                  : 'Exhaustive multiple-choice bank categorized into Fundamental, Application, and Olympiad-level thinking with instant explanations.'}
               </p>
               <div className="mat-feature-tag">
-                <CheckCircle2 size={14} /> CBT Practice Portal
+                <CheckCircle2 size={14} /> {isBangla ? 'সিবিটি অনলাইন প্র্যাকটিস পোর্টাল' : 'CBT Practice Portal'}
               </div>
             </div>
           </div>
@@ -316,26 +342,28 @@ export const ProgramPage: React.FC = () => {
         <section className="prog-cta-section text-center">
           <div className="prog-cta-box">
             <span className="badge badge-green" style={{ marginBottom: '1rem', display: 'inline-flex' }}>
-              Limited 30-Seat Cohort • {availableSeats} Seats Left
+              {isBangla ? `সীমিত ৩০ জনের ব্যাচ • ${toBnNum(availableSeats)}টি আসন বাকি` : `Limited 30-Seat Cohort • ${availableSeats} Seats Left`}
             </span>
             <h2 className="prog-cta-title">
-              Ready to Master HSC Biology with Afroza Tahmina?
+              {isBangla ? 'আফরোজ়া তাহমিনার সাথে এইচএসসি বায়োলজিতে পূর্ণাঙ্গ দক্ষতা অর্জনে আপনি কি প্রস্তুত?' : 'Ready to Master HSC Biology with Afroza Tahmina?'}
             </h2>
             <p className="prog-cta-sub">
-              Secure your place in the upcoming Alpha Cohort and start building true conceptual mastery today.
+              {isBangla 
+                ? 'আসন্ন আলফা ব্যাচে আপনার আসনটি নিশ্চিত করুন এবং আজ থেকেই গভীর ধারণাগত জীববিজ্ঞান প্রস্তুতি শুরু করুন।' 
+                : 'Secure your place in the upcoming Alpha Cohort and start building true conceptual mastery today.'}
             </p>
 
             <div className="prog-cta-actions">
               <Link to="/enroll?course=alpha-cohort" className="btn btn-primary btn-lg">
-                Enroll in Alpha Cohort <ArrowRight size={18} />
+                {isBangla ? 'আলফা ব্যাচে ভর্তি হোন' : 'Enroll in Alpha Cohort'} <ArrowRight size={18} />
               </Link>
               <a 
-                href="https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20have%20questions%20about%20the%20program%20structure" 
+                href={isBangla ? "https://wa.me/8801700000000?text=%E0%A6%86%E0%A6%B8%E0%A6%B8%E0%A6%BE%E0%A6%B2%E0%A6%BE%E0%A6%AE%E0%A7%81%20%E0%A6%86%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%95%E0%A7%81%E0%A6%AE%2C%20%E0%A6%AC%E0%A6%BE%E0%A6%AF%E0%A6%BC%E0%A7%8B%20%E0%A6%8F%E0%A6%9C%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%8B%E0%A6%97%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%AE%20%E0%A6%B8%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A7%87%20%E0%A6%9C%E0%A6%BE%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%87" : "https://wa.me/8801700000000?text=Hello%20Bio%20Edge%20Team,%20I%20have%20questions%20about%20the%20program%20structure"} 
                 target="_blank" 
                 rel="noreferrer" 
                 className="btn btn-outline btn-lg"
               >
-                <Phone size={16} /> Inquire via WhatsApp
+                <Phone size={16} /> {isBangla ? 'হোয়াটসঅ্যাপে যোগাযোগ করুন' : 'Inquire via WhatsApp'}
               </a>
             </div>
           </div>

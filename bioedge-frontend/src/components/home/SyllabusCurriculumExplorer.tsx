@@ -59,7 +59,7 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
               onClick={() => setSelectedMonthIndex(idx)}
             >
               <span className="m-num">{isBangla ? `${toBnNum(m.monthNumber)}ম মাস` : `Month 0${m.monthNumber}`}</span>
-              <span className="m-title">{m.title.replace(/MONTH \d — /, '')}</span>
+              <span className="m-title">{isBangla ? (m.titleBn ? m.titleBn.replace(/.*মাস — /, '') : m.title) : m.title.replace(/MONTH \d — /, '')}</span>
               <span className="m-badge">{toBnNum(m.totalClasses)} {isBangla ? 'টি ক্লাস' : 'Classes'}</span>
             </button>
           ))}
@@ -70,9 +70,9 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
           {/* Month Overview Banner */}
           <div className="month-panel-top">
             <div className="month-meta-info">
-              <span className="month-badge-pill">{isBangla ? `${toBnNum(currentMonth.monthNumber)}ম মাস` : `Month ${currentMonth.monthNumber}`} • {currentMonth.classRange}</span>
-              <h3 className="month-panel-title">{currentMonth.title}</h3>
-              <p className="month-panel-desc">{currentMonth.subtitle}</p>
+              <span className="month-badge-pill">{isBangla ? `${toBnNum(currentMonth.monthNumber)}ম মাস` : `Month ${currentMonth.monthNumber}`} • {isBangla ? (currentMonth.classRangeBn || currentMonth.classRange) : currentMonth.classRange}</span>
+              <h3 className="month-panel-title">{isBangla ? (currentMonth.titleBn || currentMonth.title) : currentMonth.title}</h3>
+              <p className="month-panel-desc">{isBangla ? (currentMonth.subtitleBn || currentMonth.subtitle) : currentMonth.subtitle}</p>
             </div>
 
             {/* Paper Filter Tabs */}
@@ -110,11 +110,11 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                   <div className="paper-col-title-wrap">
                     <span className="paper-icon">🌿</span>
                     <div>
-                      <h4 className="paper-col-title">1st Paper — Botany</h4>
-                      <span className="paper-col-sub">Plant Science & Cellular Physiology</span>
+                      <h4 className="paper-col-title">{isBangla ? '১ম পত্র — উদ্ভিদবিজ্ঞান' : '1st Paper — Botany'}</h4>
+                      <span className="paper-col-sub">{isBangla ? 'উদ্ভিদবিজ্ঞান ও কোষীয় শারীরতত্ত্ব' : 'Plant Science & Cellular Physiology'}</span>
                     </div>
                   </div>
-                  <span className="classes-counter-pill">{currentMonth.botanyClasses.length} Classes</span>
+                  <span className="classes-counter-pill">{toBnNum(currentMonth.botanyClasses.length)} {isBangla ? 'টি ক্লাস' : 'Classes'}</span>
                 </div>
 
                 <div className="classes-timeline-list">
@@ -124,12 +124,31 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                       className={`class-timeline-item ${cls.isExam ? 'is-exam-item' : ''} ${cls.isTest ? 'is-test-item' : ''} ${cls.isRevision ? 'is-revision-item' : ''}`}
                     >
                       <div className="class-num-badge">
-                        {cls.classLabel}
+                        {isBangla ? `ক্লাস ${toBnNum(cls.classNumber)}` : cls.classLabel}
                       </div>
                       <div className="class-body-details">
                         <div className="class-top-meta">
-                          <span className="class-ch-tag">{cls.chapter}</span>
-                          {cls.badge && <span className={`class-badge-pill badge-${cls.isExam ? 'red' : cls.isTest ? 'amber' : 'green'}`}>{cls.badge}</span>}
+                          <span className="class-ch-tag">
+                            {isBangla ? cls.chapter.replace('Ch ', 'অধ্যায় ').replace('Full 1st Paper', '১ম পত্র সম্পূর্ণ').replace('Full 2nd Paper', '২য় পত্র সম্পূর্ণ').replace('1st + 2nd Paper', '১ম + ২য় পত্র').replace('Board Papers', 'বোর্ড পেপার').replace('All Chapters', 'সকল অধ্যায়').replace('Exam Ready', 'পরীক্ষা প্রস্তুতি') : cls.chapter}
+                          </span>
+                          {cls.badge && (
+                            <span className={`class-badge-pill badge-${cls.isExam ? 'red' : cls.isTest ? 'amber' : 'green'}`}>
+                              {isBangla 
+                                ? (cls.badge === 'Chapter Test' ? 'অধ্যায় পরীক্ষা'
+                                  : cls.badge === 'Monthly Exam' ? 'মাসিক পরীক্ষা'
+                                  : cls.badge === 'Grand Revision' ? 'মহারিভিশন'
+                                  : cls.badge === 'MCQ Marathon' ? 'এমসিকিউ ম্যারাথন'
+                                  : cls.badge === 'CQ Drill' ? 'সিকিউ ড্রিল'
+                                  : cls.badge === 'Board Solutions' ? 'বোর্ড সমাধান'
+                                  : cls.badge === 'Doubt Clinic' ? 'ডাউট ক্লিয়ারিং'
+                                  : cls.badge === 'Final Masterclass' ? 'ফাইনাল মাস্টারক্লাস'
+                                  : cls.badge === 'Diagram Blitz' ? 'চিত্র অঙ্কন ড্রিল'
+                                  : cls.badge.startsWith('Model Test') ? `মডেল টেস্ট ${toBnNum(cls.badge.replace('Model Test ', ''))}`
+                                  : cls.badge.startsWith('Full Biology Test') ? `বায়োলজি টেস্ট ${toBnNum(cls.badge.replace('Full Biology Test ', ''))}`
+                                  : cls.badge)
+                                : cls.badge}
+                            </span>
+                          )}
                         </div>
                         <h5 className="class-title-text">{cls.title}</h5>
                       </div>
@@ -146,11 +165,11 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                   <div className="paper-col-title-wrap">
                     <span className="paper-icon">🧬</span>
                     <div>
-                      <h4 className="paper-col-title">2nd Paper — Zoology</h4>
-                      <span className="paper-col-sub">Animal Diversity & Human Physiology</span>
+                      <h4 className="paper-col-title">{isBangla ? '২য় পত্র — প্রাণিবিজ্ঞান' : '2nd Paper — Zoology'}</h4>
+                      <span className="paper-col-sub">{isBangla ? 'প্রাণীর বিভিন্নতা ও মানব শারীরতত্ত্ব' : 'Animal Diversity & Human Physiology'}</span>
                     </div>
                   </div>
-                  <span className="classes-counter-pill">{currentMonth.zoologyClasses.length} Classes</span>
+                  <span className="classes-counter-pill">{toBnNum(currentMonth.zoologyClasses.length)} {isBangla ? 'টি ক্লাস' : 'Classes'}</span>
                 </div>
 
                 <div className="classes-timeline-list">
@@ -160,12 +179,31 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                       className={`class-timeline-item ${cls.isExam ? 'is-exam-item' : ''} ${cls.isTest ? 'is-test-item' : ''} ${cls.isRevision ? 'is-revision-item' : ''}`}
                     >
                       <div className="class-num-badge zoology-num">
-                        {cls.classLabel}
+                        {isBangla ? `ক্লাস ${toBnNum(cls.classNumber)}` : cls.classLabel}
                       </div>
                       <div className="class-body-details">
                         <div className="class-top-meta">
-                          <span className="class-ch-tag zoology-tag">{cls.chapter}</span>
-                          {cls.badge && <span className={`class-badge-pill badge-${cls.isExam ? 'red' : cls.isTest ? 'amber' : 'green'}`}>{cls.badge}</span>}
+                          <span className="class-ch-tag zoology-tag">
+                            {isBangla ? cls.chapter.replace('Ch ', 'অধ্যায় ').replace('Full 1st Paper', '১ম পত্র সম্পূর্ণ').replace('Full 2nd Paper', '২য় পত্র সম্পূর্ণ').replace('1st + 2nd Paper', '১ম + ২য় পত্র').replace('Board Papers', 'বোর্ড পেপার').replace('All Chapters', 'সকল অধ্যায়').replace('Exam Ready', 'পরীক্ষা প্রস্তুতি') : cls.chapter}
+                          </span>
+                          {cls.badge && (
+                            <span className={`class-badge-pill badge-${cls.isExam ? 'red' : cls.isTest ? 'amber' : 'green'}`}>
+                              {isBangla 
+                                ? (cls.badge === 'Chapter Test' ? 'অধ্যায় পরীক্ষা'
+                                  : cls.badge === 'Monthly Exam' ? 'মাসিক পরীক্ষা'
+                                  : cls.badge === 'Grand Revision' ? 'মহারিভিশন'
+                                  : cls.badge === 'MCQ Marathon' ? 'এমসিকিউ ম্যারাথন'
+                                  : cls.badge === 'CQ Drill' ? 'সিকিউ ড্রিল'
+                                  : cls.badge === 'Board Solutions' ? 'বোর্ড সমাধান'
+                                  : cls.badge === 'Doubt Clinic' ? 'ডাউট ক্লিয়ারিং'
+                                  : cls.badge === 'Final Masterclass' ? 'ফাইনাল মাস্টারক্লাস'
+                                  : cls.badge === 'Diagram Blitz' ? 'চিত্র অঙ্কন ড্রিল'
+                                  : cls.badge.startsWith('Model Test') ? `মডেল টেস্ট ${toBnNum(cls.badge.replace('Model Test ', ''))}`
+                                  : cls.badge.startsWith('Full Biology Test') ? `বায়োলজি টেস্ট ${toBnNum(cls.badge.replace('Full Biology Test ', ''))}`
+                                  : cls.badge)
+                                : cls.badge}
+                            </span>
+                          )}
                         </div>
                         <h5 className="class-title-text">{cls.title}</h5>
                       </div>
@@ -183,18 +221,18 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
                 <Award size={24} />
               </div>
               <div>
-                <span className="exam-milestone-tag">Month 0{currentMonth.monthNumber} Assessment Milestone</span>
-                <h4 className="exam-milestone-title">{currentMonth.monthlyExam.title}</h4>
-                <p className="exam-milestone-desc">{currentMonth.monthlyExam.description}</p>
+                <span className="exam-milestone-tag">{isBangla ? `${toBnNum(currentMonth.monthNumber)}ম মাসের মূল্যায়ন মাইলস্টোন` : `Month 0${currentMonth.monthNumber} Assessment Milestone`}</span>
+                <h4 className="exam-milestone-title">{isBangla ? (currentMonth.monthlyExam.titleBn || currentMonth.monthlyExam.title) : currentMonth.monthlyExam.title}</h4>
+                <p className="exam-milestone-desc">{isBangla ? (currentMonth.monthlyExam.descriptionBn || currentMonth.monthlyExam.description) : currentMonth.monthlyExam.description}</p>
               </div>
             </div>
 
             <div className="exam-milestone-syllabus-pills">
               <div className="syllabus-pill">
-                <strong>1st Paper:</strong> {currentMonth.monthlyExam.botanySyllabus}
+                <strong>{isBangla ? '১ম পত্র:' : '1st Paper:'}</strong> {isBangla ? (currentMonth.monthlyExam.botanySyllabusBn || currentMonth.monthlyExam.botanySyllabus) : currentMonth.monthlyExam.botanySyllabus}
               </div>
               <div className="syllabus-pill">
-                <strong>2nd Paper:</strong> {currentMonth.monthlyExam.zoologySyllabus}
+                <strong>{isBangla ? '২য় পত্র:' : '2nd Paper:'}</strong> {isBangla ? (currentMonth.monthlyExam.zoologySyllabusBn || currentMonth.monthlyExam.zoologySyllabus) : currentMonth.monthlyExam.zoologySyllabus}
               </div>
             </div>
           </div>
@@ -203,10 +241,10 @@ export const SyllabusCurriculumExplorer: React.FC = () => {
         {/* Bottom CTA Row */}
         <div className="curriculum-footer-row text-center">
           <Link to="/program#structure" className="btn btn-outline">
-            View Program Structure & Schedule <Calendar size={16} />
+            {isBangla ? 'সম্পূর্ণ প্রোগ্রাম রূপরেখা ও রুটিন দেখুন' : 'View Program Structure & Schedule'} <Calendar size={16} />
           </Link>
           <Link to="/enroll" className="btn btn-primary">
-            Enroll in Full 48-Class Program <ArrowRight size={16} />
+            {isBangla ? '৪৮টি ক্লাসের সম্পূর্ণ কোর্সে ভর্তি হোন' : 'Enroll in Full 48-Class Program'} <ArrowRight size={16} />
           </Link>
         </div>
       </div>

@@ -1,29 +1,40 @@
 export interface SyllabusClassItem {
   classNumber: number;
   classLabel: string;
+  classLabelBn?: string;
   chapter: string;
+  chapterBn?: string;
   title: string;
+  titleBn?: string;
   isTest?: boolean;
   isExam?: boolean;
   isRevision?: boolean;
   badge?: string;
+  badgeBn?: string;
 }
 
 export interface MonthCurriculum {
   monthNumber: number;
   monthId: string;
   title: string;
+  titleBn?: string;
   subtitle: string;
+  subtitleBn?: string;
   classesPerWeek: number;
   totalClasses: number;
   classRange: string;
+  classRangeBn?: string;
   botanyClasses: SyllabusClassItem[];
   zoologyClasses: SyllabusClassItem[];
   monthlyExam: {
     title: string;
+    titleBn?: string;
     botanySyllabus: string;
+    botanySyllabusBn?: string;
     zoologySyllabus: string;
+    zoologySyllabusBn?: string;
     description: string;
+    descriptionBn?: string;
   };
 }
 
@@ -32,10 +43,13 @@ export const HSC_BIOLOGY_CURRICULUM: MonthCurriculum[] = [
     monthNumber: 1,
     monthId: "month-1",
     title: "MONTH 1 — Foundation & Cell Biology",
+    titleBn: "১ম মাস — ফাউন্ডেশন ও কোষ জীববিজ্ঞান",
     subtitle: "3 Classes per Week — Total 12 Classes • Core cellular architecture & animal classification foundation",
+    subtitleBn: "সপ্তাহে ৩টি ক্লাস — মোট ১২টি ক্লাস • কোষীয় গঠন ও প্রাণীর শ্রেণিবিন্যাসের মূল ভিত্তি",
     classesPerWeek: 3,
     totalClasses: 12,
     classRange: "Classes 01 – 12",
+    classRangeBn: "ক্লাস ০১ – ১২",
     botanyClasses: [
       { classNumber: 1, classLabel: "Class 01", chapter: "Ch 1", title: "Cell & Its Structure — Part 1 (Plasma membrane, cell wall, fluid mosaic model)" },
       { classNumber: 2, classLabel: "Class 02", chapter: "Ch 1", title: "Cell & Its Structure — Part 2 (Mitochondria, chloroplast & organelles)" },
@@ -66,19 +80,26 @@ export const HSC_BIOLOGY_CURRICULUM: MonthCurriculum[] = [
     ],
     monthlyExam: {
       title: "Monthly Exam 01",
+      titleBn: "মাসিক মূল্যায়ন পরীক্ষা ০১",
       botanySyllabus: "1st Paper: Chapter 1 (Cell Structure) & Chapter 2 (Cell Division)",
+      botanySyllabusBn: "১ম পত্র: অধ্যায় ১ (কোষ ও এর গঠন) এবং অধ্যায় ২ (কোষ বিভাজন)",
       zoologySyllabus: "2nd Paper: Chapter 1 (Animal Diversity) & Chapter 2 (Type Animals)",
-      description: "Timed 50-mark board standard examination featuring 25 MCQs and 2 Structured CQs with full diagram evaluation."
+      zoologySyllabusBn: "২য় পত্র: অধ্যায় ১ (প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস) এবং অধ্যায় ২ (প্রাণীর পরিচিতি)",
+      description: "Timed 50-mark board standard examination featuring 25 MCQs and 2 Structured CQs with full diagram evaluation.",
+      descriptionBn: "বোর্ড স্ট্যান্ডার্ড ৫০ নম্বরের সময় নিয়ন্ত্রিত পরীক্ষা; ২৫টি এমসিকিউ এবং ২টি পূর্ণাঙ্গ সিকিউ (CQ) সঙ্গে চিত্র মূল্যায়ন।"
     }
   },
   {
     monthNumber: 2,
     monthId: "month-2",
     title: "MONTH 2 — Cell Chemistry + Human Physiology I",
+    titleBn: "২য় মাস — কোষ রসায়ন ও মানব শারীরতত্ত্ব (১ম ভাগ)",
     subtitle: "3 Classes per Week — Total 12 Classes • Biomolecules, microbiology, circulation, respiration & excretion",
+    subtitleBn: "সপ্তাহে ৩টি ক্লাস — মোট ১২টি ক্লাস • জৈব অণু, অণুজীব, রক্ত সঞ্চালন, শ্বসন ও বর্জ্য নিষ্কাশন",
     classesPerWeek: 3,
     totalClasses: 12,
     classRange: "Classes 13 – 24",
+    classRangeBn: "ক্লাস ১৩ – ২৪",
     botanyClasses: [
       { classNumber: 13, classLabel: "Class 13", chapter: "Ch 3", title: "Cell Chemistry — Part 1 (Carbohydrates: Monosaccharides, disaccharides, polysaccharides)" },
       { classNumber: 14, classLabel: "Class 14", chapter: "Ch 3", title: "Cell Chemistry — Part 2 (Amino acids, peptide bonds & lipid classification)" },
@@ -109,19 +130,26 @@ export const HSC_BIOLOGY_CURRICULUM: MonthCurriculum[] = [
     ],
     monthlyExam: {
       title: "Monthly Exam 02",
+      titleBn: "মাসিক মূল্যায়ন পরীক্ষা ০২",
       botanySyllabus: "1st Paper: Chapter 3 (Biomolecules), Ch 4 (Microorganisms), Ch 5 (Algae/Fungi), Ch 6 (Bryo/Pterido) & Ch 7 (Gymno/Angio)",
+      botanySyllabusBn: "১ম পত্র: অধ্যায় ৩ (কোষ রসায়ন), অধ্যায় ৪ (অণুজীব), অধ্যায় ৫ (শৈবাল ও ছত্রাক), অধ্যায় ৬ (ব্রায়োফাইটা ও টেরিডোফাইটা) এবং অধ্যায় ৭ (নগ্নবীজী ও আবৃতবীজী)",
       zoologySyllabus: "2nd Paper: Chapter 3 (Digestion), Ch 4 (Circulation), Ch 5 (Respiration), Ch 6 (Excretion) & Ch 7 (Locomotion)",
-      description: "Comprehensive mid-term evaluation testing biochemical pathways, human physiological cycles, and CQ answer precision."
+      zoologySyllabusBn: "২য় পত্র: অধ্যায় ৩ (পরিপাক ও শোষণ), অধ্যায় ৪ (রক্ত ও সঞ্চালন), অধ্যায় ৫ (শ্বসন ও শ্বাসক্রিয়া), অধ্যায় ৬ (বর্জ্য নিষ্কাশন) এবং অধ্যায় ৭ (চলন ও অঙ্গচালনা)",
+      description: "Comprehensive mid-term evaluation testing biochemical pathways, human physiological cycles, and CQ answer precision.",
+      descriptionBn: "জৈবরাসায়নিক বিক্রিয়াপথ, মানব শারীরতত্ত্বের বিভিন্ন সাইকেল এবং পূর্ণাঙ্গ সিকিউ উত্তর লিখনের মিড-টার্ম পরীক্ষা।"
     }
   },
   {
     monthNumber: 3,
     monthId: "month-3",
     title: "MONTH 3 — Plant Physiology + Advanced Zoology",
+    titleBn: "৩য় মাস — উদ্ভিদ শারীরতত্ত্ব ও উচ্চতর প্রাণিবিজ্ঞান",
     subtitle: "3 Classes per Week — Total 12 Classes • Photosynthesis, respiration, genetics, endocrine, immunity & behavior",
+    subtitleBn: "সপ্তাহে ৩টি ক্লাস — মোট ১২টি ক্লাস • সালোকসংশ্লেষণ, শ্বসন, জিনতত্ত্ব, হরমোন, প্রতিরক্ষা ও প্রাণীর আচরণ",
     classesPerWeek: 3,
     totalClasses: 12,
     classRange: "Classes 25 – 36",
+    classRangeBn: "ক্লাস ২৫ – ৩৬",
     botanyClasses: [
       { classNumber: 25, classLabel: "Class 25", chapter: "Ch 8", title: "Tissue & Tissue System — Part 1 (Meristematic tissue types & vascular bundles)" },
       { classNumber: 26, classLabel: "Class 26", chapter: "Ch 8", title: "Tissue & Tissue System — Part 2 (Stomatal mechanism, epidermis & ground tissue)" },
@@ -152,19 +180,26 @@ export const HSC_BIOLOGY_CURRICULUM: MonthCurriculum[] = [
     ],
     monthlyExam: {
       title: "Monthly Exam 03",
+      titleBn: "মাসিক মূল্যায়ন পরীক্ষা ০৩",
       botanySyllabus: "1st Paper: Chapter 8 (Tissue System), Ch 9 (Plant Physiology), Ch 10 (Plant Reproduction) & Ch 11 (Biotechnology)",
+      botanySyllabusBn: "১ম পত্র: অধ্যায় ৮ (টিস্যু ও টিস্যুতন্ত্র), অধ্যায় ৯ (উদ্ভিদ শারীরতত্ত্ব), অধ্যায় ১০ (উদ্ভিদ প্রজনন) এবং অধ্যায় ১১ (জীবপ্রযুক্তি)",
       zoologySyllabus: "2nd Paper: Chapter 8 (Coordination), Ch 9 (Reproduction), Ch 10 (Immunity), Ch 11 (Genetics & Evolution) & Ch 12 (Behaviour)",
-      description: "Advanced assessment testing analytical genetics crosses, plant metabolism, and complex physiological regulation."
+      zoologySyllabusBn: "২য় পত্র: অধ্যায় ৮ (সমন্বয় ও নিয়ন্ত্রণ), অধ্যায় ৯ (মানব জীবনের ধারাবাহিকতা), অধ্যায় ১০ (মানবদেহের প্রতিরক্ষা), অধ্যায় ১১ (জিনতত্ত্ব ও বিবর্তন) এবং অধ্যায় ১২ (প্রাণীর আচরণ)",
+      description: "Advanced assessment testing analytical genetics crosses, plant metabolism, and complex physiological regulation.",
+      descriptionBn: "বিশ্লেষণধর্মী জিনতাত্ত্বিক ক্রসিং, উদ্ভিদের মেটাবলিজম এবং জটিল হরমোন ও প্রতিরক্ষা ব্যবস্থার ওপর উচ্চতর মূল্যায়ন।"
     }
   },
   {
     monthNumber: 4,
     monthId: "month-4",
     title: "MONTH 4 — Final Revision & Exam Preparation",
+    titleBn: "৪র্থ মাস — পূর্ণাঙ্গ রিভিশন ও ফাইনাল বোর্ড প্রস্তুতি",
     subtitle: "3 Classes per Week — Total 12 Classes • Complete 24-chapter revision, MCQ marathons & Board model tests",
+    subtitleBn: "সপ্তাহে ৩টি ক্লাস — মোট ১২টি ক্লাস • সম্পূর্ণ ২৪টি অধ্যায়ের নিবিড় রিভিশন, এমসিকিউ ম্যারাথন ও বোর্ড সিমুলেশন",
     classesPerWeek: 3,
     totalClasses: 12,
     classRange: "Classes 37 – 48",
+    classRangeBn: "ক্লাস ৩৭ – ৪৮",
     botanyClasses: [
       { classNumber: 37, classLabel: "Class 37", chapter: "Ch 1–6", title: "Revision: Ch 1–6 (MCQ + CQ + Core Diagrams Rapid Recap)", isRevision: true, badge: "Grand Revision" },
       { classNumber: 38, classLabel: "Class 38", chapter: "Ch 7–12", title: "Revision: Ch 7–12 (MCQ + CQ + Core Diagrams Rapid Recap)", isRevision: true, badge: "Grand Revision" },
@@ -195,9 +230,13 @@ export const HSC_BIOLOGY_CURRICULUM: MonthCurriculum[] = [
     ],
     monthlyExam: {
       title: "Final Board Model Test Series",
+      titleBn: "ফাইনাল বোর্ড মডেল টেস্ট সিরিজ",
       botanySyllabus: "Complete 1st Paper (Chapters 1–12)",
+      botanySyllabusBn: "১ম পত্র সম্পূর্ণ (অধ্যায় ০১ থেকে ১২)",
       zoologySyllabus: "Complete 2nd Paper (Chapters 1–12)",
-      description: "Full-scale timed board simulations with real-time ranking, line-by-line CQ evaluation, and final exam confidence coaching."
+      zoologySyllabusBn: "২য় পত্র সম্পূর্ণ (অধ্যায় ০১ থেকে ১২)",
+      description: "Full-scale timed board simulations with real-time ranking, line-by-line CQ evaluation, and final exam confidence coaching.",
+      descriptionBn: "রিয়েল-টাইম মেধাতালিকা, লাইন-বাই-লাইন খাতা মূল্যায়ন এবং বোর্ড পরীক্ষার পূর্ণাঙ্গ আত্মবিশ্বাস সৃষ্টির চূড়ান্ত মহড়া।"
     }
   }
 ];
