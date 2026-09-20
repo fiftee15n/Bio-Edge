@@ -19,15 +19,36 @@ export const toBengaliNumber = (num: string | number): string => {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Check localStorage, default to 'bn' as requested
+  // Requirement: While opening the web first initially, it must open in Bangla ('bn').
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('bioedge_language');
-    return (saved === 'en' || saved === 'bn') ? saved : 'bn';
+    // Clear any obsolete legacy key from previous sessions that might have cached 'en'
+    try {
+      localStorage.removeItem('bioedge_language');
+    } catch {
+      // ignore
+    }
+
+    // Check if user has explicitly chosen a language in this active session
+    try {
+      const sessionLang = sessionStorage.getItem('bioedge_session_lang');
+      if (sessionLang === 'en' || sessionLang === 'bn') {
+        return sessionLang;
+      }
+    } catch {
+      // ignore
+    }
+
+    // Default initial language MUST be Bangla ('bn')
+    return 'bn';
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('bioedge_language', lang);
+    try {
+      sessionStorage.setItem('bioedge_session_lang', lang);
+    } catch {
+      // ignore
+    }
   };
 
   const toggleLanguage = () => {
@@ -36,14 +57,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   useEffect(() => {
-    // Set document lang attribute and update body class
+    // Set document lang attribute, document title, and update body class
     document.documentElement.lang = language;
     if (language === 'bn') {
       document.body.classList.add('lang-bn');
       document.body.setAttribute('data-lang', 'bn');
+      document.title = 'বায়ো এজ বাই আফরোজা তাহমিনা | এইচএসসি বায়োলজি ইন্টেনসিভ প্রোগ্রাম';
     } else {
       document.body.classList.remove('lang-bn');
       document.body.setAttribute('data-lang', 'en');
+      document.title = 'Bio Edge by Afroza Tahmina | Premium HSC Biology Intensive Program';
     }
   }, [language]);
 
