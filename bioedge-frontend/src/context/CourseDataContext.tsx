@@ -88,9 +88,53 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
 
   const [course, setCourse] = useState<CourseData>(() => getStored('course', initialCourseData));
   const [teacher, setTeacher] = useState<TeacherData>(() => getStored('teacher', initialTeacherData));
-  const [papers, setPapers] = useState<Paper[]>(() => getStored('papers', initialPapers));
-  const [classes, setClasses] = useState<ClassSession[]>(() => getStored('classes', initialClasses));
-  const [tests, setTests] = useState<Test[]>(() => getStored('tests', initialTests));
+  const [papers, setPapers] = useState<Paper[]>(() => {
+    const stored = getStored<Paper[]>('papers', initialPapers);
+    const fpStored = stored.find(p => p.id === 'first-paper');
+    const firstCh = fpStored?.chapters?.[0];
+    if (firstCh && (firstCh.name === 'Cell and Its Structure' || !firstCh.numberBn || firstCh.name !== 'কোষ ও এর গঠন')) {
+      const fpInitial = initialPapers.find(p => p.id === 'first-paper');
+      if (fpInitial) {
+        return stored.map(p => {
+          if (p.id !== 'first-paper') return p;
+          return {
+            ...p,
+            name: fpInitial.name,
+            chapters: fpInitial.chapters.map(initCh => {
+              const existingCh = p.chapters.find(c => c.id === initCh.id);
+              return {
+                ...initCh,
+                progress: existingCh?.progress ?? initCh.progress,
+                status: existingCh?.status ?? initCh.status,
+                topics: existingCh?.topics?.length ? existingCh.topics : initCh.topics
+              };
+            })
+          };
+        });
+      }
+    }
+    return stored;
+  });
+  const [classes, setClasses] = useState<ClassSession[]>(() => {
+    const stored = getStored<ClassSession[]>('classes', initialClasses);
+    return stored.map(cls => {
+      const initMatch = initialClasses.find(ic => ic.id === cls.id);
+      if (initMatch && initMatch.chapterName !== cls.chapterName) {
+        return { ...cls, chapter: initMatch.chapter, chapterName: initMatch.chapterName };
+      }
+      return cls;
+    });
+  });
+  const [tests, setTests] = useState<Test[]>(() => {
+    const stored = getStored<Test[]>('tests', initialTests);
+    return stored.map(t => {
+      const initMatch = initialTests.find(it => it.id === t.id);
+      if (initMatch && initMatch.chapterName !== t.chapterName) {
+        return { ...t, chapterName: initMatch.chapterName };
+      }
+      return t;
+    });
+  });
   const [students, setStudents] = useState<Student[]>(() => getStored('students', initialStudents));
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>(() => getStored('feedbacks', initialFeedbacks));
   const [notifications, setNotifications] = useState<NotificationItem[]>(() => getStored('notifications', initialNotifications));

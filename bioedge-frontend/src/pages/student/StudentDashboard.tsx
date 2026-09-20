@@ -334,7 +334,9 @@ export const StudentDashboard: React.FC = () => {
               {firstPaper.chapters.slice(0, 5).map((ch) => (
                 <div key={ch.id} className="ch-progress-item">
                   <div className="ch-p-row">
-                    <span className="ch-label">Chapter {ch.number}: {ch.name}</span>
+                    <span className="ch-label">
+                      {isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}: ${ch.nameBn || ch.name}` : `Chapter ${ch.number}: ${ch.nameEn || ch.name}`}
+                    </span>
                     <span className={`badge ${ch.status === 'Completed' ? 'badge-green' : ch.status === 'In Progress' ? 'badge-amber' : 'badge-gray'}`}>
                       {ch.progress}% {ch.status}
                     </span>
@@ -356,7 +358,9 @@ export const StudentDashboard: React.FC = () => {
               {secondPaper.chapters.slice(0, 5).map((ch) => (
                 <div key={ch.id} className="ch-progress-item">
                   <div className="ch-p-row">
-                    <span className="ch-label">Chapter {ch.number}: {ch.name}</span>
+                    <span className="ch-label">
+                      {isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}: ${ch.nameBn || ch.name}` : `Chapter ${ch.number}: ${ch.nameEn || ch.name}`}
+                    </span>
                     <span className={`badge ${ch.status === 'Completed' ? 'badge-green' : ch.status === 'In Progress' ? 'badge-amber' : 'badge-gray'}`}>
                       {ch.progress}% {ch.status}
                     </span>

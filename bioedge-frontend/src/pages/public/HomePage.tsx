@@ -198,10 +198,10 @@ export const HomePage: React.FC = () => {
             {selectedPaper.chapters.map((ch) => (
               <div key={ch.id} className="chapter-item-card bio-card">
                 <div className="ch-header">
-                  <span className="ch-num-badge">{isBangla ? `অধ্যায় ${toBnNum(ch.number)}` : `Chapter ${ch.number}`}</span>
+                  <span className="ch-num-badge">{isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}` : `Chapter ${ch.number}`}</span>
                   <span className="ch-topics-count">{toBnNum((ch.topics || []).length)} {isBangla ? 'টি বিষয়' : 'Topics'}</span>
                 </div>
-                <h4 className="ch-name">{ch.name}</h4>
+                <h4 className="ch-name">{isBangla ? (ch.nameBn || ch.name) : (ch.nameEn || ch.name)}</h4>
                 <div className="ch-topics-list">
                   {(ch.topics || []).slice(0, 3).map((tItem, idx) => (
                     <div key={idx} className="ch-topic-bullet">

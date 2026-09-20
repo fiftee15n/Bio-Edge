@@ -11,7 +11,7 @@ export const TeacherTestCreatePage: React.FC = () => {
     title: '',
     paper: 'Biology First Paper',
     category: 'Chapter Practice' as 'Chapter Practice' | 'CQ/SQ Practice' | 'Full Syllabus Model Tests',
-    chapterName: 'Chapter 05: Algae and Fungi',
+    chapterName: 'অধ্যায় ৫: শৈবাল ও ছত্রাক',
     durationMinutes: 20,
     totalQuestions: 15,
     totalMarks: 15,

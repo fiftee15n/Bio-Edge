@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { 
   BookOpen, 
   Clock, 
@@ -20,6 +21,7 @@ import {
 
 export const ProgramPage: React.FC = () => {
   const { course, papers, availableSeats } = useCourseData();
+  const { isBangla, toBnNum } = useLanguage();
   const [selectedPaperId, setSelectedPaperId] = useState<string>('first-paper');
   const [expandedChapterIds, setExpandedChapterIds] = useState<Record<string, boolean>>({
     'c1-01': true,
@@ -220,13 +222,13 @@ export const ProgramPage: React.FC = () => {
                     tabIndex={0}
                   >
                     <div className="ch-header-left">
-                      <span className="ch-number-badge">Chapter {ch.number}</span>
-                      <h3 className="ch-title">{ch.name}</h3>
+                      <span className="ch-number-badge">{isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}` : `Chapter ${ch.number}`}</span>
+                      <h3 className="ch-title">{isBangla ? (ch.nameBn || ch.name) : (ch.nameEn || ch.name)}</h3>
                     </div>
 
                     <div className="ch-header-right">
                       <span className="ch-topics-count">
-                        {topicsList.length} Core Topics
+                        {toBnNum(topicsList.length)} {isBangla ? 'টি বিষয়' : 'Core Topics'}
                       </span>
                       <div className="ch-chevron-box">
                         {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}

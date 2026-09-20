@@ -107,7 +107,10 @@ export interface Topic {
 export interface Chapter {
   id: string;
   number: string;
+  numberBn?: string;
   name: string;
+  nameEn?: string;
+  nameBn?: string;
   paperId: string;
   progress: number;
   status: 'Completed' | 'In Progress' | 'Not Started';

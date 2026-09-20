@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { ProgressBar } from '../../components/common/ProgressBar';
 import { 
   ArrowLeft, 
@@ -19,6 +20,7 @@ export const StudentChapterDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { papers, classes, toggleTopicStatus } = useCourseData();
+  const { isBangla, toBnNum } = useLanguage();
 
   // Find chapter in papers
   let currentChapter: Chapter | null = null;
@@ -41,7 +43,11 @@ export const StudentChapterDetailsPage: React.FC = () => {
 
   // Associated classes
   const relatedClasses = classes.filter(
-    c => c.chapterName === currentChapter?.name || c.chapter === `Chapter ${currentChapter?.number}`
+    c => c.chapterName === currentChapter?.name || 
+         c.chapterName === currentChapter?.nameBn || 
+         c.chapterName === currentChapter?.nameEn ||
+         c.chapter === `Chapter ${currentChapter?.number}` ||
+         c.chapter === `অধ্যায় ${currentChapter?.numberBn || toBnNum(parseInt(currentChapter?.number || '0', 10))}`
   );
 
   return (
@@ -58,17 +64,17 @@ export const StudentChapterDetailsPage: React.FC = () => {
         <div className="ch-head-left">
           <span className="badge badge-green">{currentPaper?.name}</span>
           <h1 className="ch-full-title">
-            Chapter {currentChapter.number}: {currentChapter.name}
+            {isBangla ? `অধ্যায় ${currentChapter.numberBn || toBnNum(parseInt(currentChapter.number, 10))}: ${currentChapter.nameBn || currentChapter.name}` : `Chapter ${currentChapter.number}: ${currentChapter.nameEn || currentChapter.name}`}
           </h1>
           <p className="ch-full-sub">
-            {(currentChapter.topics || []).length} Topics • Complete High-Yield Concept Mastery
+            {toBnNum((currentChapter.topics || []).length)} {isBangla ? 'টি বিষয় • পূর্ণাঙ্গ হাই-ইল্ড কনসেপ্ট প্রস্তুতি' : 'Topics • Complete High-Yield Concept Mastery'}
           </p>
         </div>
 
         <div className="ch-head-right">
           <div className="ch-prog-stat">
-            <span>Chapter Completion</span>
-            <strong className="prog-percent">{currentChapter.progress}%</strong>
+            <span>{isBangla ? 'অধ্যায় সমাপ্তি' : 'Chapter Completion'}</span>
+            <strong className="prog-percent">{toBnNum(currentChapter.progress)}%</strong>
           </div>
           <ProgressBar progress={currentChapter.progress} height={8} />
         </div>

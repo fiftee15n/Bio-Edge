@@ -18,7 +18,7 @@ export const TeacherClassesPage: React.FC = () => {
   const [newClass, setNewClass] = useState({
     title: '',
     paper: 'Biology First Paper',
-    chapterName: 'Chapter 05: Algae and Fungi',
+    chapterName: 'অধ্যায় ৫: শৈবাল ও ছত্রাক',
     topic: '',
     date: '2026-09-24',
     time: '7:00 PM – 8:30 PM',
@@ -33,7 +33,7 @@ export const TeacherClassesPage: React.FC = () => {
     setNewClass({
       title: '',
       paper: 'Biology First Paper',
-      chapterName: 'Chapter 05: Algae and Fungi',
+      chapterName: 'অধ্যায় ৫: শৈবাল ও ছত্রাক',
       topic: '',
       date: '2026-09-24',
       time: '7:00 PM – 8:30 PM',

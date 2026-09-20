@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Modal } from '../../components/common/Modal';
 import { 
   BookOpen, 
@@ -20,6 +21,7 @@ export const TeacherChaptersPage: React.FC = () => {
     deleteChapter, 
     addTopic 
   } = useCourseData();
+  const { isBangla, toBnNum } = useLanguage();
 
   const [activePaperId, setActivePaperId] = useState<string>('first-paper');
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
@@ -93,15 +95,15 @@ export const TeacherChaptersPage: React.FC = () => {
           <div key={ch.id} className="chapter-admin-card bio-card">
             <div className="ch-admin-top">
               <div className="ch-admin-meta">
-                <span className="ch-badge">Chapter {ch.number}</span>
-                <h3 className="ch-admin-title">{ch.name}</h3>
+                <span className="ch-badge">{isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}` : `Chapter ${ch.number}`}</span>
+                <h3 className="ch-admin-title">{isBangla ? (ch.nameBn || ch.name) : (ch.nameEn || ch.name)}</h3>
               </div>
 
               <div className="ch-admin-actions">
                 <button
                   onClick={() => {
-                    const newName = prompt('Update Chapter Name:', ch.name);
-                    if (newName) updateChapter(activePaperId, ch.id, { name: newName });
+                    const newName = prompt('Update Chapter Name:', ch.nameBn || ch.name);
+                    if (newName) updateChapter(activePaperId, ch.id, { name: newName, nameBn: newName });
                   }}
                   className="btn btn-ghost btn-sm"
                   title="Rename Chapter"
@@ -110,7 +112,7 @@ export const TeacherChaptersPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => {
-                    if (window.confirm(`Delete Chapter ${ch.number}: ${ch.name}?`)) {
+                    if (window.confirm(isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}: ${ch.nameBn || ch.name} মুছে ফেলবেন?` : `Delete Chapter ${ch.number}: ${ch.name}?`)) {
                       deleteChapter(activePaperId, ch.id);
                     }
                   }}

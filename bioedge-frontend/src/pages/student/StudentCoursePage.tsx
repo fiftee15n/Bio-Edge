@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCourseData } from '../../context/CourseDataContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { ProgressBar } from '../../components/common/ProgressBar';
 import { 
   BookOpen, 
@@ -18,6 +19,7 @@ import {
 export const StudentCoursePage: React.FC = () => {
   const { user } = useAuth();
   const { papers, toggleTopicStatus, hasAccessToCourse, enrollments } = useCourseData();
+  const { isBangla, toBnNum } = useLanguage();
   const [selectedPaperTab, setSelectedPaperTab] = useState<string>('first-paper');
 
   const userEmail = user?.email || '';
@@ -103,13 +105,13 @@ export const StudentCoursePage: React.FC = () => {
         {activePaper.chapters.map((ch) => (
           <div key={ch.id} className="student-chapter-card bio-card">
             <div className="ch-card-top">
-              <span className="ch-index-badge">Chapter {ch.number}</span>
+              <span className="ch-index-badge">{isBangla ? `অধ্যায় ${ch.numberBn || toBnNum(parseInt(ch.number, 10))}` : `Chapter ${ch.number}`}</span>
               <span className={`badge ${ch.status === 'Completed' ? 'badge-green' : ch.status === 'In Progress' ? 'badge-amber' : 'badge-gray'}`}>
                 {ch.status}
               </span>
             </div>
 
-            <h3 className="ch-card-title">{ch.name}</h3>
+            <h3 className="ch-card-title">{isBangla ? (ch.nameBn || ch.name) : (ch.nameEn || ch.name)}</h3>
 
             <div className="ch-progress-wrapper">
               <div className="ch-progress-meta">
