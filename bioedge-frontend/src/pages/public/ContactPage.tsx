@@ -344,7 +344,7 @@ export const ContactPage: React.FC = () => {
                     {isBangla ? 'আপনার প্রশ্ন বা মন্তব্য' : 'Your Question or Notes'} <span className="text-required">*</span>
                   </label>
                   <textarea
-                    rows={4}
+                    rows={3}
                     required
                     placeholder={isBangla ? 'অধ্যায় অগ্রগতি, CQ/MCQ মূল্যায়ন পদ্ধতি বা ব্যাচ সময়সূচি সম্পর্কে আপনার প্রশ্ন লিখুন...' : 'Ask any specific question regarding chapter progression, MCQ/CQ evaluation, or batch timings...'}
                     value={form.message}
@@ -412,35 +412,36 @@ export const ContactPage: React.FC = () => {
 
         .contact-main-grid {
           display: grid;
-          grid-template-columns: 1fr 1.32fr;
-          gap: 2.25rem;
-          max-width: 1120px;
-          margin: 0 auto 3.5rem;
+          grid-template-columns: 1fr 1.22fr;
+          gap: 2rem;
+          max-width: 1200px;
+          margin: 0 auto 3rem;
           align-items: stretch;
         }
 
         /* Left Column: Academic Hub */
         .contact-info-card {
-          padding: 2.25rem;
+          padding: 2rem;
           display: flex;
           flex-direction: column;
           background: #FFFFFF;
           border-radius: var(--radius-lg);
           border: 1px solid var(--border-color);
+          box-shadow: var(--shadow-sm);
         }
 
         .faculty-desk-badge {
           display: flex;
           align-items: center;
           gap: 1rem;
-          padding-bottom: 1.5rem;
+          padding-bottom: 1.15rem;
           border-bottom: 1px solid var(--border-subtle);
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.15rem;
         }
 
         .desk-avatar-circle {
-          width: 52px;
-          height: 52px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
           background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
           color: #FFFFFF;
@@ -448,7 +449,7 @@ export const ContactPage: React.FC = () => {
           align-items: center;
           justify-content: center;
           font-weight: 700;
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           letter-spacing: -0.5px;
           box-shadow: 0 4px 12px rgba(41, 78, 54, 0.2);
           flex-shrink: 0;
@@ -458,7 +459,7 @@ export const ContactPage: React.FC = () => {
           display: inline-flex;
           align-items: center;
           gap: 0.35rem;
-          font-size: 0.75rem;
+          font-size: 0.74rem;
           font-weight: 700;
           color: var(--primary-green);
           text-transform: uppercase;
@@ -480,25 +481,25 @@ export const ContactPage: React.FC = () => {
         }
 
         .contact-intro-text {
-          font-size: 0.92rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
-          line-height: 1.6;
-          margin-bottom: 1.5rem;
+          line-height: 1.55;
+          margin-bottom: 1.15rem;
         }
 
         /* Action Channels List */
         .contact-channels-list {
           display: flex;
           flex-direction: column;
-          gap: 0.9rem;
-          margin-bottom: 1.75rem;
+          gap: 0.75rem;
+          margin-bottom: 1.25rem;
         }
 
         .channel-action-card {
           display: flex;
           align-items: center;
-          gap: 1rem;
-          padding: 1rem 1.15rem;
+          gap: 0.95rem;
+          padding: 0.85rem 1.05rem;
           border-radius: var(--radius-md);
           background: var(--light-green-subtle);
           border: 1.5px solid var(--border-subtle);
@@ -526,8 +527,8 @@ export const ContactPage: React.FC = () => {
         }
 
         .channel-icon-circle {
-          width: 44px;
-          height: 44px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           background: var(--light-green);
           color: var(--dark-green);
@@ -560,7 +561,7 @@ export const ContactPage: React.FC = () => {
         }
 
         .channel-label {
-          font-size: 0.75rem;
+          font-size: 0.74rem;
           color: var(--text-muted);
           font-weight: 600;
           text-transform: uppercase;
@@ -578,14 +579,14 @@ export const ContactPage: React.FC = () => {
         }
 
         .channel-val {
-          font-size: 1rem;
+          font-size: 0.96rem;
           color: var(--text-dark);
           font-weight: 700;
-          margin: 0.1rem 0 0.15rem;
+          margin: 0.08rem 0 0.12rem;
         }
 
         .channel-note {
-          font-size: 0.76rem;
+          font-size: 0.74rem;
           color: var(--text-muted);
         }
 
@@ -606,21 +607,21 @@ export const ContactPage: React.FC = () => {
           background: #F9FBFA;
           border: 1px solid var(--border-color);
           border-radius: var(--radius-md);
-          padding: 1.25rem;
+          padding: 1.1rem 1.2rem;
         }
 
         .hours-header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.65rem;
         }
 
         .hours-title {
           display: flex;
           align-items: center;
-          gap: 0.45rem;
-          font-size: 0.88rem;
+          gap: 0.4rem;
+          font-size: 0.85rem;
           font-weight: 700;
           color: var(--dark-green);
         }
@@ -628,12 +629,12 @@ export const ContactPage: React.FC = () => {
         .status-live-pill {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
-          font-size: 0.74rem;
+          gap: 0.35rem;
+          font-size: 0.72rem;
           font-weight: 600;
           background: #EAF8EE;
           color: #15803D;
-          padding: 0.2rem 0.6rem;
+          padding: 0.18rem 0.55rem;
           border-radius: var(--radius-full);
         }
 
@@ -655,9 +656,9 @@ export const ContactPage: React.FC = () => {
         .hours-grid {
           display: flex;
           flex-direction: column;
-          gap: 0.35rem;
-          font-size: 0.84rem;
-          margin-bottom: 0.85rem;
+          gap: 0.3rem;
+          font-size: 0.82rem;
+          margin-bottom: 0.65rem;
         }
 
         .hours-row {
@@ -678,9 +679,9 @@ export const ContactPage: React.FC = () => {
           display: flex;
           align-items: center;
           gap: 0.45rem;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
-          padding-top: 0.75rem;
+          padding-top: 0.65rem;
           border-top: 1px solid var(--border-subtle);
         }
 
@@ -691,27 +692,31 @@ export const ContactPage: React.FC = () => {
 
         /* Right Column: Inquiry Form Card */
         .contact-form-card {
-          padding: 2.5rem;
+          padding: 2rem 2.25rem;
           background: #FFFFFF;
           border-radius: var(--radius-lg);
           border: 1px solid var(--border-color);
+          box-shadow: var(--shadow-sm);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         }
 
         .form-card-header {
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.25rem;
         }
 
         .form-card-title {
-          font-size: 1.4rem;
+          font-size: 1.35rem;
           color: var(--dark-green);
-          margin-bottom: 0.4rem;
+          margin-bottom: 0.25rem;
           font-weight: 700;
         }
 
         .form-card-subtitle {
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
-          line-height: 1.5;
+          line-height: 1.45;
         }
 
         .text-required {
@@ -724,15 +729,68 @@ export const ContactPage: React.FC = () => {
           font-weight: 400;
         }
 
+        .inquiry-form .form-group {
+          margin-bottom: 0.85rem;
+          text-align: left;
+        }
+
+        .inquiry-form .form-label {
+          font-size: 0.82rem;
+          font-weight: 600;
+          margin-bottom: 0.3rem;
+          display: block;
+          color: var(--text-dark);
+        }
+
+        .inquiry-form .form-input,
+        .inquiry-form .form-select {
+          height: 42px;
+          padding: 0.55rem 0.85rem;
+          font-size: 0.88rem;
+          width: 100%;
+        }
+
+        .inquiry-form .form-row-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.85rem;
+          margin-bottom: 0.85rem;
+        }
+
+        .inquiry-form .form-row-2 .form-group {
+          margin-bottom: 0;
+        }
+
+        .inquiry-form .form-textarea {
+          padding: 0.6rem 0.85rem;
+          font-size: 0.88rem;
+          line-height: 1.5;
+          border-radius: var(--radius-sm);
+          resize: vertical;
+          min-height: 78px;
+          width: 100%;
+        }
+
+        .inquiry-form .form-helper-text {
+          display: block;
+          font-size: 0.74rem;
+          color: var(--text-muted);
+          margin-top: 0.25rem;
+          line-height: 1.35;
+        }
+
         .input-with-icon {
           position: relative;
           display: flex;
           align-items: center;
+          width: 100%;
         }
 
         .input-with-icon .input-icon {
           position: absolute;
-          left: 1rem;
+          left: 0.85rem;
+          top: 50%;
+          transform: translateY(-50%);
           color: var(--text-light);
           pointer-events: none;
           transition: color 0.2s ease;
@@ -740,7 +798,7 @@ export const ContactPage: React.FC = () => {
 
         .input-with-icon .form-input.has-icon,
         .input-with-icon .form-select.has-icon {
-          padding-left: 2.75rem;
+          padding-left: 2.5rem;
         }
 
         .input-with-icon:focus-within .input-icon {
@@ -748,28 +806,33 @@ export const ContactPage: React.FC = () => {
         }
 
         .submit-inquiry-btn {
-          margin-top: 0.5rem;
-          height: 50px;
+          margin-top: 0.4rem;
+          height: 48px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          border-radius: var(--radius-full);
         }
 
         /* Form Success State */
         .success-state-box {
-          padding: 2.5rem 1.5rem;
+          padding: 2.25rem 1.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
+          height: 100%;
         }
 
         .success-check-circle {
-          width: 72px;
-          height: 72px;
+          width: 68px;
+          height: 68px;
           border-radius: 50%;
           background: #EAF8EE;
           color: #16A34A;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.15rem;
           box-shadow: 0 8px 24px rgba(22, 163, 74, 0.16);
           animation: popScale 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -795,18 +858,18 @@ export const ContactPage: React.FC = () => {
         }
 
         .success-title {
-          font-size: 1.55rem;
+          font-size: 1.45rem;
           color: var(--dark-green);
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.45rem;
           font-weight: 700;
         }
 
         .success-desc {
-          font-size: 0.94rem;
+          font-size: 0.92rem;
           color: var(--text-muted);
           line-height: 1.6;
           max-width: 440px;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
         }
 
         .success-dispatch-summary {
@@ -815,11 +878,11 @@ export const ContactPage: React.FC = () => {
           background: var(--light-green-subtle);
           border: 1px solid var(--border-subtle);
           border-radius: var(--radius-md);
-          padding: 1rem 1.25rem;
-          margin-bottom: 1.75rem;
+          padding: 0.9rem 1.15rem;
+          margin-bottom: 1.5rem;
           display: flex;
           flex-direction: column;
-          gap: 0.45rem;
+          gap: 0.4rem;
           text-align: left;
         }
 
@@ -850,16 +913,17 @@ export const ContactPage: React.FC = () => {
         .contact-quick-resolutions {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1.75rem;
-          max-width: 1120px;
+          gap: 1.5rem;
+          max-width: 1200px;
           margin: 0 auto;
         }
 
         .resolution-card {
-          padding: 1.75rem;
+          padding: 1.6rem 1.4rem;
           background: #FFFFFF;
           border-radius: var(--radius-lg);
           border: 1px solid var(--border-color);
+          box-shadow: var(--shadow-sm);
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -873,50 +937,54 @@ export const ContactPage: React.FC = () => {
         }
 
         .res-icon-circle {
-          width: 44px;
-          height: 44px;
+          width: 42px;
+          height: 42px;
           border-radius: 12px;
           background: var(--light-green);
           color: var(--dark-green);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1.15rem;
+          margin-bottom: 0.95rem;
         }
 
         .res-title {
-          font-size: 1.08rem;
+          font-size: 1.05rem;
           color: var(--dark-green);
           font-weight: 700;
-          margin-bottom: 0.45rem;
+          margin-bottom: 0.35rem;
         }
 
         .res-desc {
-          font-size: 0.88rem;
+          font-size: 0.86rem;
           color: var(--text-muted);
-          line-height: 1.6;
+          line-height: 1.55;
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 960px) {
+        @media (max-width: 1024px) {
           .contact-main-grid {
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.75rem;
           }
           .contact-quick-resolutions {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.25rem;
           }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
           .contact-info-card,
           .contact-form-card {
-            padding: 1.75rem 1.25rem;
+            padding: 1.5rem 1.15rem;
           }
-          .form-row-2 {
+          .inquiry-form .form-row-2 {
             grid-template-columns: 1fr;
-            gap: 0.5rem;
+            gap: 0.85rem;
+          }
+          .contact-quick-resolutions {
+            grid-template-columns: 1fr;
+            gap: 1rem;
           }
         }
       `}</style>
