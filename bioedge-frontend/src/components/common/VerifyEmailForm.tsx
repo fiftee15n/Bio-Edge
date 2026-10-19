@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { Mail, Clock, RefreshCw, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Mail, Clock, RefreshCw, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
 
 interface VerifyEmailFormProps {
   email: string;
@@ -189,6 +189,25 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           )}
         </p>
 
+        {email.toLowerCase().includes('gmail.com') && (
+          <div className="gmail-quick-action">
+            <a 
+              href="https://mail.google.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn-open-gmail"
+              title="Open Gmail in a new tab"
+            >
+              <Mail size={16} />
+              <span>{isBangla ? 'Gmail ইনবক্স খুলুন' : 'Open Gmail Inbox'}</span>
+              <ExternalLink size={13} />
+            </a>
+            <span className="gmail-spam-hint">
+              {isBangla ? '💡 ইনবক্সে না পেলে Spam অথবা Promotions ফোল্ডার দেখুন' : '💡 Check Spam or Promotions folder if not in primary inbox'}
+            </span>
+          </div>
+        )}
+
         {redirectNotice && (
           <div className="redirect-notice-pill">
             <Sparkles size={14} />
@@ -318,6 +337,40 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         }
         .verify-subtitle strong {
           color: var(--text-primary);
+        }
+
+        .gmail-quick-action {
+          margin-top: 0.85rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.4rem;
+        }
+        .btn-open-gmail {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          background: #FFFFFF;
+          color: #DC2626;
+          border: 1px solid #FECACA;
+          border-radius: 9999px;
+          padding: 0.4rem 1rem;
+          font-size: 0.82rem;
+          font-weight: 600;
+          text-decoration: none;
+          box-shadow: 0 1px 3px rgba(220, 38, 38, 0.08);
+          transition: all 0.2s ease;
+        }
+        .btn-open-gmail:hover {
+          background: #FEF2F2;
+          border-color: #F87171;
+          transform: translateY(-1px);
+          box-shadow: 0 3px 8px rgba(220, 38, 38, 0.14);
+        }
+        .gmail-spam-hint {
+          font-size: 0.76rem;
+          color: var(--text-muted);
+          font-style: italic;
         }
 
         .redirect-notice-pill {

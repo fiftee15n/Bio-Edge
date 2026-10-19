@@ -48,15 +48,18 @@ export const AuthController = {
           // User exists but unverified: generate new OTP code
           const code = Math.floor(100000 + Math.random() * 900000).toString();
           VerificationModel.saveCode(normalizedEmail, code, 10);
-          await EmailService.sendVerificationCode(normalizedEmail, code, name.trim());
+          const emailResult = await EmailService.sendVerificationCode(normalizedEmail, code, name.trim());
 
           return res.status(200).json({
             success: true,
             isNewUser: false,
             requiresVerification: true,
             email: normalizedEmail,
-            verificationCode: code, // Included for instant sandbox testing
-            message: 'Your account is pending verification. A new 6-digit verification code has been sent to your email.'
+            sentViaGmail: !emailResult.simulated,
+            verificationCode: emailResult.simulated ? code : undefined,
+            message: emailResult.simulated 
+              ? 'A 6-digit verification code has been generated.' 
+              : `A 6-digit verification code has been sent directly to your Gmail (${normalizedEmail}).`
           });
         }
       }
@@ -80,15 +83,18 @@ export const AuthController = {
       // Generate 6-digit verification code (10-minute expiry)
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       VerificationModel.saveCode(normalizedEmail, code, 10);
-      await EmailService.sendVerificationCode(normalizedEmail, code, newUser.name);
+      const emailResult = await EmailService.sendVerificationCode(normalizedEmail, code, newUser.name);
 
       return res.status(201).json({
         success: true,
         isNewUser: true,
         requiresVerification: true,
         email: normalizedEmail,
-        verificationCode: code, // Included for developer testing convenience
-        message: 'Account created! Please enter the 6-digit verification code sent to your email.'
+        sentViaGmail: !emailResult.simulated,
+        verificationCode: emailResult.simulated ? code : undefined,
+        message: emailResult.simulated
+          ? 'Account created! Enter the 6-digit verification code to complete setup.'
+          : `Account created! We've sent a 6-digit verification code directly to your Gmail (${normalizedEmail}).`
       });
     } catch (error) {
       console.error('Registration error:', error);
@@ -235,12 +241,15 @@ export const AuthController = {
       // Generate fresh 6-digit code with 10-minute expiry
       const newCode = Math.floor(100000 + Math.random() * 900000).toString();
       VerificationModel.saveCode(normalizedEmail, newCode, 10);
-      await EmailService.sendVerificationCode(normalizedEmail, newCode, user.name);
+      const emailResult = await EmailService.sendVerificationCode(normalizedEmail, newCode, user.name);
 
       return res.status(200).json({
         success: true,
-        verificationCode: newCode, // Included for instant sandbox testing
-        message: 'A new 6-digit verification code has been sent to your email.'
+        sentViaGmail: !emailResult.simulated,
+        verificationCode: emailResult.simulated ? newCode : undefined,
+        message: emailResult.simulated
+          ? 'A new 6-digit verification code has been generated.'
+          : `A new 6-digit verification code has been sent directly to your Gmail (${normalizedEmail}).`
       });
     } catch (error) {
       console.error('Resend verification error:', error);
@@ -297,14 +306,17 @@ export const AuthController = {
         // Send a fresh code
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         VerificationModel.saveCode(normalizedEmail, code, 10);
-        await EmailService.sendVerificationCode(normalizedEmail, code, user.name);
+        const emailResult = await EmailService.sendVerificationCode(normalizedEmail, code, user.name);
 
         return res.status(403).json({
           success: false,
           requiresVerification: true,
           email: normalizedEmail,
-          verificationCode: code,
-          message: 'Your email is not verified yet. A 6-digit verification code was sent to your email.'
+          sentViaGmail: !emailResult.simulated,
+          verificationCode: emailResult.simulated ? code : undefined,
+          message: emailResult.simulated
+            ? 'Your email is not verified yet. A 6-digit verification code was generated.'
+            : `Your email is not verified yet. A 6-digit verification code has been sent directly to your Gmail (${normalizedEmail}).`
         });
       }
 
