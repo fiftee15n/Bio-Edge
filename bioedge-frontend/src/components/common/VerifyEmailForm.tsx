@@ -262,6 +262,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
               onPaste={handlePaste}
               className={`otp-digit-box ${digit ? 'filled' : ''}`}
               autoComplete="one-time-code"
+              style={{ minWidth: 0, width: '100%' }}
             />
           ))}
         </div>
@@ -308,35 +309,46 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
 
       <style>{`
         .verify-email-form-wrapper {
+          width: 100%;
+          max-width: 100%;
           padding: 0.5rem 0;
+          box-sizing: border-box;
+          overflow: hidden;
         }
         .verify-header {
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
+          width: 100%;
+          box-sizing: border-box;
         }
         .verify-icon-bubble {
-          width: 64px;
-          height: 64px;
+          width: 58px;
+          height: 58px;
           border-radius: 50%;
           background: var(--light-green);
           color: var(--dark-green);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin: 0 auto 1rem;
+          margin: 0 auto 0.85rem;
         }
         .verify-title {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           color: var(--dark-green);
           font-family: var(--font-heading);
-          margin-bottom: 0.4rem;
+          margin-bottom: 0.35rem;
         }
         .verify-subtitle {
-          font-size: 0.92rem;
+          font-size: 0.88rem;
           color: var(--text-muted);
-          line-height: 1.4;
+          line-height: 1.45;
+          word-break: break-word;
+          overflow-wrap: break-word;
+          max-width: 380px;
+          margin: 0 auto;
         }
         .verify-subtitle strong {
           color: var(--text-primary);
+          word-break: break-all;
         }
 
         .gmail-quick-action {
@@ -344,7 +356,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.35rem;
         }
         .btn-open-gmail {
           display: inline-flex;
@@ -354,8 +366,8 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           color: #DC2626;
           border: 1px solid #FECACA;
           border-radius: 9999px;
-          padding: 0.4rem 1rem;
-          font-size: 0.82rem;
+          padding: 0.35rem 0.9rem;
+          font-size: 0.8rem;
           font-weight: 600;
           text-decoration: none;
           box-shadow: 0 1px 3px rgba(220, 38, 38, 0.08);
@@ -368,7 +380,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           box-shadow: 0 3px 8px rgba(220, 38, 38, 0.14);
         }
         .gmail-spam-hint {
-          font-size: 0.76rem;
+          font-size: 0.75rem;
           color: var(--text-muted);
           font-style: italic;
         }
@@ -381,10 +393,10 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           border: 1px solid var(--border-color);
           padding: 0.35rem 0.85rem;
           border-radius: 9999px;
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           color: var(--dark-green);
           font-weight: 500;
-          margin-top: 0.75rem;
+          margin-top: 0.65rem;
         }
 
         .dev-code-hint {
@@ -393,24 +405,29 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           justify-content: space-between;
           background: #F0FDF4;
           border: 1px dashed #86EFAC;
-          padding: 0.6rem 0.9rem;
+          padding: 0.6rem 0.85rem;
           border-radius: var(--radius-sm);
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: #166534;
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.15rem;
+          width: 100%;
+          max-width: 360px;
+          margin-left: auto;
+          margin-right: auto;
+          box-sizing: border-box;
         }
         .dev-hint-content {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.45rem;
         }
         .dev-fill-btn {
           background: #166534;
           color: #FFFFFF;
           border: none;
-          padding: 0.25rem 0.6rem;
+          padding: 0.22rem 0.55rem;
           border-radius: var(--radius-sm);
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           font-weight: 600;
           cursor: pointer;
         }
@@ -418,11 +435,16 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         .auth-alert {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
-          padding: 0.75rem 1rem;
+          gap: 0.55rem;
+          padding: 0.7rem 0.9rem;
           border-radius: var(--radius-sm);
-          font-size: 0.88rem;
-          margin-bottom: 1.25rem;
+          font-size: 0.85rem;
+          margin-bottom: 1.15rem;
+          width: 100%;
+          max-width: 360px;
+          margin-left: auto;
+          margin-right: auto;
+          box-sizing: border-box;
         }
         .auth-alert.error {
           background: #FEF2F2;
@@ -435,27 +457,54 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           border: 1px solid #BBF7D0;
         }
 
+        .otp-form {
+          width: 100%;
+          max-width: 360px;
+          margin: 0 auto;
+          box-sizing: border-box;
+        }
+
         .otp-boxes-grid {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 0.6rem;
-          margin-bottom: 1.25rem;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 0.5rem;
+          width: 100%;
+          max-width: 350px;
+          margin: 0 auto 1.25rem auto;
+          box-sizing: border-box;
+          justify-items: center;
         }
+
         .otp-digit-box {
-          height: 56px;
-          font-size: 1.5rem;
+          width: 100%;
+          min-width: 0 !important;
+          max-width: 48px;
+          height: 52px;
+          aspect-ratio: 1 / 1;
+          box-sizing: border-box;
+          padding: 0;
+          margin: 0;
+          font-size: 1.45rem;
           font-weight: 700;
           text-align: center;
           border: 1.5px solid var(--border-color);
-          border-radius: var(--radius-sm);
+          border-radius: var(--radius-sm, 8px);
           background: #FFFFFF;
           color: var(--dark-green);
           transition: all 0.2s ease;
+          -webkit-appearance: none;
+          -moz-appearance: textfield;
+        }
+        .otp-digit-box::-webkit-outer-spin-button,
+        .otp-digit-box::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
         .otp-digit-box:focus {
           outline: none;
           border-color: var(--dark-green);
-          box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.12);
+          box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.15);
+          transform: translateY(-1px);
         }
         .otp-digit-box.filled {
           background: var(--light-green-subtle);
@@ -466,9 +515,11 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           display: flex;
           align-items: center;
           justify-content: space-between;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: var(--text-muted);
           margin-bottom: 1rem;
+          width: 100%;
+          box-sizing: border-box;
         }
         .otp-timer {
           display: flex;
@@ -483,7 +534,7 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
           border: none;
           color: var(--dark-green);
           font-weight: 600;
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           display: flex;
           align-items: center;
           gap: 0.35rem;
@@ -504,23 +555,42 @@ export const VerifyEmailForm: React.FC<VerifyEmailFormProps> = ({
         @media (max-width: 480px) {
           .otp-boxes-grid {
             gap: 0.35rem;
+            max-width: 300px;
           }
           .otp-digit-box {
-            height: 46px;
+            height: 44px;
+            max-width: 42px;
             font-size: 1.2rem;
+            border-radius: 6px;
           }
           .otp-meta-row {
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.45rem;
             align-items: center;
           }
           .dev-code-hint {
             flex-direction: column;
-            gap: 0.5rem;
-            align-items: flex-start;
+            gap: 0.45rem;
+            align-items: stretch;
+            text-align: center;
+          }
+          .dev-hint-content {
+            justify-content: center;
           }
           .verify-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+          }
+        }
+
+        @media (max-width: 350px) {
+          .otp-boxes-grid {
+            gap: 0.25rem;
+            max-width: 260px;
+          }
+          .otp-digit-box {
+            height: 38px;
+            max-width: 36px;
+            font-size: 1.05rem;
           }
         }
       `}</style>
