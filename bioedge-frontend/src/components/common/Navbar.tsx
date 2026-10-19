@@ -38,18 +38,6 @@ export const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile drawer is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileMenuOpen]);
-
   return (
     <header className={`navbar-wrapper ${isHome ? 'is-home-nav' : ''}`}>
       {/* Top Notice: Under Development */}
@@ -135,100 +123,77 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Bottom Sheet Drawer */}
+      {/* Mobile Menu Dropdown (Opens downwards directly below the navbar) */}
       {mobileMenuOpen && (
-        <div className="mobile-drawer-overlay" onClick={() => setMobileMenuOpen(false)}>
-          <div className="mobile-menu-drawer bottom-sheet" onClick={(e) => e.stopPropagation()}>
-            {/* Touch / Swipe Indicator Handle */}
-            <div className="drawer-handle-bar">
-              <span className="drawer-handle" />
-            </div>
-
-            {/* Bottom Sheet Header */}
-            <div className="drawer-header-row">
-              <div className="drawer-brand">
-                <div className="logo-icon sm">
-                  <Sparkles size={16} />
+        <div className="mobile-dropdown-menu">
+          <div className="mobile-dropdown-inner">
+            <div className="container">
+              <div className="mobile-nav-links">
+                {/* Language Switcher inside Menu */}
+                <div className="mobile-drawer-lang-row">
+                  <span className="drawer-lang-label">
+                    <Globe size={15} />
+                    <span>{isBangla ? 'ভাষা পরিবর্তন' : 'Language'}</span>
+                  </span>
+                  <LanguageToggle />
                 </div>
-                <div className="drawer-brand-text">
-                  <span className="drawer-brand-title">Bio Edge</span>
-                  <span className="drawer-brand-sub">by Afroza Tahmina</span>
-                </div>
-              </div>
-              <button
-                className="drawer-close-circle"
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close Navigation"
-              >
-                <X size={18} />
-              </button>
-            </div>
 
-            <div className="mobile-nav-links">
-              {/* Language Switcher inside Drawer */}
-              <div className="mobile-drawer-lang-row">
-                <span className="drawer-lang-label">
-                  <Globe size={15} />
-                  <span>{isBangla ? 'ভাষা পরিবর্তন' : 'Language'}</span>
-                </span>
-                <LanguageToggle />
-              </div>
-
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className={`mobile-nav-item ${isActive('/') ? 'active' : ''}`}>
-                {t.nav.home}
-              </Link>
-
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`mobile-nav-item ${isActive(link.path) ? 'active' : ''}`}
-                >
-                  {link.name}
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} className={`mobile-nav-item ${isActive('/') ? 'active' : ''}`}>
+                  {t.nav.home}
                 </Link>
-              ))}
 
-              <div className="mobile-menu-divider" />
-              {user ? (
-                <div className="mobile-user-links">
-                  {user.role !== 'admin' && (
-                    <Link
-                      to={user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="btn btn-primary btn-block mb-2"
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`mobile-nav-item ${isActive(link.path) ? 'active' : ''}`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+
+                <div className="mobile-menu-divider" />
+                {user ? (
+                  <div className="mobile-user-links">
+                    {user.role !== 'admin' && (
+                      <Link
+                        to={user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard'}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="btn btn-primary btn-block mb-2"
+                      >
+                        {user.role === 'teacher' ? t.nav.openFacultyPortal : t.nav.openStudentPortal}
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        logout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="btn btn-outline btn-block mt-2"
                     >
-                      {user.role === 'teacher' ? t.nav.openFacultyPortal : t.nav.openStudentPortal}
+                      {t.nav.logout}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mobile-guest-links">
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="btn btn-outline btn-block"
+                    >
+                      {t.nav.login}
                     </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="btn btn-outline btn-block mt-2"
-                  >
-                    {t.nav.logout}
-                  </button>
-                </div>
-              ) : (
-                <div className="mobile-guest-links">
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="btn btn-outline btn-block"
-                  >
-                    {t.nav.login}
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="btn btn-primary btn-block"
-                  >
-                    {t.nav.getStarted}
-                  </Link>
-                </div>
-              )}
+                    <Link
+                      to="/register"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="btn btn-primary btn-block"
+                    >
+                      {t.nav.getStarted}
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -476,130 +441,36 @@ export const Navbar: React.FC = () => {
           color: #FFFFFF;
         }
 
-        /* Mobile Menu Bottom Sheet Drawer */
-        .mobile-drawer-overlay {
-          position: fixed;
-          inset: 0;
-          background: rgba(15, 23, 42, 0.55);
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
-          z-index: 9999;
-          display: flex;
-          align-items: flex-end;
-          justify-content: center;
-          animation: fadeInOverlay 0.22s ease forwards;
-        }
-
-        @keyframes fadeInOverlay {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        .mobile-menu-drawer.bottom-sheet {
+        /* Mobile Dropdown Menu - Opens cleanly BELOW the navbar */
+        .mobile-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
           width: 100%;
-          max-width: 540px;
           background: #FFFFFF;
-          border-radius: 26px 26px 0 0;
-          border-top: 1px solid rgba(78, 134, 95, 0.2);
-          box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.22);
-          padding: 0.65rem 1.25rem 2rem;
-          max-height: 82vh;
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
-          animation: slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          border-bottom: 2px solid var(--primary-green);
+          box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(41, 78, 54, 0.08);
+          animation: slideDownMenu 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          z-index: 999;
         }
 
-        @keyframes slideUpSheet {
+        @keyframes slideDownMenu {
           from {
-            transform: translateY(100%);
+            opacity: 0;
+            transform: translateY(-8px);
           }
           to {
+            opacity: 1;
             transform: translateY(0);
           }
         }
 
-        .drawer-handle-bar {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 0.25rem 0 0.65rem;
-          cursor: pointer;
-        }
-
-        .drawer-handle {
-          width: 44px;
-          height: 5px;
-          background: #CBD5E1;
-          border-radius: var(--radius-full);
-          transition: background 0.2s ease;
-        }
-
-        .drawer-handle-bar:hover .drawer-handle {
-          background: #94A3B8;
-        }
-
-        .drawer-header-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-bottom: 0.75rem;
-          margin-bottom: 0.75rem;
-          border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .drawer-brand {
-          display: flex;
-          align-items: center;
-          gap: 0.65rem;
-        }
-
-        .logo-icon.sm {
-          width: 32px;
-          height: 32px;
-          border-radius: 9px;
-          background-color: var(--dark-green);
-          color: #FFFFFF;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .drawer-brand-text {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .drawer-brand-title {
-          font-family: var(--font-heading);
-          font-size: 1.12rem;
-          font-weight: 700;
-          color: var(--dark-green);
-          line-height: 1.1;
-        }
-
-        .drawer-brand-sub {
-          font-size: 0.68rem;
-          color: var(--text-muted);
-          font-weight: 500;
-        }
-
-        .drawer-close-circle {
-          width: 34px;
-          height: 34px;
-          border-radius: 50%;
-          background: #F1F5F2;
-          border: 1px solid var(--border-subtle);
-          color: var(--text-dark);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .drawer-close-circle:hover {
-          background: #E2ECE5;
-          color: var(--dark-green);
+        .mobile-dropdown-inner {
+          max-height: calc(85vh - 70px);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          padding: 1.15rem 0 1.5rem;
         }
 
         .mobile-nav-links {
@@ -611,8 +482,8 @@ export const Navbar: React.FC = () => {
         .mobile-nav-item {
           display: flex;
           align-items: center;
-          padding: 0.65rem 0.85rem;
-          font-size: 0.95rem;
+          padding: 0.7rem 0.85rem;
+          font-size: 0.96rem;
           font-weight: 600;
           color: var(--text-dark);
           border-radius: var(--radius-sm);
@@ -658,6 +529,32 @@ export const Navbar: React.FC = () => {
           font-size: 0.88rem;
           font-weight: 700;
           color: var(--dark-green);
+        }
+
+        /* Dark Home Hero Theme support */
+        .navbar-wrapper.is-home-nav .mobile-dropdown-menu {
+          background: #0B1910;
+          border-bottom: 2px solid #34D399;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+        }
+        .navbar-wrapper.is-home-nav .mobile-nav-item {
+          color: #E2E8F0;
+        }
+        .navbar-wrapper.is-home-nav .mobile-nav-item:hover,
+        .navbar-wrapper.is-home-nav .mobile-nav-item.active {
+          background: rgba(52, 211, 153, 0.12);
+          color: #34D399;
+        }
+        .navbar-wrapper.is-home-nav .mobile-drawer-lang-row {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(255, 255, 255, 0.12);
+        }
+        .navbar-wrapper.is-home-nav .drawer-lang-label {
+          color: #34D399;
+        }
+        .navbar-wrapper.is-home-nav .mobile-menu-divider {
+          background: rgba(255, 255, 255, 0.1);
         }
         @media (max-width: 992px) {
           .desktop-lang-toggle {
@@ -710,10 +607,9 @@ export const Navbar: React.FC = () => {
             padding: 0.38rem 0.8rem;
             font-size: 0.8rem;
           }
-          .mobile-menu-drawer.bottom-sheet {
-            max-height: 85vh;
-            padding: 0.5rem 1rem 1.75rem;
-            border-radius: 22px 22px 0 0;
+          .mobile-dropdown-inner {
+            max-height: calc(85vh - 62px);
+            padding: 0.85rem 0 1.25rem;
           }
         }
 
