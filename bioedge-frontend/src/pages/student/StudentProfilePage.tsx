@@ -26,8 +26,8 @@ export const StudentProfilePage: React.FC = () => {
 
           <div className="profile-main-meta">
             <span className="badge badge-green">Student Profile</span>
-            <h1 className="p-student-name">{user?.name || "Tariqul Islam"}</h1>
-            <p className="p-student-id">Student ID: {user?.studentId || "BE-2026-001"}</p>
+            <h1 className="p-student-name">{user?.name || "Student"}</h1>
+            <p className="p-student-id">Student ID: {user?.studentId || "Assigned on verification"}</p>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@ export const StudentProfilePage: React.FC = () => {
 
             <div className="info-row">
               <span className="info-label">Admission Date:</span>
-              <span className="info-val">August 15, 2026</span>
+              <span className="info-val">Recent</span>
             </div>
 
             <div className="info-row">
@@ -72,22 +72,22 @@ export const StudentProfilePage: React.FC = () => {
           <div className="info-rows-list">
             <div className="info-row">
               <span className="info-label">Email:</span>
-              <strong className="info-val">{user?.email || "tariqul@gmail.com"}</strong>
+              <strong className="info-val">{user?.email || "—"}</strong>
             </div>
 
             <div className="info-row">
               <span className="info-label">Phone:</span>
-              <strong className="info-val">+880 1819-112233</strong>
+              <strong className="info-val">{user?.phone || "Not provided"}</strong>
             </div>
 
             <div className="info-row">
               <span className="info-label">Institution:</span>
-              <strong className="info-val">Notre Dame College, Dhaka</strong>
+              <strong className="info-val">{user?.institution || "Not specified"}</strong>
             </div>
 
             <div className="info-row">
               <span className="info-label">Target HSC Year:</span>
-              <strong className="info-val">HSC 2026</strong>
+              <strong className="info-val">{user?.examYear || "HSC 2026"}</strong>
             </div>
           </div>
         </div>

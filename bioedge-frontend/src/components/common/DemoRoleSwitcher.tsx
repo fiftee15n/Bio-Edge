@@ -51,7 +51,7 @@ export const DemoRoleSwitcher: React.FC = () => {
                 <User size={16} />
                 <div>
                   <div className="role-title">Student Portal</div>
-                  <div className="role-desc">Tariqul Islam (BE-2026-001)</div>
+                  <div className="role-desc">Enrolled Student View</div>
                 </div>
               </div>
               {user?.role === 'student' && <Check size={16} className="check-icon" />}

@@ -74,6 +74,19 @@ interface CourseDataContextType {
 const CourseDataContext = createContext<CourseDataContextType>({} as CourseDataContextType);
 
 export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // One-time cleanup of stale dummy cache for a fresh, clean account experience
+  const STORAGE_VERSION = 'bioedge_clean_prod_v2';
+  if (typeof window !== 'undefined' && localStorage.getItem('bioedge_storage_version') !== STORAGE_VERSION) {
+    localStorage.removeItem('bioedge_papers');
+    localStorage.removeItem('bioedge_classes');
+    localStorage.removeItem('bioedge_tests');
+    localStorage.removeItem('bioedge_students');
+    localStorage.removeItem('bioedge_feedbacks');
+    localStorage.removeItem('bioedge_notifications');
+    localStorage.removeItem('bioedge_enrollments');
+    localStorage.setItem('bioedge_storage_version', STORAGE_VERSION);
+  }
+
   const getStored = <T,>(key: string, fallback: T): T => {
     const saved = localStorage.getItem(`bioedge_${key}`);
     if (saved) {
@@ -344,10 +357,21 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
       return t;
     }));
 
+    let studentId = "student";
+    let studentName = "Student";
+    try {
+      const stored = localStorage.getItem('bioedge_auth_user');
+      if (stored) {
+        const u = JSON.parse(stored);
+        studentId = u.studentId || u.id || studentId;
+        studentName = u.name || studentName;
+      }
+    } catch (e) {}
+
     const newFeedback: FeedbackItem = {
       id: `fb-${Date.now()}`,
-      studentId: "std-001",
-      studentName: "Tariqul Islam",
+      studentId: studentId,
+      studentName: studentName,
       teacherName: teacher.name,
       category: "MCQ",
       title: "Automated Test Evaluation",
@@ -569,18 +593,11 @@ export const CourseDataProvider: React.FC<{ children: ReactNode }> = ({ children
 
   const hasAccessToCourse = (email: string, courseKey: string): boolean => {
     if (!email) return false;
-    const approved = enrollments.some(e => 
+    return enrollments.some(e => 
       e.email.toLowerCase() === email.toLowerCase() && 
       e.courseKey === courseKey && 
       e.status === 'Approved'
     );
-    if (approved) return true;
-
-    // Tariqul default demo access to Alpha Cohort
-    if (email.toLowerCase() === 'tariqul@gmail.com' && courseKey === 'alpha-cohort') {
-      return true;
-    }
-    return false;
   };
 
   return (

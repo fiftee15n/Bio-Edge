@@ -224,7 +224,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <input
                   type="email"
                   required
-                  placeholder={activeRole === 'teacher' ? 'afroza.tahmina@bioedge.edu' : 'tariqul@gmail.com'}
+                  placeholder={activeRole === 'teacher' ? 'afroza.tahmina@bioedge.edu' : 'student@gmail.com'}
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
                   className="form-input with-icon"

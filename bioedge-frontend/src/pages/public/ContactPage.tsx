@@ -249,7 +249,7 @@ export const ContactPage: React.FC = () => {
                     <input
                       type="text"
                       required
-                      placeholder={isBangla ? 'যেমন: তারিকুল ইসলাম' : 'e.g. Tariqul Islam'}
+                      placeholder={isBangla ? 'যেমন: মাহির ফয়সাল' : 'e.g. Mahir Faisal'}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className="form-input has-icon"

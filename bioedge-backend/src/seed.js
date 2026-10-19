@@ -33,7 +33,7 @@ export async function seedDatabase() {
     duration: '4 Months',
     total_classes: 48,
     seat_limit: 20,
-    enrolled_count: 14,
+    enrolled_count: 0,
     full_fee: 12500,
     monthly_fee: 3500,
     discount_amount: 1500,
@@ -136,7 +136,7 @@ export async function seedDatabase() {
     duration: '2.5 Months',
     total_classes: 20,
     seat_limit: 30,
-    enrolled_count: 19,
+    enrolled_count: 0,
     full_fee: 2200,
     monthly_fee: 2200,
     discount_amount: 800,
@@ -167,25 +167,8 @@ export async function seedDatabase() {
     }
   });
 
-  // 3. Seed Demo Users
-  const studentPasswordHash = await bcrypt.hash('student123', 10);
+  // 3. Seed Authoritative System Accounts (Teacher & Admin only)
   const teacherPasswordHash = await bcrypt.hash('teacher123', 10);
-
-  // Student: Tariqul
-  if (!UserModel.findByEmail('tariqul@gmail.com')) {
-    UserModel.create({
-      name: 'Tariqul Islam',
-      email: 'tariqul@gmail.com',
-      passwordHash: studentPasswordHash,
-      role: 'student',
-      phone: '01711223344',
-      institution: 'Notre Dame College, Dhaka',
-      examYear: 'HSC 2026',
-      studentId: 'BE-2026-001',
-      batch: 'Alpha Cohort',
-      isVerified: 1
-    });
-  }
 
   // Teacher: Afroza Tahmina
   if (!UserModel.findByEmail('afroza.tahmina@bioedge.edu')) {

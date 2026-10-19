@@ -209,23 +209,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return { success: true, user: teacherUser, token: 'bioedge_teacher_jwt_token' };
       }
 
-      if (normalizedEmail === 'tariqul@gmail.com' && password === 'student123') {
-        const studentUser: User = {
-          id: 'std_tariqul_01',
-          name: 'Tariqul Islam',
-          email: 'tariqul@gmail.com',
-          role: 'student',
-          studentId: 'BE-2026-001',
-          batch: 'Alpha Cohort',
-          enrolledCourses: ['alpha-cohort'],
-          status: 'Active',
-          isVerified: true
-        };
-        setUser(studentUser);
-        setToken('bioedge_student_jwt_token');
-        return { success: true, user: studentUser, token: 'bioedge_student_jwt_token' };
-      }
-
       return {
         success: false,
         message: 'Invalid email address or password.'
@@ -283,7 +266,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } else if (newRole === 'teacher') {
       login('afroza.tahmina@bioedge.edu', 'teacher123', 'teacher');
     } else if (newRole === 'student') {
-      login('tariqul@gmail.com', 'student123', 'student');
+      logout();
     } else {
       logout();
     }

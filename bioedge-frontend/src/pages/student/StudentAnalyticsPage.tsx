@@ -14,21 +14,25 @@ import {
 export const StudentAnalyticsPage: React.FC = () => {
   const { tests, papers } = useCourseData();
 
-  const completedTests = tests.filter(t => t.status === 'Completed');
-  const avgScore = 86.5;
-  const highestScore = 95;
-  const lowestScore = 78;
+  const completedTests = tests.filter(t => t.status === 'Completed' && t.score !== undefined && t.score !== null);
+  const totalScore = completedTests.reduce((acc, t) => acc + (t.score || 0), 0);
+  const totalPossible = completedTests.reduce((acc, t) => acc + (t.totalMarks || 1), 0);
+  const avgScore = completedTests.length > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+  const highestScore = completedTests.length > 0 
+    ? Math.max(...completedTests.map(t => Math.round(((t.score || 0) / (t.totalMarks || 1)) * 100))) 
+    : 0;
 
-  const chapterAnalytics = [
-    { name: "Cell Biology & Division", score: 92, status: "Excellent" },
-    { name: "Cell Chemistry (Biomolecules)", score: 85, status: "Strong" },
-    { name: "Microorganisms & Viruses", score: 80, status: "Good" },
-    { name: "Animal Diversity & Phyla", score: 88, status: "Strong" },
-    { name: "Human Digestion & Absorption", score: 84, status: "Good" },
-    { name: "Human Circulation & Cardiac System", score: 76, status: "Needs Practice" },
-    { name: "Genetics & Mendelian Laws", score: 90, status: "Excellent" },
-    { name: "Plant Physiology & Photosynthesis", score: 74, status: "Needs Practice" }
-  ];
+  const paper1 = papers.find(p => p.id === 'paper-1');
+  const paper2 = papers.find(p => p.id === 'paper-2');
+
+  const p1Progress = paper1 && paper1.totalChapters > 0 
+    ? Math.round((paper1.completedChapters / paper1.totalChapters) * 100) 
+    : 0;
+  const p2Progress = paper2 && paper2.totalChapters > 0 
+    ? Math.round((paper2.completedChapters / paper2.totalChapters) * 100) 
+    : 0;
+
+  const allChapters = [...(paper1?.chapters || []), ...(paper2?.chapters || [])];
 
   return (
     <div className="student-analytics-page">
@@ -51,7 +55,9 @@ export const StudentAnalyticsPage: React.FC = () => {
             <TrendingUp size={18} className="a-icon green" />
           </div>
           <strong className="a-stat-value">{avgScore}%</strong>
-          <span className="a-stat-sub">Across all completed assessments</span>
+          <span className="a-stat-sub">
+            {completedTests.length > 0 ? 'Across all completed assessments' : 'No tests submitted yet'}
+          </span>
         </div>
 
         <div className="a-stat-card bio-card">
@@ -60,7 +66,9 @@ export const StudentAnalyticsPage: React.FC = () => {
             <Award size={18} className="a-icon amber" />
           </div>
           <strong className="a-stat-value">{highestScore}%</strong>
-          <span className="a-stat-sub">Chapter 01 Practice Test</span>
+          <span className="a-stat-sub">
+            {completedTests.length > 0 ? 'Personal best mark' : 'Will update upon completion'}
+          </span>
         </div>
 
         <div className="a-stat-card bio-card">
@@ -74,11 +82,15 @@ export const StudentAnalyticsPage: React.FC = () => {
 
         <div className="a-stat-card bio-card">
           <div className="a-stat-header">
-            <span className="a-stat-label">Batch Percentile</span>
+            <span className="a-stat-label">Cohort Standing</span>
             <Sparkles size={18} className="a-icon green" />
           </div>
-          <strong className="a-stat-value">Top 15%</strong>
-          <span className="a-stat-sub">Among 17 Active Students</span>
+          <strong className="a-stat-value">
+            {completedTests.length > 0 ? `${avgScore >= 80 ? 'Top Tier' : 'In Progress'}` : 'New Student'}
+          </strong>
+          <span className="a-stat-sub">
+            {completedTests.length > 0 ? 'Based on test results' : 'Complete tests to generate rank'}
+          </span>
         </div>
       </div>
 
@@ -90,18 +102,18 @@ export const StudentAnalyticsPage: React.FC = () => {
             <h3 className="p-a-title">Biology First Paper (Botany & Cell)</h3>
           </div>
           <div className="p-a-stat-row">
-            <span className="p-a-label">Average Mastery</span>
-            <strong className="p-a-score">88.0%</strong>
+            <span className="p-a-label">Syllabus Progress</span>
+            <strong className="p-a-score">{p1Progress}%</strong>
           </div>
-          <ProgressBar progress={88} height={8} />
+          <ProgressBar progress={p1Progress} height={8} />
           <div className="p-a-details">
             <div className="p-a-detail-item">
-              <span>MCQ Accuracy:</span>
-              <strong>89%</strong>
+              <span>Chapters:</span>
+              <strong>{paper1?.chapters.length || 0} Modules</strong>
             </div>
             <div className="p-a-detail-item">
-              <span>CQ Written Score:</span>
-              <strong>87%</strong>
+              <span>Status:</span>
+              <strong>{p1Progress === 100 ? 'Completed' : p1Progress > 0 ? 'In Progress' : 'Not Started'}</strong>
             </div>
           </div>
         </div>
@@ -112,18 +124,18 @@ export const StudentAnalyticsPage: React.FC = () => {
             <h3 className="p-a-title">Biology Second Paper (Zoology & Physiology)</h3>
           </div>
           <div className="p-a-stat-row">
-            <span className="p-a-label">Average Mastery</span>
-            <strong className="p-a-score">85.0%</strong>
+            <span className="p-a-label">Syllabus Progress</span>
+            <strong className="p-a-score">{p2Progress}%</strong>
           </div>
-          <ProgressBar progress={85} height={8} />
+          <ProgressBar progress={p2Progress} height={8} />
           <div className="p-a-details">
             <div className="p-a-detail-item">
-              <span>MCQ Accuracy:</span>
-              <strong>86%</strong>
+              <span>Chapters:</span>
+              <strong>{paper2?.chapters.length || 0} Modules</strong>
             </div>
             <div className="p-a-detail-item">
-              <span>CQ Written Score:</span>
-              <strong>84%</strong>
+              <span>Status:</span>
+              <strong>{p2Progress === 100 ? 'Completed' : p2Progress > 0 ? 'In Progress' : 'Not Started'}</strong>
             </div>
           </div>
         </div>
@@ -133,24 +145,24 @@ export const StudentAnalyticsPage: React.FC = () => {
       <div className="chapter-analytics-card bio-card">
         <div className="ch-a-card-header">
           <div>
-            <h3 className="ch-a-title">Chapter-wise Accuracy Breakdown</h3>
-            <p className="ch-a-sub">Identify chapters requiring additional revision and diagram practice</p>
+            <h3 className="ch-a-title">Chapter-wise Syllabus & Mastery Breakdown</h3>
+            <p className="ch-a-sub">Track your progress and mastery across all assigned curriculum chapters</p>
           </div>
         </div>
 
         <div className="ch-analytics-list">
-          {chapterAnalytics.map((item, idx) => (
-            <div key={idx} className="ch-a-row">
+          {allChapters.map((item) => (
+            <div key={item.id} className="ch-a-row">
               <div className="ch-a-info">
-                <span className="ch-a-name">{item.name}</span>
-                <span className={`badge ${item.score >= 85 ? 'badge-green' : item.score >= 80 ? 'badge-amber' : 'badge-red'}`}>
-                  {item.status} ({item.score}%)
+                <span className="ch-a-name">{item.number}: {item.nameEn || item.name}</span>
+                <span className={`badge ${item.progress >= 85 ? 'badge-green' : item.progress > 0 ? 'badge-amber' : 'badge-dark'}`}>
+                  {item.status} ({item.progress}%)
                 </span>
               </div>
               <ProgressBar 
-                progress={item.score} 
+                progress={item.progress} 
                 height={7} 
-                variant={item.score >= 85 ? 'primary' : 'dark'} 
+                variant={item.progress >= 85 ? 'primary' : 'dark'} 
               />
             </div>
           ))}

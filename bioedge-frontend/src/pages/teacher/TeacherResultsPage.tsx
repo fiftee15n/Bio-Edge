@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useCourseData } from '../../context/CourseDataContext';
 import { Modal } from '../../components/common/Modal';
 import { 
@@ -18,60 +18,24 @@ export const TeacherResultsPage: React.FC = () => {
   const [manualScore, setManualScore] = useState<string>('');
   const [inlineFeedback, setInlineFeedback] = useState<string>('');
 
-  const attempts = [
-    {
-      id: "att-1",
-      studentName: "Tariqul Islam",
-      studentId: "BE-2026-001",
-      testTitle: "Chapter 03 MCQ Practice: Cell Chemistry",
-      paper: "Biology First Paper",
-      type: "MCQ",
-      score: 18,
-      totalMarks: 20,
-      percentage: 90,
-      submittedAt: "2026-09-09 20:45",
-      status: "Graded"
-    },
-    {
-      id: "att-2",
-      studentName: "Tariqul Islam",
-      studentId: "BE-2026-001",
-      testTitle: "Chapter 02 CQ Written Practice: Cell Division",
-      paper: "Biology First Paper",
-      type: "CQ Written",
-      score: 17,
-      totalMarks: 20,
-      percentage: 85,
-      submittedAt: "2026-09-04 18:20",
-      status: "Graded"
-    },
-    {
-      id: "att-3",
-      studentName: "Nusrat Jahan Fariha",
-      studentId: "BE-2026-002",
-      testTitle: "Chapter 03 MCQ Practice: Cell Chemistry",
-      paper: "Biology First Paper",
-      type: "MCQ",
-      score: 19,
-      totalMarks: 20,
-      percentage: 95,
-      submittedAt: "2026-09-09 21:10",
-      status: "Graded"
-    },
-    {
-      id: "att-4",
-      studentName: "Mahir Faisal",
-      studentId: "BE-2026-005",
-      testTitle: "Chapter 02 CQ Written Practice: Cell Division",
-      paper: "Biology First Paper",
-      type: "CQ Written",
-      score: 14,
-      totalMarks: 20,
-      percentage: 70,
-      submittedAt: "2026-09-05 15:30",
-      status: "Needs Evaluation"
-    }
-  ];
+  // Derive real test submissions dynamically
+  const attempts = useMemo(() => {
+    return tests
+      .filter(t => t.status === 'Completed' && t.score !== null && t.score !== undefined)
+      .map(t => ({
+        id: `att-${t.id}`,
+        studentName: (t as any).studentName || "Enrolled Student",
+        studentId: (t as any).studentId || "BE-2026-001",
+        testTitle: t.title,
+        paper: t.paper || "Biology",
+        type: t.type,
+        score: t.score || 0,
+        totalMarks: t.totalMarks,
+        percentage: Math.round(((t.score || 0) / (t.totalMarks || 1)) * 100),
+        submittedAt: t.submittedAt || "Recent",
+        status: "Graded"
+      }));
+  }, [tests]);
 
   const handleOpenGrading = (attempt) => {
     setSelectedAttempt(attempt);
@@ -138,7 +102,15 @@ export const TeacherResultsPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((att) => (
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '3.5rem 1.5rem', color: 'var(--text-muted)' }}>
+                  <p style={{ margin: 0, fontWeight: 600, fontSize: '1rem', color: 'var(--text-dark)' }}>No student submissions yet</p>
+                  <span style={{ fontSize: '0.85rem' }}>When students complete tests or submit CQ answers, their marks and evaluation options will appear here.</span>
+                </td>
+              </tr>
+            ) : (
+              filtered.map((att) => (
               <tr key={att.id}>
                 <td>
                   <strong className="std-att-name">{att.studentName}</strong>
@@ -172,7 +144,7 @@ export const TeacherResultsPage: React.FC = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

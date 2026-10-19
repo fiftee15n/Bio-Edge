@@ -192,24 +192,8 @@ def seed_database():
         }
     })
 
-    # 3. Seed Demo Users
-    student_pw_hash = hash_password("student123")
+    # 3. Seed Authoritative System Accounts (Teacher & Admin only)
     teacher_pw_hash = hash_password("teacher123")
-
-    # Student: Tariqul
-    if not UserModel.find_by_email("tariqul@gmail.com"):
-        UserModel.create(
-            name="Tariqul Islam",
-            email="tariqul@gmail.com",
-            password_hash=student_pw_hash,
-            role="student",
-            phone="01711223344",
-            institution="Notre Dame College, Dhaka",
-            exam_year="HSC 2026",
-            student_id="BE-2026-001",
-            batch="Alpha Cohort",
-            is_verified=1
-        )
 
     # Teacher: Afroza Tahmina
     if not UserModel.find_by_email("afroza.tahmina@bioedge.edu"):

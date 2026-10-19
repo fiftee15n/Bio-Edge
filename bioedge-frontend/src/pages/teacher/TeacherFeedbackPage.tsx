@@ -16,7 +16,7 @@ export const TeacherFeedbackPage: React.FC = () => {
     if (!message.trim()) return;
 
     const targetStudent = students.find(s => s.id === selectedStudent);
-    const studentName = selectedStudent === 'all' ? 'Entire Alpha Cohort' : (targetStudent?.name || 'Tariqul Islam');
+    const studentName = selectedStudent === 'all' ? 'Entire Alpha Cohort' : (targetStudent?.name || 'Enrolled Student');
 
     addFeedback({
       studentId: selectedStudent === 'all' ? 'all' : targetStudent?.id,
