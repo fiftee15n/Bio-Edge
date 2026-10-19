@@ -439,6 +439,11 @@ export const ContactPage: React.FC = () => {
           margin-bottom: 1.15rem;
         }
 
+        .desk-details {
+          min-width: 0;
+          flex: 1;
+        }
+
         .desk-avatar-circle {
           width: 50px;
           height: 50px;
@@ -552,12 +557,14 @@ export const ContactPage: React.FC = () => {
           flex: 1;
           display: flex;
           flex-direction: column;
+          min-width: 0;
         }
 
         .channel-header-row {
           display: flex;
           align-items: center;
           gap: 0.5rem;
+          flex-wrap: wrap;
         }
 
         .channel-label {
@@ -583,6 +590,8 @@ export const ContactPage: React.FC = () => {
           color: var(--text-dark);
           font-weight: 700;
           margin: 0.08rem 0 0.12rem;
+          word-break: break-word;
+          overflow-wrap: anywhere;
         }
 
         .channel-note {
@@ -962,10 +971,11 @@ export const ContactPage: React.FC = () => {
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 1024px) {
+        @media (max-width: 992px) {
           .contact-main-grid {
             grid-template-columns: 1fr;
             gap: 1.75rem;
+            margin-bottom: 2.5rem;
           }
           .contact-quick-resolutions {
             grid-template-columns: repeat(2, 1fr);
@@ -973,10 +983,15 @@ export const ContactPage: React.FC = () => {
           }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 680px) {
+          .contact-main-grid {
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+          }
           .contact-info-card,
           .contact-form-card {
-            padding: 1.5rem 1.15rem;
+            padding: 1.5rem 1.25rem;
+            border-radius: var(--radius-md);
           }
           .inquiry-form .form-row-2 {
             grid-template-columns: 1fr;
@@ -985,6 +1000,201 @@ export const ContactPage: React.FC = () => {
           .contact-quick-resolutions {
             grid-template-columns: 1fr;
             gap: 1rem;
+          }
+          .resolution-card {
+            padding: 1.35rem 1.2rem;
+            border-radius: var(--radius-md);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact-page-wrapper {
+            padding-top: 1.5rem;
+            padding-bottom: 2.5rem;
+          }
+          .contact-info-card,
+          .contact-form-card {
+            padding: 1.25rem 1rem;
+          }
+          .faculty-desk-badge {
+            gap: 0.75rem;
+            padding-bottom: 0.95rem;
+            margin-bottom: 0.95rem;
+          }
+          .desk-avatar-circle {
+            width: 44px;
+            height: 44px;
+            font-size: 1rem;
+          }
+          .desk-tag {
+            font-size: 0.68rem;
+          }
+          .desk-name {
+            font-size: 1.15rem;
+          }
+          .desk-role {
+            font-size: 0.76rem;
+          }
+          .contact-intro-text {
+            font-size: 0.84rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+          }
+          .contact-channels-list {
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+          }
+          .channel-action-card {
+            padding: 0.75rem 0.85rem;
+            gap: 0.75rem;
+            border-radius: var(--radius-sm);
+          }
+          .channel-icon-circle {
+            width: 36px;
+            height: 36px;
+          }
+          .channel-label {
+            font-size: 0.68rem;
+          }
+          .channel-pill-tag {
+            font-size: 0.58rem;
+            padding: 0.08rem 0.35rem;
+          }
+          .channel-val {
+            font-size: 0.88rem;
+          }
+          .channel-note {
+            font-size: 0.7rem;
+          }
+          .counseling-hours-box {
+            padding: 0.95rem 1rem;
+            border-radius: var(--radius-sm);
+          }
+          .hours-title {
+            font-size: 0.8rem;
+          }
+          .status-live-pill {
+            font-size: 0.66rem;
+            padding: 0.14rem 0.45rem;
+          }
+          .hours-grid {
+            font-size: 0.78rem;
+            margin-bottom: 0.5rem;
+          }
+          .location-footer-row {
+            font-size: 0.76rem;
+            line-height: 1.4;
+            padding-top: 0.55rem;
+          }
+          .form-card-header {
+            margin-bottom: 1rem;
+          }
+          .form-card-title {
+            font-size: 1.2rem;
+          }
+          .form-card-subtitle {
+            font-size: 0.82rem;
+          }
+          .inquiry-form .form-group {
+            margin-bottom: 0.75rem;
+          }
+          .inquiry-form .form-label {
+            font-size: 0.78rem;
+            margin-bottom: 0.25rem;
+          }
+          .inquiry-form .form-input,
+          .inquiry-form .form-select {
+            height: 44px;
+            font-size: 16px;
+            padding: 0.55rem 0.75rem;
+          }
+          .input-with-icon .input-icon {
+            left: 0.75rem;
+          }
+          .input-with-icon .form-input.has-icon,
+          .input-with-icon .form-select.has-icon {
+            padding-left: 2.35rem;
+          }
+          .inquiry-form .form-textarea {
+            font-size: 16px;
+            min-height: 72px;
+            padding: 0.55rem 0.75rem;
+          }
+          .inquiry-form .form-helper-text {
+            font-size: 0.7rem;
+          }
+          .submit-inquiry-btn {
+            height: 44px;
+            font-size: 0.9rem;
+          }
+          .success-state-box {
+            padding: 1.5rem 0.5rem;
+          }
+          .success-check-circle {
+            width: 56px;
+            height: 56px;
+          }
+          .success-title {
+            font-size: 1.25rem;
+          }
+          .success-desc {
+            font-size: 0.86rem;
+            margin-bottom: 1.25rem;
+          }
+          .success-dispatch-summary {
+            padding: 0.75rem 0.95rem;
+            margin-bottom: 1.25rem;
+          }
+          .resolution-card {
+            padding: 1.15rem 1rem;
+            border-radius: var(--radius-sm);
+          }
+          .res-icon-circle {
+            width: 38px;
+            height: 38px;
+            margin-bottom: 0.75rem;
+          }
+          .res-title {
+            font-size: 0.98rem;
+          }
+          .res-desc {
+            font-size: 0.82rem;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .contact-info-card,
+          .contact-form-card {
+            padding: 1rem 0.75rem;
+          }
+          .desk-name {
+            font-size: 1.05rem;
+          }
+          .channel-action-card {
+            padding: 0.65rem 0.7rem;
+            gap: 0.6rem;
+          }
+          .channel-icon-circle {
+            width: 32px;
+            height: 32px;
+          }
+          .channel-external-icon {
+            display: none;
+          }
+          .channel-val {
+            font-size: 0.82rem;
+          }
+          .hours-row {
+            flex-direction: column;
+            gap: 0.15rem;
+          }
+          .hours-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
+          }
+          .resolution-card {
+            padding: 1rem 0.8rem;
           }
         }
       `}</style>
