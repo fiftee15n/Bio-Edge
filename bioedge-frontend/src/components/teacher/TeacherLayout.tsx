@@ -163,6 +163,67 @@ export const TeacherLayout: React.FC = () => {
           object-position: top center;
         }
 
+        /* Mobile Navigation Drawer */
+        .mobile-drawer-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(15, 23, 42, 0.55);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          z-index: 9999;
+          display: flex;
+        }
+        .mobile-drawer-pane {
+          width: 280px;
+          height: 100%;
+          background: #FFFFFF;
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          box-shadow: var(--shadow-lg);
+          animation: slideDrawerRight 0.25s ease forwards;
+        }
+        @keyframes slideDrawerRight {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+        .mobile-drawer-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 1rem;
+          margin-bottom: 1.25rem;
+          border-bottom: 1px solid var(--border-subtle);
+        }
+        .mobile-drawer-links {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          overflow-y: auto;
+          flex: 1;
+        }
+        .m-link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.65rem 0.85rem;
+          border-radius: var(--radius-sm);
+          font-size: 0.92rem;
+          font-weight: 500;
+          color: var(--text-dark);
+          transition: all 0.2s ease;
+        }
+        .m-link:hover {
+          background: var(--light-green);
+          color: var(--dark-green);
+        }
+        .logout-m-link {
+          color: var(--error);
+          margin-top: auto;
+          border-top: 1px solid var(--border-subtle);
+          padding-top: 0.85rem;
+        }
+
         @media (max-width: 900px) {
           .portal-mobile-menu-btn {
             display: flex;
